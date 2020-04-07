@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Musician index{% endblock %}
+
+{% block body %}
+    <h1>Musician index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>Currentsalary</th>
+                <th>Expectedsalary</th>
+                <th>Fullname</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Age</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for musician in musicians %}
+            <tr>
+                <td>{{ musician.id }}</td>
+                <td>{{ musician.username }}</td>
+                <td>{{ musician.roles ? musician.roles|json_encode : '' }}</td>
+                <td>{{ musician.password }}</td>
+                <td>{{ musician.currentsalary }}</td>
+                <td>{{ musician.expectedsalary }}</td>
+                <td>{{ musician.fullname }}</td>
+                <td>{{ musician.email }}</td>
+                <td>{{ musician.phone }}</td>
+                <td>{{ musician.age }}</td>
+                <td>
+                    <a href="{{ path('musician_show', {'id': musician.id}) }}">show</a>
+                    <a href="{{ path('musician_edit', {'id': musician.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('musician_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Musician{% endblock %}
+
+{% block body %}
+    <h1>Musician</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ musician.id }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ musician.username }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ musician.roles ? musician.roles|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ musician.password }}</td>
+            </tr>
+            <tr>
+                <th>Currentsalary</th>
+                <td>{{ musician.currentsalary }}</td>
+            </tr>
+            <tr>
+                <th>Expectedsalary</th>
+                <td>{{ musician.expectedsalary }}</td>
+            </tr>
+            <tr>
+                <th>Fullname</th>
+                <td>{{ musician.fullname }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ musician.email }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ musician.phone }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ musician.age }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('musician_index') }}">back to list</a>
+
+    <a href="{{ path('musician_edit', {'id': musician.id}) }}">edit</a>
+
+    {{ include('musician/_delete_form.html.twig') }}
+{% endblock %}

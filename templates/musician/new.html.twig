@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Musician{% endblock %}
+
+{% block body %}
+    <h1>Create new Musician</h1>
+
+    {# {{ include('musician/_form.html.twig') }} #}
+
+    <form>
+    <div class="form-group">
+        <label for="fullname">Full name</label>
+        <input type="text" class="form-control" id="fullname" placeholder="Enter full name">
+    </div>
+    <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+        <label for="phonenumber">Phone number</label>
+        <input type="text" class="form-control" id="phonenumber" placeholder="Enter phone number">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Age</label>
+        <input type="text" class="form-control" id="age" placeholder="Enter your age">
+    </div>
+    
+    <button type="button" id="update" class="btn btn-primary">Submit</button>
+    </form>
+    <a href="{{ path('musician_index') }}">back to list</a>
+{% endblock %}
+
+
+{% block javascripts %}
+
+      <script>
+      $( "#update" ).click(function() {
+
+        var fullname = $("#fullname").val();              
+        var email = $("#email").val();              
+        var phonenumber = $("#phonenumber").val();              
+        var age = $("#age").val();              
+
+          $.ajax({
+              url:'{{ (path('update_user')) }}',
+              type: "POST",
+              dataType: "json",
+              data: {
+                  "fullname": fullname,
+                  "email": email,
+                  "phonenumber": phonenumber,
+                  "age": age,
+              },
+              async: true,
+              success: function (data)
+              {
+                  console.log(data);
+                  location.href = "{{path('skill_new')}}";
+                //   if (typeof data.output.catArray != 'undefined'){
+                //     $("#close").show();
+                //     $("#categoryBox").show();
+                //     $.each( data.output.catArray, function( key, value) {
+                //       //console.log("this is why "+value[1]);
+
+                //       $("#categoryBox").append('<button type="button" class="btn btn-info col-xs-6 col-sm-4" id="fromCagetory_'+value[0]+'" style="margin-top:5px;"><strong>'+value[1]+'</strong></button>');
+                //     });
+
+                //   }                                             
+              },
+             error: function () {
+                  $("#warning").html("<b>something's wrong</b>");
+            }
+          });
+
+      });
+      </script>
+
+
+{% endblock %}

@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use App\Entity\Skill;
 
 
 class AjaxController extends AbstractController
@@ -52,6 +53,34 @@ class AjaxController extends AbstractController
         }
 
         // return $this->render('sell/index.html.twig');
+    }
+
+    /**
+     * @Route("/save/skill", name="save_skill")
+     */
+    public function saveSkill(Request $request)
+    {
+        if($request->request->get('skill')){
+
+            $skillname = $this->sanitizeInput($request->request->get('skill'));
+            $level = $this->sanitizeInput($request->request->get('level'));
+            $experience = $this->sanitizeInput($request->request->get('experience'));
+
+            $musician = $this->getUser();
+    
+            $entityManager = $this->getDoctrine()->getManager();
+            $skill = new Skill();
+            $skill->setSkillname($skillname);
+            $skill->setLevelofskill($level);
+            $skill->setExperienceofskill($experience);
+            $skill->setMusician($musician);
+            $entityManager->persist($skill);
+            $entityManager->flush();
+           
+            return new JsonResponse($skillname);
+        }
+        
+
     }
 
     public function sanitizeInput($input){

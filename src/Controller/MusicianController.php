@@ -26,10 +26,11 @@ class MusicianController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="musician_new", methods={"GET","POST"})
+     * @Route("/details", name="musician_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
+        //this is for displaying the page and redirecting if all details are intact
         //get the musician in session
         $musician = $this->getUser();
         
@@ -42,7 +43,7 @@ class MusicianController extends AbstractController
         //if the details above are in database, then move to add skills
         if ($musician_email != NULL && $musician_phone != NULL && $musician_fullname != NULL && $musician_age != NULL ) {
             //come back here and check more things 
-            return $this->redirectToRoute('skill_new');
+            // return $this->redirectToRoute('skill_new');
 
         }
 

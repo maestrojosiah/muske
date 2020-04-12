@@ -15,7 +15,7 @@ class SkillType extends AbstractType
             ->add('skillname')
             ->add('levelofskill')
             ->add('experienceofskill')
-            ->add('musician')
+            // ->add('musician')
         ;
     }
 

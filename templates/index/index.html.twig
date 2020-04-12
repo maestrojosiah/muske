@@ -4,16 +4,183 @@
 
 {% block body %}
 
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="{{ asset('img/logo_only.png') }}"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto mb-2 mb-md-0">
+          <li class="nav-item active">
+            <a class="nav-link" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">My Portfolio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://triads.muske.co.ke">Chord generator</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://choir.muske.co.ke">Choir manager</a>
+          </li>
+        </ul>
+        <div>
+          {% include "security/login.html.twig" %}
+          {# <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search"> #}
+          {# <button class="btn btn-outline-success" type="submit">Search</button> #}
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
 
-<section style="text-align:center;">
+<main>
 
-    <h3>How can we help?</h3>
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{{ asset('img/black.jpeg')}}" width="100%" height="100%" background="#777" color="#777" text="false" title="false" >
+        {# <img src="{{ asset('bundles/acmedemo/img/weather_icons/blizzard.gif') }}" /> #}
+        <div class="container">
+          <div class="carousel-caption text-left">
+            <h1>Musician's Portfolio.</h1>
+            <p>Upload your CV on to the largest musician's portfolios database in Kenya. Advertize yourself and get the opportunity to work for great institutions in Kenya. </p>
+            <p><a class="btn btn-lg btn-primary" href="{{ path('app_register')}}" role="button">Create Portfolio</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        {# {{< placeholder width="100%" height="100%" background="#777" color="#777" text="false" title="false" >}} #}
+        <img src="{{ asset('img/black.jpeg')}}" width="100%" height="100%" background="#777" color="#777" text="false" title="false" >
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Find Music Services.</h1>
+            <p>Whether you want music services as an institution or an individual, instrumentalist or instructor, music theory or drums, piano or guitar, they are all here and ready</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Search Now</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        {# {{< placeholder width="100%" height="100%" background="#777" color="#777" text="false" title="false" >}} #}
+        <img src="{{ asset('img/black.jpeg')}}" width="100%" height="100%" background="#777" color="#777" text="false" title="false" >
+        <div class="container">
+          <div class="carousel-caption text-right">
+            <h1>Advertize a job.</h1>
+            <p>You have a job that you want to advertize and have as many musicians as possible apply? This is your platform. Clearly describe the job and we will ensure all musicians know about it.</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Advertize Now</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
 
-    <a href="" >Find a musician</a> <br />
-    <a href="{{ path('app_register')}}" >Advertize yourself</a> <br />
-    <a href="" >Advertize a job position</a> <br />
-    <a href="{{ path('app_login') }}" >Login</a> <br />
 
-</section>
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div class="col-lg-4">
+        {# {{< placeholder width="140" height="140" background="#777" color="#777" class="rounded-circle" >}} #}
+        <img src="{{ asset('img/black.jpeg')}}" width="140" height="140" background="#777" color="#777" class="rounded-circle"  >
+        <h2>Advertize yourself</h2>
+        <p>
+          Create a profile with your full resume that people can visit to see your skills and profession. We will notify you when someone requests for any of your services through text message and email. It is time to get your skills visible in the only music services website in Kenya.
+        </p>
+        <p><a class="btn btn-secondary" href="{{ path('app_register')}}" role="button">Create profile &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        {# {{< placeholder width="140" height="140" background="#777" color="#777" class="rounded-circle" >}} #}
+        <img src="{{ asset('img/black.jpeg')}}" width="140" height="140" background="#777" color="#777" class="rounded-circle"  >
+        <h2>Find a musician</h2>
+        <p>
+          Easily find the music service that you want. Instrumentalist, Choir Trainer, Music theory teacher, guitar instructor, piano instructor, drum instructor, School music teacher, Music Director, etc. It is time to get a musician you can trust from the greatest musician's database in Kenya
+        </p>
+        <p><a class="btn btn-secondary" href="#" role="button">Search Now &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        {# {{< placeholder width="140" height="140" background="#777" color="#777" class="rounded-circle" >}} #}
+        <img src="{{ asset('img/black.jpeg')}}" width="140" height="140" background="#777" color="#777" class="rounded-circle"  >
+        <h2>Advertize a job</h2>
+        <p>
+          You have a job that you want to advertize to the musicians in MuSKe? You are welcome. It is easy to post an advert and we will make sure the best musicians who fit your job description have seen the advertizement. We will post the advert at our notice board and send it to the musicians.
+        </p>
+        <p><a class="btn btn-secondary" href="#" role="button">Advertize Now &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      </div>
+      <div class="col-md-5">
+        {# {{< placeholder width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto" >}} #}
+        <img src="{{ asset('img/black.jpeg')}}" width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto"  >
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span></h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        {# {{< placeholder width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto" >}} #}
+        <img src="{{ asset('img/black.jpeg')}}" width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto"  >
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      </div>
+      <div class="col-md-5">
+        {# {{< placeholder width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto" >}} #}
+        <img src="{{ asset('img/black.jpeg')}}" width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto"  >
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- /END THE FEATURETTES -->
+
+  </div><!-- /.container -->
+
+
+  <!-- FOOTER -->
+  <footer class="container">
+    <p class="float-right"><a href="#">Back to top</a></p>
+    {# <p>&copy; 2017-{{< year >}} Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p> #}
+  </footer>
+</main>
 
 {% endblock %}

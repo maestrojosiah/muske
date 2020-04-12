@@ -20,8 +20,9 @@ class SkillController extends AbstractController
      */
     public function index(SkillRepository $skillRepository): Response
     {
+        $mySkills = $this->getUser()->getSkills();
         return $this->render('skill/index.html.twig', [
-            'skills' => $skillRepository->findAll(),
+            'skills' => $mySkills,
         ]);
     }
 
@@ -33,20 +34,24 @@ class SkillController extends AbstractController
         $skill = new Skill();
         $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
+        $musician = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $skill->setMusician($this->getUser());
-            $entityManager->persist($skill);
+            $skill->setMusician($musician);
+            $entityManager->persist($skill); 
             $entityManager->flush();
 
             return $this->redirectToRoute('skill_index');
         }
 
+        $mySkills = count($musician->getSkills());
+
         return $this->render('skill/new.html.twig', [
             'skill' => $skill,
             'form' => $form->createView(),
             'user' => $this->getUser(),
+            'myskills' => $mySkills,
         ]);
     }
 

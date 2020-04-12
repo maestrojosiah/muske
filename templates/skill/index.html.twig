@@ -27,6 +27,7 @@
                     <a href="{{ path('skill_edit', {'id': skill.id}) }}">edit</a>
                 </td>
             </tr>
+    
         {% else %}
             <tr>
                 <td colspan="5">no records found</td>
@@ -35,5 +36,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('skill_new') }}">Create new</a>
+    <a href="{{ path('skill_new') }}">Add another skill</a>
+    {% if skills|length > 0 %}
+        <a href="{{path('education_new')}}">Next Step</a>
+    {% endif %}
 {% endblock %}

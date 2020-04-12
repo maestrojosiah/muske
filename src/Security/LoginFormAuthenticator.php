@@ -39,7 +39,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function supports(Request $request)
     {
-        return 'app_login' === $request->attributes->get('_route')
+        // changed from return 'app_login'
+        return 'homepage' === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
 
@@ -102,6 +103,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     protected function getLoginUrl()
     {
-        return $this->urlGenerator->generate('app_login');
+        // changed route from app_login page to homepage so that I could login from homepage
+        return $this->urlGenerator->generate('homepage');
     }
 }

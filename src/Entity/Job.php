@@ -46,6 +46,11 @@ class Job
      */
     private $location;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $institution;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +124,18 @@ class Job
     public function setLocation(?string $location): self
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    public function getInstitution(): ?string
+    {
+        return $this->institution;
+    }
+
+    public function setInstitution(?string $institution): self
+    {
+        $this->institution = $institution;
 
         return $this;
     }

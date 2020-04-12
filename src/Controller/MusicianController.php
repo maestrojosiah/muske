@@ -35,17 +35,17 @@ class MusicianController extends AbstractController
         $musician = $this->getUser();
         
         //define email phone age and full name
-        $musician_email = $musician->getEmail();
-        $musician_phone = $musician->getPhone();
-        $musician_age = $musician->getAge();
-        $musician_fullname = $musician->getFullname();
+        // $musician_email = $musician->getEmail();
+        // $musician_phone = $musician->getPhone();
+        // $musician_age = $musician->getAge();
+        // $musician_fullname = $musician->getFullname();
 
         //if the details above are in database, then move to add skills
-        if ($musician_email != NULL && $musician_phone != NULL && $musician_fullname != NULL && $musician_age != NULL ) {
+        // if ($musician_email != NULL && $musician_phone != NULL && $musician_fullname != NULL && $musician_age != NULL ) {
             //come back here and check more things 
             // return $this->redirectToRoute('skill_new');
 
-        }
+        // }
 
         return $this->render('musician/new.html.twig', [
             'musician' => $musician,

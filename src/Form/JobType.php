@@ -17,6 +17,7 @@ class JobType extends AbstractType
             ->add('endedin')
             ->add('currentornot')
             ->add('location')
+            ->add('institution')
             ->add('musician')
         ;
     }

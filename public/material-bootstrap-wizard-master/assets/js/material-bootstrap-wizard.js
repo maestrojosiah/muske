@@ -141,6 +141,7 @@ $(document).ready(function(){
     });
 
     $('[data-toggle="wizard-checkbox"]').click(function(){
+
         if( $(this).hasClass('active')){
             $(this).removeClass('active');
             $(this).find('[type="checkbox"]').removeAttr('checked');

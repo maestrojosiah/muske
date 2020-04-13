@@ -3,6 +3,24 @@
 {% block title %}More Info{% endblock %}
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{{ asset('datepicker/css/bootstrap-datepicker.css')}}" />
+<style>
+.skills ul{
+	display:block;
+	margin:0 auto;
+	padding:0;
+	max-width:800px
+}
+.skills li{
+	display:inline-block;
+	margin:7px;
+	padding:5px 10px;
+	color:#374054;
+	background:#e4e4ea;
+	list-style:none;
+	cursor:default;
+	font-size:1.2em
+}
+</style>
 {% endblock %}
 {% block body %}
 
@@ -27,12 +45,12 @@
 		                    	</div>
 								<div class="wizard-navigation">
 									<ul>
-			                            <li><a href="#information" data-toggle="tab">Information</a></li>
-			                            <li><a href="#skill" data-toggle="tab">Skills</a></li>
-			                            <li><a href="#education" data-toggle="tab">Education</a></li>
-			                            <li><a href="#job" data-toggle="tab">Jobs</a></li>
-			                            <li><a href="#roles" data-toggle="tab">Roles</a></li>
-			                            <li><a href="#salary" data-toggle="tab">Salary</a></li>
+			                            <li><a class="toggle" href="#information" data-toggle="tab">Information</a></li>
+			                            <li><a class="toggle" href="#skill" data-toggle="tab">Skills</a></li>
+			                            <li><a class="toggle" href="#education" data-toggle="tab">Education</a></li>
+			                            <li><a class="toggle" href="#job" data-toggle="tab">Jobs</a></li>
+			                            <li><a class="toggle" href="#roles" data-toggle="tab">Roles</a></li>
+			                            <li><a class="toggle" href="#salary" data-toggle="tab">Salary</a></li>
 										
 			                        </ul>
 								</div>
@@ -48,7 +66,7 @@
 		                                        	{# <label class="control-label">City</label> #}
                                                     <label class="control-label" for="fullname">Full name</label>
 		                                        	{# <input type="text" class="form-control" id="exampleInputEmail1"> #}
-                                                    <input type="text" class="form-control" id="fullname">
+                                                    <input type="text" class="form-control" id="fullname" value="{{fields.full_name}}">
 		                                    	</div>
 		                                	</div>
 		                                	<div class="col-sm-5">
@@ -56,7 +74,7 @@
 		                                        	{# <label class="control-label">City</label> #}
                                                     <label class="control-label" for="email">Email address</label>
 		                                        	{# <input type="text" class="form-control" id="exampleInputEmail1"> #}
-                                                    <input type="email" class="form-control" id="email">
+                                                    <input type="email" class="form-control" id="email" value="{{fields.email}}">
 		                                    	</div>
 		                                	</div>
 		                                	<div class="col-sm-5 col-sm-offset-1">
@@ -64,7 +82,7 @@
 		                                        	{# <label class="control-label">City</label> #}
                                                     <label class="control-label" for="phonenumber">Phone number</label>
 		                                        	{# <input type="text" class="form-control" id="exampleInputEmail1"> #}
-                                                    <input type="text" class="form-control" id="phonenumber">
+                                                    <input type="text" class="form-control" id="phonenumber" value="{{fields.phone}}">
 		                                    	</div>
 		                                	</div>
 		                                	<div class="col-sm-5">
@@ -72,7 +90,7 @@
 		                                        	{# <label class="control-label">City</label> #}
                                                     <label class="control-label" for="age">Age</label>
 		                                        	{# <input type="text" class="form-control" id="exampleInputEmail1"> #}
-                                                    <input type="text" class="form-control" id="age">
+                                                    <input type="text" class="form-control" id="age" value="{{fields.age}}">
 		                                    	</div>
 		                                	</div>
 		                            	</div>
@@ -103,6 +121,15 @@
                                                     <button type="button" id="save_skill" class="btn btn-primary">Save This Skill</button>
 		                                    	</div>
 		                                	</div>
+											<div class="skills for_skills">
+												<ul>
+													{% for skill in fields.skills %}
+													<li>{{skill.skillname}}</li>
+													{% endfor %}
+												</ul>
+											</div>
+											<!-- End #skills -->
+
 		                            	</div>
 		                            </div>
 		                            <div class="tab-pane" id="education">
@@ -149,6 +176,13 @@
                                                     <button type="button" id="save_education" class="btn btn-primary">Save This Information</button>
 		                                    	</div>
 		                                	</div>
+											<div class="skills for_education">
+												<ul>
+													{% for edu in fields.education %}
+													<li>{{edu.coursename}}</li>
+													{% endfor %}
+												</ul>
+											</div>
 		                                </div>
 		                            </div>
 		                            <div class="tab-pane" id="job">
@@ -200,6 +234,14 @@
                                                     <button type="button" id="save_job" class="btn btn-primary">Save This Job</button>
 		                                    	</div>
 		                                	</div>
+											<div class="skills for_jobs">
+												<ul>
+													{% for job in fields.jobs %}
+													<li>{{job.institution}}</li>
+													{% endfor %}
+												</ul>
+											</div>
+
 		                                </div>
 		                            </div>
 		                            <div class="tab-pane" id="roles">
@@ -226,6 +268,14 @@
                                                     <button type="button" id="save_role" class="btn btn-primary">Save This Role</button>
 		                                    	</div>
 		                                	</div>
+											<div class="skills for_roles">
+												<ul>
+													{% for role in fields.roles %}
+													<li>{{role.medium}} {{role.jobtitle}}</li>
+													{% endfor %}
+												</ul>
+											</div>
+
 		                            	</div>
 		                            </div>
 		                            <div class="tab-pane" id="salary">
@@ -234,13 +284,13 @@
 		                                	<div class="col-sm-5 col-sm-offset-1">
 		                                    	<div class="form-group label-floating">
                                                     <label class="control-label" for="cur_salary">Current Salary (e.g if applicable)</label>
-                                                    <input type="text" class="form-control" id="cur_salary">
+                                                    <input type="text" class="form-control" id="cur_salary" value="{{fields.salary}}">
 		                                    	</div>
 		                                	</div>
 		                                	<div class="col-sm-5">
 		                                    	<div class="form-group label-floating">
                                                     <label class="control-label" for="exp_salary">Expected Salary (e.g 50,000)</label>
-                                                    <input type="text" class="form-control" id="exp_salary">
+                                                    <input type="text" class="form-control" id="exp_salary" value="{{fields.exp_salary}}">
 		                                    	</div>
 		                                	</div>
 		                            	</div>
@@ -250,7 +300,7 @@
 	                            	<div class="pull-right">
                                         {# <button type="button" id="update" class="btn btn-primary">Submit</button> #}
 	                                    <input type='button' class='btn btn-next btn-fill btn-primary btn-wd' name='next'  id="update" value='Next' />
-	                                    <input type='button' class='btn btn-finish btn-fill btn-primary btn-wd' name='finish' id="salary" value='Finish' />
+	                                    <input type='button' class='btn btn-finish btn-fill btn-primary btn-wd' name='finish' id="save_salary" value='Finish' />
 	                                </div>
 	                                <div class="pull-left">
 	                                    <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' />
@@ -270,7 +320,7 @@
 	        </div>
 	    </div>
 	</div>
-
+	{{dump(fields)}}
 {% endblock %}
 
 
@@ -326,6 +376,43 @@
     </script>
 
     <script>
+    $( ".toggle" ).click(function() {
+
+	var idName = $(".tab-pane.active").attr("id");
+
+	console.log("id of the div is: " + idName);
+	
+	var fullname = $("#fullname").val();              
+	var email = $("#email").val();              
+	var phonenumber = $("#phonenumber").val();              
+	var age = $("#age").val();              
+
+		$.ajax({
+			url:'{{ (path('update_user')) }}',
+			type: "POST",
+			dataType: "json",
+			data: {
+				"fullname": fullname,
+				"email": email,
+				"phonenumber": phonenumber,
+				"age": age,
+			},
+			async: true,
+			success: function (data)
+			{
+				console.log(data);
+				console.log("saved information");
+			},
+			error: function () {
+				$("#warning").html("<b>something's wrong</b>");
+			}
+		});
+
+
+    });
+    </script>
+
+    <script>
     $( "#save_skill" ).click(function() {
 
     var skillname = $("#skillname").val();              
@@ -350,6 +437,7 @@
 			$("#level").val('')
 			$("#experience").val('')
 			$("#info-text-skill").text("Great! Keep adding more skills...");
+			$(".for_skills ul").append("<li>"+data+"</li>");
 		},
 		error: function () {
 			// $("#warning").html("<b>something's wrong</b>");
@@ -395,6 +483,7 @@
 					$("#location").val('');
 					$("#course").val('');
 					$("#info-text-education").text("Great! Keep adding more...");
+					$(".for_education ul").append("<li>"+data+"</li>");
 
 				},
 				error: function () {
@@ -441,6 +530,7 @@
 					$("#location_job").val('');
 					$("#current_or_not").val('');
 					$("#info-text-job").text("Great! Keep adding more...");
+					$(".for_jobs ul").append("<li>"+data+"</li>");
 
 				},
 				error: function () {
@@ -475,6 +565,7 @@
 					console.log("saved job");
 					$("#role").val('');
 					$("#medium").val('');
+					$(".for_roles ul").append("<li>"+data+"</li>");
 
 				},
 				error: function () {
@@ -489,7 +580,7 @@
 
 	<script>
 
-	$( "#salary" ).click(function() {
+	$( "#save_salary" ).click(function() {
 
 		var cur_salary = $("#cur_salary").val();              
 		var exp_salary = $("#exp_salary").val();              

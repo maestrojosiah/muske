@@ -118,7 +118,7 @@ class AjaxController extends AbstractController
             $entityManager->persist($education);
             $entityManager->flush();
            
-            return new JsonResponse($institution);
+            return new JsonResponse($course);
         }
         
 
@@ -159,7 +159,7 @@ class AjaxController extends AbstractController
             $entityManager->persist($job);
             $entityManager->flush();
            
-            return new JsonResponse($from_year);
+            return new JsonResponse($institution);
         }
         
 
@@ -186,7 +186,7 @@ class AjaxController extends AbstractController
             $entityManager->persist($job);
             $entityManager->flush();
            
-            return new JsonResponse($role);
+            return new JsonResponse($medium. " " . $role);
         }
         
 
@@ -197,10 +197,12 @@ class AjaxController extends AbstractController
      */
     public function saveSalary(Request $request)
     {
-        if($request->request->get('cur_salary')){
+        // if($request->request->get('cur_salary')){
 
             $cur_salary = $this->sanitizeInput($request->request->get('cur_salary'));
             $exp_salary = $this->sanitizeInput($request->request->get('exp_salary'));
+            $cur_salary == "" ? "nil" : $cur_salary;
+            $exp_salary == "" ? "nil" : $exp_salary;
 
             $musician = $this->getUser();
     
@@ -212,7 +214,7 @@ class AjaxController extends AbstractController
             $entityManager->flush();
            
             return new JsonResponse($exp_salary);
-        }
+        // }
         
 
     }

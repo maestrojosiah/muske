@@ -34,21 +34,51 @@ class MusicianController extends AbstractController
         //get the musician in session
         $musician = $this->getUser();
         
-        //define email phone age and full name
-        // $musician_email = $musician->getEmail();
-        // $musician_phone = $musician->getPhone();
-        // $musician_age = $musician->getAge();
-        // $musician_fullname = $musician->getFullname();
+        // for placeholding if data exists
+
+        // define email phone age and full name
+        $musician_email = $musician->getEmail();
+        $musician_phone = $musician->getPhone();
+        $musician_age = $musician->getAge();
+        $musician_fullname = $musician->getFullname();
+        $skills = $musician->getSkills()[0];
+        $education = $musician->getEducation()[0];
+        $jobs = $musician->getJobs()[0];
+        $roles = $musician->getJobstobeoffered()[0];
+        $salary = $musician->getCurrentsalary();
+        $salary_exp = $musician->getExpectedSalary();
+
+        $details_array = [$musician_email, $musician_phone, $musician_age, $musician_fullname, $skills,
+                            $education, $jobs, $roles, $salary, $salary_exp];
+        $fields = ["email" => $musician_email,
+                    "phone" => $musician_phone,
+                    "age" => $musician_age,
+                    "full_name" => $musician_fullname,
+                    "salary" => $salary,
+                    "exp_salary" => $salary_exp,
+                    "skills" => $musician->getSkills(),
+                    "education" => $musician->getEducation(),
+                    "jobs" => $musician->getJobs(),
+                    "roles" => $musician->getJobstobeoffered()
+                ];
+        
+        // to know if all the above have content                            
+        $filter = array_filter($details_array, function($k) {
+            return (isset($k) || !empty($k));
+        }, ARRAY_FILTER_USE_BOTH );
+
 
         //if the details above are in database, then move to add skills
-        // if ($musician_email != NULL && $musician_phone != NULL && $musician_fullname != NULL && $musician_age != NULL ) {
-            //come back here and check more things 
-            // return $this->redirectToRoute('skill_new');
+        if (count($filter) == 10) {
+            // come back here and check more things 
+            return $this->redirectToRoute('location_new');
 
-        // }
+        }
 
         return $this->render('musician/new.html.twig', [
             'musician' => $musician,
+            'fields' => $fields,
+            'filter' => $filter,
         ]);
     }
 

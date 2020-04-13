@@ -5,23 +5,6 @@
 {% block body %}
 
 	<div class="image-container set-full-height" style="background-image: url('{{ asset('img/wizard-city.jpg')}}')">
-	    <!--   Creative Tim Branding   -->
-	    <a href="http://creative-tim.com">
-	         <div class="logo-container">
-	            <div class="logo">
-	                <img src="{{ asset('img/new_logo.png')}}">
-	            </div>
-	            <div class="brand">
-	                Creative Tim
-	            </div>
-	        </div>
-	    </a>
-
-		<!--  Made With Material Kit  -->
-		<a href="http://demos.creative-tim.com/material-kit/index.html?ref=material-bootstrap-wizard" class="made-with-mk">
-			<div class="brand">MK</div>
-			<div class="made-with">Made with <strong>Material Kit</strong></div>
-		</a>
 
 	    <!--   Big container   -->
 	    <div class="container">
@@ -36,17 +19,14 @@
 
 		                    	<div class="wizard-header">
 		                        	<h3 class="wizard-title">
-		                        		List Your Place
+		                        		Basic Information
 		                        	</h3>
-									<h5>This information will let us know more about your place.</h5>
+									<h5>Create an account with MuSKe. Its free!.</h5>
 		                    	</div>
 								<div class="wizard-navigation">
 									<ul>
 			                            <li><a href="#about" data-toggle="tab">About</a></li>
-			                            <li><a href="#location" data-toggle="tab">Location</a></li>
-			                            <li><a href="#type" data-toggle="tab">Type</a></li>
-			                            <li><a href="#facilities" data-toggle="tab">Facilities</a></li>
-			                            <li><a href="#description" data-toggle="tab">Description</a></li>
+			                            <li><a href="#description" data-toggle="tab">More Information</a></li>
 			                        </ul>
 								</div>
 
@@ -66,6 +46,7 @@
 		                                	<div class="col-sm-10 col-sm-offset-1">
 												<div class="input-group">
                                                     {{ form_errors(registrationForm.username) }}
+                                                    {{ form_errors(registrationForm.plainPassword) }}
 													<span class="input-group-addon">
 														<i class="material-icons">face</i>
 													</span>
@@ -105,130 +86,6 @@
 		                                	</div>
 		                            	</div>
 		                            </div>                                
-		                            <div class="tab-pane" id="location">
-		                            	<div class="row">
-		                                	<div class="col-sm-12">
-		                                    	<h4 class="info-text"> Let's start with the basic details</h4>
-		                                	</div>
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-		                                        	<label class="control-label">City</label>
-		                                        	<input type="text" class="form-control" id="exampleInputEmail1">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-		                                            <label class="control-label">Country</label>
-	                                            	<select name="country" class="form-control">
-	                                                	<option disabled="" selected=""></option>
-	                                                	<option value="Afghanistan"> Afghanistan </option>
-	                                                	<option value="Albania"> Albania </option>
-	                                                	<option value="Algeria"> Algeria </option>
-	                                                	<option value="American Samoa"> American Samoa </option>
-	                                                	<option value="Andorra"> Andorra </option>
-	                                                	<option value="Angola"> Angola </option>
-	                                                	<option value="Anguilla"> Anguilla </option>
-	                                                	<option value="Antarctica"> Antarctica </option>
-	                                                	<option value="...">...</option>
-	                                            	</select>
-	                                        	</div>
-		                                	</div>
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-		                                        	<label class="control-label">Accommodates</label>
-		                                        	<select class="form-control">
-		                                            	<option disabled="" selected=""></option>
-		                                            	<option>1 Person</option>
-		                                            	<option>2 Persons </option>
-		                                            	<option>3 Persons</option>
-		                                            	<option>4 Persons</option>
-		                                            	<option>5 Persons</option>
-		                                            	<option>6+ Persons</option>
-		                                        	</select>
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-		                                        	<label class="control-label">Rent price</label>
-		                                        	<div class="input-group">
-		                                            	<input type="text" class="form-control">
-		                                            	<span class="input-group-addon">$</span>
-		                                        	</div>
-		                                    	</div>
-		                                	</div>
-		                            	</div>
-		                            </div>
-		                            <div class="tab-pane" id="type">
-		                                <h4 class="info-text">What type of location do you have? </h4>
-		                                <div class="row">
-		                                    <div class="col-sm-10 col-sm-offset-1">
-		                                        <div class="col-sm-4 col-sm-offset-2">
-		                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have a house.">
-		                                                <input type="radio" name="type" value="House">
-		                                                <div class="icon">
-		                                                    <i class="material-icons">home</i>
-		                                                </div>
-		                                                <h6>House</h6>
-		                                            </div>
-		                                        </div>
-		                                        <div class="col-sm-4">
-		                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you have an appartment">
-		                                                <input type="radio" name="type" value="Appartment">
-		                                                <div class="icon">
-		                                                    <i class="material-icons">hotel</i>
-		                                                </div>
-		                                                <h6>Appartment</h6>
-		                                            </div>
-		                                        </div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="tab-pane" id="facilities">
-		                                <h4 class="info-text">Tell us more about facilities. </h4>
-		                                <div class="row">
-		                                    <div class="col-sm-5 col-sm-offset-1">
-		                                      <div class="form-group label-floating">
-		                                        	<label class="control-label">Your place is good for</label>
-		                                        	<select class="form-control">
-		                                            	<option disabled="" selected=""></option>
-		                                            	<option>Business</option>
-		                                            	<option>Vacation </option>
-		                                            	<option>Work</option>
-		                                        	</select>
-		                                    	</div>
-		                                    </div>
-		                                    <div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-		                                        	<label class="control-label">Is air conditioning included ?</label>
-		                                        	<select class="form-control">
-		                                            	<option disabled="" selected=""></option>
-		                                            	<option>Yes</option>
-		                                            	<option>No </option>
-		                                        	</select>
-		                                    	</div>
-		                                    </div>
-		                                    <div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-		                                        	<label class="control-label">Does your place have wi-fi?</label>
-		                                        	<select class="form-control">
-		                                    			<option disabled="" selected=""></option>
-		                                            	<option>Yes</option>
-		                                            	<option>No </option>
-		                                        	</select>
-		                                    	</div>
-		                                    </div>
-		                                    <div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-		                                        	<label class="control-label">Is breakfast included?</label>
-		                                        	<select class="form-control">
-		                                            	<option disabled="" selected=""></option>
-		                                            	<option>Yes</option>
-		                                            	<option>No </option>
-		                                        	</select>
-		                                    	</div>
-	                                    	</div>
-		                                </div>
-		                            </div>
 		                            <div class="tab-pane" id="description">
 		                                <div class="row">
 		                                    <h4 class="info-text"> Drop us a small description. </h4>

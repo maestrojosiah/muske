@@ -128,7 +128,7 @@ $(document).ready(function(){
 
 
     // Prepare the preview for profile picture
-    $("#wizard-picture").change(function(){
+    $("#wizard-photo").change(function(){
         readURL(this);
     });
 

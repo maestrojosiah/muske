@@ -9,14 +9,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
-/**
- * @Route("/musician")
- */
+
 class MusicianController extends AbstractController
 {
     /**
-     * @Route("/", name="musician_index", methods={"GET"})
+     * @Route("/musician/index", name="musician_index", methods={"GET"})
      */
     public function index(MusicianRepository $musicianRepository): Response
     {
@@ -26,7 +27,7 @@ class MusicianController extends AbstractController
     }
 
     /**
-     * @Route("/details", name="musician_new", methods={"GET","POST"})
+     * @Route("/musician/details", name="musician_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -71,7 +72,7 @@ class MusicianController extends AbstractController
         //if the details above are in database, then move to add skills
         if (count($filter) == 10) {
             // come back here and check more things 
-            return $this->redirectToRoute('location_new');
+            return $this->redirectToRoute('finalize_musician');
 
         }
 
@@ -83,7 +84,65 @@ class MusicianController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="musician_show", methods={"GET"})
+     * @Route("/musician/finalize", name="finalize_musician", methods={"GET","POST"})
+     */
+    public function finalize(Request $request, SluggerInterface $slugger)
+    {
+        $musician = $this->getUser();
+
+        $form = $this->createForm(MusicianType::class, $musician);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $photoFile */
+            $photoFile = $form->get('photo')->getData();
+
+            // this condition is needed because the 'photo' field is not required
+            // so the image file must be processed only when a file is uploaded
+            if ($photoFile) {
+                //delete the current phowo if available
+                if($musician->getPhoto() != null ) {
+                    $current_photo_path = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
+                    unlink($current_photo_path);
+                }
+               
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $photoFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'photoFilename' property to store the PDF file name
+                // instead of its contents
+                $musician->setPhoto($newFilename);
+            }
+
+            // ... persist the $product variable or any other work
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($musician);
+            $entityManager->flush();
+
+            return $this->redirect($this->generateUrl('musician_show', ['username' => $musician->getUsername()]));
+        }
+
+
+        return $this->render('musician/final.html.twig', [
+            'musician' => $musician,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{username}", name="musician_show", methods={"GET"})
      */
     public function show(Musician $musician): Response
     {
@@ -93,7 +152,7 @@ class MusicianController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="musician_edit", methods={"GET","POST"})
+     * @Route("/musician/{id}/edit", name="musician_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Musician $musician): Response
     {
@@ -114,7 +173,7 @@ class MusicianController extends AbstractController
 
 
     /**
-     * @Route("/{id}", name="musician_delete", methods={"DELETE"})
+     * @Route("/musician/{id}", name="musician_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Musician $musician): Response
     {

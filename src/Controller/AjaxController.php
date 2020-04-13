@@ -11,6 +11,7 @@ use App\Entity\Skill;
 use App\Entity\Education;
 use App\Entity\Job;
 use App\Entity\JobToBeOffered;
+use App\Entity\Project;
 
 
 class AjaxController extends AbstractController
@@ -214,6 +215,35 @@ class AjaxController extends AbstractController
             $entityManager->flush();
            
             return new JsonResponse($exp_salary);
+        // }
+        
+
+    }
+
+    /**
+     * @Route("/save/project", name="save_project")
+     */
+    public function saveProject(Request $request)
+    {
+        // if($request->request->get('cur_salary')){
+
+            $project_title = $this->sanitizeInput($request->request->get('project_title'));
+            $project_description = $this->sanitizeInput($request->request->get('project_description'));
+            $project_title == "" ? "nil" : $project_title;
+            $project_description == "" ? "nil" : $project_description;
+
+            $musician = $this->getUser();
+            $project = new Project();
+    
+            $entityManager = $this->getDoctrine()->getManager();
+            $project->setProjecttitle($project_title);
+            $project->setProjectdescription($project_description);
+            $project->setMusician($musician);
+
+            $entityManager->persist($project);
+            $entityManager->flush();
+           
+            return new JsonResponse($project_title);
         // }
         
 

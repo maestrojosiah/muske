@@ -92,6 +92,21 @@ class Musician implements UserInterface
      */
     private $age;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="musician")
+     */
+    private $projects;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $about;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -99,6 +114,7 @@ class Musician implements UserInterface
         $this->education = new ArrayCollection();
         $this->jobstobeoffered = new ArrayCollection();
         $this->locations = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     public function __toString() {
@@ -401,6 +417,61 @@ class Musician implements UserInterface
     public function setAge(?string $age): self
     {
         $this->age = $age;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Project[]
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): self
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects[] = $project;
+            $project->setMusician($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): self
+    {
+        if ($this->projects->contains($project)) {
+            $this->projects->removeElement($project);
+            // set the owning side to null (unless already changed)
+            if ($project->getMusician() === $this) {
+                $project->setMusician(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAbout(): ?string
+    {
+        return $this->about;
+    }
+
+    public function setAbout(?string $about): self
+    {
+        $this->about = $about;
 
         return $this;
     }

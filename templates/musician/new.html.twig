@@ -600,7 +600,7 @@
 					console.log("saved salary");
 					$("#cur_salary").val('');
 					$("#exp_salary").val('');
-					location.href = "{{ path('location_new')}}";
+					location.href = "{{ path('finalize_musician')}}";
 				},
 				error: function () {
 					$("#warning").html("<b>something's wrong</b>");

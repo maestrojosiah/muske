@@ -134,40 +134,151 @@ class MusicianController extends AbstractController
             return $this->redirect($this->generateUrl('musician_show', ['username' => $musician->getUsername()]));
         }
 
+        // define email phone age and full name
+        $musician_photo = $musician->getPhoto();
+        $musician_about = $musician->getAbout();
+        $musician_projects = $musician->getProjects()[0];
+
+        $details_array = [$musician_photo, $musician_about, $musician_projects];
+        $fields = ["email" => $musician_photo,
+                    "phone" => $musician_about,
+                    "age" => $musician_projects,
+                ];
+        
+        // to know if all the above have content                            
+        $filter = array_filter($details_array, function($k) {
+            return (isset($k) || !empty($k));
+        }, ARRAY_FILTER_USE_BOTH );
+
+
+        //if the details above are in database, then move to add skills
+        if (count($filter) == 3) {
+            // come back here and check more things 
+            return $this->redirectToRoute('musician_show', ['username' => $musician]);
+
+        }
+        
 
         return $this->render('musician/final.html.twig', [
+            'musician' => $musician,
+            'filter' => $filter,
+            'form' => $form->createView(),
+        ]);
+    }
+
+        /**
+     * @Route("/musician/final/edit", name="finalize_musician_edit", methods={"GET","POST"})
+     */
+    public function finalize_edit(Request $request, SluggerInterface $slugger)
+    {
+        $musician = $this->getUser();
+
+        $form = $this->createForm(MusicianType::class, $musician);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $photoFile */
+            $photoFile = $form->get('photo')->getData();
+
+            // this condition is needed because the 'photo' field is not required
+            // so the image file must be processed only when a file is uploaded
+            if ($photoFile) {
+                //delete the current phowo if available
+                if($musician->getPhoto() != null ) {
+                    $current_photo_path = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
+                    unlink($current_photo_path);
+                }
+               
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $photoFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'photoFilename' property to store the PDF file name
+                // instead of its contents
+                $musician->setPhoto($newFilename);
+            }
+
+            // ... persist the $product variable or any other work
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($musician);
+            $entityManager->flush();
+
+            return $this->redirect($this->generateUrl('musician_show', ['username' => $musician->getUsername()]));
+        }
+
+
+        return $this->render('musician/final_edit.html.twig', [
             'musician' => $musician,
             'form' => $form->createView(),
         ]);
     }
+
 
     /**
      * @Route("/{username}", name="musician_show", methods={"GET"})
      */
     public function show(Musician $musician): Response
     {
+        $full_name = explode(' ', $musician->getFullname());
+        $first_name = $full_name[0];
+        $last_name = end($full_name);
+
         return $this->render('musician/show.html.twig', [
             'musician' => $musician,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
         ]);
     }
 
+
     /**
-     * @Route("/musician/{id}/edit", name="musician_edit", methods={"GET","POST"})
+     * @Route("/musician/{username}/edit", name="musician_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Musician $musician): Response
     {
-        $form = $this->createForm(MusicianType::class, $musician);
-        $form->handleRequest($request);
+        
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        // for placeholding if data exists
 
-            return $this->redirectToRoute('musician_index');
-        }
+        // define email phone age and full name
+        $musician_email = $musician->getEmail();
+        $musician_phone = $musician->getPhone();
+        $musician_age = $musician->getAge();
+        $musician_fullname = $musician->getFullname();
+        $skills = $musician->getSkills();
+        $education = $musician->getEducation();
+        $jobs = $musician->getJobs();
+        $roles = $musician->getJobstobeoffered();
+        $salary = $musician->getCurrentsalary();
+        $salary_exp = $musician->getExpectedSalary();
+
+        $fields = ["email" => $musician_email,
+                    "phone" => $musician_phone,
+                    "age" => $musician_age,
+                    "full_name" => $musician_fullname,
+                    "salary" => $salary,
+                    "exp_salary" => $salary_exp,
+                    "skills" => $skills,
+                    "education" => $education,
+                    "jobs" => $jobs,
+                    "roles" => $roles
+                ];
 
         return $this->render('musician/edit.html.twig', [
             'musician' => $musician,
-            'form' => $form->createView(),
+            'fields' => $fields,
         ]);
     }
 

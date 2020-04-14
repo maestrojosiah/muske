@@ -5,22 +5,20 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <link rel="icon" href="favicon.ico" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-        <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/styles.css" rel="stylesheet">
+        <link href="{{ asset('devportfolio/favicon.ico')}}" rel="shortcut icon" type="image/x-icon">
+        <link href="{{ asset('devportfolio/favicon.ico')}}" rel="icon" type="image/x-icon">
+        <link href="{{ asset('devportfolio/libs/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+        <link href="{{ asset('devportfolio/css/bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{ asset('devportfolio/css/styles.css')}}" rel="stylesheet">
 
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
-        <script src="{{ asset('js/jquery.min.js') }}"></script>        
-        <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>    
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="js/scripts.min.js"></script>
+        <script src="{{ asset('devportfolio/js/scripts.min.js') }}"></script>
             
         {% block javascripts %}{% endblock %}
     </body>

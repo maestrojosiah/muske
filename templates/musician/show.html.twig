@@ -1,67 +1,9 @@
 {% extends 'base_profile.html.twig' %}
 
-{% block title %}Musician{% endblock %}
+{% block title %}{{musician.fullname}}{% endblock %}
 
 {% block body %}
-    <h1>Musician</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ musician.id }}</td>
-            </tr>
-            <tr>
-                <th>Username</th>
-                <td>{{ musician.username }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ musician.roles ? musician.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ musician.password }}</td>
-            </tr>
-            <tr>
-                <th>Currentsalary</th>
-                <td>{{ musician.currentsalary }}</td>
-            </tr>
-            <tr>
-                <th>Expectedsalary</th>
-                <td>{{ musician.expectedsalary }}</td>
-            </tr>
-            <tr>
-                <th>Fullname</th>
-                <td>{{ musician.fullname }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ musician.email }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
-                <td>{{ musician.phone }}</td>
-            </tr>
-            <tr>
-                <th>Age</th>
-                <td>{{ musician.age }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('musician_index') }}">back to list</a>
-
-    <a href="{{ path('musician_edit', {'id': musician.id}) }}">edit</a>
-
-    {{ include('musician/_delete_form.html.twig') }}
-
-
-<!DOCTYPE html>
-<html class="no-js" lang="en">
-
-
-<body>
     <div id="mobile-menu-open" class="shadow-large">
         <i class="fa fa-bars" aria-hidden="true"></i>
     </div>
@@ -95,9 +37,15 @@
 
     <div id="lead">
         <div id="lead-content">
-            <h1>Ryan Fitzgerald</h1>
-            <h2>Software Engineer</h2>
+            <h1>{{musician.fullname}}</h1>
+            <h2>Musician</h2>
             <a href="#" class="btn-rounded-white">Download Resume</a>
+            <br />
+            <br />
+            {% if app.user and app.user != null %}
+                <a class="btn btn-sm btn-rounded-white" href="{{ path('musician_edit', {'username': musician.username})}}">Edit Info</a>
+            {% endif %}
+
         </div>
         <!-- End #lead-content -->
 
@@ -116,13 +64,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h2 class="heading">About Me</h2>
+                    <h2 style="align:right;" class="heading">About Me</h2>
                 </div>
                 <div class="col-md-8">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in iaculis ex. Etiam volutpat laoreet urna. Morbi ut tortor nec nulla commodo malesuada sit amet vel lacus. Fusce eget efficitur libero. Morbi dapibus porta quam laoreet placerat. Donec
-                        eu vehicula neque. Donec viverra lorem nunc, tempus euismod eros sollicitudin ut. Quisque et tincidunt libero. Donec id pharetra justo. Proin euismod lacinia dolor, eu scelerisque justo tempus pharetra. Vivamus nunc justo, finibus
-                        ut nisl sed, euismod rhoncus nulla. Proin sed magna egestas, egestas ante et, congue eros. In consequat, mauris dapibus tincidunt suscipit, ex libero aliquet diam, at maximus risus enim non leo.
+                        {{musician.about}}
                     </p>
                 </div>
             </div>
@@ -133,29 +79,26 @@
     <div id="experience" class="background-alt">
         <h2 class="heading">Experience</h2>
         <div id="experience-timeline">
-            <div data-date="September 2015 – September 2016">
-                <h3>Employer Name</h3>
-                <h4>Job Title</h4>
+        {% for job in musician.jobs %}
+            <div data-date="{{job.startingfrom|date("F Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y") }}">
+                <h3>{{job.institution}}</h3>
+                <h4>{{job.jobtitle}}</h4>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in iaculis ex. Etiam volutpat laoreet urna. Morbi ut tortor nec nulla commodo malesuada sit amet vel lacus. Fusce eget efficitur libero. Morbi dapibus porta quam laoreet placerat.
+                {% if job.roles %}
+                    {% for role in job.roles %}
+                    {# list of roles #}
+                    {% endfor %}
+                {% endif %}
+                {% if job.roles is empty %}
+                    {% if app.user and app.user != null %}
+                        You haven't added any roles that you did in this job. Please <a href="">Add some roles </a>
+                    {% else %}
+                        Did all the required roles that a {{job.jobtitle}} should do. You can <a target="_blank" href="http://www.google.com/search?q={{job.jobtitle|replace({' ': '+'}) }}+Job+Description">search on google</a> what the roles are.
+                    {% endif %}
+                {% endif %}
                 </p>
             </div>
-
-            <div data-date="September 2015 – September 2016">
-                <h3>Employer Name</h3>
-                <h4>Job Title</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in iaculis ex. Etiam volutpat laoreet urna. Morbi ut tortor nec nulla commodo malesuada sit amet vel lacus. Fusce eget efficitur libero. Morbi dapibus porta quam laoreet placerat.
-                </p>
-            </div>
-
-            <div data-date="September 2015 – September 2016">
-                <h3>Employer Name</h3>
-                <h4>Job Title</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in iaculis ex. Etiam volutpat laoreet urna. Morbi ut tortor nec nulla commodo malesuada sit amet vel lacus. Fusce eget efficitur libero. Morbi dapibus porta quam laoreet placerat.
-                </p>
-            </div>
+        {% endfor %}
         </div>
     </div>
     <!-- End #experience -->
@@ -198,7 +141,7 @@
             <div class="row">
                 <div class="project shadow-large">
                     <div class="project-image">
-                        <img src="images/project.jpg" />
+                        <img src="{{ asset('devportfolio/images/project.jpg') }}" />
                     </div>
                     <!-- End .project-image -->
                     <div class="project-info">
@@ -214,7 +157,7 @@
 
                 <div class="project shadow-large">
                     <div class="project-image">
-                        <img src="images/project.jpg" />
+                        <img src="{{ asset('devportfolio/images/project.jpg') }}" />
                     </div>
                     <!-- End .project-image -->
                     <div class="project-info">
@@ -318,13 +261,5 @@
         </div>
     </footer>
     <!-- End footer -->
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/scripts.min.js"></script>
-</body>
-
-</html>
-
-
 
 {% endblock %}

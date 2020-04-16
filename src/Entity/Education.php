@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,8 +50,19 @@ class Education
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Musician", inversedBy="education")
+     * @ORM\JoinColumn(name="musician_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $musician;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Specialty", mappedBy="education")
+     */
+    private $specialties;
+
+    public function __construct()
+    {
+        $this->specialties = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -136,6 +149,37 @@ class Education
     public function setMusician(?Musician $musician): self
     {
         $this->musician = $musician;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Specialty[]
+     */
+    public function getSpecialties(): Collection
+    {
+        return $this->specialties;
+    }
+
+    public function addSpecialty(Specialty $specialty): self
+    {
+        if (!$this->specialties->contains($specialty)) {
+            $this->specialties[] = $specialty;
+            $specialty->setEducation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpecialty(Specialty $specialty): self
+    {
+        if ($this->specialties->contains($specialty)) {
+            $this->specialties->removeElement($specialty);
+            // set the owning side to null (unless already changed)
+            if ($specialty->getEducation() === $this) {
+                $specialty->setEducation(null);
+            }
+        }
 
         return $this;
     }

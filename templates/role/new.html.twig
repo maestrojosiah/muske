@@ -1,0 +1,162 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}New Role{% endblock %}
+
+{% block body %}
+    <h1>Create new Role</h1>
+
+    {{ include('role/_form.html.twig') }}
+
+    <a href="{{ path('role_index') }}">back to list</a>
+{% endblock %} #}
+{% extends 'base_wizard.html.twig' %}
+
+{% block title %}House Keeping{% endblock %}
+{% block stylesheets %}
+
+{% endblock %}
+{% block body %}
+
+	<div class="image-container set-full-height" style="background-image: url('{{ asset('img/drumset.jpg')}}')">
+	{# Photo by Derek Truninger on Unsplash #}
+
+	    <!--   Big container   -->
+	    <div class="container">
+	        <div class="row">
+		        <div class="col-sm-8 col-sm-offset-2">
+		            <!--      Wizard container        -->
+		            <div class="wizard-container">
+		                <div class="card wizard-card" data-color="blue" id="wizard">
+			                <form action="" method="">
+                            {# {{ form_start(form) }} #}
+							{# {{dump(form)}} #}
+			                <!--        You can switch " data-color="rose" "  with one of the next bright colors: "blue", "green", "orange", "purple"        -->
+
+		                    	<div class="wizard-header">
+		                        	<h3 class="wizard-title">
+		                        		Finally...
+		                        	</h3>
+									<h5>Let's do some house keeping. </h5>
+		                    	</div>
+								<div class="wizard-navigation">
+									<ul>
+			                            <li><a href="#role" data-toggle="tab">Job Roles</a></li>
+			                        </ul>
+								</div>
+
+		                        <div class="tab-content">
+		                            <div class="tab-pane" id="role">
+		                                <div class="row">
+		                                    <h4 class="info-text"> Select a job from the left column and add the job roles. </h4>
+		                                	<div class="col-sm-4">
+		                                    	<div class="form-group label-floating">
+                                                    <div class="list-group">
+                                                    {% for job_stub in jobs %}
+                                                    <a 
+                                                    href="{{ path('role_new', {'job_id': job_stub.id} )}}" 
+                                                    class="list-group-item list-group-item-action {{ job_stub.id == job.id ? 'active' : '' }}">
+                                                        {{job_stub.jobtitle}}
+                                                    </a>
+                                                    {% endfor %}
+                                                    </div>		                                    	
+                                                </div>
+		                                	</div>
+		                                    <div class="col-sm-6 col-sm-offset-1">
+		                                        <div class="form-group label-floating">
+                                                    <h4>{{job.jobtitle}} at {{job.institution}}</h4>
+		                                        </div>
+		                                        <div class="form-group label-floating">
+                                                    <label class="control-label" for="job_role">Role (e.g Trained the church choir...)</label>
+                                                    <input type="text" class="form-control" id="job_role">
+		                                        </div>
+		                                    </div>
+		                                	<div class="col-sm-5 col-sm-offset-1">
+		                                    	<div class="form-group label-floating">
+		                                    	</div>
+		                                	</div>
+		                                	<div class="col-sm-5">
+		                                    	<div class="form-group label-floating">
+                                                    <button type="button" id="save_role" class="btn btn-primary">Save This Role</button>
+		                                    	</div>
+		                                	</div>
+											<div class="skills for_roles">
+												<ul>
+													{% for role in job.roles %}
+													<li>{{role.role}}</li>
+													{% endfor %}
+												</ul>
+											</div>
+
+		                                </div>
+		                            </div>
+		                        </div>
+		                        <div class="wizard-footer">
+	                            	<div class="pull-right">
+	                                    {# <input type='button' class='btn btn-next btn-fill btn-primary btn-wd' name='next' value='Next' /> #}
+                                        <a class='btn btn-fill btn-primary btn-wd' href="{{path('musician_show', {'username': job.musician.username } )}}">Done</a>
+	                                    {# <input type='button' class='btn btn-finish btn-fill btn-primary btn-wd' name='finish' value='Finish' /> #}
+                                        {# <button class='btn btn-finish btn-fill btn-primary btn-wd'>{{ button_label|default('Finish') }}</button> #}
+	                                </div>
+	                                <div class="pull-left">
+	                                    {# <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' /> #}
+	                                </div>
+		                            <div class="clearfix"></div>
+		                        </div>
+			                </form>
+                            {# {{ form_end(form) }} #}
+		                </div>
+		            </div> <!-- wizard container -->
+		        </div>
+	        </div> <!-- row -->
+	    </div> <!--  big container -->
+
+	    <div class="footer">
+	        <div class="container text-center">
+	             Template made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creative Tim</a>. Free download <a href="http://www.creative-tim.com/product/bootstrap-wizard">here.</a>
+	        </div>
+	    </div>
+	</div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+	<script>
+
+	$( "#save_role" ).click(function() {
+
+		var job_role = $("#job_role").val();              
+		var job_id = "{{job.id}}";              
+
+			$.ajax({
+				url:'{{ (path('save_job_role')) }}',
+				type: "POST",
+				dataType: "json",
+				data: {
+					"job_role": job_role,
+					"job_id": job_id,
+				},
+				async: true,
+				success: function (data)
+				{
+					console.log(data);
+					console.log("saved role");
+					$("#job_role").val('');
+					// location.href = "{{ path('location_new')}}";
+					$(".for_roles ul").append("<li>"+data+"</li>");
+					
+				},
+				error: function () {
+					$("#warning").html("<b>something's wrong</b>");
+				}
+			});
+
+	});
+
+	</script>
+
+
+
+{% endblock %}

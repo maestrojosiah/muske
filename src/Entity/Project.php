@@ -28,8 +28,14 @@ class Project
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Musician", inversedBy="projects")
+     * @ORM\JoinColumn(name="musician_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $musician;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $projectimage;
 
     public function getId(): ?int
     {
@@ -68,6 +74,21 @@ class Project
     public function setMusician(?Musician $musician): self
     {
         $this->musician = $musician;
+
+        return $this;
+    }
+
+    public function getProjectimage(): ?string
+    {
+        $url = "http://localhost:8000/uploads/photos/$this->projectimage";
+
+        return $url;
+
+    }
+
+    public function setProjectimage(?string $projectimage): self
+    {
+        $this->projectimage = $projectimage;
 
         return $this;
     }

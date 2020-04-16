@@ -58,6 +58,11 @@ class Job
      */
     private $roles;
 
+    public function __toString() {
+        return $this->jobtitle;
+    }
+
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();

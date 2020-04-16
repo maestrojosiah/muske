@@ -28,6 +28,7 @@ class JobToBeOffered
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Musician", inversedBy="jobstobeoffered")
+     * @ORM\JoinColumn(name="musician_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $musician;
 

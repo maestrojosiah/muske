@@ -33,6 +33,7 @@ class Skill
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Musician", inversedBy="skills")
+     * @ORM\JoinColumn(name="musician_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $musician;
 

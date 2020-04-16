@@ -21,6 +21,12 @@ class Specialty
      */
     private $instrumentorskill;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Education", inversedBy="specialties")
+     * @ORM\JoinColumn(name="education_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $education;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +40,18 @@ class Specialty
     public function setInstrumentorskill(?string $instrumentorskill): self
     {
         $this->instrumentorskill = $instrumentorskill;
+
+        return $this;
+    }
+
+    public function getEducation(): ?Education
+    {
+        return $this->education;
+    }
+
+    public function setEducation(?Education $education): self
+    {
+        $this->education = $education;
 
         return $this;
     }

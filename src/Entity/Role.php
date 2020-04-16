@@ -23,6 +23,7 @@ class Role
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Job", inversedBy="roles")
+     * @ORM\JoinColumn(name="job_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $job;
 

@@ -1,7 +1,26 @@
 {% extends 'base_profile.html.twig' %}
 
 {% block title %}{{musician.fullname}}{% endblock %}
-
+{% block stylesheets %}
+        <style>
+        .skills ul{
+            display:block;
+            margin:0 auto;
+            padding:0;
+            max-width:800px
+        }
+        .skills li{
+            display:inline-block;
+            margin:7px;
+            padding:5px 10px;
+            color:#374054;
+            background:#e4e4ea;
+            list-style:none;
+            cursor:default;
+            font-size:1.2em
+        }
+        </style>
+{% endblock %}
 {% block body %}
 
     <div id="mobile-menu-open" class="shadow-large">
@@ -43,7 +62,8 @@
             <br />
             <br />
             {% if app.user and app.user != null %}
-                <a class="btn btn-sm btn-rounded-white" href="{{ path('musician_edit', {'username': musician.username})}}">Edit Info</a>
+                <a class="btn btn-sm btn-rounded-white" href="{{ path('musician_edit', {'username': musician.username})}}">Basic Info</a>
+                <a class="btn btn-sm btn-rounded-white" href="{{ path('easyadmin')}}" target="_blank">Admin Page</a>
             {% endif %}
 
         </div>
@@ -63,10 +83,13 @@
     <div id="about">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <h2 style="align:right;" class="heading">About Me</h2>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-3">
+                    <img src="{{ musician.photo }}" width="100%" height="100%" background="#777" color="#777" style="border-radius: 50%; max-width: 300px"  >
+                </div>
+                <div class="col-md-6">
                     <p>
                         {{musician.about}}
                     </p>
@@ -81,20 +104,22 @@
         <div id="experience-timeline">
         {% for job in musician.jobs %}
             <div data-date="{{job.startingfrom|date("F Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y") }}">
-                <h3>{{job.institution}}</h3>
-                <h4>{{job.jobtitle}}</h4>
+                <h3>{{job.jobtitle}}</h3>
+                <h4>{{job.institution}}{{" / " ~ job.location}}</h4>
                 <p>
-                {% if job.roles %}
-                    {% for role in job.roles %}
-                    {# list of roles #}
-                    {% endfor %}
-                {% endif %}
                 {% if job.roles is empty %}
                     {% if app.user and app.user != null %}
-                        You haven't added any roles that you did in this job. Please <a href="">Add some roles </a>
+                        You haven't added any roles that you did in this job. Please <a href="{{ path('role_new', {'job_id': job.id}) }}">Add some roles </a>
                     {% else %}
                         Did all the required roles that a {{job.jobtitle}} should do. You can <a target="_blank" href="http://www.google.com/search?q={{job.jobtitle|replace({' ': '+'}) }}+Job+Description">search on google</a> what the roles are.
                     {% endif %}
+                {% else %}
+                    <ul>
+                        {% for role in job.roles %}
+                        <li>{{role.role}}</li>
+                        {% endfor %}
+                        {% if app.user and app.user != null %}<li><a href="{{ path('role_new', {'job_id': job.id}) }}">Add roles</a></li>{% endif %}
+                    </ul>
                 {% endif %}
                 </p>
             </div>
@@ -105,75 +130,67 @@
 
     <div id="education">
         <h2 class="heading">Education</h2>
-        <div class="education-block">
-            <h3>University of Ottawa</h3>
-            <span class="education-date">Sept 2016 - Sept 2017</span>
-            <h4>Bachelor of Science in Computer Science</h4>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in iaculis ex. Etiam volutpat laoreet urna. Morbi ut tortor nec nulla commodo malesuada sit amet vel lacus. Fusce eget efficitur libero. Morbi dapibus porta quam laoreet placerat.
-            </p>
-        </div>
-        <!-- End .education-block -->
 
+        {% for edu in musician.education %}
         <div class="education-block">
-            <h3>University of Ottawa</h3>
-            <span class="education-date">Sept 2016 - Sept 2017</span>
-            <h4>Bachelor of Science in Computer Science</h4>
-            <ul>
-                <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </li>
-                <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </li>
-                <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </li>
+            <h3>{{edu.institution}}</h3>
+            <span class="education-date">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</span>
+            <h4>{{edu.coursename}}</h4>
+            <ul class="skills">
+            {% if edu.specialties is empty %}
+                {% if app.user and app.user != null %}
+                    You haven't added any skills that you learned in this institution. Please <a href="{{ path('specialty_new', {'education_id': edu.id}) }}">Add some skills </a>
+                {% else %}
+                    Learned a lot of things that are found under {{edu.coursename}} course. You can <a target="_blank" href="http://www.google.com/search?q={{edu.coursename|replace({' ': '+'}) }}+Course+Description+{{edu.institution|replace({' ': '+'})}}">search on google</a> what some of the skills are.
+                {% endif %}
+            {% else %}
+                {% for skill in edu.specialties %}
+                    <li>
+                        {{skill.instrumentorskill}}
+                    </li>
+                {% endfor %}
+                {% if app.user and app.user != null %}<li><a href="{{ path('specialty_new', {'education_id': edu.id}) }}">Add skills</a></li>{% endif %}                
+            {% endif %}
             </ul>
         </div>
+        {% endfor %}
         <!-- End .education-block -->
     </div>
     <!-- End #education -->
-
+    {% if musician.projects %}
     <div id="projects" class="background-alt">
         <h2 class="heading">Projects</h2>
         <div class="container">
             <div class="row">
+            {% for project in musician.projects %}
                 <div class="project shadow-large">
                     <div class="project-image">
                         <img src="{{ asset('devportfolio/images/project.jpg') }}" />
                     </div>
                     <!-- End .project-image -->
                     <div class="project-info">
-                        <h3>Project Name Here</h3>
+                        <h3>{{project.projecttitle}}</h3>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in iaculis ex. Etiam volutpat laoreet urna. Morbi ut tortor nec nulla commodo malesuada sit amet vel lacus. Fusce eget efficitur libero. Morbi dapibus porta quam laoreet placerat.
+                            {{project.projectdescription}}
                         </p>
                         <a href="#">View Project</a>
-                    </div>
+                        <form name="Document" method="post" action enctype="multipart/form-data">
+                            <div class="col-md-6">
+                                <input type="file" id="documento" name="project[projectimage]" required="required">
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" {#onclick="saveDoc()"#} class="btn btn-success" id="proj_{{project.id}}">Upload</button>
+                            </div>
+                        </form>                    </div>
                     <!-- End .project-info -->
                 </div>
                 <!-- End .project -->
-
-                <div class="project shadow-large">
-                    <div class="project-image">
-                        <img src="{{ asset('devportfolio/images/project.jpg') }}" />
-                    </div>
-                    <!-- End .project-image -->
-                    <div class="project-info">
-                        <h3>Project Name Here</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in iaculis ex. Etiam volutpat laoreet urna. Morbi ut tortor nec nulla commodo malesuada sit amet vel lacus. Fusce eget efficitur libero. Morbi dapibus porta quam laoreet placerat.
-                        </p>
-                        <a href="#">View Project</a>
-                    </div>
-                    <!-- End .project-info -->
-                </div>
-                <!-- End .project -->
+            {% endfor %}
             </div>
         </div>
     </div>
     <!-- End #projects -->
+    {% endif %}
 
     <div id="skills">
         <h2 class="heading">Skills</h2>
@@ -261,5 +278,63 @@
         </div>
     </footer>
     <!-- End footer -->
+
+{% endblock %}
+{% block javascripts %}
+
+<script>
+$(document).on("click", '[id^="proj_"]', function(){
+
+    var project = jQuery(this).attr("id");
+    var splitted = project.split('_'); //changeRow_Qt_1504
+    var id = splitted[1] //1504
+
+// function saveDoc() {
+    var inputFile = document.getElementById('documento');
+    var file = inputFile.files[0];
+    var data = new FormData();
+    data.append('doc', file, file.name);
+    $.ajax({
+        url: "{{ path('upload_project_image') }}",
+        type: "POST",
+        data: data,
+        // data: {
+        //     'data': data,
+        //     'id': id,
+        // },
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data){
+            console.log(data);
+            console.log("saved information");
+            $.ajax({
+                url:"{{ (path('upload_project_image')) }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "id": id,
+                    "filename": data,
+                },
+                async: true,
+                success: function (data)
+                {
+                    console.log(data);
+                    console.log("saved another information");
+                },
+                error: function () {
+                    $("#warning").html("<b>something's wrong</b>");
+                }
+            });
+
+        },
+        error: function () {
+            $("#warning").html("<b>something's wrong</b>");
+        }
+
+    });
+
+});
+</script>
 
 {% endblock %}

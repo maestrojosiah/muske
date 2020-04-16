@@ -7,11 +7,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Entity\Skill;
 use App\Entity\Education;
 use App\Entity\Job;
 use App\Entity\JobToBeOffered;
 use App\Entity\Project;
+use App\Entity\Role;
+use App\Entity\Specialty;
 
 
 class AjaxController extends AbstractController
@@ -193,6 +197,59 @@ class AjaxController extends AbstractController
 
     }
 
+
+
+    /**
+     * @Route("/save/job/role", name="save_job_role")
+     */
+    public function saveJobRole(Request $request)
+    {
+        if($request->request->get('job_role')){
+
+            $job_role = $this->sanitizeInput($request->request->get('job_role'));
+            $job_id = $this->sanitizeInput($request->request->get('job_id'));
+
+            $job = $this->getDoctrine()->getManager()->getRepository('App:Job')->find($job_id);
+    
+            $entityManager = $this->getDoctrine()->getManager();
+            $role = new Role();
+            $role->setRole($job_role);
+            $role->setJob($job);
+            $entityManager->persist($role);
+            $entityManager->flush();
+           
+            return new JsonResponse($job_role);
+        }
+        
+
+    }
+
+    /**
+     * @Route("/save/edu/skill", name="save_edu_skill")
+     */
+    public function saveEduSkill(Request $request)
+    {
+        if($request->request->get('skill')){
+
+            $edu_skill = $this->sanitizeInput($request->request->get('skill'));
+            $education_id = $this->sanitizeInput($request->request->get('education_id'));
+
+            $education = $this->getDoctrine()->getManager()->getRepository('App:Education')->find($education_id);
+    
+            $entityManager = $this->getDoctrine()->getManager();
+            $skill = new Specialty();
+            $skill->setInstrumentorskill($edu_skill);
+            $skill->setEducation($education);
+            $entityManager->persist($skill);
+            $entityManager->flush();
+           
+            return new JsonResponse($edu_skill);
+        }
+        
+
+    }
+
+    
     /**
      * @Route("/save/salary", name="save_salary")
      */
@@ -225,7 +282,7 @@ class AjaxController extends AbstractController
      */
     public function saveProject(Request $request)
     {
-        // if($request->request->get('cur_salary')){
+        // if($request->request->get('project_title')){
 
             $project_title = $this->sanitizeInput($request->request->get('project_title'));
             $project_description = $this->sanitizeInput($request->request->get('project_description'));
@@ -247,6 +304,47 @@ class AjaxController extends AbstractController
         // }
         
 
+    }
+
+
+    /**
+     * @Route("/upload/project/image", name="upload_project_image")
+     */
+    public function uploadProjImage(Request $request)
+    {
+
+        $project_id = $this->sanitizeInput($request->request->get('id'));
+        $file = $request->files->get('doc');
+        $user = $this->getUser();
+        
+        if($file){
+            $filename = md5(uniqid()).'.'.$file->guessExtension();
+            // Move the file to the directory where brochures are stored
+            try {
+                $file->move(
+                    $this->getParameter('brochures_directory'),
+                    $filename
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+
+            return new JsonResponse($filename);        
+
+        }
+        
+        if($request->request->get('filename')){
+
+            $filename = $this->sanitizeInput($request->request->get('filename'));
+            $project = $this->getDoctrine()->getManager()->getRepository('App:Project')->find($project_id);
+            $project->setProjectimage($filename);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($project);
+            $em->flush();
+
+            return new JsonResponse("success");
+        }
+        return new JsonResponse("fail");
     }
 
 

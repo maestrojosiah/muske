@@ -4,7 +4,8 @@
 
 {% block body %}
 
-	<div class="image-container set-full-height" style="background-image: url('{{ asset('img/wizard-city.jpg')}}')">
+	<div class="image-container set-full-height" style="background-image: url('{{ asset('img/drumset.jpg')}}')">
+	{# Photo by Derek Truninger on Unsplash #}
 
 	    <!--   Big container   -->
 	    <div class="container">
@@ -138,7 +139,7 @@
 				success: function (data)
 				{
 					console.log(data);
-					console.log("saved salary");
+					console.log("saved project");
 					$("#project_title").val('');
 					$("#project_description").val('');
 					// location.href = "{{ path('location_new')}}";

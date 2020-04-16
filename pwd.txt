@@ -10,3 +10,8 @@ user can download own resume
 pro:
 live chat
 website visitors can download resume
+direct link to social media pages or profiles
+project link
+
+change http://localhost from musician.php getPhoto();
+change http://localhost from project.php getProjectimage();

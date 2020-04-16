@@ -1,0 +1,84 @@
+easy_admin:
+    disabled_actions: ['new']
+    design:
+        menu:
+            - { label: 'Homepage', route: 'homepage' }
+            # - { label: 'Profile', route: 'musician_show', params: { username: "{{musician.username}}"} }
+            - { entity: 'Education', label: 'Education' }            
+            - { entity: 'Job', label: 'Jobs' }            
+            - { entity: 'Skill', label: 'Skills' }            
+            - { entity: 'Project', label: 'Projects' }            
+            - { entity: 'Role', label: "Roles you're looking for" }            
+            - { entity: 'JobRole', label: 'Job Roles' }            
+            # - { label: 'Some Task', route: 'user_some_task' }
+            # - { label: 'Other Task', route: 'other_task', params: { max: 7 } }
+
+    site_name: 'Your Admin Page'
+
+    formats:
+        date:     'M Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
+
+    entities:
+        Education:
+            class: App\Entity\Education
+            label: 'Education'
+            list:
+                title: "Education background"    
+                fields: ['institution', {property: 'fromyear', label: 'From'}, {property: 'toyear', label: 'To'}, {property: 'coursename', label: 'Course'}, 'degree', 'location']        
+                sort: ['toyear', 'DESC']
+            search:
+                sort: ['toyear', 'DESC']    
+            form:
+                fields: ['institution', {property: 'fromyear', label: 'From'}, {property: 'toyear', label: 'To'}, {property: 'coursename', label: 'Course'}, 'degree', 'location']        
+        Job:
+            class: App\Entity\Job
+            label: 'Jobs'
+            list:
+                title: "Job Experience"            
+                fields: ['jobtitle', {property: 'startingfrom', label: 'From'}, {property: 'endedin', label: 'To'}, {property: 'currentornot', label: 'Current Job?'}, 'location', 'institution']
+            search:
+                sort: ['endedin', 'DESC']  
+            form:
+                fields: ['jobtitle', {property: 'startingfrom', label: 'From'}, {property: 'endedin', label: 'To'}, {property: 'currentornot', label: 'Current Job?'}, 'location', 'institution']                              
+        Role:
+            class: App\Entity\JobToBeOffered
+            label: 'Roles'
+            list:
+                title: "Roles you can play"   
+                fields: [{property: 'medium', label: 'Medium'}, , {property: 'jobtitle', label: 'Job Title'}] 
+            form:
+                fields: [{property: 'medium', label: 'Medium'}, , {property: 'jobtitle', label: 'Job Title'}] 
+        JobRole:
+            class:  App\Entity\Role
+            label: 'Job Roles'
+            list:
+                title: "Roles for your jobs"            
+                fields: ['role', 'job']
+            form:
+                fields: ['role', 'job']
+        Project:
+            class: App\Entity\Project
+            label: 'Projects'
+            list:
+                title: "Projects you've done"            
+                fields: [{property: 'projecttitle', label: 'Project Title'}]
+            form:
+                fields: [{property: 'projecttitle', label: 'Project Title'}]
+        Skill:
+            class: App\Entity\Skill
+            label: 'Skills'
+            list:
+                title: "Your skills"            
+                fields: [{property: 'skillname', label: 'Skill'}, {property: 'levelofskill', label: 'Leveo of Skill'}, {property: 'experienceofskill', label: 'Experience in Years'}]                        
+            form:
+                fields: [{property: 'skillname', label: 'Skill'}, {property: 'levelofskill', label: 'Leveo of Skill'}, {property: 'experienceofskill', label: 'Experience in Years'}]                        
+    user:
+        # this method/property must return the string representation of the user
+        # (Symfony will look for getFullName(), isFullName(), ..., and 'fullName' property)
+        name_property_path: 'fullname'
+        # this method/property must return the absolute URL of the user avatar image
+        # (Symfony will look for getGravatar(), isGravatar(), ..., and 'gravatar' property)
+        avatar_property_path: 'photo'
+        # **/vendor/**/{Tests,tests}/**

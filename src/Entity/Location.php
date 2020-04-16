@@ -28,6 +28,7 @@ class Location
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Musician", inversedBy="locations")
+     * @ORM\JoinColumn(name="musician_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $musician;
 

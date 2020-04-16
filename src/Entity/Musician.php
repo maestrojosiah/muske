@@ -423,7 +423,9 @@ class Musician implements UserInterface
 
     public function getPhoto(): ?string
     {
-        return $this->photo;
+        $url = "http://localhost:8000/uploads/photos/$this->photo";
+
+        return $url;
     }
 
     public function setPhoto(?string $photo): self

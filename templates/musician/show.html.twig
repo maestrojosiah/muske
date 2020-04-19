@@ -57,7 +57,9 @@
     <div id="lead">
         <div id="lead-content">
             <h1>{{musician.fullname}}</h1>
-            <h2>Musician</h2>
+            {% for job_role in musician.jobstobeoffered %}
+            <h4 style="display:inline; color:white;" >{{job_role.jobtitle}} {% if loop.index < musician.jobstobeoffered|length %} | {% endif %}</h4>
+            {% endfor %}<br />
             <a href="#" class="btn-rounded-white">Download Resume</a>
             <br />
             <br />
@@ -84,12 +86,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                    <h2 style="align:right;" class="heading">About Me</h2>
+                    <img src="{{ musician.photourl }}" width="50%" height="50%" background="#777" color="#777" style="border-radius: 50%; max-width: 300px"  >
                 </div>
-                <div class="col-md-3">
-                    <img src="{{ musician.photo }}" width="100%" height="100%" background="#777" color="#777" style="border-radius: 50%; max-width: 300px"  >
-                </div>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <p>
                         {{musician.about}}
                     </p>
@@ -164,24 +163,32 @@
             <div class="row">
             {% for project in musician.projects %}
                 <div class="project shadow-large">
-                    <div class="project-image">
-                        <img src="{{ asset('devportfolio/images/project.jpg') }}" />
+                    <div class="project-image col-md-4" style="position:relative; margin-left:-25px;">
+                        {% if project.projectimage == null or project.projectimage == ""%}
+                            <img id="project_image_{{project.id}}" src="{{ asset('devportfolio/images/project.jpg') }}" />
+                            {% if app.user and app.user != null %}
+                            <form style="position:absolute; top:20px; left:0; background-color:white;" id="image_form" name="Document" method="post" action enctype="multipart/form-data">
+                                <div class="col-md-6">
+                                    <input type="file" id="documento_{{project.id}}" name="project[projectimage]" required="required">
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" {#onclick="saveDoc()"#} class="btn btn-success" id="proj_{{project.id}}">Upload</button>
+                                </div>
+                            </form>     
+                            {% endif %}               
+                            
+                        {% else %}
+                            <img id="project_image_present" src="{{project.imagelink}}" style="max-width:250px;" />
+                        {% endif %}
                     </div>
                     <!-- End .project-image -->
-                    <div class="project-info">
+                    <div class="project-info col-md-8">
                         <h3>{{project.projecttitle}}</h3>
                         <p>
                             {{project.projectdescription}}
                         </p>
                         <a href="#">View Project</a>
-                        <form name="Document" method="post" action enctype="multipart/form-data">
-                            <div class="col-md-6">
-                                <input type="file" id="documento" name="project[projectimage]" required="required">
-                            </div>
-                            <div class="col-md-3">
-                                <button type="button" {#onclick="saveDoc()"#} class="btn btn-success" id="proj_{{project.id}}">Upload</button>
-                            </div>
-                        </form>                    </div>
+                    </div>
                     <!-- End .project-info -->
                 </div>
                 <!-- End .project -->
@@ -195,32 +202,9 @@
     <div id="skills">
         <h2 class="heading">Skills</h2>
         <ul>
-            <li>JavaScript</li>
-            <li>Python</li>
-            <li>Ruby</li>
-            <li>Go</li>
-            <li>Node.js</li>
-            <li>AngularJs</li>
-            <li>React</li>
-            <li>Elixir</li>
-            <li>Java</li>
-            <li>C</li>
-            <li>C#</li>
-            <li>C++</li>
-            <li>Ruby on Rails</li>
-            <li>JavaScript</li>
-            <li>Python</li>
-            <li>Ruby</li>
-            <li>Go</li>
-            <li>Node.js</li>
-            <li>AngularJs</li>
-            <li>React</li>
-            <li>Elixir</li>
-            <li>Java</li>
-            <li>C</li>
-            <li>C#</li>
-            <li>C++</li>
-            <li>Ruby on Rails</li>
+            {% for skill in musician.skills %}
+            <li>{{skill.skillname}} | <i>{{skill.levelofskill}}</i> | {{skill.experienceofskill}}</li>
+            {% endfor %}
         </ul>
     </div>
     <!-- End #skills -->
@@ -290,7 +274,7 @@ $(document).on("click", '[id^="proj_"]', function(){
     var id = splitted[1] //1504
 
 // function saveDoc() {
-    var inputFile = document.getElementById('documento');
+    var inputFile = document.getElementById('documento_'+id);
     var file = inputFile.files[0];
     var data = new FormData();
     data.append('doc', file, file.name);
@@ -298,10 +282,6 @@ $(document).on("click", '[id^="proj_"]', function(){
         url: "{{ path('upload_project_image') }}",
         type: "POST",
         data: data,
-        // data: {
-        //     'data': data,
-        //     'id': id,
-        // },
         processData: false,
         contentType: false,
         cache: false,
@@ -321,6 +301,7 @@ $(document).on("click", '[id^="proj_"]', function(){
                 {
                     console.log(data);
                     console.log("saved another information");
+                    $("#project_image"+"_"+id).attr("src", data).css("maxWidth", '250px');
                 },
                 error: function () {
                     $("#warning").html("<b>something's wrong</b>");

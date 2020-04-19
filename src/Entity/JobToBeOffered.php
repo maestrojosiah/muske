@@ -22,11 +22,6 @@ class JobToBeOffered
     private $jobtitle;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $medium;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Musician", inversedBy="jobstobeoffered")
      * @ORM\JoinColumn(name="musician_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -45,18 +40,6 @@ class JobToBeOffered
     public function setJobtitle(?string $jobtitle): self
     {
         $this->jobtitle = $jobtitle;
-
-        return $this;
-    }
-
-    public function getMedium(): ?string
-    {
-        return $this->medium;
-    }
-
-    public function setMedium(?string $medium): self
-    {
-        $this->medium = $medium;
 
         return $this;
     }

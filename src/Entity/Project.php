@@ -80,6 +80,12 @@ class Project
 
     public function getProjectimage(): ?string
     {
+       return $this->projectimage;
+
+    }
+
+    public function imagelink(): ?string
+    {
         $url = "http://localhost:8000/uploads/photos/$this->projectimage";
 
         return $url;

@@ -107,6 +107,8 @@ class Musician implements UserInterface
      */
     private $about;
 
+    private $photourl;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -423,9 +425,16 @@ class Musician implements UserInterface
 
     public function getPhoto(): ?string
     {
-        $url = "http://localhost:8000/uploads/photos/$this->photo";
 
-        return $url;
+        return $this->photo;
+    }
+
+    public function photourl(): ?string
+    {
+        $url = "http://localhost:8000/uploads/photos/$this->photo";
+        $this->photourl = $url;
+
+        return $this->photourl;
     }
 
     public function setPhoto(?string $photo): self

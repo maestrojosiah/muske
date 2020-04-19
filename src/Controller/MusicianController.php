@@ -31,6 +31,8 @@ class MusicianController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         //this is for displaying the page and redirecting if all details are intact
         //get the musician in session
         $musician = $this->getUser();
@@ -88,6 +90,8 @@ class MusicianController extends AbstractController
      */
     public function finalize(Request $request, SluggerInterface $slugger)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $musician = $this->getUser();
 
         $form = $this->createForm(MusicianType::class, $musician);
@@ -171,6 +175,8 @@ class MusicianController extends AbstractController
      */
     public function finalize_edit(Request $request, SluggerInterface $slugger)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $musician = $this->getUser();
 
         $form = $this->createForm(MusicianType::class, $musician);

@@ -179,19 +179,17 @@ class AjaxController extends AbstractController
         if($request->request->get('role')){
 
             $role = $this->sanitizeInput($request->request->get('role'));
-            $medium = $this->sanitizeInput($request->request->get('medium'));
 
             $musician = $this->getUser();
     
             $entityManager = $this->getDoctrine()->getManager();
             $job = new JobToBeOffered();
             $job->setJobtitle($role);
-            $job->setMedium($medium);
             $job->setMusician($musician);
             $entityManager->persist($job);
             $entityManager->flush();
            
-            return new JsonResponse($medium. " " . $role);
+            return new JsonResponse($role);
         }
         
 
@@ -342,7 +340,9 @@ class AjaxController extends AbstractController
             $em->persist($project);
             $em->flush();
 
-            return new JsonResponse("success");
+            $img_link = $project->imagelink();
+
+            return new JsonResponse($img_link);
         }
         return new JsonResponse("fail");
     }

@@ -1,7 +1,7 @@
 muskecok
 uU-6X2vL+7F0fg
 
-add to job duties/tasks
+year/month format on education
 
 basic:
 user can download own resume
@@ -15,3 +15,9 @@ project link
 
 change http://localhost from musician.php getPhoto();
 change http://localhost from project.php getProjectimage();
+
+let them choose order of job whether by date, asc or desc or order of adding asc or desc
+
+now add the jobs that you'd like to be employed for
+change order of fields in the above tab
+auto complete to help in filling the fields

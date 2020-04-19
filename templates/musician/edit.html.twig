@@ -253,22 +253,12 @@
 		                                </div>
 		                            </div>
 		                            <div class="tab-pane" id="roles">
-		                                <h4 class="info-text" id="info-text-skill">Now add the roles that you would like to perform. </h4>
+		                                <h4 class="info-text" id="info-text-skill">Which jobs can you do? </h4>
 		                            	<div class="row">
 		                                	<div class="col-sm-5 col-sm-offset-1">
 		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="role">Role (e.g instrumentalist, instructor, etc)</label>
+                                                    <label class="control-label" for="role">Role (e.g Choral Conductor, Church Pianist, etc)</label>
                                                     <input type="text" class="form-control" id="role">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="medium">Medium (e.g Piano, choir, Theory etc)</label>
-                                                    <input type="text" class="form-control" id="medium">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
 		                                    	</div>
 		                                	</div>
 		                                	<div class="col-sm-5">
@@ -279,7 +269,7 @@
 											<div class="skills for_roles">
 												<ul>
 													{% for role in fields.roles %}
-													<li>{{role.medium}} {{role.jobtitle}}</li>
+													<li>{{role.jobtitle}}</li>
 													{% endfor %}
 												</ul>
 											</div>
@@ -328,7 +318,6 @@
 	        </div>
 	    </div>
 	</div>
-	{{dump(fields)}}
 {% endblock %}
 
 

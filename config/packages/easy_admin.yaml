@@ -4,12 +4,13 @@ easy_admin:
         menu:
             - { label: 'Homepage', route: 'homepage' }
             # - { label: 'Profile', route: 'musician_show', params: { username: "{{musician.username}}"} }
-            - { entity: 'Education', label: 'Education' }            
-            - { entity: 'Job', label: 'Jobs' }            
+            - label: 'Education'
+              children: ['Education', 'Specialty']                        
+            - label: 'Jobs'
+              children: ['Job', 'JobRole']                        
             - { entity: 'Skill', label: 'Skills' }            
             - { entity: 'Project', label: 'Projects' }            
-            - { entity: 'Role', label: "Roles you're looking for" }            
-            - { entity: 'JobRole', label: 'Job Roles' }            
+            - { entity: 'Role', label: "Jobs you can do" }            
             # - { label: 'Some Task', route: 'user_some_task' }
             # - { label: 'Other Task', route: 'other_task', params: { max: 7 } }
 
@@ -74,6 +75,14 @@ easy_admin:
                 fields: [{property: 'skillname', label: 'Skill'}, {property: 'levelofskill', label: 'Leveo of Skill'}, {property: 'experienceofskill', label: 'Experience in Years'}]                        
             form:
                 fields: [{property: 'skillname', label: 'Skill'}, {property: 'levelofskill', label: 'Leveo of Skill'}, {property: 'experienceofskill', label: 'Experience in Years'}]                        
+        Specialty:
+            class: App\Entity\Specialty
+            label: 'Skills learned'
+            list:
+                title: "Skills earned"            
+                fields: [{property: 'instrumentorskill', label: 'Skills earned'}, {property: 'education.coursename', label: 'Course'}, {property: 'education.degree', label: 'Level'}]                        
+            form:
+                fields: [{property: 'instrumentorskill', label: 'Skills earned'}, {property: 'education.coursename', label: 'Course'}, {property: 'education.degree', label: 'Level'}]                        
     user:
         # this method/property must return the string representation of the user
         # (Symfony will look for getFullName(), isFullName(), ..., and 'fullName' property)

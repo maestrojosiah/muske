@@ -12,6 +12,8 @@ live chat
 website visitors can download resume
 direct link to social media pages or profiles
 project link
+whatsapp chat with musician
+call me button
 
 change http://localhost from musician.php getPhoto();
 change http://localhost from project.php getProjectimage();

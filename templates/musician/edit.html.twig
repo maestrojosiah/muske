@@ -3,6 +3,7 @@
 {% block title %}More Info{% endblock %}
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{{ asset('datepicker/css/bootstrap-datepicker.css')}}" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
 .skills ul{
 	display:block;
@@ -322,7 +323,7 @@
 
 
 {% block javascripts %}
-
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="{{ asset('datepicker/js/bootstrap-datepicker.js')}}" type="text/javascript"></script>
 
     <script>
@@ -607,6 +608,32 @@
 	});
 
 	</script>
+
+	<script>
+	$( function() {
+		var skills = [
+			{% for skill in skills_auto_fill %}
+				"{{skill}}",
+			{% endfor %}
+		];
+		var job_roles = [
+			{% for role in job_roles_auto_fill %}
+				"{{role}}",
+			{% endfor %}
+		];
+		$( "#skillname" ).autocomplete({
+			source: skills,
+			autoFocus: true,
+		});
+		$( "#role" ).autocomplete({
+			source: job_roles,
+			autoFocus: true,
+
+		});
+	} );
+	</script>
+
+
 
 
 	<script>

@@ -27,6 +27,11 @@ class JobToBeOffered
      */
     private $musician;
 
+    public function __toString() {
+        return $this->jobtitle;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

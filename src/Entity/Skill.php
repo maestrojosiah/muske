@@ -37,6 +37,10 @@ class Skill
      */
     private $musician;
 
+    public function __toString() {
+        return $this->skillname;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

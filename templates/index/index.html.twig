@@ -14,17 +14,27 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto mb-2 mb-md-0">
           <li class="nav-item active">
-            <a class="nav-link" aria-current="page" href="#">Home</a>
+            <a class="nav-link" aria-current="page" href="{{path('app_register')}}">Resume</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">My Portfolio</a>
+            <a class="nav-link" href="#">Find Service</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://triads.muske.co.ke">Chord generator</a>
-          </li>
+            <a class="nav-link" href="#">Advertize</a>
+          </li>          
           <li class="nav-item">
-            <a class="nav-link" href="https://choir.muske.co.ke">Choir manager</a>
+            <a class="nav-link" href="#">FAQ</a>
+          </li>          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Apps</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="https://triads.muske.co.ke">Chord generator</a>
+              <a class="dropdown-item" href="https://choir.muske.co.ke">Choir manager</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Coming soon</a>
+            </div>            
           </li>
+
         </ul>
         <div>
           {% include "security/login.html.twig" %}
@@ -50,9 +60,9 @@
         {# <img src="{{ asset('bundles/acmedemo/img/weather_icons/blizzard.gif') }}" /> #}
         <div class="container">
           <div class="carousel-caption text-left">
-            <h1>Musician's Portfolio.</h1>
-            <p>Upload your CV on to the largest musician's portfolios database in Kenya. Advertize yourself and get the opportunity to work for great institutions in Kenya. </p>
-            <p><a class="btn btn-lg btn-primary" href="{{ path('app_register')}}" role="button">Create Portfolio</a></p>
+            <h1>Musician's Resume.</h1>
+            <p>Create your CV/Resume on to the largest musician's resume database in Kenya. Get a free webpage for yourself and advertize yourself for an opportunity to work for great institutions in Kenya. </p>
+            <p><a class="btn btn-lg btn-primary" href="{{ path('app_register')}}" role="button">Create Resume</a></p>
           </div>
         </div>
       </div>
@@ -101,11 +111,11 @@
       <div class="col-lg-4">
         {# {{< placeholder width="140" height="140" background="#777" color="#777" class="rounded-circle" >}} #}
         <img src="{{ asset('img/adv-yourself.jpg')}}" width="140" height="140" background="#777" color="#777" class="rounded-circle"  >
-        <h2>Advertize yourself</h2>
+        <h2>Free Resume</h2>
         <p>
-          Create a profile with your full resume that people can visit to see your skills and profession. We will notify you when someone requests for any of your services through text message and email. It is time to get your skills visible in the only music services website in Kenya.
+          Create an online resume page that people can visit to see your skills and profession. You can also download it!. We will notify you when someone requests for any of your services through text message and email. It is time to get your skills visible in the only music services website in Kenya.
         </p>
-        <p><a class="btn btn-secondary" href="{{ path('app_register')}}" role="button">Create profile &raquo;</a></p>
+        <p><a class="btn btn-secondary" href="{{ path('app_register')}}" role="button">Create Resume &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
         {# {{< placeholder width="140" height="140" background="#777" color="#777" class="rounded-circle" >}} #}
@@ -121,7 +131,7 @@
         <img src="{{ asset('img/adv-job.jpg')}}" width="140" height="140" background="#777" color="#777" class="rounded-circle"  >
         <h2>Advertize a job</h2>
         <p>
-          You have a job that you want to advertize to the musicians in MuSKe? You are welcome. It is easy to post an advert and we will make sure the best musicians who fit your job description have seen the advertizement. We will post the advert at our notice board and send it to the musicians.
+          You have a job that you want to advertize to the musicians in MuSKe? You are welcome. It is easy to post an advert and we will make sure the best musicians who fit your job description have seen the advertizement. We will post the advert at our notice board and also send it to the musicians.
         </p>
         <p><a class="btn btn-secondary" href="#" role="button">Advertize Now &raquo;</a></p>
       </div><!-- /.col-lg-4 -->

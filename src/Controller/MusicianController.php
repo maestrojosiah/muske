@@ -21,7 +21,13 @@ class MusicianController extends AbstractController
      */
     public function index(MusicianRepository $musicianRepository): Response
     {
+        $musician = $this->getUser();
+        $skills = $this->getDoctrine()->getManager()->getRepository('App:Skill')->findall();
+        $job_roles = $this->getDoctrine()->getManager()->getRepository('App:JobToBeOffered')->findall();
         return $this->render('musician/index.html.twig', [
+            'musician' => $musician,
+            'skills' => $skills,
+            'job_roles' => $job_roles,
             'musicians' => $musicianRepository->findAll(),
         ]);
     }
@@ -50,6 +56,9 @@ class MusicianController extends AbstractController
         $roles = $musician->getJobstobeoffered()[0];
         $salary = $musician->getCurrentsalary();
         $salary_exp = $musician->getExpectedSalary();
+
+        $skills_auto_fill = $this->getDoctrine()->getManager()->getRepository('App:Skill')->findall();
+        $job_roles_auto_fill = $this->getDoctrine()->getManager()->getRepository('App:JobToBeOffered')->findall();
 
         $details_array = [$musician_email, $musician_phone, $musician_age, $musician_fullname, $skills,
                             $education, $jobs, $roles, $salary, $salary_exp];
@@ -81,6 +90,8 @@ class MusicianController extends AbstractController
         return $this->render('musician/new.html.twig', [
             'musician' => $musician,
             'fields' => $fields,
+            'skills_auto_fill' => $skills_auto_fill,
+            'job_roles_auto_fill' => $job_roles_auto_fill,
             'filter' => $filter,
         ]);
     }
@@ -158,7 +169,8 @@ class MusicianController extends AbstractController
         //if the details above are in database, then move to add skills
         if (count($filter) == 3) {
             // come back here and check more things 
-            return $this->redirectToRoute('musician_show', ['username' => $musician]);
+            // return $this->redirectToRoute('musician_show', ['username' => $musician]);
+            return $this->redirectToRoute('musician_profile');
 
         }
         
@@ -247,6 +259,19 @@ class MusicianController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/musician/profile", name="musician_profile", methods={"GET"})
+     */
+    public function profile(): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $musician = $this->getUser();
+        return $this->render('musician/profile.html.twig', [
+            'musician' => $musician,
+        ]);
+    }
+
 
     /**
      * @Route("/musician/{username}/edit", name="musician_edit", methods={"GET","POST"})
@@ -270,6 +295,9 @@ class MusicianController extends AbstractController
         $salary = $musician->getCurrentsalary();
         $salary_exp = $musician->getExpectedSalary();
 
+        $skills_auto_fill = $this->getDoctrine()->getManager()->getRepository('App:Skill')->findall();
+        $job_roles_auto_fill = $this->getDoctrine()->getManager()->getRepository('App:JobToBeOffered')->findall();
+
         $fields = ["email" => $musician_email,
                     "phone" => $musician_phone,
                     "age" => $musician_age,
@@ -285,6 +313,8 @@ class MusicianController extends AbstractController
         return $this->render('musician/edit.html.twig', [
             'musician' => $musician,
             'fields' => $fields,
+            'skills_auto_fill' => $skills_auto_fill,
+            'job_roles_auto_fill' => $job_roles_auto_fill,
         ]);
     }
 

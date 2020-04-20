@@ -2,7 +2,8 @@ easy_admin:
     disabled_actions: ['new']
     design:
         menu:
-            - { label: 'Homepage', route: 'homepage' }
+            - { label: 'Resume Page', route: 'homepage' }
+            - { label: 'Profile Page', route: 'musician_profile' }
             # - { label: 'Profile', route: 'musician_show', params: { username: "{{musician.username}}"} }
             - label: 'Education'
               children: ['Education', 'Specialty']                        
@@ -89,5 +90,5 @@ easy_admin:
         name_property_path: 'fullname'
         # this method/property must return the absolute URL of the user avatar image
         # (Symfony will look for getGravatar(), isGravatar(), ..., and 'gravatar' property)
-        avatar_property_path: 'photo'
+        avatar_property_path: 'photourl'
         # **/vendor/**/{Tests,tests}/**

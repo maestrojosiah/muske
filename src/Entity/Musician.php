@@ -108,6 +108,7 @@ class Musician implements UserInterface
     private $about;
 
     private $photourl;
+    private $logourl;
 
     public function __construct()
     {
@@ -435,6 +436,14 @@ class Musician implements UserInterface
         $this->photourl = $url;
 
         return $this->photourl;
+    }
+
+    public function logourl(): ?string
+    {
+        $url = "http://localhost:8000/img/logo_only_white_sq.png";
+        $this->logourl = $url;
+
+        return $this->logourl;
     }
 
     public function setPhoto(?string $photo): self

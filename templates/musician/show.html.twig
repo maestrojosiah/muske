@@ -60,12 +60,13 @@
             {% for job_role in musician.jobstobeoffered %}
             <h4 style="display:inline; color:white;" >{{job_role.jobtitle}} {% if loop.index < musician.jobstobeoffered|length %} | {% endif %}</h4>
             {% endfor %}<br />
+            {% if app.user == null %}
             <a href="#" class="btn-rounded-white">Download Resume</a>
             <br />
             <br />
+            {% endif %}
             {% if app.user and app.user != null %}
-                <a class="btn btn-sm btn-rounded-white" href="{{ path('musician_edit', {'username': musician.username})}}">Basic Info</a>
-                <a class="btn btn-sm btn-rounded-white" href="{{ path('easyadmin')}}" target="_blank">Admin Page</a>
+                <a class="btn btn-sm btn-rounded-white" href="{{ path('musician_profile')}}" target="_blank">Profile Page</a>
             {% endif %}
 
         </div>
@@ -210,13 +211,13 @@
     <!-- End #skills -->
 
     <div id="contact">
-        <h2>Get in Touch</h2>
+        <h2>Leave a Review</h2>
         <div id="contact-form">
             <form method="POST" action="https://formspree.io/email@email.com">
                 <input type="hidden" name="_subject" value="Contact request from personal website" />
                 <input type="email" name="_replyto" placeholder="Your email" required>
                 <textarea name="message" placeholder="Your message" required></textarea>
-                <button type="submit">Send</button>
+                <button type="submit">Submit</button>
             </form>
         </div>
         <!-- End #contact-form -->
@@ -228,7 +229,7 @@
             <div class="row">
                 <div class="col-sm-5 copyright">
                     <p>
-                        Copyright &copy; 2020 YOUR NAME
+                        Copyright &copy; {{"now"|date("Y")}} {{musician.username}} | {% if app.user and app.user != null %} <a href="{{path("app_logout")}}">Logout</a> {% else %} <a href="{{path("homepage")}}">Login</a>{% endif %}
                     </p>
                 </div>
                 <div class="col-sm-2 top">

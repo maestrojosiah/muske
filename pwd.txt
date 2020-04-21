@@ -23,3 +23,5 @@ let them choose order of job whether by date, asc or desc or order of adding asc
 now add the jobs that you'd like to be employed for
 change order of fields in the above tab
 auto complete to help in filling the fields
+
+seobundle

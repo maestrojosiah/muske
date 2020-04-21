@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for job in jobs %}
+        {% for job in jobs|sort((a, b) => b.id <=> a.id) %}
             <tr>
                 <td>{{ job.id }}</td>
                 <td>{{ job.jobtitle }}</td>

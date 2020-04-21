@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LinkRepository")
  */
-class Link
+class Settings
 {
     /**
      * @ORM\Id()
@@ -40,6 +40,16 @@ class Link
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $youtube;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $orderusing;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $orderdirection;
 
     public function getId(): ?int
     {
@@ -102,6 +112,30 @@ class Link
     public function setYoutube(?string $youtube): self
     {
         $this->youtube = $youtube;
+
+        return $this;
+    }
+
+    public function getOrderusing(): ?string
+    {
+        return $this->orderusing;
+    }
+
+    public function setOrderusing(?string $orderusing): self
+    {
+        $this->orderusing = $orderusing;
+
+        return $this;
+    }
+
+    public function getOrderdirection(): ?string
+    {
+        return $this->orderdirection;
+    }
+
+    public function setOrderdirection(?string $orderdirection): self
+    {
+        $this->orderdirection = $orderdirection;
 
         return $this;
     }

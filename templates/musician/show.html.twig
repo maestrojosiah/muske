@@ -102,7 +102,7 @@
     <div id="experience" class="background-alt">
         <h2 class="heading">Experience</h2>
         <div id="experience-timeline">
-        {% for job in musician.jobs %}
+        {% for job in musician.jobs|sort((a, b) => b.endedin <=> a.endedin) %}
             <div data-date="{{job.startingfrom|date("F Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y") }}">
                 <h3>{{job.jobtitle}}</h3>
                 <h4>{{job.institution}}{{" / " ~ job.location}}</h4>

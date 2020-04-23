@@ -1,21 +1,12 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+{% extends 'base.html.twig' %}
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+{% block title %}{{musician.fullname}} | Profile{% endblock %}
+{% block stylesheets %}
 
-<head>
-  <title>{{musician.fullname}} | Profile</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+{% endblock %}
+{% block body %}
 
 
 <hr>
@@ -29,7 +20,7 @@
               
 
       <div class="text-center">
-        <img src="{{musician.photourl}}" class="avatar img-circle img-thumbnail" alt="avatar">
+        <img src="{{musician.thumbnailurl}}" class="avatar img-circle img-thumbnail" alt="avatar">
         <h6>Upload a different photo...</h6>
         <input type="file" class="text-center center-block file-upload">
       </div></hr><br>
@@ -50,7 +41,7 @@
                 <li><a href="{{ path('easyadmin')}}">Admin Page</a></li>
                 <li><a href="{{ path('musician_edit', {'username': musician.username})}}">Resume info</a></li>
                 <li><a href="{{ path('easyadmin')}}">Download Your Resume</a></li>
-                <li><a href="{{ path('easyadmin')}}">Gallery</a></li>
+                <li><a href="{{ path('gallery_index')}}">Gallery</a></li>
               </ul>
 
               
@@ -71,6 +62,7 @@
                     <div class="panel-heading">Social Media links</div>
                     <div class="panel-body">
                       <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
+                      <button class="btn btn-lg btn-success pull-right" id="test" type="button"> Save</button>                      
                     </div>
                   </div>
                 </div>
@@ -89,68 +81,95 @@
             		
                	
                   <hr>
-                  <form class="form" action="##" method="post" id="registrationForm">
-                      <div class="form-group">
-                          
+                  <form class="form" action="##" method="post" id="">
+                      <div class="form-group">                          
                           <div class="col-xs-6">
-                              <label for="first_name"><h4>First name</h4></label>
-                              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" title="enter your first name if any.">
+                            <label for="order_job"><h4>Order Your Jobs by:</h4></label>
+                            <select class="form-control" id="order_job">
+                              <option value="id" selected>How you added them</option>
+                              <option value="endedin">Job ending date</option>
+                              <option value="startingfrom">Job starting date</option>
+                            </select>
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
-                            <label for="last_name"><h4>Last name</h4></label>
-                              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" title="enter your last name if any.">
+                            <label for="order_job_by"><h4>Sort your Jobs...</h4></label>
+                            <select class="form-control" id="order_job_by">
+                              <option value="DESC" selected>Starting with latest</option>
+                              <option value="ASC">Ending with latest</option>
+                            </select>
+                          </div>
+                      </div>
+          
+                      <div class="form-group">                          
+                          <div class="col-xs-6">
+                            <label for="order_education"><h4>Order Your Education by:</h4></label>
+                            <select class="form-control" id="order_education">
+                              <option value="id" selected>How you added them</option>
+                              <option value="toyear">Education ending date</option>
+                              <option value="fromyear">Education starting date</option>
+                            </select>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                            <label for="order_education_by"><h4>Sort your Education...</h4></label>
+                            <select class="form-control" id="order_education_by">
+                              <option value="DESC" selected>Starting with latest</option>
+                              <option value="ASC">Ending with latest</option>
+                            </select>
                           </div>
                       </div>
           
                       <div class="form-group">
                           
                           <div class="col-xs-6">
-                              <label for="phone"><h4>Phone</h4></label>
-                              <input type="text" class="form-control" name="phone" id="phone" placeholder="enter phone" title="enter your phone number if any.">
-                          </div>
-                      </div>
-          
-                      <div class="form-group">
-                          <div class="col-xs-6">
-                             <label for="mobile"><h4>Mobile</h4></label>
-                              <input type="text" class="form-control" name="mobile" id="mobile" placeholder="enter mobile number" title="enter your mobile number if any.">
+                              <label for="twitter"><h4>Twitter URL</h4></label>
+                              <input type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
-                              <label for="email"><h4>Email</h4></label>
-                              <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email.">
+                              <label for="facebook"><h4>Facebook URL</h4></label>
+                              <input type="text" class="form-control" id="facebook" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
-                              <label for="email"><h4>Location</h4></label>
-                              <input type="email" class="form-control" id="location" placeholder="somewhere" title="enter a location">
+                              <label for="linkedin"><h4>Linkedin URL</h4></label>
+                              <input type="text" class="form-control" id="linkedin" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
-                              <label for="password"><h4>Password</h4></label>
-                              <input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter your password.">
+                              <label for="instagram"><h4>Instagram URL</h4></label>
+                              <input type="text" class="form-control" id="instagram" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
-                            <label for="password2"><h4>Verify</h4></label>
-                              <input type="password" class="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2.">
+                              <label for="youtube"><h4>Youtube URL</h4></label>
+                              <input type="text" class="form-control" id="youtube" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="twitter"><h4>Twitter link</h4></label>
+                              <input type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
+                          </div>
+                      </div>          
                       <div class="form-group">
                            <div class="col-xs-12">
                                 <br>
-                              	<button class="btn btn-lg btn-success pull-right" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
+                              	<button class="btn btn-lg btn-success pull-right" id="save_settings" type="button"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
                                	<!--<button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>-->
                             </div>
                       </div>
@@ -162,8 +181,11 @@
 
         </div><!--/col-9-->
     </div><!--/row-->
-                                                      
+
+{% endblock %}                                                      
 {% block javascripts %}													  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
 $(document).ready(function() {
@@ -187,5 +209,50 @@ $(document).ready(function() {
     });
 });
 </script>
+
+	<script>
+
+	$( "#save_settings" ).click(function() {
+
+		var order_job = $("#order_job").val();              
+		var order_job_by = $("#order_job_by").val();              
+		var order_education = $("#order_education").val();              
+		var order_education_by = $("#order_education_by").val();              
+		var facebook = $("#facebook").val();              
+		var twitter = $("#twitter").val();              
+		var linkedin = $("#linkedin").val();              
+		var youtube = $("#youtube").val();              
+		var instagram = $("#instagram").val();              
+
+			$.ajax({
+				url:'{{ (path('save_settings')) }}',
+				type: "POST",
+				dataType: "json",
+				data: {
+					"order_job": order_job,
+					"order_job_by": order_job_by,
+          "order_education": order_education,
+          "order_education_by": order_education_by,
+          "facebook": facebook,
+          "twitter": twitter,
+          "linkedin": linkedin,
+          "youtube": youtube,
+          "instagram": instagram,
+				},
+				async: true,
+				success: function (data)
+				{
+					console.log(data);
+					console.log("saved settings");
+				},
+				error: function () {
+					$("#warning").html("<b>something's wrong</b>");
+				}
+			});
+
+	});
+
+	</script>
+
 
 {% endblock %}

@@ -16,6 +16,8 @@ use App\Entity\JobToBeOffered;
 use App\Entity\Project;
 use App\Entity\Role;
 use App\Entity\Specialty;
+use App\Entity\Settings;
+use App\Entity\Gallery;
 
 
 class AjaxController extends AbstractController
@@ -347,6 +349,136 @@ class AjaxController extends AbstractController
         return new JsonResponse("fail");
     }
 
+    /**
+     * @Route("/upload/gallery/image", name="upload_gallery_image")
+     */
+    public function uploadGalleryImage(Request $request)
+    {
+
+        $file = $request->files->get('doc');
+        $musician = $this->getUser();
+        
+        if($file){
+            $filename = md5(uniqid()).'.'.$file->guessExtension();
+            // Move the file to the directory where brochures are stored
+            try {
+                $file->move(
+                    $this->getParameter('gallery_directory'),
+                    $filename
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+
+            return new JsonResponse($filename);        
+
+        }
+        
+        if($request->request->get('filename')){
+
+            $filename = $this->sanitizeInput($request->request->get('filename'));
+            $description = $this->sanitizeInput($request->request->get('description'));
+            $type = "photo";
+            $image = new Gallery();
+            $image->setPhoto($filename);
+            $image->setDescription($description);
+            $image->setType($type);
+            $image->setMusician($musician);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($image);
+            $em->flush();
+
+            $updir = $this->getParameter('gallery_directory');
+            $img = $image->getPhoto();
+            $this->makeThumbnails($updir, $img);
+
+            $img_link = $image->getPhoto();
+
+            return new JsonResponse($img_link);
+        }
+        return new JsonResponse("fail");
+    }
+
+    /**
+     * @Route("/save/setting", name="save_settings")
+     */
+    public function saveSetting(Request $request)
+    {
+        if($request->request->get('order_job')){
+
+            $order_job = $this->sanitizeInput($request->request->get('order_job'));
+            $order_job_by = $this->sanitizeInput($request->request->get('order_job_by'));
+            $order_education = $this->sanitizeInput($request->request->get('order_education'));
+            $order_education_by = $this->sanitizeInput($request->request->get('order_education_by'));
+            $facebook = $this->sanitizeInput($request->request->get('facebook'));
+            $twitter = $this->sanitizeInput($request->request->get('twitter'));
+            $linkedin = $this->sanitizeInput($request->request->get('linkedin'));
+            $youtube = $this->sanitizeInput($request->request->get('youtube'));
+            $instagram = $this->sanitizeInput($request->request->get('instagram'));
+
+            $musician = $this->getUser();
+    
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $settings = $entityManager
+			->getRepository('App:Settings')
+			->findBy(
+				array('musician' => $musician)
+            );
+            
+            if($settings){
+                $setting = $settings[0];
+            } else {
+                $setting = new Settings();
+            }
+
+            $setting->setJobOrder($order_job);
+            $setting->setJobOrderBy($order_job_by);
+            $setting->setEduOrder($order_education);
+            $setting->setEduOrderBy($order_education_by);
+            $setting->setFacebook($facebook);
+            $setting->setTwitter($twitter);
+            $setting->setLinkedin($linkedin);
+            $setting->setYoutube($youtube);
+            $setting->setInstagram($instagram);
+            $setting->setMusician($musician);
+            $entityManager->persist($setting);
+            $entityManager->flush();
+           
+            return new JsonResponse($order_education);
+        }
+        
+
+    }
+
+    /**
+     * @Route("/upload/link", name="upload_link")
+     */
+    public function uploadLink(Request $request)
+    {
+        if($request->request->get('url')){
+
+            $url = $this->sanitizeInput($request->request->get('url'));
+            $description = $this->sanitizeInput($request->request->get('description_link'));
+
+            $musician = $this->getUser();
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $link = new Gallery();
+            $link->setPhoto($url);
+            $link->setDescription($description);
+            $link->setType("video");
+            $link->setMusician($musician);
+            $entityManager->persist($link);
+            $entityManager->flush();
+           
+            return new JsonResponse($link);
+        }
+        
+
+    }
+
+
 
     public function sanitizeInput($input){
         $cleanInput = trim(strip_tags($input));
@@ -363,5 +495,46 @@ class AjaxController extends AbstractController
         return $this->render('musician/reset_password.html.twig', []);
     }
 
+    
+    public function makeThumbnails($updir, $img)
+    {
+
+        $thumbnail_width = 300;
+        $thumbnail_height = 200;
+        $thumb_beforeword = "thumbs";
+        $arr_image_details = getimagesize("$updir" .  '/'. "$img"); // pass id to thumb name
+        $original_width = $arr_image_details[0];
+        $original_height = $arr_image_details[1];
+        if ($original_width > $original_height) {
+            $new_width = $thumbnail_width;
+            $new_height = intval($original_height * $new_width / $original_width);
+        } else {
+            $new_height = $thumbnail_height;
+            $new_width = intval($original_width * $new_height / $original_height);
+        }
+        $dest_x = intval(($thumbnail_width - $new_width) / 2);
+        $dest_y = intval(($thumbnail_height - $new_height) / 2);
+        if ($arr_image_details[2] == IMAGETYPE_GIF) {
+            $imgt = "ImageGIF";
+            $imgcreatefrom = "ImageCreateFromGIF";
+        }
+        if ($arr_image_details[2] == IMAGETYPE_JPEG) {
+            $imgt = "ImageJPEG";
+            $imgcreatefrom = "ImageCreateFromJPEG";
+        }
+        if ($arr_image_details[2] == IMAGETYPE_PNG) {
+            $imgt = "ImagePNG";
+            $imgcreatefrom = "ImageCreateFromPNG";
+        }
+        if ($imgt) {
+            $old_image = $imgcreatefrom("$updir" .  '/'. "$img");
+            $new_image = imagecreatetruecolor($thumbnail_width, $thumbnail_height);
+            imagecopyresized($new_image, $old_image, $dest_x, $dest_y, 0, 0, $new_width, $new_height, $original_width, $original_height);
+            $imgt($new_image, "$updir" .  '/'. "$thumb_beforeword/" . "$img");
+        }
+
+        return $imgt;
+
+    }
 
 }

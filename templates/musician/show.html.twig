@@ -56,10 +56,10 @@
 
     <div id="lead">
         <div id="lead-content">
-            <h1>{{musician.fullname}}</h1>
+            <h1>{{musician.fullname}}</h1><br />
             {% for job_role in musician.jobstobeoffered %}
             <h4 style="display:inline; color:white;" >{{job_role.jobtitle}} {% if loop.index < musician.jobstobeoffered|length %} | {% endif %}</h4>
-            {% endfor %}<br />
+            {% endfor %}<br /><br />
             {% if app.user == null %}
             <a href="#" class="btn-rounded-white">Download Resume</a>
             <br />
@@ -102,7 +102,7 @@
     <div id="experience" class="background-alt">
         <h2 class="heading">Experience</h2>
         <div id="experience-timeline">
-        {% for job in musician.jobs|sort((a, b) => b.endedin <=> a.endedin) %}
+        {% for job in jobs %}
             <div data-date="{{job.startingfrom|date("F Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y") }}">
                 <h3>{{job.jobtitle}}</h3>
                 <h4>{{job.institution}}{{" / " ~ job.location}}</h4>
@@ -131,7 +131,7 @@
     <div id="education">
         <h2 class="heading">Education</h2>
 
-        {% for edu in musician.education %}
+        {% for edu in edu %}
         <div class="education-block">
             <h3>{{edu.institution}}</h3>
             <span class="education-date">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</span>

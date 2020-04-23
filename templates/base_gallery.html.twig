@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link href="{{ asset('gallery/lightgallery.css')}}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{asset('bootstrap/css/bootstrap.min.css')}}" />
+        <link rel="stylesheet" type="text/css" href="{{asset('css/carousel.css')}}" />
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        {#<script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>#}
+        <script src="{{ asset('gallery/picturefill.min.js') }}"></script>
+        <script src="{{ asset('gallery/lightgallery-all.min.js') }}"></script>
+        <script src="{{ asset('gallery/lg-video.js') }}"></script>
+        <script src="{{ asset('gallery/lg-thumbnail.js') }}"></script>
+        <script src="{{ asset('gallery/jquery.mousewheel.min.js') }}"></script>
+        <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>        
+        <script src="{{ asset('https://f.vimeocdn.com/js/froogaloop2.min.js')}}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

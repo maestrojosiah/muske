@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\LinkRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\SettingsRepository")
  */
 class Settings
 {
@@ -44,12 +44,28 @@ class Settings
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $orderusing;
+    private $job_order;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $orderdirection;
+    private $job_order_by;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Musician", inversedBy="settings", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="musician_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $musician;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $edu_order;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $edu_order_by;
 
     public function getId(): ?int
     {
@@ -116,26 +132,62 @@ class Settings
         return $this;
     }
 
-    public function getOrderusing(): ?string
+    public function getJobOrder(): ?string
     {
-        return $this->orderusing;
+        return $this->job_order;
     }
 
-    public function setOrderusing(?string $orderusing): self
+    public function setJobOrder(?string $job_order): self
     {
-        $this->orderusing = $orderusing;
+        $this->job_order = $job_order;
 
         return $this;
     }
 
-    public function getOrderdirection(): ?string
+    public function getJobOrderBy(): ?string
     {
-        return $this->orderdirection;
+        return $this->job_order_by;
     }
 
-    public function setOrderdirection(?string $orderdirection): self
+    public function setJobOrderBy(?string $job_order_by): self
     {
-        $this->orderdirection = $orderdirection;
+        $this->job_order_by = $job_order_by;
+
+        return $this;
+    }
+
+    public function getMusician(): ?Musician
+    {
+        return $this->musician;
+    }
+
+    public function setMusician(?Musician $musician): self
+    {
+        $this->musician = $musician;
+
+        return $this;
+    }
+
+    public function getEduOrder(): ?string
+    {
+        return $this->edu_order;
+    }
+
+    public function setEduOrder(?string $edu_order): self
+    {
+        $this->edu_order = $edu_order;
+
+        return $this;
+    }
+
+    public function getEduOrderBy(): ?string
+    {
+        return $this->edu_order_by;
+    }
+
+    public function setEduOrderBy(?string $edu_order_by): self
+    {
+        $this->edu_order_by = $edu_order_by;
 
         return $this;
     }

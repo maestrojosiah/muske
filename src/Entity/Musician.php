@@ -108,7 +108,18 @@ class Musician implements UserInterface
     private $about;
 
     private $photourl;
+    private $thumbnailurl;
     private $logourl;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Settings", mappedBy="musician", cascade={"persist", "remove"})
+     */
+    private $settings;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Gallery", mappedBy="musician")
+     */
+    private $uploadedphotos;
 
     public function __construct()
     {
@@ -118,6 +129,7 @@ class Musician implements UserInterface
         $this->jobstobeoffered = new ArrayCollection();
         $this->locations = new ArrayCollection();
         $this->projects = new ArrayCollection();
+        $this->uploadedphotos = new ArrayCollection();
     }
 
     public function __toString() {
@@ -438,6 +450,15 @@ class Musician implements UserInterface
         return $this->photourl;
     }
 
+
+    public function thumbnailurl(): ?string
+    {
+        $url = "http://localhost:8000/uploads/photos/thumbs/$this->photo";
+        $this->photourl = $url;
+
+        return $this->photourl;
+    }
+
     public function logourl(): ?string
     {
         $url = "http://localhost:8000/img/logo_only_white_sq.png";
@@ -492,6 +513,55 @@ class Musician implements UserInterface
     public function setAbout(?string $about): self
     {
         $this->about = $about;
+
+        return $this;
+    }
+
+    public function getSettings(): ?Settings
+    {
+        return $this->settings;
+    }
+
+    public function setSettings(?Settings $settings): self
+    {
+        $this->settings = $settings;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newMusician = null === $settings ? null : $this;
+        if ($settings->getMusician() !== $newMusician) {
+            $settings->setMusician($newMusician);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Gallery[]
+     */
+    public function getUploadedphotos(): Collection
+    {
+        return $this->uploadedphotos;
+    }
+
+    public function addUploadedphoto(Gallery $uploadedphoto): self
+    {
+        if (!$this->uploadedphotos->contains($uploadedphoto)) {
+            $this->uploadedphotos[] = $uploadedphoto;
+            $uploadedphoto->setMusician($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUploadedphoto(Gallery $uploadedphoto): self
+    {
+        if ($this->uploadedphotos->contains($uploadedphoto)) {
+            $this->uploadedphotos->removeElement($uploadedphoto);
+            // set the owning side to null (unless already changed)
+            if ($uploadedphoto->getMusician() === $this) {
+                $uploadedphoto->setMusician(null);
+            }
+        }
 
         return $this;
     }

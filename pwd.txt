@@ -16,12 +16,8 @@ whatsapp chat with musician
 call me button
 
 change http://localhost from musician.php getPhoto();
-change http://localhost from project.php getProjectimage();
+change http://localhost from project.php getProjectimage();\
+same with gallery.php
 
-let them choose order of job whether by date, asc or desc or order of adding asc or desc
-
-now add the jobs that you'd like to be employed for
-change order of fields in the above tab
-auto complete to help in filling the fields
 
 seobundle

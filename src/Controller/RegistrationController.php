@@ -46,6 +46,11 @@ class RegistrationController extends AbstractController
             );
         }
 
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $musician = $this->getUser();
+            return $this->redirectToRoute('musician_profile');
+        }
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);

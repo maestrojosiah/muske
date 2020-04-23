@@ -118,7 +118,9 @@ class MusicianController extends AbstractController
                 //delete the current phowo if available
                 if($musician->getPhoto() != null ) {
                     $current_photo_path = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
+                    $current_photo_thumb_path = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto();
                     unlink($current_photo_path);
+                    unlink($current_photo_thumb_path);
                 }
                
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -135,10 +137,16 @@ class MusicianController extends AbstractController
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
-
                 // updates the 'photoFilename' property to store the PDF file name
                 // instead of its contents
+
                 $musician->setPhoto($newFilename);
+
+                $updir = $this->getParameter('brochures_directory');
+                $musician = $this->getUser();
+                // $img = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
+                $img = $musician->getPhoto();
+                $this->makeThumbnails($updir, $img);
             }
 
             // ... persist the $product variable or any other work
@@ -205,6 +213,9 @@ class MusicianController extends AbstractController
                 if($musician->getPhoto() != null ) {
                     $current_photo_path = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
                     unlink($current_photo_path);
+                    $current_photo_thumb_path = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto();
+                    unlink($current_photo_thumb_path);
+
                 }
                
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -225,6 +236,12 @@ class MusicianController extends AbstractController
                 // updates the 'photoFilename' property to store the PDF file name
                 // instead of its contents
                 $musician->setPhoto($newFilename);
+                $updir = $this->getParameter('brochures_directory');
+                $musician = $this->getUser();
+                // $img = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
+                $img = $musician->getPhoto();
+                $this->makeThumbnails($updir, $img);
+
             }
 
             // ... persist the $product variable or any other work
@@ -251,11 +268,25 @@ class MusicianController extends AbstractController
         $full_name = explode(' ', $musician->getFullname());
         $first_name = $full_name[0];
         $last_name = end($full_name);
+        if($musician->getSettings()){
+            $jobs = $this->getDoctrine()->getManager()->getRepository('App:Job')
+            ->findByGivenField($musician->getSettings()->getJobOrder(), 
+                $musician->getSettings()->getJobOrderBy());
 
+            $edu = $this->getDoctrine()->getManager()->getRepository('App:Education')
+            ->findByGivenField($musician->getSettings()->getEduOrder(), 
+                $musician->getSettings()->getEduOrderBy());
+
+        } else {
+            $jobs = $musician->getJobs();
+            $edu = $musician->getEducation();
+        }
         return $this->render('musician/show.html.twig', [
             'musician' => $musician,
             'first_name' => $first_name,
             'last_name' => $last_name,
+            'jobs' => $jobs,
+            'edu' => $edu,
         ]);
     }
 
@@ -331,6 +362,48 @@ class MusicianController extends AbstractController
         }
 
         return $this->redirectToRoute('musician_index');
+    }
+
+
+    public function makeThumbnails($updir, $img)
+    {
+
+        $thumbnail_width = 300;
+        $thumbnail_height = 300;
+        $thumb_beforeword = "thumbs";
+        $arr_image_details = getimagesize("$updir" .  '/'. "$img"); // pass id to thumb name
+        $original_width = $arr_image_details[0];
+        $original_height = $arr_image_details[1];
+        if ($original_width > $original_height) {
+            $new_width = $thumbnail_width;
+            $new_height = intval($original_height * $new_width / $original_width);
+        } else {
+            $new_height = $thumbnail_height;
+            $new_width = intval($original_width * $new_height / $original_height);
+        }
+        $dest_x = intval(($thumbnail_width - $new_width) / 2);
+        $dest_y = intval(($thumbnail_height - $new_height) / 2);
+        if ($arr_image_details[2] == IMAGETYPE_GIF) {
+            $imgt = "ImageGIF";
+            $imgcreatefrom = "ImageCreateFromGIF";
+        }
+        if ($arr_image_details[2] == IMAGETYPE_JPEG) {
+            $imgt = "ImageJPEG";
+            $imgcreatefrom = "ImageCreateFromJPEG";
+        }
+        if ($arr_image_details[2] == IMAGETYPE_PNG) {
+            $imgt = "ImagePNG";
+            $imgcreatefrom = "ImageCreateFromPNG";
+        }
+        if ($imgt) {
+            $old_image = $imgcreatefrom("$updir" .  '/'. "$img");
+            $new_image = imagecreatetruecolor($thumbnail_width, $thumbnail_height);
+            imagecopyresized($new_image, $old_image, $dest_x, $dest_y, 0, 0, $new_width, $new_height, $original_width, $original_height);
+            $imgt($new_image, "$updir" .  '/'. "$thumb_beforeword/" . "$img");
+        }
+
+        return $imgt;
+
     }
 
 

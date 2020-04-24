@@ -210,6 +210,27 @@
     </div>
     <!-- End #skills -->
 
+    <div id="album_intro"  style="text-align: center; margin-bottom: 50px;" class="background-alt">
+
+        <h2 class="heading">Gallery</h2>
+        <div class="container">
+
+          <div class="row text-center text-lg-left">
+            {% for photo in fourPhotos %}
+            <div class="col-lg-3 col-md-4 col-xs-6">
+            <a href="#" class="d-block mb-4 h-100">
+                <img class="img-fluid img-thumbnail" src="{{photo.thumbnailpath}}" alt="">
+            </a>
+            </div>
+            {% endfor %}
+          </div>
+          <a href="{{ path('gallery_index', {'username': musician.username })}}" class="btn-rounded-blue">See More Photos</a>
+      </div>
+
+    </div>
+    <!-- /.album_intro -->
+
+
     <div id="contact">
         <h2>Leave a Review</h2>
         <div id="contact-form">

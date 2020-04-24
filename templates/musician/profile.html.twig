@@ -41,7 +41,7 @@
                 <li><a href="{{ path('easyadmin')}}">Admin Page</a></li>
                 <li><a href="{{ path('musician_edit', {'username': musician.username})}}">Resume info</a></li>
                 <li><a href="{{ path('easyadmin')}}">Download Your Resume</a></li>
-                <li><a href="{{ path('gallery_index')}}">Gallery</a></li>
+                <li><a href="{{ path('gallery_index', {'username': musician.username})}}">Gallery</a></li>
               </ul>
 
               

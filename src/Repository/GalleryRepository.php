@@ -19,22 +19,22 @@ class GalleryRepository extends ServiceEntityRepository
         parent::__construct($registry, Gallery::class);
     }
 
-    // /**
-    //  * @return Gallery[] Returns an array of Gallery objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Gallery[] Returns an array of Gallery objects
+     */
+    
+    public function findFourPhotos($musician)
     {
         return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('g.musician = :val')
+            ->setParameter('val', $musician)
             ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(4)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Gallery

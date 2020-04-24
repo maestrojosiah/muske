@@ -58,7 +58,7 @@
 		                                    <div class="col-sm-6 col-sm-offset-1">
 		                                        <div class="form-group label-floating">
 													<button type="button" class='btn btn-primary btn-wd' id="upload">Upload</button>
-													<a href="{{path('gallery_index')}}" class='btn btn-primary btn-wd'>Back to gallery</a>
+													<a href="{{path('gallery_index', {'username': musician.username })}}" class='btn btn-primary btn-wd'>Back to gallery</a>
 		                                        </div>
 		                                    </div>
 												
@@ -69,7 +69,7 @@
 		                                	<div class="col-sm-4 col-sm-offset-1">
 		                                	<h4 class="info-text" id="another_link"> Paste a youtube / vimeo link below</h4>
 		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="url">Video url eg: </label>
+                                                    <label class="control-label" for="url">Video url eg: youtu.be/MD-LJGRnUZY</label>
                                                     <input type="text" class="form-control" id="url">
 		                                    	</div>
 		                                	</div>
@@ -85,7 +85,7 @@
 		                                    <div class="col-sm-6 col-sm-offset-1">
 		                                        <div class="form-group label-floating">
 													<button type="button" class='btn btn-primary btn-wd' id="upload_link">Save</button>
-													<a href="{{path('gallery_index')}}" class='btn btn-primary btn-wd'>Back to gallery</a>
+													<a href="{{path('gallery_index', {'username': musician.username })}}" class='btn btn-primary btn-wd'>Back to gallery</a>
 		                                        </div>
 		                                    </div>
 
@@ -158,6 +158,7 @@ $( "#upload" ).click(function() {
                     console.log("saved another information");
 					$("#another").html("<span style='color:green'>Photo uploaded. Keep on...</span>");
                     $("#wizardPicturePreview").attr("src", "{{asset('img/placeholder.jpg')}}").css("maxWidth", '250px');
+					$("#description").val(""); 
                 },
                 error: function () {
                     $("#warning").html("<b>something's wrong</b>");
@@ -193,6 +194,8 @@ $( "#upload_link" ).click(function() {
 			{
 				console.log(data);
 				console.log("saved information");
+				$("#description_link").val(""); 
+				$("#url").val(""); 
 			},
 			error: function () {
 				$("#warning").html("<b>something's wrong</b>");

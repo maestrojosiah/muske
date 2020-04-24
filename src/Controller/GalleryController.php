@@ -16,25 +16,51 @@ use Symfony\Component\Routing\Annotation\Route;
 class GalleryController extends AbstractController
 {
     /**
-     * @Route("/", name="gallery_index", methods={"GET"})
+     * @Route("/{username}/{page}", name="gallery_index", methods={"GET"})
      */
-    public function index(GalleryRepository $galleryRepository): Response
+    public function index(GalleryRepository $galleryRepository, $username, $page = 1): Response
     {
-        $musician = $this->getUser();
+        $limit = 6;
+        $offset = $page * $limit - $limit;
+        $data = [];
+
+        $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')
+        ->findByUsername($username)[0];
+        // $photos = $musician->getUploadedphotos();
+        $photos = $galleryRepository
+            ->findBy(
+                array('musician' => $musician),
+                array('id' => 'DESC'),
+                $limit,
+                $offset
+            );
+
+        if($photos){
+            $data['nextPage'] = $page + 1;
+        } else {
+            $data['nextPage'] = "blank";
+        }
+    
+
         return $this->render('gallery/index.html.twig', [
-            'galleries' => $galleryRepository->findAll(),
+            'photos' => $photos,
             'musician' => $musician,
+            'data' => $data,
         ]);
     }
 
     /**
-     * @Route("/new", name="gallery_new", methods={"GET","POST"})
+     * @Route("/new/upload/photos/links", name="gallery_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $gallery = new Gallery();
         $form = $this->createForm(GalleryType::class, $gallery);
         $form->handleRequest($request);
+
+        $musician = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -47,6 +73,7 @@ class GalleryController extends AbstractController
         return $this->render('gallery/new.html.twig', [
             'gallery' => $gallery,
             'form' => $form->createView(),
+            'musician' =>$musician,
         ]);
     }
 

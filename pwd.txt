@@ -21,3 +21,5 @@ same with gallery.php
 
 
 seobundle
+
+upload photo from profile page through ajax

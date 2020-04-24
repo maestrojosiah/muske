@@ -268,6 +268,10 @@ class MusicianController extends AbstractController
         $full_name = explode(' ', $musician->getFullname());
         $first_name = $full_name[0];
         $last_name = end($full_name);
+        if(count($musician->getUploadedphotos()) >= 4){
+            $fourPhotos =  $this->getDoctrine()->getManager()->getRepository('App:Gallery')
+            ->findFourPHotos($musician);
+        }
         if($musician->getSettings()){
             $jobs = $this->getDoctrine()->getManager()->getRepository('App:Job')
             ->findByGivenField($musician->getSettings()->getJobOrder(), 
@@ -287,6 +291,7 @@ class MusicianController extends AbstractController
             'last_name' => $last_name,
             'jobs' => $jobs,
             'edu' => $edu,
+            'fourPhotos' => $fourPhotos,
         ]);
     }
 

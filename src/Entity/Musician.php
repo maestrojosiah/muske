@@ -121,6 +121,11 @@ class Musician implements UserInterface
      */
     private $uploadedphotos;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Document", mappedBy="musician")
+     */
+    private $documents;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -130,6 +135,7 @@ class Musician implements UserInterface
         $this->locations = new ArrayCollection();
         $this->projects = new ArrayCollection();
         $this->uploadedphotos = new ArrayCollection();
+        $this->documents = new ArrayCollection();
     }
 
     public function __toString() {
@@ -560,6 +566,37 @@ class Musician implements UserInterface
             // set the owning side to null (unless already changed)
             if ($uploadedphoto->getMusician() === $this) {
                 $uploadedphoto->setMusician(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Document[]
+     */
+    public function getDocuments(): Collection
+    {
+        return $this->documents;
+    }
+
+    public function addDocument(Document $document): self
+    {
+        if (!$this->documents->contains($document)) {
+            $this->documents[] = $document;
+            $document->setMusician($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocument(Document $document): self
+    {
+        if ($this->documents->contains($document)) {
+            $this->documents->removeElement($document);
+            // set the owning side to null (unless already changed)
+            if ($document->getMusician() === $this) {
+                $document->setMusician(null);
             }
         }
 

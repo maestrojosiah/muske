@@ -277,20 +277,20 @@ class MusicianController extends AbstractController
             ->findByGivenField($musician->getSettings()->getJobOrder(), 
                 $musician->getSettings()->getJobOrderBy());
 
-            $edu = $this->getDoctrine()->getManager()->getRepository('App:Education')
+            $educ = $this->getDoctrine()->getManager()->getRepository('App:Education')
             ->findByGivenField($musician->getSettings()->getEduOrder(), 
                 $musician->getSettings()->getEduOrderBy());
 
         } else {
             $jobs = $musician->getJobs();
-            $edu = $musician->getEducation();
+            $educ = $musician->getEducation();
         }
         return $this->render('musician/show.html.twig', [
             'musician' => $musician,
             'first_name' => $first_name,
             'last_name' => $last_name,
             'jobs' => $jobs,
-            'edu' => $edu,
+            'educ' => $educ,
             'fourPhotos' => $fourPhotos,
         ]);
     }
@@ -301,10 +301,29 @@ class MusicianController extends AbstractController
     public function profile(): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
         $musician = $this->getUser();
+        $data = [];
+
+        $details_array = [$musician->getSettings()->getOnline(), $musician->getSettings()->getTsc(), $musician->getSettings()->getPlaceofwork()];
+        
+        // to know if all the above have content                            
+        $filter = array_filter($details_array, function($k) {
+            return (isset($k) || !empty($k));
+        }, ARRAY_FILTER_USE_BOTH );
+
+
+        //if the details above are in database, then move to add skills
+        if (count($filter) < 3) {
+            // come back here and check more things 
+            $data['complete'] = false;
+
+        } else {
+            $data['complete'] = true;
+        }
+
         return $this->render('musician/profile.html.twig', [
             'musician' => $musician,
+            'data' => $data,
         ]);
     }
 

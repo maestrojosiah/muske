@@ -67,6 +67,32 @@ class Settings
      */
     private $edu_order_by;
 
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $online;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $muske;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pro;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tsc;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $placeofwork;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -191,4 +217,66 @@ class Settings
 
         return $this;
     }
+
+    public function getOnline(): ?string
+    {
+        return $this->online;
+    }
+
+    public function setOnline(?string $online): self
+    {
+        $this->online = $online;
+
+        return $this;
+    }
+
+    public function getMuske(): ?string
+    {
+        return $this->muske;
+    }
+
+    public function setMuske(?string $muske): self
+    {
+        $this->muske = $muske;
+
+        return $this;
+    }
+
+    public function getPro(): ?string
+    {
+        return $this->pro;
+    }
+
+    public function setPro(?string $pro): self
+    {
+        $this->pro = $pro;
+
+        return $this;
+    }
+
+    public function getTsc(): ?string
+    {
+        return $this->tsc;
+    }
+
+    public function setTsc(?string $tsc): self
+    {
+        $this->tsc = $tsc;
+
+        return $this;
+    }
+
+    public function getPlaceofwork(): ?string
+    {
+        return $this->placeofwork;
+    }
+
+    public function setPlaceofwork(?string $placeofwork): self
+    {
+        $this->placeofwork = $placeofwork;
+
+        return $this;
+    }
+
+
 }

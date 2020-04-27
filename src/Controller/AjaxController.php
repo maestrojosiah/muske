@@ -18,6 +18,7 @@ use App\Entity\Role;
 use App\Entity\Specialty;
 use App\Entity\Settings;
 use App\Entity\Gallery;
+use App\Entity\Document;
 
 
 class AjaxController extends AbstractController
@@ -349,6 +350,110 @@ class AjaxController extends AbstractController
         return new JsonResponse("fail");
     }
 
+
+    /**
+     * @Route("/upload/profile/picture", name="change_profile_picture")
+     */
+    public function uploadProfPic(Request $request)
+    {
+
+        $file = $request->files->get('doc');
+        $musician = $this->getUser();
+        
+        if($file){
+            if($musician->getPhoto() != null ) {
+                $current_photo_path = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
+                $current_photo_thumb_path = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto();
+                if(file_exists($current_photo_path)){ unlink($current_photo_path); }
+                if(file_exists($current_photo_thumb_path)){ unlink($current_photo_thumb_path); }
+            }
+
+            $filename = md5(uniqid()).'.'.$file->guessExtension();
+            // Move the file to the directory where brochures are stored
+            try {
+                $file->move(
+                    $this->getParameter('brochures_directory'),
+                    $filename
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+
+            return new JsonResponse($filename);        
+
+        }
+        
+        if($request->request->get('filename')){
+
+            $filename = $this->sanitizeInput($request->request->get('filename'));
+            $musician->setPhoto($filename);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($musician);
+            $em->flush();
+
+            $updir = $this->getParameter('brochures_directory');
+            $img = $musician->getPhoto();
+            $this->makeThumbnails($updir, $img, 300, 300);
+
+
+            $img_link = $musician->photourl();
+
+            return new JsonResponse($img_link);
+        }
+        return new JsonResponse("fail");
+    }
+
+    /**
+     * @Route("/upload/education/document", name="upload_education_document")
+     */
+    public function uploadEduDoc(Request $request)
+    {
+
+        $edu_id = $this->sanitizeInput($request->request->get('id'));
+        $file = $request->files->get('doc');
+        $musician = $this->getUser();
+        
+        if($file){
+            $filename = md5(uniqid()).'.'.$file->guessExtension();
+            // Move the file to the directory where brochures are stored
+            try {
+                $file->move(
+                    $this->getParameter('document_directory'),
+                    $filename
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+
+            return new JsonResponse($filename);        
+
+        }
+        
+        if($request->request->get('filename')){
+
+            $filename = $this->sanitizeInput($request->request->get('filename'));
+            $education = $this->getDoctrine()->getManager()->getRepository('App:Education')->find($edu_id);
+            $edu_doc = $education->getDocument();
+            if($edu_doc){
+                $document = $edu_doc;
+            } else {
+                $document = new Document();
+            }
+        
+            $document->setEducation($education);
+            $document->setMusician($musician);
+            $document->setDoc($filename);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($document);
+            $em->flush();
+
+            $doc_link = $document->getDocpath();
+
+            return new JsonResponse($doc_link);
+        }
+        return new JsonResponse("fail");
+    }
+
     /**
      * @Route("/upload/gallery/image", name="upload_gallery_image")
      */
@@ -415,6 +520,10 @@ class AjaxController extends AbstractController
             $linkedin = $this->sanitizeInput($request->request->get('linkedin'));
             $youtube = $this->sanitizeInput($request->request->get('youtube'));
             $instagram = $this->sanitizeInput($request->request->get('instagram'));
+            $online = $this->sanitizeInput($request->request->get('online'));
+            $tsc = $this->sanitizeInput($request->request->get('tsc'));
+            $wheretowork = $this->sanitizeInput($request->request->get('wheretowork'));
+            $accounttype = $this->sanitizeInput($request->request->get('accounttype'));
 
             $musician = $this->getUser();
     
@@ -431,6 +540,13 @@ class AjaxController extends AbstractController
             } else {
                 $setting = new Settings();
             }
+            
+            if($accounttype == 'pro'){
+                $setting->setPro("true");
+            }
+            if($accounttype == 'muske'){
+                $setting->setMuske("true");
+            }
 
             $setting->setJobOrder($order_job);
             $setting->setJobOrderBy($order_job_by);
@@ -441,6 +557,9 @@ class AjaxController extends AbstractController
             $setting->setLinkedin($linkedin);
             $setting->setYoutube($youtube);
             $setting->setInstagram($instagram);
+            $setting->setOnline($online);
+            $setting->setTsc($tsc);
+            $setting->setPlaceofwork($wheretowork);
             $setting->setMusician($musician);
             $entityManager->persist($setting);
             $entityManager->flush();
@@ -496,11 +615,9 @@ class AjaxController extends AbstractController
     }
 
     
-    public function makeThumbnails($updir, $img)
+    public function makeThumbnails($updir, $img, $thumbnail_width="300", $thumbnail_height="200")
     {
 
-        $thumbnail_width = 300;
-        $thumbnail_height = 200;
         $thumb_beforeword = "thumbs";
         $arr_image_details = getimagesize("$updir" .  '/'. "$img"); // pass id to thumb name
         $original_width = $arr_image_details[0];

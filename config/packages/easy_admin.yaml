@@ -6,12 +6,13 @@ easy_admin:
             - { label: 'Profile Page', route: 'musician_profile' }
             # - { label: 'Profile', route: 'musician_show', params: { username: "{{musician.username}}"} }
             - label: 'Education'
-              children: ['Education', 'Specialty']                        
+              children: ['Education', 'Specialty', 'Document']                        
             - label: 'Jobs'
               children: ['Job', 'JobRole']                        
             - { entity: 'Skill', label: 'Skills' }            
             - { entity: 'Project', label: 'Projects' }            
             - { entity: 'Role', label: "Jobs you can do" }            
+            - { entity: 'Gallery', label: "Photos and Videos" }            
             # - { label: 'Some Task', route: 'user_some_task' }
             # - { label: 'Other Task', route: 'other_task', params: { max: 7 } }
 
@@ -84,6 +85,22 @@ easy_admin:
                 fields: [{property: 'instrumentorskill', label: 'Skills earned'}, {property: 'education.coursename', label: 'Course'}, {property: 'education.degree', label: 'Level'}]                        
             form:
                 fields: [{property: 'instrumentorskill', label: 'Skills earned'}, {property: 'education.coursename', label: 'Course'}, {property: 'education.degree', label: 'Level'}]                        
+        Document:
+            class: App\Entity\Document
+            label: 'Documents'
+            list:
+                title: "Your Documents"            
+                fields: [{property: 'doc', label: 'Document'}, {property: 'education.coursename', label: 'Course'}, {property: 'education.degree', label: 'Level'}]                        
+            form:
+                fields: [{property: 'doc', label: 'Document'}, {property: 'education.coursename', label: 'Course'}, {property: 'education.degree', label: 'Level'}]                        
+        Gallery:
+            class: App\Entity\Gallery
+            label: 'Photos & Videos'
+            list:
+                title: "Gallery"            
+                fields: [{property: 'photo', label: 'Media'}, {property: 'description', label: 'Description'}]                        
+            form:
+                fields: [{property: 'photo', label: 'Media'}, {property: 'description', label: 'Description'}]                        
     user:
         # this method/property must return the string representation of the user
         # (Symfony will look for getFullName(), isFullName(), ..., and 'fullName' property)

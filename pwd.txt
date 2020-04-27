@@ -18,8 +18,9 @@ call me button
 change http://localhost from musician.php getPhoto();
 change http://localhost from project.php getProjectimage();\
 same with gallery.php
+same with document.php
 
 
 seobundle
 
-upload photo from profile page through ajax
+extra settings of musician and how to display them

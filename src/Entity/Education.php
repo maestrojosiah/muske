@@ -59,6 +59,11 @@ class Education
      */
     private $specialties;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Document", mappedBy="education", cascade={"persist", "remove"})
+     */
+    private $document;
+
     public function __construct()
     {
         $this->specialties = new ArrayCollection();
@@ -179,6 +184,24 @@ class Education
             if ($specialty->getEducation() === $this) {
                 $specialty->setEducation(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getDocument(): ?Document
+    {
+        return $this->document;
+    }
+
+    public function setDocument(?Document $document): self
+    {
+        $this->document = $document;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newEducation = null === $document ? null : $this;
+        if ($document->getEducation() !== $newEducation) {
+            $document->setEducation($newEducation);
         }
 
         return $this;

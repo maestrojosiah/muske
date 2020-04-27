@@ -460,9 +460,9 @@ class Musician implements UserInterface
     public function thumbnailurl(): ?string
     {
         $url = "http://localhost:8000/uploads/photos/thumbs/$this->photo";
-        $this->photourl = $url;
+        $this->thumbnailurl = $url;
 
-        return $this->photourl;
+        return $this->thumbnailurl;
     }
 
     public function logourl(): ?string

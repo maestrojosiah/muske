@@ -543,9 +543,15 @@ class AjaxController extends AbstractController
             
             if($accounttype == 'pro'){
                 $setting->setPro("true");
+                $setting->setMuske("false");
             }
             if($accounttype == 'muske'){
                 $setting->setMuske("true");
+                $setting->setPro("false");
+            }
+            if($accounttype == 'basic'){
+                $setting->setMuske("false");
+                $setting->setPro("false");
             }
 
             $setting->setJobOrder($order_job);

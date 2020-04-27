@@ -53,6 +53,8 @@
                 <hr>
                 <div class="col-md-6">
                 {% if data.complete == false %} <p><a data-toggle="tab" href="#settings">Please complete your settings</a></p>{% endif %}
+                {% if roles|length < musician.jobs|length %} <p><a href="{{ path('musician_show', {'username': app.user.username })}}#experience">Please complete setting up your Experience by adding roles to the jobs you've done</a></p>{% endif %}
+                {% if skills|length < musician.education|length %} <p><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please complete setting up your Experience by adding skills you gained in various learning institutions</a></p>{% endif %}
                   <ul class="list-group">
                     <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
                     <li class="list-group-item text-right"><span class="pull-left"><strong>Website views</strong></span> 125</li>
@@ -63,10 +65,10 @@
                 </div>
                 <div class="col-md-6">
                   <div class="panel panel-default">
-                    <div class="panel-heading">Social Media links</div>
+                    <div class="panel-heading">Your Account</div>
                     <div class="panel-body">
-                      <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
-                      <button class="btn btn-lg btn-success pull-right" id="test" type="button"> Save</button>                      
+                      <p> You are a {{membership}} member </p>
+                      <a href="{{ path('musician_plan')}}" class="btn btn-lg btn-success pull-right" id="test" type="button"> Change</a>                      
                     </div>
                   </div>
                 </div>
@@ -89,9 +91,9 @@
                           <div class="col-xs-6">
                             <label for="order_job"><h4>Order Your Jobs by:</h4></label>
                             <select class="form-control" id="order_job">
-                              <option value="id"  {% if musician.settings.jobOrder == 'null' or musician.settings.jobOrder == 'id' %} selected {% endif %}>How you added them</option>
-                              <option value="endedin" {{ musician.settings.jobOrder == 'endedin' ? 'selected' : '' }}>Job ending date</option>
-                              <option value="startingfrom" {{ musician.settings.jobOrder == 'startingfrom' ? 'selected' : '' }}>Job starting date</option>
+                              <option value="id"  {% if musician.settings and musician.settings.jobOrder == 'null' or musician.settings and musician.settings.jobOrder == 'id' %} selected {% endif %}>How you added them</option>
+                              <option value="endedin" {{ musician.settings and musician.settings.jobOrder == 'endedin' ? 'selected' : '' }}>Job ending date</option>
+                              <option value="startingfrom" {{ musician.settings and musician.settings.jobOrder == 'startingfrom' ? 'selected' : '' }}>Job starting date</option>
                             </select>
                           </div>
                       </div>
@@ -100,9 +102,9 @@
                           <div class="col-xs-6">
                             <label for="order_job_by"><h4>Sort your Jobs...</h4></label>
                             <select class="form-control" id="order_job_by">
-                              <option value="" {{ musician.settings.jobOrderBy == null ? 'selected' : '' }} {{ musician.settings.jobOrderBy == '' ? 'selected' : '' }}>Select One</option>
-                              <option value="DESC" {{ musician.settings.jobOrderBy == 'DESC' ? 'selected' : '' }}>Starting with latest</option>
-                              <option value="ASC" {{ musician.settings.jobOrderBy == 'ASC' ? 'selected' : '' }}>Ending with latest</option>
+                              <option value="" {{ musician.settings and musician.settings.jobOrderBy == null ? 'selected' : '' }} {{ musician.settings and musician.settings.jobOrderBy == '' ? 'selected' : '' }}>Select One</option>
+                              <option value="DESC" {{ musician.settings and musician.settings.jobOrderBy == 'DESC' ? 'selected' : '' }}>Starting with latest</option>
+                              <option value="ASC" {{ musician.settings and musician.settings.jobOrderBy == 'ASC' ? 'selected' : '' }}>Ending with latest</option>
                             </select>
                           </div>
                       </div>
@@ -111,9 +113,9 @@
                           <div class="col-xs-6">
                             <label for="order_education"><h4>Order Your Education by:</h4></label>
                             <select class="form-control" id="order_education">
-                              <option value="id"  {{ musician.settings.eduOrder == 'id' ? 'selected' : '' }} {{ musician.settings.eduOrder == '' ? 'selected' : '' }}>How you added them</option>
-                              <option value="toyear" {{ musician.settings.eduOrder == 'toyear' ? 'selected' : '' }}>Education ending date</option>
-                              <option value="fromyear" {{ musician.settings.eduOrder == 'fromyear' ? 'selected' : '' }}>Education starting date</option>
+                              <option value="id"  {{ musician.settings and musician.settings.eduOrder == 'id' ? 'selected' : '' }} {{ musician.settings and musician.settings.eduOrder == '' ? 'selected' : '' }}>How you added them</option>
+                              <option value="toyear" {{ musician.settings and musician.settings.eduOrder == 'toyear' ? 'selected' : '' }}>Education ending date</option>
+                              <option value="fromyear" {{ musician.settings and musician.settings.eduOrder == 'fromyear' ? 'selected' : '' }}>Education starting date</option>
                             </select>
                           </div>
                       </div>
@@ -121,19 +123,19 @@
                           <div class="col-xs-6">
                             <label for="order_education_by"><h4>Sort your Education...</h4></label>
                             <select class="form-control " id="order_education_by">
-                              <option value="" {{ musician.settings.eduOrderBy == '' ? 'selected' : '' }} {{ musician.settings.eduOrderBy == null ? 'selected' : '' }}>Select One</option> 
-                              <option value="DESC" {{ musician.settings.eduOrderBy == 'DESC' ? 'selected' : '' }}>Starting with latest</option>
-                              <option value="ASC" {{ musician.settings.eduOrderBy == 'ASC' ? 'selected' : '' }}>Ending with latest</option>
+                              <option value="" {{ musician.settings and musician.settings.eduOrderBy == '' ? 'selected' : '' }} {{ musician.settings and musician.settings.eduOrderBy == null ? 'selected' : '' }}>Select One</option> 
+                              <option value="DESC" {{ musician.settings and musician.settings.eduOrderBy == 'DESC' ? 'selected' : '' }}>Starting with latest</option>
+                              <option value="ASC" {{ musician.settings and musician.settings.eduOrderBy == 'ASC' ? 'selected' : '' }}>Ending with latest</option>
                             </select>
                           </div>
                       </div>
                       <div class="form-group">                          
                           <div class="col-xs-6">
                             <label for="tsc"><h4>Do you have a TSC number?</h4></label>
-                            <select class="form-control {% if musician.settings.tsc == null or musician.settings.tsc == "" %} is-invalid {% endif %}" id="tsc">
-                              <option value="" {{ musician.settings.tsc == '' ? 'selected' : '' }}{{ musician.settings.tsc == null ? 'selected' : '' }}>Select Answer</option>
-                              <option value="false" {{ musician.settings.tsc == 'false' ? 'selected' : '' }}>No</option>
-                              <option value="true"{{ musician.settings.tsc == 'true' ? 'selected' : '' }}>Yes</option>
+                            <select class="form-control {% if musician.settings and musician.settings.tsc == null or musician.settings and musician.settings.tsc == "" %} is-invalid {% endif %}" id="tsc">
+                              <option value="" {{ musician.settings and musician.settings.tsc == '' ? 'selected' : '' }}{{ musician.settings and musician.settings.tsc == null ? 'selected' : '' }}>Select Answer</option>
+                              <option value="false" {{ musician.settings and musician.settings.tsc == 'false' ? 'selected' : '' }}>No</option>
+                              <option value="true"{{ musician.settings and musician.settings.tsc == 'true' ? 'selected' : '' }}>Yes</option>
                             </select>
                           </div>
                       </div>
@@ -142,10 +144,10 @@
                           
                           <div class="col-xs-6">
                             <label for="online"><h4>Can you offer online lessons?</h4></label>
-                            <select class="form-control {% if musician.settings.online == null or musician.settings.online == "" %} is-invalid {% endif %}" id="online">
-                              <option value="" {{ musician.settings.online == '' ? 'selected' : '' }}{{ musician.settings.online == null ? 'selected' : '' }}>Select Answer</option>
-                              <option value="false" {{ musician.settings.online == 'false' ? 'selected' : '' }}>No</option>
-                              <option value="true" {{ musician.settings.online == 'true' ? 'selected' : '' }}>Yes</option>
+                            <select class="form-control {% if musician.settings and musician.settings.online == null or musician.settings and musician.settings.online == "" %} is-invalid {% endif %}" id="online">
+                              <option value="" {{ musician.settings and musician.settings.online == '' ? 'selected' : '' }}{{ musician.settings and musician.settings.online == null ? 'selected' : '' }}>Select Answer</option>
+                              <option value="false" {{ musician.settings and musician.settings.online == 'false' ? 'selected' : '' }}>No</option>
+                              <option value="true" {{ musician.settings and musician.settings.online == 'true' ? 'selected' : '' }}>Yes</option>
                             </select>
                           </div>
                       </div>
@@ -154,7 +156,7 @@
                           
                           <div class="col-xs-6">
                               <label for="wheretowork"><h4>Where do you stay / wish to work?</h4></label>
-                              <input type="text" value="{{musician.settings.placeofwork}}" class="form-control {% if musician.settings.placeofwork == null or musician.settings.placeofwork == "" %}is-invalid{% endif %}" id="wheretowork" placeholder="Eg: Nairobi, Kiambu, Thika" title="Separate using comma">
+                              <input type="text" value="{{musician.settings and musician.settings.placeofwork}}" class="form-control {% if musician.settings and musician.settings.placeofwork == null or musician.settings and musician.settings.placeofwork == "" %}is-invalid{% endif %}" id="wheretowork" placeholder="Eg: Nairobi, Kiambu, Thika" title="Separate using comma">
                           </div>
                       </div>
           
@@ -169,19 +171,19 @@
                             </select>
                           </div>
                       </div>
-                      {% if app.user and app.user != null and app.user.settings.pro == 'true' %}
+                      {% if app.user and app.user != null and app.user.settings and app.user.settings.pro == 'true' %}
                       <div class="form-group">
                           
                           <div class="col-xs-6">
                               <label for="twitter"><h4>Twitter URL</h4></label>
-                              <input value="{{musician.settings.twitter}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
+                              <input value="{{musician.settings and musician.settings.twitter}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
                               <label for="facebook"><h4>Facebook URL</h4></label>
-                              <input value="{{musician.settings.facebook}}" type="text" class="form-control" id="facebook" placeholder="enter url" title="copy from address bar and paste here.">
+                              <input value="{{musician.settings and musician.settings.facebook}}" type="text" class="form-control" id="facebook" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
@@ -195,21 +197,21 @@
                           
                           <div class="col-xs-6">
                               <label for="instagram"><h4>Instagram URL</h4></label>
-                              <input value="{{musician.settings.instagram}}" type="text" class="form-control" id="instagram" placeholder="enter url" title="copy from address bar and paste here.">
+                              <input value="{{musician.settings and musician.settings.instagram}}" type="text" class="form-control" id="instagram" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
                               <label for="youtube"><h4>Youtube URL</h4></label>
-                              <input value="{{musician.settings.youtube}}" type="text" class="form-control" id="youtube" placeholder="enter url" title="copy from address bar and paste here.">
+                              <input value="{{musician.settings and musician.settings.youtube}}" type="text" class="form-control" id="youtube" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
                               <label for="twitter"><h4>Twitter link</h4></label>
-                              <input value="{{musician.settings.twitter}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
+                              <input value="{{musician.settings and musician.settings.twitter}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>          
                       {% endif %}

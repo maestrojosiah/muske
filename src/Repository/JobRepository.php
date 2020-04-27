@@ -23,11 +23,11 @@ class JobRepository extends ServiceEntityRepository
      * @return Job[] Returns an array of Job objects
      */
     
-    public function findByGivenField($field, $sort)
+    public function findByGivenField($field, $sort, $musician)
     {
         return $this->createQueryBuilder('j')
-            // ->andWhere("j.$findby = :val")
-            // ->setParameter('val', $field)
+            ->andWhere("j.musician = :val")
+            ->setParameter('val', $musician)
             ->orderBy("j.$field", $sort)
             ->setMaxResults(100)
             ->getQuery()

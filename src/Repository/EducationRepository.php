@@ -23,11 +23,11 @@ class EducationRepository extends ServiceEntityRepository
      * @return Education[] Returns an array of Education objects
      */
  
-    public function findByGivenField($field, $sort)
+    public function findByGivenField($field, $sort, $musician)
     {
         return $this->createQueryBuilder('e')
-            // ->andWhere('e.exampleField = :val')
-            // ->setParameter('val', $value)
+            ->andWhere('e.musician = :val')
+            ->setParameter('val', $musician)
             ->orderBy("e.$field", $sort)
             ->setMaxResults(100)
             ->getQuery()

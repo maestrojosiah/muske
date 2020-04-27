@@ -162,9 +162,9 @@
                         {{musician.about}}
                     </p>
                     <ul class="skills">
-                        {% if musician.settings.tsc == 'true' %} <li> TSC Certified  </li>{% endif %}
-                        {% if musician.settings.online == 'true' %} <li> Online Lessons Available  </li>{% endif %}
-                        {% if musician.settings.placeofwork != null %} <li> {{musician.settings.placeofwork}}  </li>{% endif %}
+                        {% if musician.settings and musician.settings.tsc == 'true' %} <li> TSC Certified  </li>{% endif %}
+                        {% if musician.settings and musician.settings.online == 'true' %} <li> Online Lessons Available  </li>{% endif %}
+                        {% if musician.settings and musician.settings.placeofwork != null %} <li> {{musician.settings.placeofwork}}  </li>{% endif %}
                     </ul>
                 </div>
             </div>
@@ -211,7 +211,7 @@
             <span class="education-date">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</span>
             <h4>{{edu.coursename}} {{edu.degree}}</h4>
             <span id="alert_{{edu.id}}"></span>
-            {% if app.user and app.user != null and (app.user.settings.pro == 'true' or app.user.settings.muske == 'true') %}
+            {% if app.user and app.user != null and app.user.settings and (app.user.settings.pro == 'true' or app.user.settings.muske == 'true') %}
                 
                 <form  id="document_form_{{edu.id}}" name="doc" method="post" action enctype="multipart/form-data" {% if edu.document != null %} style="display:none;" {% endif %}>
                     <div class="row alert alert-info">
@@ -318,7 +318,7 @@
         </ul>
     </div>
     <!-- End #skills -->
-    {% if musician.settings.pro == 'true' or musician.settings.muske == 'true' %}
+    {% if musician.settings and musician.settings.pro == 'true' or musician.settings and musician.settings.muske == 'true' %}
     <div id="album_intro"  style="text-align: center; margin-bottom: 50px;" class="background-alt">
 
         <h2 class="heading">Gallery</h2>

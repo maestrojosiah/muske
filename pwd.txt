@@ -23,4 +23,7 @@ same with document.php
 
 seobundle
 
-extra settings of musician and how to display them
+plan - describe them all
+change save to saved when saving settings
+show percentage of profile progress
+better listing in plan page

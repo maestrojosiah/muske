@@ -154,7 +154,8 @@ class MusicianController extends AbstractController
             $entityManager->persist($musician);
             $entityManager->flush();
 
-            return $this->redirect($this->generateUrl('musician_show', ['username' => $musician->getUsername()]));
+            // return $this->redirect($this->generateUrl('musician_show', ['username' => $musician->getUsername()]));
+            return $this->redirect($this->generateUrl('musician_profile'));
         }
 
         // define email phone age and full name
@@ -163,10 +164,6 @@ class MusicianController extends AbstractController
         $musician_projects = $musician->getProjects()[0];
 
         $details_array = [$musician_photo, $musician_about, $musician_projects];
-        $fields = ["email" => $musician_photo,
-                    "phone" => $musician_about,
-                    "age" => $musician_projects,
-                ];
         
         // to know if all the above have content                            
         $filter = array_filter($details_array, function($k) {
@@ -175,7 +172,7 @@ class MusicianController extends AbstractController
 
 
         //if the details above are in database, then move to add skills
-        if (count($filter) == 3) {
+        if (count($filter) >= 2) {
             // come back here and check more things 
             // return $this->redirectToRoute('musician_show', ['username' => $musician]);
             return $this->redirectToRoute('musician_profile');
@@ -263,23 +260,25 @@ class MusicianController extends AbstractController
     /**
      * @Route("/{username}", name="musician_show", methods={"GET"})
      */
-    public function show(Musician $musician): Response
+    public function show($username): Response
     {
-        $full_name = explode(' ', $musician->getFullname());
-        $first_name = $full_name[0];
-        $last_name = end($full_name);
+
+        $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->findByUsername($username)[0];
+
         if(count($musician->getUploadedphotos()) >= 4){
             $fourPhotos =  $this->getDoctrine()->getManager()->getRepository('App:Gallery')
-            ->findFourPHotos($musician);
+            ->findFourPhotos($musician);
+        } else {
+            $fourPhotos = [];
         }
         if($musician->getSettings()){
             $jobs = $this->getDoctrine()->getManager()->getRepository('App:Job')
             ->findByGivenField($musician->getSettings()->getJobOrder(), 
-                $musician->getSettings()->getJobOrderBy());
+                $musician->getSettings()->getJobOrderBy(), $musician);
 
             $educ = $this->getDoctrine()->getManager()->getRepository('App:Education')
             ->findByGivenField($musician->getSettings()->getEduOrder(), 
-                $musician->getSettings()->getEduOrderBy());
+                $musician->getSettings()->getEduOrderBy(), $musician);
 
         } else {
             $jobs = $musician->getJobs();
@@ -287,8 +286,6 @@ class MusicianController extends AbstractController
         }
         return $this->render('musician/show.html.twig', [
             'musician' => $musician,
-            'first_name' => $first_name,
-            'last_name' => $last_name,
             'jobs' => $jobs,
             'educ' => $educ,
             'fourPhotos' => $fourPhotos,
@@ -303,27 +300,107 @@ class MusicianController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $musician = $this->getUser();
         $data = [];
+        if($musician->getSettings()){
+            if($musician->getSettings()->getMuske() == 'true'){
+                $membership = "Muske";
+            } elseif($musician->getSettings()->getPro() == 'true'){
+                $membership = "Pro";
+            } else {
+                $membership = "Basic";
+            }
 
-        $details_array = [$musician->getSettings()->getOnline(), $musician->getSettings()->getTsc(), $musician->getSettings()->getPlaceofwork()];
+            $details_array = [$musician->getSettings()->getOnline(), $musician->getSettings()->getTsc(), $musician->getSettings()->getPlaceofwork()];
+            
+            // to know if all the above have content                            
+            $filter = array_filter($details_array, function($k) {
+                return (isset($k) || !empty($k));
+            }, ARRAY_FILTER_USE_BOTH );
+
+            if (count($filter) < 3) {
+                $data['complete'] = false;
+            } else {
+                $data['complete'] = true;
+            }
         
-        // to know if all the above have content                            
-        $filter = array_filter($details_array, function($k) {
-            return (isset($k) || !empty($k));
-        }, ARRAY_FILTER_USE_BOTH );
-
-
-        //if the details above are in database, then move to add skills
-        if (count($filter) < 3) {
-            // come back here and check more things 
-            $data['complete'] = false;
-
         } else {
-            $data['complete'] = true;
+            $membership = "basic";
+            $data['complete'] = false;
+        }
+
+        $roles_array = [];
+        $jobs_array = $this->getDoctrine()->getManager()->getRepository('App:Job')
+            ->findByGivenField($musician->getSettings()->getJobOrder(), 
+                $musician->getSettings()->getJobOrderBy(), $musician);
+        foreach ($jobs_array as $key => $job) {
+            if(count($job->getRoles()) > 0){
+                $roles_array[$key] = $job->getRoles();
+            }
+            
+        }
+
+        $skills_array = [];
+        $edu_array = $this->getDoctrine()->getManager()->getRepository('App:Education')
+            ->findByGivenField($musician->getSettings()->getEduOrder(), 
+            $musician->getSettings()->getEduOrderBy(), $musician);
+        foreach ($edu_array as $key => $edu) {
+            if(count($edu->getSpecialties()) > 0){
+                $skills_array[$key] = $edu->getSpecialties();
+            }
+            
         }
 
         return $this->render('musician/profile.html.twig', [
             'musician' => $musician,
             'data' => $data,
+            'membership' => $membership,
+            'roles' => $roles_array,
+            'skills' => $skills_array,
+        ]);
+    }
+
+
+    /**
+     * @Route("/musician/plan", name="musician_plan", methods={"GET"})
+     */
+    public function plan(): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $musician = $this->getUser();
+
+        if($musician->getSettings()->getMuske() == 'true'){
+            $membership = "Muske";
+        } elseif($musician->getSettings()->getPro() == 'true'){
+            $membership = "Pro";
+        } else {
+            $membership = "Basic";
+        }
+        
+        return $this->render('musician/plan.html.twig', [
+            'musician' => $musician,
+            'membership' => $membership,
+        ]);
+    }
+
+    /**
+     * @Route("/musician/plan_details/{plan}", name="musician_plan_details", methods={"GET"})
+     */
+    public function planDetails($plan): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $musician = $this->getUser();
+
+        if($musician->getSettings()->getMuske() == 'true'){
+            $membership = "Muske";
+        } elseif($musician->getSettings()->getPro() == 'true'){
+            $membership = "Pro";
+        } else {
+            $membership = "Basic";
+        }
+        
+        return $this->render('musician/plan_details.html.twig', [
+            'musician' => $musician,
+            'plan' => $plan,
+            'membership' => $membership,
         ]);
     }
 

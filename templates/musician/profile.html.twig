@@ -54,7 +54,7 @@
                 <div class="col-md-6">
                 {% if data.complete == false %} <p><a data-toggle="tab" href="#settings">Please complete your settings</a></p>{% endif %}
                 {% if roles|length < musician.jobs|length %} <p><a href="{{ path('musician_show', {'username': app.user.username })}}#experience">Please complete setting up your Experience by adding roles to the jobs you've done</a></p>{% endif %}
-                {% if skills|length < musician.education|length %} <p><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please complete setting up your Experience by adding skills you gained in various learning institutions</a></p>{% endif %}
+                {% if skills|length < musician.education|length %} <p><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please complete setting up your Education by adding skills you gained in various learning institutions</a></p>{% endif %}
                   <ul class="list-group">
                     <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
                     <li class="list-group-item text-right"><span class="pull-left"><strong>Website views</strong></span> 125</li>

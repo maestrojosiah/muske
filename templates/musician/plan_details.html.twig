@@ -40,10 +40,37 @@
 
     <!-- Jumbotron Header -->
     <header class="jumbotron my-4">
-      <h1 class="display-3">A Warm Welcome!</h1>
-      <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
+      <h3 class="display-2">Welcome to {{plan}} Membership!</h3>
+      {% if plan == "muske" %}
+      <p class="lead">
+        MuSKe is a platform that has been created by music experts to cater for needs of other musicians. MuSKe is all aware of the plethora of problems that novice as well as experienced musicians face.
+      </p>
+      <p class="lead">
+        We will operate in a partner based relationship where we have customized our services tomake sure musicians get what they deserve based on their qualifications, as we ensure that they constantly grow in their skills.
+      </p>
+      <p class="lead">
+        In that light, musicians who become MuSKe members will benefit from:
+      </p>
+      <ul>
+        <li>Increased visibility on our online musician search platform</li>
+        <li>Secure a job for you that fits your education level, abilities, skills and experience</li>
+        <li>Free resume page</li>
+        <li>Download generated resume</li>
+        <li>Clients can view resume online</li>
+        <li>Resume in 3 formats</li>
+        <li>Photo and video gallery</li>
+        <li>Notified when client needs you</li>
+        <li>Profile notification on adverts</li>
+        <li>Fully manage your page</li>
+        <li>Job offers from Muske</li>
+        <li>Receive educational materials</li>
+        <li>Events preparation tips</li>
+        <li>Receive exam notifications</li>
+        <li>Help in exam preparation</li>
+        <li>Documents backup</li>
+      </ul>
+      {% endif %}
       <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
-      {{dump(plan)}}
     </header>
 
     <!-- Page Features -->

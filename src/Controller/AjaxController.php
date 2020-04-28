@@ -19,6 +19,7 @@ use App\Entity\Specialty;
 use App\Entity\Settings;
 use App\Entity\Gallery;
 use App\Entity\Document;
+use App\Updates\ResetPwdManager;
 
 
 class AjaxController extends AbstractController
@@ -659,5 +660,18 @@ class AjaxController extends AbstractController
         return $imgt;
 
     }
+
+    /**
+     * @Route("/musician/password/reset", name="musician_reset_password", methods={"GET", "POST"})
+     */
+    public function resetPassword(ResetPwdManager $resetPwdManager, Request $request)
+    {
+        if($resetPwdManager->sendResetEmail("jshbr7@gmail.com")){
+            $this->addFlash('success', 'Notification mail was sent successfully');
+        }
+
+        return $this->render('musician/reset_password.html.twig');
+    }
+    
 
 }

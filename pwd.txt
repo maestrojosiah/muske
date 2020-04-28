@@ -27,3 +27,7 @@ plan - describe them all
 change save to saved when saving settings
 show percentage of profile progress
 better listing in plan page
+end of pro version table
+notification by email when end of pro
+reset password
+check username that it should be one word during registration

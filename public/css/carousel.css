@@ -85,6 +85,9 @@ body {
 
 @media (min-width: 62em) {
   .featurette-heading {
-    margin-top: 7rem;
+    margin-top: 3rem;
+  }
+  .featurette-heading-sm {
+    margin-top: 1rem;
   }
 }

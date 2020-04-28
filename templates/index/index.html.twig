@@ -34,13 +34,19 @@
               <a class="dropdown-item" href="#">Coming soon</a>
             </div>            
           </li>
-
         </ul>
-        <div>
+        <ul class="navbar-nav ml-auto mb-2 mb-md-0">
           {% include "security/login.html.twig" %}
-          {# <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search"> #}
-          {# <button class="btn btn-outline-success" type="submit">Search</button> #}
-        </div>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Options</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{{ path('app_register')}}">Sign Up</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{ path('musician_reset_password')}}"><span class="small">Forgot Password</span></a>
+            </div>            
+          </li>
+        </ul>
+          
       </div>
     </div>
   </nav>
@@ -144,12 +150,12 @@
 
     <div class="row featurette">
       <div class="col-md-7">
-        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <h2 class="featurette-heading">Mentorship. <span class="text-muted">Breakthrough for Musicians.</span></h2>
+        <p>We have the experience in the music market and we would like to see new musicians making it in life without going through the hustle that we went through ourselves. There is ready market and we have many talented musicians around. The only bridge that can make them meet is Music Services Kenya. Now you don't need to look for someone who knows someone who may know who needs your services :), Just create your Resume and wait! We will do the rest for you.</p>
       </div>
       <div class="col-md-5">
-        {# {{< placeholder width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto" >}} #}
-        <img src="{{ asset('img/black.jpeg')}}" width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto"  >
+        {# <img width="500" height="500" class="featurette-image img-fluid mx-auto" src="" > #}
+        <img src="{{ asset('img/trumpet.jpg')}}" width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto"  >
       </div>
     </div>
 
@@ -157,12 +163,12 @@
 
     <div class="row featurette">
       <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <h2 class="featurette-heading-sm">Get that Music instrument. <span class="text-muted">We have the teacher.</span></h2>
+        <p class="lead">Whether you want to learn a musical instrument or you just want to know how to sing, we've got you covered. Learning music theory, Choral conducting, name it! If you want an instrumentalist for your institution, an instructor in any musical field, we give you the teacher and we make sure that you achieve what you want by supervising the works of the musician and offering any help that is needed. Don't wait any longer! Click the search button and get one of the best!</p>
       </div>
       <div class="col-md-5 order-md-1">
         {# {{< placeholder width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto" >}} #}
-        <img src="{{ asset('img/black.jpeg')}}" width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto"  >
+        <img src="{{ asset('img/choir.jpg')}}" width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto"  >
       </div>
     </div>
 
@@ -170,12 +176,12 @@
 
     <div class="row featurette">
       <div class="col-md-7">
-        <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <h2 class="featurette-heading">Advertize. <span class="text-muted">We'll make sure they see it.</span></h2>
+        <p class="lead">So you've searched and you can't find who you want? Or maybe you just want them to look for you! :) No problem. You can easily advertize your job position and we'll make sure they have it in their emails. Each one of them. By the way, we will do the interview for you if you don't mind.</p>
       </div>
       <div class="col-md-5">
         {# {{< placeholder width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto" >}} #}
-        <img src="{{ asset('img/black.jpeg')}}" width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto"  >
+        <img src="{{ asset('img/musicians.jpg')}}" width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto"  >
       </div>
     </div>
 
@@ -188,7 +194,36 @@
 
   <!-- FOOTER -->
   <footer class="container">
-    <p class="float-right"><a href="#">Back to top</a></p>
+    <div class="row">
+      <div class="col-12 col-md">
+        <small class="d-block mb-3 text-muted">&copy; Music Services Kenya 2020-{{ "now"|date('Y') }}</small>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Features</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="#">Free website page</a></li>
+          <li><a class="link-secondary" href="#">Share page in your social media</a></li>
+          <li><a class="link-secondary" href="#">Look professional</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Resources</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="#">Download your generated resume</a></li>
+          <li><a class="link-secondary" href="#">Receive music education materials</a></li>
+          <li><a class="link-secondary" href="#">Back up your documents</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>About</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="link-secondary" href="#">Team</a></li>
+          <li><a class="link-secondary" href="#">Locations</a></li>
+          <li><a class="link-secondary" href="#">Privacy</a></li>
+          <li><a class="link-secondary" href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
     {# <p>&copy; 2017-{{< year >}} Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p> #}
   </footer>
 </main>

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Musician;
 use App\Form\MusicianType;
 use App\Repository\MusicianRepository;
+use App\Updates\ResetPwdManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

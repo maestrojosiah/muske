@@ -62,7 +62,7 @@
           <li class="list-group-item">Profile notification on adverts</li>
           <li class="list-group-item">Fully manage your page</li>
         </ul>
-        <button type="button" id="activate_basic" class="btn btn-lg btn-block btn-outline-primary">Activate Basic Account</button>
+        <a href="{{ path('musician_plan_details', {'plan': 'basic'})}}" id="activate_basic" class="btn btn-lg btn-block btn-outline-primary">Activate Basic Account</a>
       </div>
     </div>
     <div class="card mb-4 shadow-sm">
@@ -157,15 +157,3 @@
   </footer>
 </div>
 {% endblock %}                                                      
-{% block javascripts %}													  
-	<script>
-
-	$( "#activate_muske" ).click(function() {
-
-			// location.href = "";
-
-	});
-
-	</script>
-
-{% endblock %}

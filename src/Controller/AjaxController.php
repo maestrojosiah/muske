@@ -20,7 +20,9 @@ use App\Entity\Settings;
 use App\Entity\Gallery;
 use App\Entity\Document;
 use App\Updates\ResetPwdManager;
-
+use App\Updates\MembershipManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Repository\MusicianRepository;
 
 class AjaxController extends AbstractController
 {
@@ -666,12 +668,169 @@ class AjaxController extends AbstractController
      */
     public function resetPassword(ResetPwdManager $resetPwdManager, Request $request)
     {
-        if($resetPwdManager->sendResetEmail("jshbr7@gmail.com")){
-            $this->addFlash('success', 'Notification mail was sent successfully');
+        
+        if($request->request->get('req')){
+
+            $req = $this->sanitizeInput($request->request->get('req'));
+            $email = $this->sanitizeInput($request->request->get('email'));
+            $data = [];
+
+            $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->findByEmail($email);
+
+            if($musician){
+                $username = $this->base64url_encode($musician[0]->getUsername());
+                if($resetPwdManager->sendResetEmail($email, $username)){
+                    $this->addFlash('success', 'Notification mail was sent successfully');
+                }
+                $data['found'] = "Please check your email for a link to reset your password. (Check spam folder if you can't find it)";
+            } else {
+                $data['found'] = "We can not find that email in our system.";
+            }
+           
+
+            return new JsonResponse($data['found']);
+
         }
 
         return $this->render('musician/reset_password.html.twig');
+
     }
     
+
+    /**
+     * @Route("/musician/password/new/{encoded_username}", name="musician_new_password", methods={"GET", "POST"})
+     */
+    public function newPassword(Request $request, UserPasswordEncoderInterface $encoder, MUsicianRepository $userRepository, $encoded_username)
+    {
+
+        if($request->request->get('username')){
+
+            $username = $this->sanitizeInput($request->request->get('username'));
+            $plainPassword = $this->sanitizeInput($request->request->get('password'));
+
+            $user = $userRepository->findOneBy(['username' => $username]);
+            if ($user === null) {
+                $this->addFlash('danger', 'Invalid username');
+                return new JsonResponse("can't find that username");
+            }
+            $password = $encoder->encodePassword($user, $plainPassword);
+
+            $user->setPassword($password);
+            $userRepository->flush();
+
+            return new JsonResponse("homepage");
+        } else {
+            $decoded_username = $this->base64url_decode($encoded_username);
+            return $this->render('musician/new_password.html.twig', [
+                'decoded_username' => $decoded_username,
+                'encoded_username' => $encoded_username,
+            ]);
+    
+        }
+        
+    }
+
+
+	function base64url_encode($data) {
+        return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+    }
+      
+    function base64url_decode($data) {
+        return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
+    }
+          
+
+    /**
+     * @Route("/musician/username/validate", name="musician_validate_username")
+     */
+    public function validateUsername(Request $request): Response
+    {
+
+        if($request->request->get('username')){
+
+            $username = $this->sanitizeInput($request->request->get('username'));
+            $musicians = $this->getDoctrine()->getManager()->getRepository('App:Musician')->findAll();
+            $usernames = [];
+            foreach ($musicians as $musician) {
+                $usernames[] = $musician->getUsername();
+            }
+
+            if (preg_match('/[^A-Za-z0-9.#\\-$]/', $username)) {
+                $message = "<p style='color:red'>Your username should not have spaces or special characters</p>";
+            } else {
+
+                if(in_array($username, $usernames)){
+                    $message = "<p style='color:red'>That username is already taken</p>";
+                } else {
+                    $message = "<p style='color:green'>Username is available</p>";
+                }
+
+            }
+
+            return new JsonResponse($message);
+
+    
+        }
+
+    }
+
+    /**
+     * @Route("/change/membership", name="change_membership")
+     */
+    public function changeMembership(MembershipManager $membershipManager, Request $request)
+    {
+        if($request->request->get('membership')){
+
+            $membership = $this->sanitizeInput($request->request->get('membership'));
+
+            $musician = $this->getUser();
+    
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $settings = $entityManager
+			->getRepository('App:Settings')
+			->findBy(
+				array('musician' => $musician)
+            );
+            
+            if($settings){
+                $setting = $settings[0];
+            } else {
+                $setting = new Settings();
+            }
+            
+            if($membership == 'pro'){
+                $setting->setPro("true");
+                $setting->setMuske("false");
+            }
+            if($membership == 'muske'){
+                $setting->setMuske("true");
+                $setting->setPro("false");
+            }
+            if($membership == 'basic'){
+                $setting->setMuske("false");
+                $setting->setPro("false");
+            }
+
+            $setting->setMusician($musician);
+            $entityManager->persist($setting);
+            $entityManager->flush();
+
+            $email = $musician->getEmail();
+            $data = [];
+
+            if($membershipManager->sendMembershipConfirmation($email, $membership)){
+                $this->addFlash('success', 'Notification mail was sent successfully');
+                $data['sent'] = "<p style='color:green'>A confirmation message has been sent to your email. (Check spam folder if you can't find it)</p>";
+            } else {
+                $data['sent'] = "<p style='color:red'>Your subscription was unsuccessful. We will call you soon</p>";
+            }
+            
+            return new JsonResponse($data['sent']);
+    
+        }
+        
+
+    }
 
 }

@@ -29,7 +29,8 @@
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "5.0.*",
         "symfony/web-link": "5.0.*",
-        "symfony/yaml": "5.0.*"
+        "symfony/yaml": "5.0.*",
+        "weysan/doctrine-img-bundle": "^1.1"
     },
     "require-dev": {
         "symfony/debug-pack": "*",

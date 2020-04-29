@@ -318,23 +318,29 @@
         </ul>
     </div>
     <!-- End #skills -->
-    {% if musician.settings and musician.settings.pro == 'true' or musician.settings and musician.settings.muske == 'true' %}
+    {% if (musician.settings and musician.settings.pro == 'true') or (musician.settings and musician.settings.muske == 'true') %}
     <div id="album_intro"  style="text-align: center; margin-bottom: 50px;" class="background-alt">
-
+        
         <h2 class="heading">Gallery</h2>
         <div class="container">
 
           <div class="row text-center text-lg-left">
+          {% if fourPhotos|length > 1 %}
             {% for photo in fourPhotos %}
             <div class="col-lg-3 col-md-4 col-xs-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="{{photo.thumbnailpath}}" alt="">
             </a>
+            <a href="{{ path('gallery_index', {'username': musician.username })}}" class="btn-rounded-blue">See More Photos</a>
             </div>
             {% endfor %}
+          {% else %}
+            <p>There are currently no photos in this gallery</p>
+            <a href="{{ path('gallery_new')}}" class="btn-rounded-blue">Add Photos</a>
+          {% endif %}
           </div>
-          <a href="{{ path('gallery_index', {'username': musician.username })}}" class="btn-rounded-blue">See More Photos</a>
-      </div>
+        </div>
+        
 
     </div>
     {% endif %}

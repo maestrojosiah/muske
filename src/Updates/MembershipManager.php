@@ -4,7 +4,7 @@ namespace App\Updates;
 
 use App\Service\EmailMessage;
 
-class ResetPwdManager
+class MembershipManager
 {
 	private $emailMessage;
 	private $mailer;
@@ -15,16 +15,15 @@ class ResetPwdManager
 		$this->mailer = $mailer;
 	}
 
-	public function sendResetEmail($emailToReceive, $username)
+	public function sendMembershipConfirmation($emailToReceive, $membership)
 	{
-		$message = $this->emailMessage->getResetMessage($username);
+		$message = $this->emailMessage->getMembershipMessage($membership);
 
-
-		$message = (new \Swift_Message('You have reset your password'))
+		$message = (new \Swift_Message("Confirmation of your $membership membership"))
 		  ->setFrom('info@muske.co.ke')
 		  ->setTo($emailToReceive)
 		  ->addPart(
-			  $message
+			  $message		  
 		);
 
 		return $this->mailer->send($message) > 0;

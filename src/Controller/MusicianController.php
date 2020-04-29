@@ -210,10 +210,10 @@ class MusicianController extends AbstractController
                 //delete the current phowo if available
                 if($musician->getPhoto() != null ) {
                     $current_photo_path = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
-                    unlink($current_photo_path);
                     $current_photo_thumb_path = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto();
-                    unlink($current_photo_thumb_path);
-
+                    if(file_exists($current_photo_path)){ unlink($current_photo_path); }
+                    if(file_exists($current_photo_thumb_path)){ unlink($current_photo_thumb_path); }
+    
                 }
                
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -507,6 +507,8 @@ class MusicianController extends AbstractController
         return $imgt;
 
     }
+
+    
 
 
 }

@@ -47,20 +47,21 @@
                 
               </ul>
 
-              
           <div class="tab-content">
             <div class="tab-pane active" id="home">
                 <hr>
                 <div class="col-md-6">
-                {% if data.complete == false %} <p><a data-toggle="tab" href="#settings">Please complete your settings</a></p>{% endif %}
-                {% if roles|length < musician.jobs|length %} <p><a href="{{ path('musician_show', {'username': app.user.username })}}#experience">Please complete setting up your Experience by adding roles to the jobs you've done</a></p>{% endif %}
-                {% if skills|length < musician.education|length %} <p><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please complete setting up your Education by adding skills you gained in various learning institutions</a></p>{% endif %}
                   <ul class="list-group">
-                    <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Website views</strong></span> 125</li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Gallery views</strong></span> 13</li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Reviews</strong></span> 37</li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Requests</strong></span> 78</li>
+                    <li class="list-group-item text-muted">Notifications <i class="fa fa-dashboard fa-1x"></i></li>                  
+                    {% if data.complete == false %} <li class="list-group-item pull-left"><span class="pull-left"><a data-toggle="tab" href="#settings">
+                    Please complete your settings</a></span></li>
+                    {% endif %}
+                    {% if roles|length < musician.jobs|length %} <li class="list-group-item"><span class="pull-left"><a href="{{ path('musician_show', {'username': app.user.username })}}#experience">Please complete setting up your Experience by adding roles to the jobs you've done</a></span></li>{% endif %}
+                    {% if skills|length < musician.education|length %} <li class="list-group-item"><span class="pull-left"><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please complete setting up your Education by adding skills you gained in various learning institutions</a></span></li>{% endif %}
+                    {% if musician.settings and musician.isproandactive == "true" or musician.settings and musician.ismuskeandactive == "true" %}
+                      {% if documents|length < musician.education|length %} <li class="list-group-item"><span class="pull-left"><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please upload supporting documents to your education. To get the {{membership}} member priviledges, we have to confirm your certifications</a></span></li>{% endif %}
+                      {% if gallery|length < 1 %} <li class="list-group-item"><span class="pull-left"><a href="{{ path('musician_show', {'username': app.user.username })}}#album_intro">You may consider adding photos to your gallery</a></span></li>{% endif %}
+                    {% endif %}
                   </ul> 
                 </div>
                 <div class="col-md-6">
@@ -156,7 +157,7 @@
                           
                           <div class="col-xs-6">
                               <label for="wheretowork"><h4>Where do you stay / wish to work?</h4></label>
-                              <input type="text" value="{{musician.settings and musician.settings.placeofwork}}" class="form-control {% if musician.settings and musician.settings.placeofwork == null or musician.settings and musician.settings.placeofwork == "" %}is-invalid{% endif %}" id="wheretowork" placeholder="Eg: Nairobi, Kiambu, Thika" title="Separate using comma">
+                              <input type="text" value="{{musician.settings and musician.settings.placeofwork ? musician.settings.placeofwork : ""}}" class="form-control {% if musician.settings and musician.settings.placeofwork == null or musician.settings and musician.settings.placeofwork == "" %}is-invalid{% endif %}" id="wheretowork" placeholder="Eg: Nairobi, Kiambu, Thika" title="Separate using comma">
                           </div>
                       </div>
           
@@ -165,53 +166,53 @@
                           <div class="col-xs-6">
                             <label for="accounttype"><h4>You account type</h4></label>
                             <select class="form-control" id="accounttype">
-                              <option value="basic" selected>Basic</option>
-                              <option value="pro">Pro</option>
-                              <option value="muske">Muske</option>
+                              <option value="basic" {{musician.isproandactive == 'false' and musician.ismuskeandactive == 'false' ? 'selected' : ''}}>Basic</option>
+                              <option value="pro" {{musician.isproandactive == 'true' ? 'selected' : ''}}>Pro</option>
+                              <option value="muske" {{musician.ismuskeandactive == 'true' ? 'selected' : ''}}>Muske</option>
                             </select>
                           </div>
                       </div>
-                      {% if app.user and app.user != null and app.user.settings and app.user.settings.pro == 'true' %}
+                      {% if app.user and app.user != null and app.user.settings and app.user.isproandactive == 'true' %}
                       <div class="form-group">
                           
                           <div class="col-xs-6">
                               <label for="twitter"><h4>Twitter URL</h4></label>
-                              <input value="{{musician.settings and musician.settings.twitter}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
+                              <input value="{{musician.settings and musician.settings.twitter ? musician.settings.twitter : ""}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
                               <label for="facebook"><h4>Facebook URL</h4></label>
-                              <input value="{{musician.settings and musician.settings.facebook}}" type="text" class="form-control" id="facebook" placeholder="enter url" title="copy from address bar and paste here.">
+                              <input value="{{musician.settings and musician.settings.facebook ? musician.settings.twitter : ""}}" type="text" class="form-control" id="facebook" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
                               <label for="linkedin"><h4>Linkedin URL</h4></label>
-                              <input type="text" class="form-control" id="linkedin" placeholder="enter url" title="copy from address bar and paste here.">
+                              <input value="{{musician.settings and musician.settings.linkedin ? musician.settings.linkedin : ""}}" type="text" class="form-control" id="linkedin" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
                               <label for="instagram"><h4>Instagram URL</h4></label>
-                              <input value="{{musician.settings and musician.settings.instagram}}" type="text" class="form-control" id="instagram" placeholder="enter url" title="copy from address bar and paste here.">
+                              <input value="{{musician.settings and musician.settings.instagram ? musician.settings.instagram : ""}}" type="text" class="form-control" id="instagram" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
                               <label for="youtube"><h4>Youtube URL</h4></label>
-                              <input value="{{musician.settings and musician.settings.youtube}}" type="text" class="form-control" id="youtube" placeholder="enter url" title="copy from address bar and paste here.">
+                              <input value="{{musician.settings and musician.settings.youtube ? musician.settings.youtube : ""}}" type="text" class="form-control" id="youtube" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
                           <div class="col-xs-6">
                               <label for="twitter"><h4>Twitter link</h4></label>
-                              <input value="{{musician.settings and musician.settings.twitter}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
+                              <input value="{{musician.settings and musician.settings.twitter ? musician.settings.twitter : ""}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>          
                       {% endif %}
@@ -303,6 +304,7 @@ $(document).ready(function() {
 				{
 					console.log(data);
 					console.log("saved settings");
+          $( "#save_settings" ).html('Saved')
 				},
 				error: function () {
 					$("#warning").html("<b>something's wrong</b>");
@@ -385,6 +387,15 @@ $(document).ready(function() {
 
 	$( "#tsc" ).change(function() {
     $("#tsc").removeClass("is-invalid");	
+	});
+
+	</script>
+
+	<script>
+
+	$( "#accounttype" ).change(function() {
+    var plan = $(this).val();
+    location.href = "/musician/plan_details/"+plan;	
 	});
 
 	</script>

@@ -26,7 +26,8 @@ class MembershipManager
 			  $message		  
 		);
 
-		return $this->mailer->send($message) > 0;
+		// return $this->mailer->send($message) > 0;
+		return true;
 	}   
 
 	

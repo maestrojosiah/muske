@@ -1,0 +1,38 @@
+muskecok
+uU-6X2vL+7F0fg
+
+year/month format on education
+
+basic:
+user can download own resume
+
+
+pro:
+live chat
+website visitors can download resume
+direct link to social media pages or profiles
+project link
+whatsapp chat with musician
+call me button
+
+prod:
+change http://localhost from musician.php getPhoto();
+change http://localhost from project.php getProjectimage();\
+same with gallery.php
+same with document.php
+restore the sending of email in src/Updates by uncommenting the return statement
+
+
+seobundle
+notification by email when end of pro : cron job
+Help link goes first to faq... faq should have contacts as the last option 
+Mail Reminder of incomplete accounts once a month : cron job
+
+faq:
+Is basic account free?
+Is muske account free?
+Is pro account free?
+What is the difference between basic, muske and pro accounts?
+Why does muske account have more benefits than basic account?
+If you get me a job as a muske account member, what percentage of income generated will I get?
+Why do I need a pro account if I can get jobs with muske and basic account?

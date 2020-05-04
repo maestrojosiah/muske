@@ -20,4 +20,11 @@ class EmailMessage
 		$message .= "We will call you as soon as possible to confirm some details.";
 		return $message;
 	}
+
+	public function getActivationMessage($username){
+		$message = "You have created an account at https://muske.co.ke. \\n";
+		$message .= "Please activate your account with this link: https://muske.co.ke/musician/activate/$username within 48 hours";
+
+		return $message;
+	}
 }

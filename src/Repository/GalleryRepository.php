@@ -36,6 +36,18 @@ class GalleryRepository extends ServiceEntityRepository
     }
     
 
+    public function findByGivenField($field, $sort, $musician)
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.musician = :val')
+            ->setParameter('val', $musician)
+            ->orderBy("g.$field", $sort)
+            ->setMaxResults(100)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
     /*
     public function findOneBySomeField($value): ?Gallery
     {

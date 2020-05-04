@@ -110,6 +110,8 @@ class Musician implements UserInterface
     private $photourl;
     private $thumbnailurl;
     private $logourl;
+    private $isproandactive;
+    private $ismuskeandactive;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Settings", mappedBy="musician", cascade={"persist", "remove"})
@@ -125,6 +127,11 @@ class Musician implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Document", mappedBy="musician")
      */
     private $documents;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Pro", mappedBy="musician", cascade={"persist", "remove"})
+     */
+    private $pro;
 
     public function __construct()
     {
@@ -602,4 +609,54 @@ class Musician implements UserInterface
 
         return $this;
     }
+
+    public function getPro(): ?Pro
+    {
+        return $this->pro;
+    }
+
+    public function setPro(?Pro $pro): self
+    {
+        $this->pro = $pro;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newMusician = null === $pro ? null : $this;
+        if ($pro->getMusician() !== $newMusician) {
+            $pro->setMusician($newMusician);
+        }
+
+        return $this;
+    }
+
+    public function isProAndActive(){
+        if($this->getPro()){
+            $ending = $this->getPro()->getEnding();
+            $now = new \DateTime("now");
+            $fact = false;
+            if($ending > $now){
+                $fact = true;
+            }
+        } else {
+            $fact = false;
+        }
+        
+        $this->isproandactive = $fact;
+        return $this->isproandactive;
+    }
+
+    public function isMuskeAndActive(){
+        if($this->getSettings()){
+            $muske = $this->getSettings()->getMuske();
+            $fact = false;
+            if($muske == "true"){
+                $fact = true;
+            }
+        } else {
+            $fact = false;
+        }
+        
+        $this->ismuskeandactive = $fact;
+        return $this->ismuskeandactive;
+    }
+
 }

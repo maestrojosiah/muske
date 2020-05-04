@@ -43,6 +43,10 @@ class MusicianController extends AbstractController
         //this is for displaying the page and redirecting if all details are intact
         //get the musician in session
         $musician = $this->getUser();
+        $settings = $musician->getSettings();
+        if($settings){
+            return $this->redirectToRoute('musician_profile');
+        } 
         
         // for placeholding if data exists
 
@@ -273,13 +277,15 @@ class MusicianController extends AbstractController
             $fourPhotos = [];
         }
         if($musician->getSettings()){
+            $jobOrder = $musician->getSettings()->getJobOrder() ? $musician->getSettings()->getJobOrder() : "id";
+            $jobSort = $musician->getSettings()->getJobOrderBy() ? $musician->getSettings()->getJobOrderBy() : "ASC";
             $jobs = $this->getDoctrine()->getManager()->getRepository('App:Job')
-            ->findByGivenField($musician->getSettings()->getJobOrder(), 
-                $musician->getSettings()->getJobOrderBy(), $musician);
+            ->findByGivenField($jobOrder, $jobSort, $musician);
 
+            $eduOrder = $musician->getSettings()->getEduOrder() ? $musician->getSettings()->getEduOrder() : "id";
+            $eduSort = $musician->getSettings()->getEduOrderBy() ? $musician->getSettings()->getEduOrderBy() : "ASC";
             $educ = $this->getDoctrine()->getManager()->getRepository('App:Education')
-            ->findByGivenField($musician->getSettings()->getEduOrder(), 
-                $musician->getSettings()->getEduOrderBy(), $musician);
+            ->findByGivenField($eduOrder, $eduSort, $musician);
 
         } else {
             $jobs = $musician->getJobs();
@@ -302,12 +308,12 @@ class MusicianController extends AbstractController
         $musician = $this->getUser();
         $data = [];
         if($musician->getSettings()){
-            if($musician->getSettings()->getMuske() == 'true'){
-                $membership = "Muske";
-            } elseif($musician->getSettings()->getPro() == 'true'){
-                $membership = "Pro";
+            if($musician->isMuskeAndActive() == 'true'){
+                $membership = "muske";
+            } elseif($musician->isProAndActive() == 'true'){
+                $membership = "pro";
             } else {
-                $membership = "Basic";
+                $membership = "basic";
             }
 
             $details_array = [$musician->getSettings()->getOnline(), $musician->getSettings()->getTsc(), $musician->getSettings()->getPlaceofwork()];
@@ -329,26 +335,41 @@ class MusicianController extends AbstractController
         }
 
         $roles_array = [];
-        $jobs_array = $this->getDoctrine()->getManager()->getRepository('App:Job')
-            ->findByGivenField($musician->getSettings()->getJobOrder(), 
-                $musician->getSettings()->getJobOrderBy(), $musician);
-        foreach ($jobs_array as $key => $job) {
-            if(count($job->getRoles()) > 0){
-                $roles_array[$key] = $job->getRoles();
-            }
+        $skills_array = [];
+        if($musician->getSettings()){
             
+            // in case settings is not available
+            $jobOrder = $musician->getSettings()->getJobOrder() ? $musician->getSettings()->getJobOrder() : "id";
+            $jobSort = $musician->getSettings()->getJobOrderBy() ? $musician->getSettings()->getJobOrderBy() : "ASC";
+            $jobs_array = $this->getDoctrine()->getManager()->getRepository('App:Job')
+                ->findByGivenField($jobOrder, $jobSort, $musician);
+            foreach ($jobs_array as $key => $job) {
+                if(count($job->getRoles()) > 0){
+                    $roles_array[$key] = $job->getRoles();
+                }
+                
+            }
+
+            // in case settings is not available
+            $eduOrder = $musician->getSettings()->getEduOrder() ? $musician->getSettings()->getEduOrder() : "id";
+            $eduSort = $musician->getSettings()->getEduOrderBy() ? $musician->getSettings()->getEduOrderBy() : "ASC";
+            $edu_array = $this->getDoctrine()->getManager()->getRepository('App:Education')
+                ->findByGivenField($eduOrder, $eduSort, $musician);
+            foreach ($edu_array as $key => $edu) {
+                if(count($edu->getSpecialties()) > 0){
+                    $skills_array[$key] = $edu->getSpecialties();
+                }
+                
+            }
+    
         }
 
-        $skills_array = [];
-        $edu_array = $this->getDoctrine()->getManager()->getRepository('App:Education')
-            ->findByGivenField($musician->getSettings()->getEduOrder(), 
-            $musician->getSettings()->getEduOrderBy(), $musician);
-        foreach ($edu_array as $key => $edu) {
-            if(count($edu->getSpecialties()) > 0){
-                $skills_array[$key] = $edu->getSpecialties();
-            }
+        $doc_array = $this->getDoctrine()->getManager()->getRepository('App:Document')
+            ->findByGivenField("id", "ASC", $musician);
             
-        }
+        $gallery_array = $this->getDoctrine()->getManager()->getRepository('App:Gallery')
+            ->findByGivenField("id", "ASC", $musician);
+            
 
         return $this->render('musician/profile.html.twig', [
             'musician' => $musician,
@@ -356,6 +377,8 @@ class MusicianController extends AbstractController
             'membership' => $membership,
             'roles' => $roles_array,
             'skills' => $skills_array,
+            'documents' => $doc_array,
+            'gallery' => $gallery_array,
         ]);
     }
 
@@ -368,9 +391,9 @@ class MusicianController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $musician = $this->getUser();
 
-        if($musician->getSettings()->getMuske() == 'true'){
+        if($musician->isMuskeAndActive() == 'true'){
             $membership = "Muske";
-        } elseif($musician->getSettings()->getPro() == 'true'){
+        } elseif($musician->isProAndActive() == 'true'){
             $membership = "Pro";
         } else {
             $membership = "Basic";
@@ -390,9 +413,9 @@ class MusicianController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $musician = $this->getUser();
 
-        if($musician->getSettings()->getMuske() == 'true'){
+        if($musician->isMuskeAndActive() == 'true'){
             $membership = "Muske";
-        } elseif($musician->getSettings()->getPro() == 'true'){
+        } elseif($musician->isProAndActive() == 'true'){
             $membership = "Pro";
         } else {
             $membership = "Basic";

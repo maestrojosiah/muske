@@ -48,6 +48,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     {
         $credentials = [
             'username' => $request->request->get('username'),
+            'email' => $request->request->get('username'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
@@ -69,8 +70,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $user = $this->entityManager->getRepository(Musician::class)->findOneBy(['username' => $credentials['username']]);
 
         if (!$user) {
+            $user = $this->entityManager->getRepository(Musician::class)->findOneBy(['email' => $credentials['email']]);
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Username could not be found.');
+            if(!$user) {
+                throw new CustomUserMessageAuthenticationException('Username could not be found.');
+            }
+            
         }
 
         return $user;

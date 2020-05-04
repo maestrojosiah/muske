@@ -4,7 +4,7 @@ namespace App\Updates;
 
 use App\Service\EmailMessage;
 
-class ResetPwdManager
+class ActivationManager
 {
 	private $emailMessage;
 	private $mailer;
@@ -15,12 +15,11 @@ class ResetPwdManager
 		$this->mailer = $mailer;
 	}
 
-	public function sendResetEmail($emailToReceive, $username)
+	public function sendActivationEmail($emailToReceive, $username)
 	{
-		$message = $this->emailMessage->getResetMessage($username);
+		$message = $this->emailMessage->getActivationMessage($username);
 
-
-		$message = (new \Swift_Message('You have reset your password'))
+		$message = (new \Swift_Message('Activate your MuSKe account'))
 		  ->setFrom('info@muske.co.ke')
 		  ->setTo($emailToReceive)
 		  ->addPart(

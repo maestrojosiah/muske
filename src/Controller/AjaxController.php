@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Entity\Skill;
+use App\Entity\Pro;
 use App\Entity\Education;
 use App\Entity\Job;
 use App\Entity\JobToBeOffered;
@@ -21,8 +22,11 @@ use App\Entity\Gallery;
 use App\Entity\Document;
 use App\Updates\ResetPwdManager;
 use App\Updates\MembershipManager;
+use App\Updates\ActivationManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Repository\MusicianRepository;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AjaxController extends AbstractController
 {
@@ -39,19 +43,25 @@ class AjaxController extends AbstractController
     /**
      * @Route("/more_info", name="update_user")
      */
-    public function updateMusician(Request $request)
+    public function updateMusician(ActivationManager $activationManager, Request $request)
     {
         if($request->request->get('email')){
             // $quantityValue = $request->request->get('quantity') ? $request->request->get('quantity') : 1 ;
             // $fullId = explode('_',$request->request->get('some_var_name'));
             // $id = $fullId[1];
+            $data = [];
             $email = $this->sanitizeInput($request->request->get('email'));
             $fullname = $this->sanitizeInput($request->request->get('fullname'));
             $age = $this->sanitizeInput($request->request->get('age'));
             $phonenumber = $this->sanitizeInput($request->request->get('phonenumber'));
 
             $musician = $this->getUser();
-    
+
+            $username = $this->base64url_encode($musician->getUsername());
+            if($activationManager->sendActivationEmail($email, $username)){
+                $this->addFlash('success', "Account created successfully! Please check your email for an account activation link. (Check spam folder if you can't find it) ");
+            }
+            
             $entityManager = $this->getDoctrine()->getManager();
             $musician->setEmail($email);
             $musician->setPhone($phonenumber);
@@ -59,9 +69,6 @@ class AjaxController extends AbstractController
             $musician->setFullname($fullname);
             $entityManager->persist($musician);
             $entityManager->flush();
-    
-            $user = $this->getUser();
-
            
             return new JsonResponse($email);
         }
@@ -450,9 +457,9 @@ class AjaxController extends AbstractController
             $em->persist($document);
             $em->flush();
 
-            $doc_link = $document->getDocpath();
+            $doc = $document->getDoc();
 
-            return new JsonResponse($doc_link);
+            return new JsonResponse("/download/".$doc);
         }
         return new JsonResponse("fail");
     }
@@ -802,6 +809,17 @@ class AjaxController extends AbstractController
             if($membership == 'pro'){
                 $setting->setPro("true");
                 $setting->setMuske("false");
+                $started = new \DateTime("now");
+                $started ->setTime(0, 0, 0);
+
+                $ending = clone $started;
+                $ending->modify('+365 days'); 
+                $pro = new Pro();
+                $pro->setMusician($musician);
+                $pro->setStarted($started);
+                $pro->setEnding($ending);
+                $entityManager->persist($pro);
+                $entityManager->flush();
             }
             if($membership == 'muske'){
                 $setting->setMuske("true");
@@ -832,5 +850,15 @@ class AjaxController extends AbstractController
         
 
     }
+
+    /**
+     * @Route("/download/{file}", name="download_pdf")
+    **/
+    public function downloadPdfAction($file){
+        $folder = $this->getParameter('document_directory');
+        $response = new BinaryFileResponse($folder."/".$file);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT,"$file.pdf");
+        return $response;
+    }    
 
 }

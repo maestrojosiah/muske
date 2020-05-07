@@ -1,0 +1,132 @@
+{% extends 'pdfBase.html.twig' %}
+
+{% block title %}Resume{% endblock %}
+{% block stylesheets %}
+	<style type="text/css" media="all">
+		html{
+			background-color:#EEE;
+			padding:0 1em;
+			}
+		body {
+			background-color:#FFF;
+			font-family:"Trebuchet MS", Helvetica, Arial;
+			padding:1em;
+			border:solid #AAA;
+			border-width:1px 3px 3px 1px;
+			margin:1em auto;
+			max-width: 50em;
+			}
+		#address{
+			height:5em;
+			width:47em;
+			margin:1em 0 1em 0;
+			}
+		#address div{
+			width:13em;
+			float:left;
+			padding:0 .5em 0 1.5em;
+			border-left:1px solid #CCC;
+			}
+		#address div#first{
+			border-left:none;
+			}
+		#address h3{
+			border-bottom: none;
+			margin-top: 0;
+			}	
+		.date {
+			float:right;
+			font-size:.8em;
+			margin-top:.4em;
+			text-align:right;
+			}
+		abbr, acronym{
+			border-bottom:1px dotted #333;
+			cursor:help;
+			}	
+		address{
+			font-style:italic;
+			color:#333;
+			font-size:.9em;
+			}
+			
+		
+		h1{
+			font-size:1.5em;
+			font-family: Helvetica, Verdana, Arial, sans-serif;
+			}
+		h2 {
+			clear:both;
+			font-size: 1.4em;
+			font-weight:bold;
+			margin-top:2em;
+			font-variant: small-caps;
+			padding-left:.25em;
+			background-color:#EEE;
+			border-bottom: 1px solid #999;
+			letter-spacing: .06em;
+			}
+		h3 {margin: 1em 0 0 0;}
+	</style>
+	<style type="text/css" media="print">
+		body {
+			background-color:#FFF;
+			border-width:0 0 0 0;
+			margin:0;
+			width:100%
+			}
+	</style>
+    {% endblock %}
+{% block body %}
+
+	<h1>{{musician.fullname}}</h1>
+	<div id="address">
+		{% include "reusable/_threecolumnaddress_.html.twig" %}
+	</div>
+	
+	<div class="section">
+		<h2>About me </h2>
+		<div class="content">
+			{% include "reusable/_simpleabout_.html.twig" %}
+		</div>
+	</div>
+	<div class="section">
+		<h2>Summary of Specialty</h2>
+		<div class="content">
+			{% include "reusable/_simplespecialty_.html.twig" %}
+		</div>
+	</div>
+	
+	<div class="section">
+		<h2>Work Experience</h2>
+		<div class="content">
+			{% include "reusable/_simpleexperience_.html.twig" %}
+		</div>
+	</div>
+	
+    {% if musician.projects is not empty %}
+	<div class="section">
+		<h2>Projects</h2>
+		<div class="content">
+			{% include "reusable/_simpleprojects_.html.twig" %}
+		</div>
+	</div>
+    {% endif %}
+
+	<div class="section">
+		<h2>Education</h2>
+		<div class="content">
+			{% include "reusable/_simpleeducation_.html.twig" %}
+		</div>
+	</div>
+
+	<div class="section">
+		<h2>Skills</h2>
+		<div class="content">
+			<ul>
+			{% include "reusable/_simpleskills_.html.twig" %}
+			</ul>
+		</div>
+	</div>
+	
+{% endblock %}

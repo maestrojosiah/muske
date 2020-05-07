@@ -1,0 +1,16 @@
+        {% for job in jobs %}
+          <div>
+			<span class="date">{{job.startingfrom|date("F Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y") }}</span>
+			<h3>{{job.jobtitle}}</h3>
+			<address>{{job.institution}}{{" / " ~ job.location}}</address>
+            {% if job.roles is empty %}
+                    {# No roles added #}
+            {% else %}
+                <ul>
+                    {% for role in job.roles %}
+                    <li>{{role.role}}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+          </div>
+		{% endfor %}

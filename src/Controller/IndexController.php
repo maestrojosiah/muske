@@ -29,4 +29,15 @@ class IndexController extends AbstractController
             'error' => $error,
         ]);
     }
+    /**
+     * @Route("/get/error/and/display/{error_msg}", name="error")
+     */
+    public function error($error_msg = ""): Response
+    {
+
+        return $this->render('index/error.html.twig', [
+            'error' => $error_msg,
+        ]);
+    }
+
 }

@@ -133,6 +133,26 @@ class Musician implements UserInterface
      */
     private $pro;
 
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $subscribed;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $confirmed;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pdfTheme;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $webTheme;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -657,6 +677,54 @@ class Musician implements UserInterface
         
         $this->ismuskeandactive = $fact;
         return $this->ismuskeandactive;
+    }
+
+    public function getSubscribed(): ?string
+    {
+        return $this->subscribed;
+    }
+
+    public function setSubscribed(?string $subscribed): self
+    {
+        $this->subscribed = $subscribed;
+
+        return $this;
+    }
+
+    public function getConfirmed(): ?string
+    {
+        return $this->confirmed;
+    }
+
+    public function setConfirmed(?string $confirmed): self
+    {
+        $this->confirmed = $confirmed;
+
+        return $this;
+    }
+
+    public function getPdfTheme(): ?string
+    {
+        return $this->pdfTheme;
+    }
+
+    public function setPdfTheme(?string $pdfTheme): self
+    {
+        $this->pdfTheme = $pdfTheme;
+
+        return $this;
+    }
+
+    public function getWebTheme(): ?string
+    {
+        return $this->webTheme;
+    }
+
+    public function setWebTheme(?string $webTheme): self
+    {
+        $this->webTheme = $webTheme;
+
+        return $this;
     }
 
 }

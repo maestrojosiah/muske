@@ -105,6 +105,28 @@ class AjaxController extends AbstractController
     }
 
     /**
+     * @Route("/save/template", name="save_template")
+     */
+    public function saveTheme(Request $request)
+    {
+        if($request->request->get('theme_template')){
+
+            $theme_template = $this->sanitizeInput($request->request->get('theme_template'));
+
+            $musician = $this->getUser();
+    
+            $entityManager = $this->getDoctrine()->getManager();
+            $musician->setPdfTheme($theme_template);
+            $entityManager->persist($musician);
+            $entityManager->flush();
+           
+            return new JsonResponse($theme_template);
+        }
+        
+
+    }
+
+    /**
      * @Route("/save/education", name="save_education")
      */
     public function saveEducation(Request $request)

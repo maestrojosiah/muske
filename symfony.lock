@@ -103,6 +103,12 @@
     "egulias/email-validator": {
         "version": "2.1.17"
     },
+    "h4cc/wkhtmltoimage-amd64": {
+        "version": "0.12.4"
+    },
+    "h4cc/wkhtmltopdf-amd64": {
+        "version": "0.12.4"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

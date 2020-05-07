@@ -41,7 +41,7 @@
                 <li><a data-toggle="tab" href="#reviews">Reviews</a></li>
                 <li><a href="{{ path('easyadmin')}}">Admin Page</a></li>
                 <li><a href="{{ path('musician_edit', {'username': musician.username})}}">Resume info</a></li>
-                <li><a href="{{ path('easyadmin')}}">Download Your Resume</a></li>
+                <li><a href="{{path('musician_show', {'username': musician.username, 'download': 'img'})}}">Download Your Resume</a></li>
                 <li><a href="{{ path('gallery_index', {'username': musician.username})}}">Gallery</a></li>
                 {% if app.user and app.user != null %}<li> <a href="{{path("app_logout")}}">Logout</a> {% else %} <a href="{{path("homepage")}}">Login</a></li>{% endif %}
                 
@@ -53,14 +53,14 @@
                 <div class="col-md-6">
                   <ul class="list-group">
                     <li class="list-group-item text-muted">Notifications <i class="fa fa-dashboard fa-1x"></i></li>                  
-                    {% if data.complete == false %} <li class="list-group-item pull-left"><span class="pull-left"><a data-toggle="tab" href="#settings">
-                    Please complete your settings</a></span></li>
+                    {% if data.complete == false %} <li class="list-group-item pull-left"><a data-toggle="tab" href="#settings">
+                    Please complete your settings</a></li>
                     {% endif %}
-                    {% if roles|length < musician.jobs|length %} <li class="list-group-item"><span class="pull-left"><a href="{{ path('musician_show', {'username': app.user.username })}}#experience">Please complete setting up your Experience by adding roles to the jobs you've done</a></span></li>{% endif %}
-                    {% if skills|length < musician.education|length %} <li class="list-group-item"><span class="pull-left"><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please complete setting up your Education by adding skills you gained in various learning institutions</a></span></li>{% endif %}
+                    {% if roles|length < musician.jobs|length %} <li class="list-group-item"><a href="{{ path('musician_show', {'username': app.user.username })}}#experience">Please complete setting up your Experience by adding roles to the jobs you've done</a></li>{% endif %}
+                    {% if skills|length < musician.education|length %} <li class="list-group-item"><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please complete setting up your Education by adding skills you gained in various learning institutions</a></li>{% endif %}
                     {% if musician.settings and musician.isproandactive == "true" or musician.settings and musician.ismuskeandactive == "true" %}
-                      {% if documents|length < musician.education|length %} <li class="list-group-item"><span class="pull-left"><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please upload supporting documents to your education. To get the {{membership}} member priviledges, we have to confirm your certifications</a></span></li>{% endif %}
-                      {% if gallery|length < 1 %} <li class="list-group-item"><span class="pull-left"><a href="{{ path('musician_show', {'username': app.user.username })}}#album_intro">You may consider adding photos to your gallery</a></span></li>{% endif %}
+                      {% if documents|length < musician.education|length %} <li class="list-group-item"><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please upload supporting documents to your education. To get the {{membership}} member priviledges, we have to confirm your certifications</a></li>{% endif %}
+                      {% if gallery|length < 1 %} <li class="list-group-item"><a href="{{ path('musician_show', {'username': app.user.username })}}#album_intro">You may consider adding photos to your gallery</a></li>{% endif %}
                     {% endif %}
                   </ul> 
                 </div>
@@ -68,8 +68,11 @@
                   <div class="panel panel-default">
                     <div class="panel-heading">Your Account</div>
                     <div class="panel-body">
-                      <p> You are a {{membership}} member </p>
-                      <a href="{{ path('musician_plan')}}" class="btn btn-lg btn-success pull-right" id="test" type="button"> Change</a>                      
+                      <div class="col-md-8"><p> You are a {{membership}} member<p></div>
+                      <div class="col-md-4"><a href="{{ path('musician_plan')}}" class="btn btn-md btn-success pull-right" id="test" type="button"> Change</a></div>
+                      <hr />
+                      <div class="col-md-8"><p> Downloadable resume theme : {{musician.pdfTheme == null ? 'Default' : musician.pdfTheme}}</p></div>
+                      <div class="col-md-4"><a href="{{ path('pdf_theme_index')}}" class="btn btn-md btn-success pull-right" id="test" type="button"> Change</a> </div>
                     </div>
                   </div>
                 </div>

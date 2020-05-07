@@ -129,7 +129,7 @@
             <h4 style="display:inline; color:white;" >{{job_role.jobtitle}} {% if loop.index < musician.jobstobeoffered|length %} | {% endif %}</h4>
             {% endfor %}<br /><br />
             {% if app.user == null %}
-            <a href="#" class="btn-rounded-white">Download Resume</a>
+            <a target="_blank" href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}" class="btn-rounded-white">Download Resume</a>
             <br />
             <br />
             {% endif %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WebTheme index{% endblock %}
+
+{% block body %}
+    <h1>WebTheme index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Template</th>
+                <th>Screenshot</th>
+                <th>Title</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for web_theme in web_themes %}
+            <tr>
+                <td>{{ web_theme.id }}</td>
+                <td>{{ web_theme.template }}</td>
+                <td>{{ web_theme.screenshot }}</td>
+                <td>{{ web_theme.title }}</td>
+                <td>
+                    <a href="{{ path('web_theme_show', {'id': web_theme.id}) }}">show</a>
+                    <a href="{{ path('web_theme_edit', {'id': web_theme.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('web_theme_new') }}">Create new</a>
+{% endblock %}

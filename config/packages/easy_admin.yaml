@@ -1,5 +1,5 @@
 easy_admin:
-    disabled_actions: ['new']
+    # disabled_actions: ['new']
     design:
         menu:
             - { label: 'Resume Page', route: 'homepage' }
@@ -13,6 +13,7 @@ easy_admin:
             - { entity: 'Project', label: 'Projects' }            
             - { entity: 'Role', label: "Jobs you can do" }            
             - { entity: 'Gallery', label: "Photos and Videos" }            
+            - { entity: 'PdfTheme', label: "Pdf Resume" }            
             # - { label: 'Some Task', route: 'user_some_task' }
             # - { label: 'Other Task', route: 'other_task', params: { max: 7 } }
 
@@ -25,6 +26,7 @@ easy_admin:
 
     entities:
         Education:
+            disabled_actions: ['new']
             class: App\Entity\Education
             label: 'Education'
             list:
@@ -36,6 +38,7 @@ easy_admin:
             form:
                 fields: ['institution', {property: 'fromyear', label: 'From'}, {property: 'toyear', label: 'To'}, {property: 'coursename', label: 'Course'}, 'degree', 'location']        
         Job:
+            disabled_actions: ['new']
             class: App\Entity\Job
             label: 'Jobs'
             list:
@@ -46,6 +49,7 @@ easy_admin:
             form:
                 fields: ['jobtitle', {property: 'startingfrom', label: 'From'}, {property: 'endedin', label: 'To'}, {property: 'currentornot', label: 'Current Job?'}, 'location', 'institution']                              
         Role:
+            disabled_actions: ['new']
             class: App\Entity\JobToBeOffered
             label: 'Roles'
             list:
@@ -54,6 +58,7 @@ easy_admin:
             form:
                 fields: [{property: 'medium', label: 'Medium'}, , {property: 'jobtitle', label: 'Job Title'}] 
         JobRole:
+            disabled_actions: ['new']
             class:  App\Entity\Role
             label: 'Job Roles'
             list:
@@ -62,6 +67,7 @@ easy_admin:
             form:
                 fields: ['role', 'job']
         Project:
+            disabled_actions: ['new']
             class: App\Entity\Project
             label: 'Projects'
             list:
@@ -70,6 +76,7 @@ easy_admin:
             form:
                 fields: [{property: 'projecttitle', label: 'Project Title'}]
         Skill:
+            disabled_actions: ['new']
             class: App\Entity\Skill
             label: 'Skills'
             list:
@@ -78,6 +85,7 @@ easy_admin:
             form:
                 fields: [{property: 'skillname', label: 'Skill'}, {property: 'levelofskill', label: 'Leveo of Skill'}, {property: 'experienceofskill', label: 'Experience in Years'}]                        
         Specialty:
+            disabled_actions: ['new']
             class: App\Entity\Specialty
             label: 'Skills learned'
             list:
@@ -86,6 +94,7 @@ easy_admin:
             form:
                 fields: [{property: 'instrumentorskill', label: 'Skills earned'}, {property: 'education.coursename', label: 'Course'}, {property: 'education.degree', label: 'Level'}]                        
         Document:
+            disabled_actions: ['new']
             class: App\Entity\Document
             label: 'Documents'
             list:
@@ -94,6 +103,7 @@ easy_admin:
             form:
                 fields: [{property: 'doc', label: 'Document'}, {property: 'education.coursename', label: 'Course'}, {property: 'education.degree', label: 'Level'}]                        
         Gallery:
+            disabled_actions: ['new']
             class: App\Entity\Gallery
             label: 'Photos & Videos'
             list:
@@ -101,6 +111,15 @@ easy_admin:
                 fields: [{property: 'photo', label: 'Media'}, {property: 'description', label: 'Description'}]                        
             form:
                 fields: [{property: 'photo', label: 'Media'}, {property: 'description', label: 'Description'}]                        
+        PdfTheme:
+            class: App\Entity\PdfTheme
+            label: 'Pdf Resume'
+            list:
+                actions: ['list', 'edit', 'search', 'delete', 'show', 'new']
+                title: "Resume"            
+                fields: [{property: 'template', label: 'Template'}, {property: 'screenshot', label: 'Screenshot'}, {property: 'title', label: 'Title'}]                        
+            form:
+                fields: [{property: 'template', label: 'Template'}, {property: 'screenshot', label: 'Screenshot'}, {property: 'title', label: 'Title'}]                        
     user:
         # this method/property must return the string representation of the user
         # (Symfony will look for getFullName(), isFullName(), ..., and 'fullName' property)

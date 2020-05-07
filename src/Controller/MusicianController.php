@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Musician;
 use App\Form\MusicianType;
 use App\Repository\MusicianRepository;
-use App\Updates\ResetPwdManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,10 +12,22 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
-
+use Knp\Snappy\Pdf;
+use Knp\Snappy\Image;
+use Symfony\Component\Routing;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class MusicianController extends AbstractController
 {
+    private $snappy_pdf;
+    private $snappy_img;
+    
+    public function __construct(Pdf $snappy_pdf, Image $snappy_img){
+        $this->snappy_pdf = $snappy_pdf;
+        $this->snappy_img = $snappy_img;
+    }    
+
+
     /**
      * @Route("/musician/index", name="musician_index", methods={"GET"})
      */
@@ -263,9 +274,9 @@ class MusicianController extends AbstractController
 
 
     /**
-     * @Route("/{username}", name="musician_show", methods={"GET"})
+     * @Route("/{username}/{download}", name="musician_show", methods={"GET"})
      */
-    public function show($username): Response
+    public function show($username, $download = '', UrlGeneratorInterface $generator): Response
     {
 
         $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->findByUsername($username)[0];
@@ -291,16 +302,40 @@ class MusicianController extends AbstractController
             $jobs = $musician->getJobs();
             $educ = $musician->getEducation();
         }
-        return $this->render('musician/show.html.twig', [
+
+        $photourl = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto();
+        $status = is_file($photourl);
+        $pdf_template = $musician->getPdfTheme() ? $musician->getPdfTheme() : 'simpleOne' ;
+
+        $array_data = [
             'musician' => $musician,
             'jobs' => $jobs,
             'educ' => $educ,
             'fourPhotos' => $fourPhotos,
-        ]);
+        ];
+
+        if($download == 'pdf'){
+            if($status){
+                return $this->toPdf("pdf/$pdf_template", $array_data, $musician->getUsername()."_Resume");
+            } else {
+                return $this->redirectToRoute('error', ['error_msg' => "Broken links prevents the pdf from downloading. Upload your profile photo"]);
+            }
+        } elseif ($download == 'img') {
+            if($status){
+                return $this->toImage('pdf/simpleOne.html.twig', $array_data, $musician->getUsername()."_Resume");
+            } else {
+                return $this->redirectToRoute('error', ['error_msg' => "Broken links prevents the pdf from downloading. Upload your profile photo"]);
+            }
+        } else {
+            return $this->render('musician/show.html.twig', $array_data);
+    
+        }
+        
+
     }
 
     /**
-     * @Route("/musician/profile", name="musician_profile", methods={"GET"})
+     * @Route("/musician/action/profile", name="musician_profile", methods={"GET"})
      */
     public function profile(): Response
     {
@@ -369,7 +404,7 @@ class MusicianController extends AbstractController
             
         $gallery_array = $this->getDoctrine()->getManager()->getRepository('App:Gallery')
             ->findByGivenField("id", "ASC", $musician);
-            
+        
 
         return $this->render('musician/profile.html.twig', [
             'musician' => $musician,
@@ -531,7 +566,33 @@ class MusicianController extends AbstractController
 
     }
 
-    
+    public function toPdf($path = '', $array = [], $filename): Response
+    {
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView($path, $array);
+
+        //Generate pdf with the retrieved HTML
+        return new Response( $this->snappy_pdf->getOutputFromHtml($html), 200, array(
+            'Content-Type'          => 'application/pdf',
+            'Content-Disposition'   => 'inline; filename='.$filename.'.pdf'
+        )
+        );        
+    }
+
+    public function toImage($path = '', $array = [], $filename): Response
+    {
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView($path, $array);
+
+        //Generate pdf with the retrieved HTML
+        return new Response( $this->snappy_img->getOutputFromHtml($html), 200, array(
+            'Content-Type'          => 'image/jpg',
+            'Content-Disposition'   => 'inline; filename='.$filename.'.jpg'
+        )
+        );        
+    }
 
 
 }

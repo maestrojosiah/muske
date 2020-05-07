@@ -1,0 +1,103 @@
+
+{% extends 'base_gallery.html.twig' %}
+
+{% block title %}Themes{% endblock %}
+{% block stylesheets %}
+<style type="text/css">
+body {
+    padding-top: 0px;
+    padding-bottom:0px;
+}
+</style>
+{% endblock %}
+{% block body %}
+
+<header>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a href="#" class="navbar-brand d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <strong>Album | {{musician.fullname}}</strong>
+      </a>
+      {% if app.user and app.user != null %}
+      <a href="{{path('musician_profile')}}" class="btn btn-primary my-2">Back to Profile</a>
+      {% endif %}
+      <a href="{{path('musician_show', {'username': musician.username })}}" class="btn btn-secondary my-2">Resume page</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="album py-5 bg-light">
+    <!-- Page Content -->
+    <div class="container">
+
+      <h1 class="my-4 text-center text-lg-left">Thumbnail Gallery</h1>
+
+      <div class="row text-center text-lg-left">
+        {% for theme in pdf_themes %}
+        <div class="card col-md-4">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{theme.title}}</h5>
+                <p class="card-text"></p>
+                <input id="template_{{theme.id}}" type="hidden" value="{{theme.template}}" />
+                <button id="changeTheme_{{theme.id}}" type="button" class="btn btn-{{musician.pdfTheme == theme.template ? 'success' : 'primary'}} common">{{musician.pdfTheme == theme.template ? 'Current' : 'Activate'}}</button>
+            </div>
+        </div>      
+        {% endfor %}
+
+      </div>
+
+    </div>
+    <!-- /.container -->
+  </div>
+  
+
+</main>
+
+<footer class="text-muted py-5">
+  <div class="container">
+    <p class="float-right mb-1">
+      <a href="#">Back to top</a>
+    </p>
+    {# <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="{{< docsref "/getting-started/introduction" >}}">getting started guide</a>.</p> #}
+  </div>
+</footer>
+
+{% endblock %}
+{% block javascripts %}
+	<script>
+
+    $(document).on("click", '[id^="changeTheme_"]', function(){
+        var project = jQuery(this).attr("id");
+        var splitted = project.split('_'); //changeRow_Qt_1504
+        var id = splitted[1] //1504
+		var theme_template = $("#template_"+id).val();              
+
+			$.ajax({
+				url:'{{ (path('save_template')) }}',
+				type: "POST",
+				dataType: "json",
+				data: {
+					"theme_template": theme_template,
+				},
+				async: true,
+				success: function (data)
+				{
+					console.log(data);
+					console.log("saved settings");
+                    $(".common").html('Activate').removeClass('btn-success').addClass('btn-primary');
+                    $("#changeTheme_"+id).html('Current Theme').removeClass('btn-primary').addClass('btn-success');
+				},
+				error: function () {
+					$("#warning").html("<b>something's wrong</b>");
+				}
+			});
+
+	});
+
+	</script>
+
+{% endblock %}

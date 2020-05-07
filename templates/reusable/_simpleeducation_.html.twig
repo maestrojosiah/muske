@@ -1,0 +1,5 @@
+			<ul>
+            {% for edu in educ %}
+				<li>{{edu.degree}} for {{edu.coursename}}, {{edu.institution}}, {{edu.location}},  {{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</li>
+            {% endfor %}
+			</ul>

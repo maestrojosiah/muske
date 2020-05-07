@@ -21,12 +21,24 @@ change http://localhost from project.php getProjectimage();\
 same with gallery.php
 same with document.php
 restore the sending of email in src/Updates by uncommenting the return statement
+change wkhtmltopdf path in .env
 
 
 seobundle
 notification by email when end of pro : cron job
 Help link goes first to faq... faq should have contacts as the last option 
 Mail Reminder of incomplete accounts once a month : cron job
+unsubscribe link : https://muske.co.ke/musician/unsubscribe/{{username}} used in email conf twig
+check if subscribed before sending any email
+complete email templates
+link email confirmation email to finish button on basic details
+salary is still nowhere in the resume
+consider blog
+select photo for background from gallery
+alter cv addresses accordingly
+special characters in pdf downloads
+change profile download back to pdf
+
 
 faq:
 Is basic account free?
@@ -36,3 +48,4 @@ What is the difference between basic, muske and pro accounts?
 Why does muske account have more benefits than basic account?
 If you get me a job as a muske account member, what percentage of income generated will I get?
 Why do I need a pro account if I can get jobs with muske and basic account?
+how do i change my themes

@@ -14,7 +14,6 @@ class GalleryType extends AbstractType
         $builder
             ->add('photo')
             ->add('description')
-            ->add('musician')
         ;
     }
 

@@ -18,8 +18,9 @@ call me button
 prod:
 change http://localhost from musician.php getPhoto();
 change http://localhost from project.php getProjectimage();\
-same with gallery.php
-same with document.php
+same with Gallery.php
+same with Document.php
+same with PfdTheme.php
 restore the sending of email in src/Updates by uncommenting the return statement
 change wkhtmltopdf path in .env
 
@@ -31,13 +32,14 @@ Mail Reminder of incomplete accounts once a month : cron job
 unsubscribe link : https://muske.co.ke/musician/unsubscribe/{{username}} used in email conf twig
 check if subscribed before sending any email
 complete email templates
-link email confirmation email to finish button on basic details
 salary is still nowhere in the resume
 consider blog
 select photo for background from gallery
-alter cv addresses accordingly
+alter cv addresses accordingly : change what to display in entity
 special characters in pdf downloads
 change profile download back to pdf
+copy link button in profile
+if project image exists, hide form
 
 
 faq:

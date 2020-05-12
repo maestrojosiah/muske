@@ -43,7 +43,7 @@ class AjaxController extends AbstractController
     /**
      * @Route("/more_info", name="update_user")
      */
-    public function updateMusician(ActivationManager $activationManager, Request $request)
+    public function updateMusician(Request $request)
     {
         if($request->request->get('email')){
             // $quantityValue = $request->request->get('quantity') ? $request->request->get('quantity') : 1 ;
@@ -56,11 +56,6 @@ class AjaxController extends AbstractController
             $phonenumber = $this->sanitizeInput($request->request->get('phonenumber'));
 
             $musician = $this->getUser();
-
-            $username = $this->base64url_encode($musician->getUsername());
-            if($activationManager->sendActivationEmail($email, $username)){
-                $this->addFlash('success', "Account created successfully! Please check your email for an account activation link. (Check spam folder if you can't find it) ");
-            }
             
             $entityManager = $this->getDoctrine()->getManager();
             $musician->setEmail($email);
@@ -286,7 +281,7 @@ class AjaxController extends AbstractController
     /**
      * @Route("/save/salary", name="save_salary")
      */
-    public function saveSalary(Request $request)
+    public function saveSalary(ActivationManager $activationManager, Request $request)
     {
         // if($request->request->get('cur_salary')){
 
@@ -296,7 +291,13 @@ class AjaxController extends AbstractController
             $exp_salary == "" ? "nil" : $exp_salary;
 
             $musician = $this->getUser();
-    
+            $email = $musician->getEmail();
+            
+            $username = $this->base64url_encode($musician->getUsername());
+            if($activationManager->sendActivationEmail($email, $username)){
+                $this->addFlash('success', "Account created successfully! Please check your email for an account activation link. (Check spam folder if you can't find it) ");
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $musician->setCurrentsalary($cur_salary);
             $musician->setExpectedsalary($exp_salary);
@@ -684,13 +685,31 @@ class AjaxController extends AbstractController
         if ($imgt) {
             $old_image = $imgcreatefrom("$updir" .  '/'. "$img");
             $new_image = imagecreatetruecolor($thumbnail_width, $thumbnail_height);
+            $this->setTransparency($new_image, $old_image); 
             imagecopyresized($new_image, $old_image, $dest_x, $dest_y, 0, 0, $new_width, $new_height, $original_width, $original_height);
-            $imgt($new_image, "$updir" .  '/'. "$thumb_beforeword/" . "$img");
+            imagepng($new_image, "$updir" .  '/'. "$thumb_beforeword/" . "$img". ".png");
         }
 
         return $imgt;
 
     }
+
+  
+    function setTransparency($new_image, $image_source)
+    {
+       
+            $transparencyIndex = imagecolortransparent($image_source);
+            $transparencyColor = array('red' => 255, 'green' => 255, 'blue' => 255);
+            
+            if ($transparencyIndex >= 0) {
+                $transparencyColor    = imagecolorsforindex($image_source, $transparencyIndex);   
+            }
+           
+            $transparencyIndex    = imagecolorallocate($new_image, $transparencyColor['red'], $transparencyColor['green'], $transparencyColor['blue']);
+            imagefill($new_image, 0, 0, $transparencyIndex);
+            imagecolortransparent($new_image, $transparencyIndex);
+       
+    } 
 
     /**
      * @Route("/musician/password/reset", name="musician_reset_password", methods={"GET", "POST"})

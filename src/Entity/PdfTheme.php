@@ -32,6 +32,7 @@ class PdfTheme
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $title;
+    private $themeurl;
 
     public function getId(): ?int
     {
@@ -72,6 +73,14 @@ class PdfTheme
         $this->title = $title;
 
         return $this;
+    }
+
+    public function themeurl(): ?string
+    {
+        $url = "http://localhost:8000/img/screenshots/$this->screenshot";
+        $this->themeurl = $url;
+
+        return $this->themeurl;
     }
 
 }

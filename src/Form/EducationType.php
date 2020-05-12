@@ -27,7 +27,6 @@ class EducationType extends AbstractType
             ->add('coursename')
             ->add('degree')
             ->add('location')
-            ->add('musician')
         ;
     }
 

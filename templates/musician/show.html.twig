@@ -2,7 +2,7 @@
 
 {% block title %}{{musician.fullname}}{% endblock %}
 {% block stylesheets %}
-        <style>
+    <style>
         .skills ul{
             display:block;
             margin:0 auto;
@@ -87,7 +87,7 @@
             color: #245269
         }
 
-        </style>
+    </style>
 {% endblock %}
 {% block body %}
 
@@ -133,7 +133,7 @@
             <br />
             <br />
             {% endif %}
-            {% if app.user and app.user != null %}
+            {% if app.user and app.user != null and app.user == musician %}
                 <a class="btn btn-sm btn-rounded-white" href="{{ path('musician_profile')}}" target="_blank">Profile Page</a>
             {% endif %}
         </div>
@@ -180,7 +180,7 @@
                 <h4>{{job.institution}}{{" / " ~ job.location}}</h4>
                 <p>
                 {% if job.roles is empty %}
-                    {% if app.user and app.user != null %}
+                    {% if app.user and app.user != null and app.user == musician %}
                         You haven't added any roles that you did in this job. Please <a href="{{ path('role_new', {'job_id': job.id}) }}">Add some roles </a>
                     {% else %}
                         Did all the required roles that a {{job.jobtitle}} should do. You can <a target="_blank" href="http://www.google.com/search?q={{job.jobtitle|replace({' ': '+'}) }}+Job+Description">search on google</a> what the roles are.
@@ -190,7 +190,7 @@
                         {% for role in job.roles %}
                         <li>{{role.role}}</li>
                         {% endfor %}
-                        {% if app.user and app.user != null %}<li><a href="{{ path('role_new', {'job_id': job.id}) }}">Add roles</a></li>{% endif %}
+                        {% if app.user and app.user != null and app.user == musician %}<li><a href="{{ path('role_new', {'job_id': job.id}) }}">Add roles</a></li>{% endif %}
                     </ul>
                 {% endif %}
                 </p>
@@ -210,7 +210,7 @@
             <span class="education-date">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</span>
             <h4>{{edu.coursename}} {{edu.degree}}</h4>
             <span id="alert_{{edu.id}}"></span>
-            {% if app.user and app.user != null and app.user.settings and (app.user.isproandactive == 'true' or app.user.ismuskeandactive == 'true') %}
+            {% if app.user and app.user != null and app.user == musician and app.user.settings and (app.user.isproandactive == 'true' or app.user.ismuskeandactive == 'true') %}
                 
                 <form  id="document_form_{{edu.id}}" name="doc" method="post" action enctype="multipart/form-data" {% if edu.document != null %} style="display:none;" {% endif %}>
                     <div class="row alert alert-info">
@@ -229,11 +229,11 @@
             {% endif %} 
 
             <ul class="skills">
-            {% if edu.document != null and (musician.isproandactive == 'true' or musician.ismuskeandactive == 'true') and (app.user and app.user != null) %}              
+            {% if edu.document != null and (musician.isproandactive == 'true' or musician.ismuskeandactive == 'true') and (app.user and app.user != null and app.user == musician) %}              
                 <li><a id="download_doc_{{edu.id}}" href="{{ path('download_pdf', {'file': edu.document.doc} ) }}" download> Download supporting document </a></li>
             {% endif %}            
             {% if edu.specialties is empty %}
-                {% if app.user and app.user != null %}
+                {% if app.user and app.user != null and app.user == musician %}
                     You haven't added any skills that you learned in this institution. Please <a href="{{ path('specialty_new', {'education_id': edu.id}) }}">Add some skills </a>
                 {% else %}
                     Learned a lot of things that are found under {{edu.coursename}} course. You can <a target="_blank" href="http://www.google.com/search?q={{edu.coursename|replace({' ': '+'}) }}+Course+Description+{{edu.institution|replace({' ': '+'})}}">search on google</a> what some of the skills are.
@@ -244,7 +244,7 @@
                         {{skill.instrumentorskill}}
                     </li>
                 {% endfor %}
-                {% if app.user and app.user != null %}
+                {% if app.user and app.user != null and app.user == musician %}
                 <li><a href="{{ path('specialty_new', {'education_id': edu.id}) }}">Add skills</a></li>
                 <li><a id="change_doc_{{edu.id}}">Change Document</a></li>
                 {% endif %}                
@@ -262,43 +262,38 @@
             <div class="row">
             {% for project in musician.projects %}
                 <div class="project shadow-large">
-                    <div class="project-image col-md-4" style="position:relative; margin-left:-25px;">
-                        {% if project.projectimage == null or project.projectimage == ""%}
-                            <img id="project_image_{{project.id}}" src="{{ asset('devportfolio/images/project.jpg') }}" />
-                            {% if app.user and app.user != null %}
-                            <form style="position:absolute; top:20px; left:0; background-color:white;" id="image_form" name="Document" method="post" action enctype="multipart/form-data">
-                                <div class="col-md-6">
-                                    <input type="file" id="documento_{{project.id}}" name="project[projectimage]" required="required">
+                    
+                    <div class="journal-block">
+                        <div class="row text-left">
+
+                            <div class="col-lg-4 col-md-6">
+                            <div class="journal-info">
+
+                                <img src="{{ project.projectimage == null or project.projectimage == "" ? asset('devportfolio/images/project.jpg') : project.imagelink }}" id="project_image_{{project.id}}" class="img-responsive" alt="img">
+
+                            </div>
+                            </div>
+                            <div class="col-lg-8 col-md-6">
+                            <div class="journal-info">
+                                <div class="journal-txt">
+
+                                <h3>{{project.projecttitle}}</h3><hr />
+                                <p class="separator">{{project.projectdescription}}
+                                </p>
+
                                 </div>
-                                <div class="col-md-3">
-                                    <button type="button" {#onclick="saveDoc()"#} class="btn btn-success" id="proj_{{project.id}}">Upload</button>
-                                </div>
-                            </form>     
-                            {% endif %}               
-                            
-                        {% else %}
-                            <img id="project_image_{{project.id}}" src="{{project.imagelink}}" style="max-width:250px;" />
-                            {% if app.user and app.user != null %}
-                            <form style="position:absolute; top:20px; left:0; background-color:white;" id="image_form" name="Document" method="post" action enctype="multipart/form-data">
-                                <div class="col-md-6">
-                                    <input type="file" id="documento_{{project.id}}" name="project[projectimage]" required="required">
-                                </div>
-                                <div class="col-md-3">
-                                    <button type="button" {#onclick="saveDoc()"#} class="btn btn-success" id="proj_{{project.id}}">Upload</button>
-                                </div>
-                            </form>     
-                            {% endif %}               
-                        {% endif %}
+                                <hr />
+                                {% include "reusable/project_form.html.twig" %}
+                                {% if project.projectimage != null and project.projectimage != "" %}
+                                <button class="btn btn-sm btn-default" id="change_projPhoto_{{project.id}}">Change Project Image</button>
+                                {% endif %}
+                                
+                            </div>
+                            </div>
+
+                        </div>
                     </div>
-                    <!-- End .project-image -->
-                    <div class="project-info col-md-8">
-                        <h3>{{project.projecttitle}}</h3>
-                        <p>
-                            {{project.projectdescription}}
-                        </p>
-                        <a href="#">View Project</a>
-                    </div>
-                    <!-- End .project-info -->
+                                        
                 </div>
                 <!-- End .project -->
             {% endfor %}
@@ -326,19 +321,20 @@
           <div class="row text-center text-lg-left">
           {% if fourPhotos|length > 1 %}
             {% for photo in fourPhotos %}
-            <div class="col-lg-3 col-md-4 col-xs-6">
+            <div class="col-lg-4 col-md-4 col-xs-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="{{photo.thumbnailpath}}" alt="">
             </a>
-            <a href="{{ path('gallery_index', {'username': musician.username })}}" class="btn-rounded-blue">See More Photos</a>
+            
             </div>
             {% endfor %}
           {% else %}
             <p>There are currently no photos in this gallery</p>
-            {% if app.user and app.user != null %}
+            {% if app.user and app.user != null and app.user == musician %}
             <a href="{{ path('gallery_new')}}" class="btn-rounded-blue">Add Photos</a>
             {% endif %}
           {% endif %}
+          {% if fourPhotos|length > 1 %}<a href="{{ path('gallery_index', {'username': musician.username })}}" class="btn-rounded-blue">See More Photos</a>{% endif %}
           </div>
         </div>
         
@@ -384,7 +380,7 @@
             <div class="row">
                 <div class="col-sm-5 copyright">
                     <p>
-                        Copyright &copy; {{"now"|date("Y")}} {{musician.username}} | {% if app.user and app.user != null %} <a href="{{path("app_logout")}}">Logout</a> {% else %} <a href="{{path("homepage")}}">Login</a>{% endif %}
+                        Copyright &copy; {{"now"|date("Y")}} {{musician.username}} | {% if app.user and app.user != null and app.user == musician %} <a href="{{path("app_logout")}}">Logout</a> {% else %} <a href="{{path("homepage")}}">Login</a>{% endif %}
                     </p>
                 </div>
                 <div class="col-sm-2 top">
@@ -398,19 +394,19 @@
                             <a href="https://github.com/" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="https://stackoverflow.com/" target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i></a>
+                            <a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}" target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="https://linkedin.com/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            <a href="{{musician.settings.linkedin  == null or musician.settings.linkedin == "" ? '#' : musician.settings.linkedin | external_link}}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="{{musician.settings.twitter  == null or musician.settings.twitter == "" ? '#' : musician.settings.twitter | external_link}}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="https://plus.google.com/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                            <a href="{{musician.settings.instagram  == null or musician.settings.instagram == "" ? '#' : musician.settings.instagram | external_link}}" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -547,5 +543,17 @@ $(document).on("click", '[id^="change_doc_"]', function(){
 });
 </script>
 
+
+  <script>
+  $(document).on("click", '[id^="change_projPhoto_"]', function(){
+
+      var project = jQuery(this).attr("id");
+      var splitted = project.split('_'); //changeRow_Qt_1504
+      var id = splitted[2] //1504
+
+      $("#project_form_"+id).show();
+      
+  });
+</script>
 
 {% endblock %}

@@ -3,14 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="{{absolute_url('bootstrap/css/bootstrap.min.css')}}" />
-        <link rel="stylesheet" type="text/css" href="{{absolute_url('css/carousel.css')}}" />
+        <link rel="stylesheet" type="text/css" href="{{asset('bootstrap/css/bootstrap.min.css')}}" />
+        <link rel="stylesheet" type="text/css" href="{{asset('css/carousel.css')}}" />
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
-        <script src="{{ absolute_url('js/jquery.min.js') }}"></script>        
-        <script src="{{ absolute_url('bootstrap/js/bootstrap.min.js') }}"></script>        
+        <script src="{{ asset('js/jquery.min.js') }}"></script>        
+        <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>        
         {% block javascripts %}{% endblock %}
     </body>
 </html>

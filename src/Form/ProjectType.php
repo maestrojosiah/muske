@@ -15,7 +15,6 @@ class ProjectType extends AbstractType
             ->add('projecttitle')
             ->add('projectdescription')
             ->add('projectimage')
-            ->add('musician')
         ;
     }
 

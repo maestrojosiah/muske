@@ -1,10 +1,10 @@
-extends 'pdfBase.html.twig' %}
+{% extends 'pdfBase.html.twig' %}
 
 {% block title %}Resume{% endblock %}
 {% block stylesheets %}
-
+<style>
 body {
-	margin: 0px;
+	margin: 50px;
 }
 p, td, span, li, a { 
 	font-family: verdana, arial, helvetica, sans-serif; 
@@ -96,80 +96,75 @@ body div ul {
 #meta {
 	display: none;
 }
-
+</style>
 {% endblock %}
 {% block body %}
 
-<h1>John Smith</h1>
+<h1>{{musician.fullname}}</h1>
 
 <p id="bio_left">
-(408) 555-1212<br>	<script type="text/javascript">email();</script><a href="mailto:john.smith@example.com">john.smith@example.com</a>
+{{musician.phone}}<br><a href="mailto:{{musician.email}}">{{musician.email}}</a>
 </p>
 <p id="bio_right">
 123 Any Street<br>City, State 99999</p>
 
-<h2>OBJECTIVE</h2>
-<p class="data">To find a job, etc.</p>
+<h2>ABOUT</h2>
+<p class="data">{{musician.about}}.</p>
 
 <h2>EXPERIENCE</h2>
+{% for job in jobs %}
 <div class="job">
-	<p class="date">2000-Present</p>
+	<p class="date">{{job.startingfrom|date("F Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y")}}</p>
 	<div class="job_data">
-		<h3><a href="http://example.com/">Company Name</a></h3>
-		<p class="location">City, State</p>
-		<p class="company">Company description.</p>
-		<p class="position">Position/Title</p>
+		<h3>{{job.institution}}</h3>
+		<p class="location">{{job.location}}</p>
+		<p class="position">{{job.jobtitle}}/Title</p>
 		<ul>
-			<li>Responsibility description</li>
-			<li>Accomplishment description #1</li>
-			<li>Accomplishment #2</li>
-		</ul>
-		&nbsp;
-		<p class="position">Position/Title 2</p>
-		<ul>
-			<li>Responsibility description #2</li>
-			<li>Accomplishment for position #2</li>
+		{% for role in job.roles %}
+			<li>{{role.role}}</li>
+		{% endfor %}
 		</ul>
 		&nbsp;
 	</div>
 </div>
+{% endfor %}
 
+<h2>SKILLS</h2>
+<ul>
+{% include "reusable/_simpleskills_.html.twig" %}
+</ul>
+
+<h2>EDUCATION</h2>
+{% for edu in educ %}
 <div class="job">
-	<p class="date">1995-2000</p>
+	<p class="date">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</p>
 	<div class="job_data">
-		<h3>Company Name</h3>
-		<p class="location">City, State</p>
-		<p class="company">Company description.</p>
-		<p class="position">Position/Title</p>
-		<ul>
-			<li>Responsibility description</li>
-			<li>Accomplishment description #1</li>
-			<li>Accomplishment #2</li>
-		</ul>
+		<h3>{{edu.coursename}}</h3>
+		<p class="location">{{edu.location}}</p>
+		<p class="position">{{edu.degree}}</p>
 		&nbsp;
 	</div>
 </div>
+{% endfor %}
 
-<h2>SKILLS, TECHNOLOGIES &amp; PROJECTS</h2>
-<ul>
-	<li>Skill description #1</li>
-	<li>Skill description #2</li>
-	<li>Skill description #3</li>
-</ul>
+{% if musician.projects is not empty %}
+<h2>PROJECTS</h2>
+{% for project in musician.projects %}
+<div>
+	<h3 class="data">{{project.projecttitle }}</h3>
+	<p class="data">{{project.projectdescription}}.</p>
+</div>
+{% endfor %}
 
-<h2>EDUCATION &amp; INTERESTS</h2>
-<ul>
-	<li>Degree description</li>
-	<li>Interest description</li>
-	<li>Accomplishment of note</li>
-</ul>
+{% endif %}
 
+<h2>SPECIALTY</h2>
+<div style="padding-left:20%">
+	<p class="data">{% include "reusable/_simplespecialty_.html.twig" %}</p>
+</div>
+
+<h2>REFERENCES</h2>
 <p id="references">References available upon request.</p>
-
-<p id="meta">
-	<span id="versions"><a href="http://alexking.org/site/projects/html-resume-template/demo/resume.php">HTML version</a> | <a href="http://alexking.org/site/projects/html-resume-template/demo/resume.php?output=html&amp;contained=1">E-mailable HTML version</a> | <a href="http://alexking.org/site/projects/html-resume-template/demo/resume.php?output=text">Plain Text (.txt) version</a>.</span>
-	<span id="valid">Valid <a href="http://validator.w3.org/check/referer">XHTML 1.1</a> / <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS 2.0</a></span>
-</p>
 
 
 {% endblock %}

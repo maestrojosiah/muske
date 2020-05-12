@@ -30,7 +30,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>
             <div class="panel-body"><a target="_blank" href="https://muske.co.ke/{{musician.username}}">https://muske.co.ke/{{musician.username}}</a></div>
-          </div>
+          </div></li>
           
                                    
         </div><!--/col-3-->
@@ -39,11 +39,11 @@
                 <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
                 <li><a data-toggle="tab" href="#settings">Settings</a></li>
                 <li><a data-toggle="tab" href="#reviews">Reviews</a></li>
-                <li><a href="{{ path('easyadmin')}}">Admin Page</a></li>
+                <li><a href="{{ path('musician_admin_index')}}">Admin Page</a></li>
                 <li><a href="{{ path('musician_edit', {'username': musician.username})}}">Resume info</a></li>
-                <li><a href="{{path('musician_show', {'username': musician.username, 'download': 'img'})}}">Download Your Resume</a></li>
+                <li><a href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}">Download Your Resume</a></li>
                 <li><a href="{{ path('gallery_index', {'username': musician.username})}}">Gallery</a></li>
-                {% if app.user and app.user != null %}<li> <a href="{{path("app_logout")}}">Logout</a> {% else %} <a href="{{path("homepage")}}">Login</a></li>{% endif %}
+                {% if app.user and app.user != null and app.user == musician %}<li> <a href="{{path("app_logout")}}">Logout</a> {% else %} <a href="{{path("homepage")}}">Login</a></li>{% endif %}
                 
               </ul>
 
@@ -51,18 +51,15 @@
             <div class="tab-pane active" id="home">
                 <hr>
                 <div class="col-md-6">
-                  <ul class="list-group">
-                    <li class="list-group-item text-muted">Notifications <i class="fa fa-dashboard fa-1x"></i></li>                  
-                    {% if data.complete == false %} <li class="list-group-item pull-left"><a data-toggle="tab" href="#settings">
-                    Please complete your settings</a></li>
+                    {% if data.complete == false %} <div class="alert alert-warning"><a data-toggle="tab" href="#settings">
+                    Please complete your settings</a></div>
                     {% endif %}
-                    {% if roles|length < musician.jobs|length %} <li class="list-group-item"><a href="{{ path('musician_show', {'username': app.user.username })}}#experience">Please complete setting up your Experience by adding roles to the jobs you've done</a></li>{% endif %}
-                    {% if skills|length < musician.education|length %} <li class="list-group-item"><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please complete setting up your Education by adding skills you gained in various learning institutions</a></li>{% endif %}
+                    {% if roles|length < musician.jobs|length %} <div class="alert alert-warning"><a href="{{ path('musician_show', {'username': app.user.username })}}#experience">Please complete setting up your Experience by adding roles to the jobs you've done</a></div>{% endif %}
+                    {% if skills|length < musician.education|length %} <div class="alert alert-warning"><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please complete setting up your Education by adding skills you gained in various learning institutions</a></div>{% endif %}
                     {% if musician.settings and musician.isproandactive == "true" or musician.settings and musician.ismuskeandactive == "true" %}
-                      {% if documents|length < musician.education|length %} <li class="list-group-item"><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please upload supporting documents to your education. To get the {{membership}} member priviledges, we have to confirm your certifications</a></li>{% endif %}
-                      {% if gallery|length < 1 %} <li class="list-group-item"><a href="{{ path('musician_show', {'username': app.user.username })}}#album_intro">You may consider adding photos to your gallery</a></li>{% endif %}
+                    {% if documents|length < musician.education|length %} <div class="alert alert-warning"><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please upload supporting documents to your education. To get the {{membership}} member priviledges, we have to confirm your certifications</a></div>{% endif %}
+                    {% if gallery|length < 1 %} <div class="alert alert-warning"><a href="{{ path('musician_show', {'username': app.user.username })}}#album_intro">You may consider adding photos to your gallery</a></div>{% endif %}
                     {% endif %}
-                  </ul> 
                 </div>
                 <div class="col-md-6">
                   <div class="panel panel-default">
@@ -175,7 +172,7 @@
                             </select>
                           </div>
                       </div>
-                      {% if app.user and app.user != null and app.user.settings and app.user.isproandactive == 'true' %}
+                      {% if app.user and app.user != null and app.user == musician and app.user.settings and app.user.isproandactive == 'true' %}
                       <div class="form-group">
                           
                           <div class="col-xs-6">

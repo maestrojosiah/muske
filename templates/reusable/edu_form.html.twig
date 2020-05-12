@@ -1,0 +1,17 @@
+{% if app.user and app.user != null and app.user == musician and app.user.settings and (app.user.isproandactive == 'true' or app.user.ismuskeandactive == 'true') %}
+                
+    <form  id="document_form_{{edu.id}}" name="doc" method="post" action enctype="multipart/form-data" {% if edu.document != null %} style="display:none;" {% endif %}>
+        <div class="row alert alert-info">
+            <div class="col-md-4">
+                <h6>Upload supporting document </h6>
+            </div>
+            <div class="col-md-6">
+                <input type="file" id="doc_edu_{{edu.id}}" name="doc_edu_{{edu.id}}" required="required">
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-success" id="upload_doc_{{edu.id}}">Upload</button>
+            </div>
+        </div>
+    </form> 
+    
+{% endif %}    

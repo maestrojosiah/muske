@@ -69,6 +69,11 @@ class Education
         $this->specialties = new ArrayCollection();
     }
 
+    public function __toString() {
+        return $this->institution;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

@@ -1,0 +1,47 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Edit {{usable_entity_name}}{% endblock %}
+
+{% block body %}
+
+  <!-- container section start -->
+<section id="container" class="">
+
+
+    {% include "admin/header.html.twig" %}
+    {% include "admin/aside.html.twig" %}
+    <section id="main-content">
+      <section class="wrapper">
+        <!--overview start-->
+       
+        <div class="row">
+            <div class="col-lg-6">
+                <section class="panel">
+                    <header class="panel-heading">
+                    <h3>Edit {{usable_entity_name}}</h3>
+                    </header>
+                    <div class="panel-body">
+                    {{ form_start(form) }}
+                    {% for child in form.children|keys %}
+                    {% if loop.index == form.children|keys|length %}
+                    {% else %}
+                        <div class="form-group">
+                            {{form_errors(attribute(form.children,child))}}
+                            {{form_label(attribute(form.children,child))}}
+                            {{form_widget(attribute(form.children,child), {'attr': {'class': 'form-control'}})}}
+                            {# type = "{{attribute(form.children,child).vars.block_prefixes.1}}" #}
+                        </div>
+                    {% endif %}
+                    {% endfor %}  
+                    {{form_rest(form)}}  
+                    <button class="btn btn-primary">{{ 'Update'|default('Save') }}</button>
+                    {{ form_end(form) }}
+
+                    </div>
+                </section>
+            </div>
+        </div>
+      </section>
+
+</section>
+{% endblock %}

@@ -81,15 +81,9 @@
 {% block body %}
 
 	<div id="address">
-    335 Name Street, Unit #, Town, Province, N2H 3Y6
+    <a href="mailto:{{musician.email}}">{{musician.email}}</a> | {{musician.phone}}
     </div>
-        <h1>First Last</h1>
-        <div id="contact">
-        3A, Your Major, 
-        <abbr title="University of Waterloo">UW</abbr>, 
-        1-519-500-8252, 
-        <a href="mailto:YOUREMAILADDRESS@uwaterloo.ca">emailaddress@uwaterloo.ca</a>
-    </div>
+        <h1>{{musician.fullname}}</h1>
 	
 	<div class="section">
 		<h2>About me</h2>

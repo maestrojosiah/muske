@@ -1,0 +1,59 @@
+    <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu">
+          <li class="active">
+            <a class="" href="{{ path('homepage')}}">
+                          <i class="icon_house_alt"></i>
+                          <span>Home</span>
+                      </a>
+          </li>          
+            {% for key, menu_item in sidebar_menu %}
+                    <li class="sub-menu">
+                    {% if menu_item is not iterable %}
+                    <a href="{{ path('musician_admin_index', {'entity' : menu_item })}}">
+                                <i class="icon_id_alt"></i>
+                                <span>{{menu_item|capitalize}}</span>
+                            </a>
+                    {% else %}
+                    <a href="javascript:;" class="">
+                                <i class="arrow_carrot-2right_alt"></i>
+                                <span>{{key|capitalize}}</span>
+                                <span class="menu-arrow arrow_carrot-right"></span>
+                            </a>
+                    <ul class="sub">
+                    {% for sub_menu in menu_item %}
+                    <li>
+                    <a class="" href="{{ path('musician_admin_index', {'entity' : sub_menu })}}">{{sub_menu|capitalize}}</a>
+                    </li>
+                    {% endfor %}
+                    </ul>
+
+                    {% endif %}
+                </li>                
+            {% endfor %}
+          <li class="">
+            <a class="" href="{{ path('musician_edit', {'username': musician.username})}}">
+                          <i class="icon_plus"></i>
+                          <span>Add Resume Info</span>
+                      </a>
+          </li>
+          <li>
+            <a class="" href="{{path('musician_profile')}}">
+                          <i class="icon_profile"></i>
+                          <span>Profile Page</span>
+                      </a>
+          </li>
+          <li>
+            <a class="" href="{{path('musician_show', {'username': musician.username})}}">
+                          <i class="icon_document_alt"></i>
+                          <span>Resume Page</span>
+                      </a>
+          </li>
+
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->

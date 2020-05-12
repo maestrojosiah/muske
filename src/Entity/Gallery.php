@@ -51,7 +51,7 @@ class Gallery
 
     public function getThumbnailpath(): ?string
     {
-        $url = "http://localhost:8000/uploads/gallery/thumbs/$this->photo";
+        $url = "http://localhost:8000/uploads/gallery/thumbs/".$this->photo.".png";
 
         $this->thumbnailpath = $url;
         return $this->thumbnailpath;

@@ -16,6 +16,7 @@ use Knp\Snappy\Pdf;
 use Knp\Snappy\Image;
 use Symfony\Component\Routing;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use App\Service\OrganizeThings; 
 
 class MusicianController extends AbstractController
 {
@@ -59,8 +60,6 @@ class MusicianController extends AbstractController
             return $this->redirectToRoute('musician_profile');
         } 
         
-        // for placeholding if data exists
-
         // define email phone age and full name
         $musician_email = $musician->getEmail();
         $musician_phone = $musician->getPhone();
@@ -73,8 +72,8 @@ class MusicianController extends AbstractController
         $salary = $musician->getCurrentsalary();
         $salary_exp = $musician->getExpectedSalary();
 
-        $skills_auto_fill = $this->getDoctrine()->getManager()->getRepository('App:Skill')->findall();
-        $job_roles_auto_fill = $this->getDoctrine()->getManager()->getRepository('App:JobToBeOffered')->findall();
+        $skills_auto_fill = array_unique($this->getDoctrine()->getManager()->getRepository('App:Skill')->findall());
+        $job_roles_auto_fill = array_unique($this->getDoctrine()->getManager()->getRepository('App:JobToBeOffered')->findall());
 
         $details_array = [$musician_email, $musician_phone, $musician_age, $musician_fullname, $skills,
                             $education, $jobs, $roles, $salary, $salary_exp];
@@ -109,6 +108,7 @@ class MusicianController extends AbstractController
             'skills_auto_fill' => $skills_auto_fill,
             'job_roles_auto_fill' => $job_roles_auto_fill,
             'filter' => $filter,
+            'settings' => $settings,
         ]);
     }
 
@@ -203,7 +203,7 @@ class MusicianController extends AbstractController
         ]);
     }
 
-        /**
+    /**
      * @Route("/musician/final/edit", name="finalize_musician_edit", methods={"GET","POST"})
      */
     public function finalize_edit(Request $request, SluggerInterface $slugger)
@@ -276,36 +276,28 @@ class MusicianController extends AbstractController
     /**
      * @Route("/{username}/{download}", name="musician_show", methods={"GET"})
      */
-    public function show($username, $download = '', UrlGeneratorInterface $generator): Response
+    public function show($username, $download = '', UrlGeneratorInterface $generator, OrganizeThings $organizeThings): Response
     {
 
         $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->findByUsername($username)[0];
 
-        if(count($musician->getUploadedphotos()) >= 4){
+        if(count($musician->getUploadedphotos()) >= 3){
             $fourPhotos =  $this->getDoctrine()->getManager()->getRepository('App:Gallery')
             ->findFourPhotos($musician);
         } else {
             $fourPhotos = [];
         }
-        if($musician->getSettings()){
-            $jobOrder = $musician->getSettings()->getJobOrder() ? $musician->getSettings()->getJobOrder() : "id";
-            $jobSort = $musician->getSettings()->getJobOrderBy() ? $musician->getSettings()->getJobOrderBy() : "ASC";
-            $jobs = $this->getDoctrine()->getManager()->getRepository('App:Job')
-            ->findByGivenField($jobOrder, $jobSort, $musician);
+        
+        $jobs = $organizeThings->organizedJobsAccordingToSettings($musician);
+        $educ = $organizeThings->organizedEducationAccordingToSettings($musician);
 
-            $eduOrder = $musician->getSettings()->getEduOrder() ? $musician->getSettings()->getEduOrder() : "id";
-            $eduSort = $musician->getSettings()->getEduOrderBy() ? $musician->getSettings()->getEduOrderBy() : "ASC";
-            $educ = $this->getDoctrine()->getManager()->getRepository('App:Education')
-            ->findByGivenField($eduOrder, $eduSort, $musician);
-
-        } else {
-            $jobs = $musician->getJobs();
-            $educ = $musician->getEducation();
-        }
 
         $photourl = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto();
         $status = is_file($photourl);
-        $pdf_template = $musician->getPdfTheme() ? $musician->getPdfTheme() : 'simpleOne' ;
+        $pdf_template = $musician->getPdfTheme() ? $musician->getPdfTheme() : 'simpleOne.html.twig' ;
+        $theme = $this->getDoctrine()->getManager()->getRepository('App:PdfTheme')->findByTemplate($pdf_template)[0];
+        $themename = str_replace(" ", "_", $theme->getTitle());
+        $web_template = "musician/show";
 
         $array_data = [
             'musician' => $musician,
@@ -316,19 +308,18 @@ class MusicianController extends AbstractController
 
         if($download == 'pdf'){
             if($status){
-                return $this->toPdf("pdf/$pdf_template", $array_data, $musician->getUsername()."_Resume");
+                return $this->toPdf("pdf/$pdf_template", $array_data, $musician->getUsername().'_'.$themename."_Resume");
             } else {
                 return $this->redirectToRoute('error', ['error_msg' => "Broken links prevents the pdf from downloading. Upload your profile photo"]);
             }
         } elseif ($download == 'img') {
             if($status){
-                return $this->toImage('pdf/simpleOne.html.twig', $array_data, $musician->getUsername()."_Resume");
+                return $this->toImage("pdf/$pdf_template", $array_data, $musician->getUsername().'_'.$themename."_Resume");
             } else {
                 return $this->redirectToRoute('error', ['error_msg' => "Broken links prevents the pdf from downloading. Upload your profile photo"]);
             }
         } else {
-            return $this->render('musician/show.html.twig', $array_data);
-    
+            return $this->render($web_template.'.html.twig', $array_data);
         }
         
 
@@ -419,7 +410,7 @@ class MusicianController extends AbstractController
 
 
     /**
-     * @Route("/musician/plan", name="musician_plan", methods={"GET"})
+     * @Route("/musician/plan/select", name="musician_plan", methods={"GET"})
      */
     public function plan(): Response
     {
@@ -558,13 +549,31 @@ class MusicianController extends AbstractController
         if ($imgt) {
             $old_image = $imgcreatefrom("$updir" .  '/'. "$img");
             $new_image = imagecreatetruecolor($thumbnail_width, $thumbnail_height);
+            $this->setTransparency($new_image, $old_image); 
             imagecopyresized($new_image, $old_image, $dest_x, $dest_y, 0, 0, $new_width, $new_height, $original_width, $original_height);
-            $imgt($new_image, "$updir" .  '/'. "$thumb_beforeword/" . "$img");
+            imagepng($new_image, "$updir" .  '/'. "$thumb_beforeword/" . "$img". ".png");
         }
 
         return $imgt;
 
     }
+
+    function setTransparency($new_image, $image_source)
+    {
+       
+            $transparencyIndex = imagecolortransparent($image_source);
+            $transparencyColor = array('red' => 255, 'green' => 255, 'blue' => 255);
+            
+            if ($transparencyIndex >= 0) {
+                $transparencyColor    = imagecolorsforindex($image_source, $transparencyIndex);   
+            }
+           
+            $transparencyIndex    = imagecolorallocate($new_image, $transparencyColor['red'], $transparencyColor['green'], $transparencyColor['blue']);
+            imagefill($new_image, 0, 0, $transparencyIndex);
+            imagecolortransparent($new_image, $transparencyIndex);
+       
+    } 
+
 
     public function toPdf($path = '', $array = [], $filename): Response
     {

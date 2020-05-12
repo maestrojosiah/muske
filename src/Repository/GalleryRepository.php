@@ -29,7 +29,7 @@ class GalleryRepository extends ServiceEntityRepository
             ->andWhere('g.musician = :val')
             ->setParameter('val', $musician)
             ->orderBy('g.id', 'ASC')
-            ->setMaxResults(4)
+            ->setMaxResults(3)
             ->getQuery()
             ->getResult()
         ;

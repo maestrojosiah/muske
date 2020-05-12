@@ -1,0 +1,777 @@
+{% extends 'base_folio.html.twig' %}
+
+{% block title %}{{musician.fullname}}{% endblock %}
+
+{% block stylesheets %}
+
+<style type="text/css">
+        .skills ul{
+            display:block;
+            margin:0 auto;
+            padding:0;
+            max-width:800px
+        }
+        .skills li{
+            display:inline-block;
+            margin:7px;
+            padding:5px 10px;
+            color:#374054;
+            background:#e4e4ea;
+            list-style:none;
+            cursor:default;
+            font-size:1.2em
+        }
+
+        .skillssm li{
+            display:inline-block;
+            margin:5px;
+            padding:3px 7px;
+            color:#374054;
+            background:#e4e4ea;
+            list-style:none;
+            cursor:default;
+            font-size:.8em
+        }
+
+
+
+    /******************* Timeline Demo - 8 *****************/
+    .main-timeline8{overflow:hidden;position:relative}
+    .main-timeline8:after,.main-timeline8:before{content:"";display:block;width:100%;clear:both}
+    .main-timeline8:before{content:"";width:3px;height:100%;background:#d6d5d5;position:absolute;top:30px;left:50%}
+    .main-timeline8 .timeline{width:50%;float:left;padding-right:30px;position:relative}
+    .main-timeline8 .timeline-icon{width:32px;height:32px;border-radius:50%;background:#fff;border:3px solid #fe6847;position:absolute;top:5.5%;right:-17.5px}
+    .main-timeline8 .year{display:block;padding:10px;margin:0;font-size:30px;color:#fff;border-radius:0 50px 50px 0;background:#755A4F;text-align:center;position:relative}
+    .main-timeline8 .year:before{content:"";border-top:35px solid #BD9281;border-left:35px solid transparent;position:absolute;bottom:-35px;left:0}
+    .main-timeline8 .timeline-content{padding:30px 20px;margin:0 45px 0 35px;background:#f2f2f2}
+    .main-timeline8 .title{font-size:19px;font-weight:700;color:#504f54;margin:0 0 10px}
+    .main-timeline8 .description{font-size:14px;color:#7d7b7b;margin:0}
+    .main-timeline8 .timeline:nth-child(2n){padding:0 0 0 30px}
+    .main-timeline8 .timeline:nth-child(2n) .timeline-icon{right:auto;left:-14.5px}
+    .main-timeline8 .timeline:nth-child(2n) .year{border-radius:50px 0 0 50px;background:#755A4F}
+    .main-timeline8 .timeline:nth-child(2n) .year:before{border-left:none;border-right:35px solid transparent;left:auto;right:0}
+    .main-timeline8 .timeline:nth-child(2n) .timeline-content{text-align:right;margin:0 35px 0 45px}
+    .main-timeline8 .timeline:nth-child(2){margin-top:170px}
+    .main-timeline8 .timeline:nth-child(odd){margin:-175px 0 0}
+    .main-timeline8 .timeline:nth-child(even){margin-bottom:80px}
+    .main-timeline8 .timeline:first-child,.main-timeline8 .timeline:last-child:nth-child(even){margin:0}
+    .main-timeline8 .timeline:nth-child(2n) .timeline-icon{border-color:#7eda99}
+    .main-timeline8 .timeline:nth-child(2n) .year:before{border-top-color:#BD9281}
+    .main-timeline8 .timeline:nth-child(3n) .timeline-icon{border-color:#8a5ec1}
+    .main-timeline8 .timeline:nth-child(3n) .year{background:#755A4F}
+    .main-timeline8 .timeline:nth-child(3n) .year:before{border-top-color:#BD9281}
+    .main-timeline8 .timeline:nth-child(4n) .timeline-icon{border-color:#f98d9c}
+    .main-timeline8 .timeline:nth-child(4n) .year{background:#755A4F}
+    .main-timeline8 .timeline:nth-child(4n) .year:before{border-top-color:#BD9281}
+    @media only screen and (max-width:767px){.main-timeline8{overflow:visible}
+    .main-timeline8:before{top:0;left:0}
+    .main-timeline8 .timeline:nth-child(2),.main-timeline8 .timeline:nth-child(even),.main-timeline8 .timeline:nth-child(odd){margin:0}
+    .main-timeline8 .timeline{width:100%;float:none;padding:0 0 0 30px;margin-bottom:20px!important}
+    .main-timeline8 .timeline:last-child{margin:0!important}
+    .main-timeline8 .timeline-icon{right:auto;left:-14.5px}
+    .main-timeline8 .year{border-radius:50px 0 0 50px}
+    .main-timeline8 .year:before{border-left:none;border-right:35px solid transparent;left:auto;right:0}
+    .main-timeline8 .timeline-content{margin:0 35px 0 45px}
+    }
+
+
+</style>
+
+<style type="text/css">
+
+  #hero {
+    background: url("{{ asset('img/class_brown.jpg')}}") repeat scroll center center/cover;
+    height: 100vh;
+    width: 100%;
+  }
+
+  .tracking-detail {
+  padding:3rem 0
+  }
+  #tracking {
+  margin-bottom:1rem
+  }
+  [class*=tracking-status-] p {
+  margin:0;
+  font-size:1.1rem;
+  color:#fff;
+  text-transform:uppercase;
+  text-align:center
+  }
+  [class*=tracking-status-] {
+  padding:1.6rem 0
+  }
+  .tracking-status-intransit {
+  background-color:#65aee0
+  }
+  .tracking-status-outfordelivery {
+  background-color:#f5a551
+  }
+  .tracking-status-deliveryoffice {
+  background-color:#f7dc6f
+  }
+  .tracking-status-delivered {
+  background-color:#4cbb87
+  }
+  .tracking-status-attemptfail {
+  background-color:#b789c7
+  }
+  .tracking-status-error,.tracking-status-exception {
+  background-color:#d26759
+  }
+  .tracking-status-expired {
+  background-color:#616e7d
+  }
+  .tracking-status-pending {
+  background-color:#ccc
+  }
+  .tracking-status-inforeceived {
+  background-color:#214977
+  }
+  .tracking-list {
+  border:1px solid #e5e5e5
+  }
+  .tracking-item {
+  border-left:1px solid #e5e5e5;
+  position:relative;
+  padding:2rem 1.5rem .5rem 2.5rem;
+  font-size:.9rem;
+  margin-left:3rem;
+  min-height:5rem
+  }
+  .tracking-item:last-child {
+  padding-bottom:4rem
+  }
+  .tracking-item .tracking-date {
+  margin-bottom:.5rem
+  }
+  .tracking-item .tracking-date span {
+  color:#888;
+  font-size:85%;
+  padding-left:.4rem
+  }
+  .tracking-item .tracking-content {
+  padding:.5rem .8rem;
+  background-color:#f4f4f4;
+  border-radius:.5rem
+  }
+  .tracking-item .tracking-content span {
+  display:block;
+  color:#888;
+  font-size:85%
+  }
+  .tracking-item .tracking-icon {
+  line-height:2.6rem;
+  position:absolute;
+  left:-1.3rem;
+  width:2.6rem;
+  height:2.6rem;
+  text-align:center;
+  border-radius:50%;
+  font-size:1.1rem;
+  background-color:#fff;
+  color:#fff
+  }
+  .tracking-item .tracking-icon.status-sponsored {
+  background-color:#f68
+  }
+  .tracking-item .tracking-icon.status-delivered {
+  background-color:#4cbb87
+  }
+  .tracking-item .tracking-icon.status-outfordelivery {
+  background-color:#f5a551
+  }
+  .tracking-item .tracking-icon.status-deliveryoffice {
+  background-color:#f7dc6f
+  }
+  .tracking-item .tracking-icon.status-attemptfail {
+  background-color:#b789c7
+  }
+  .tracking-item .tracking-icon.status-exception {
+  background-color:#d26759
+  }
+  .tracking-item .tracking-icon.status-inforeceived {
+  background-color:#214977
+  }
+  .tracking-item .tracking-icon.status-intransit {
+  color:#755A4F;
+  border:1px solid #755A4F;
+  font-size:.6rem
+  }
+  @media(min-width:992px) {
+  .tracking-item {
+    margin-left:20rem
+  }
+  .tracking-item .tracking-date {
+    position:absolute;
+    left:-15rem;
+    width:11.5rem;
+    text-align:right
+  }
+  .tracking-item .tracking-date span {
+    display:block
+  }
+  .tracking-item .tracking-content {
+    padding:0;
+    background-color:transparent
+  }
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+
+  <!-- ======= Navbar ======= -->
+  <nav id="main-nav">
+    <div class="row">
+      <div class="container">
+
+        <div class="logo">
+          <a href="index.html"><img src="assets/img//logo.png" alt="logo"></a>
+        </div>
+
+        <div class="responsive"><i data-icon="m" class="ion-navicon-round"></i></div>
+
+        <ul class="nav-menu list-unstyled">
+          <li><a href="#header" class="smoothScroll">Home</a></li>
+          <li><a href="#about" class="smoothScroll">About</a></li>
+          <li><a href="#portfolio" class="smoothScroll">Portfolio</a></li>
+          <li><a href="#journal" class="smoothScroll">Blog</a></li>
+          <li><a href="#contact" class="smoothScroll">Contact</a></li>
+        </ul>
+
+      </div>
+    </div>
+  </nav><!-- End Navbar -->
+
+  <!-- ======= Hero Section ======= -->
+  <div id="hero" class="home">
+
+    <div class="container">
+      <div class="hero-content">
+        <h1>{{musician.fullname}}</h1>
+        <h3><span class="typed"></span></h3>
+        <p class="typed-items" data-typed-person="Musician">{% for job_role in musician.jobstobeoffered %}{{job_role.jobtitle}} {% if loop.index < musician.jobstobeoffered|length %},{% endif %}{% endfor %}</p>
+
+        <ul class="list-unstyled list-social">
+          <li><a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-facebook"></i></a></li>
+          <li><a href="{{musician.settings.twitter  == null or musician.settings.twitter == "" ? '#' : musician.settings.twitter | external_link}}"><i class="ion-social-twitter"></i></a></li>
+          <li><a href="{{musician.settings.instagram  == null or musician.settings.instagram == "" ? '#' : musician.settings.instagram | external_link}}"><i class="ion-social-instagram"></i></a></li>
+          <li><a href="{{musician.settings.linkedin  == null or musician.settings.linkedin == "" ? '#' : musician.settings.linkedin | external_link}}"><i class="ion-social-linkedin"></i></a></li>
+          <li><a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-tumblr"></i></a></li>
+          <li><a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-dribbble"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= About Section ======= -->
+    <div id="about" class="paddsection">
+      <div class="container">
+        <div class="row justify-content-between">
+
+          <div class="col-lg-4 ">
+            <div class="div-img-bg">
+              <div class="about-img">
+                <img src="{{musician.thumbnailurl}}" class="img-responsive" alt="me">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <div class="about-descr">
+
+              <p class="p-heading">About Me</p>
+              <p class="separator">{{musician.about}}</p>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div><!-- End About Section -->
+
+    <!-- ======= Services Section ======= -->
+    <div id="services">
+      <div class="container">
+
+        <div class="owl-theme text-center">
+
+            <ul class="skills">
+                {% if musician.settings and musician.settings.tsc == 'true' %} <li> TSC Certified  </li>{% endif %}
+                {% if musician.settings and musician.settings.online == 'true' %} <li> Online Lessons Available  </li>{% endif %}
+                {% if musician.settings and musician.settings.placeofwork != null %} <li> {{musician.settings.placeofwork}}  </li>{% endif %}
+                {% if app.user == null %}
+                <li><a target="_blank" href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}" class="btn-rounded-white">Download Resume</a></li>
+                {% endif %}
+                {% if app.user and app.user != null and app.user == musician %}
+                    <li><a class="btn btn-sm btn-rounded-white" href="{{ path('musician_profile')}}" target="_blank">Profile Page</a></li>
+                {% endif %}
+            </ul>
+
+        </div>
+
+      </div>
+
+    </div><!-- End Services Section -->
+
+    <!-- ======= Experience Section ======= -->
+    <div id="experience" class="text-center paddsection">
+
+      <div class="container">
+        <div class="section-title text-center">
+          <h2>Experience</h2>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-timeline8">
+                    {% for job in jobs %}
+                        <div class="timeline">
+                            <span class="timeline-icon"></span>
+                            <span class="year">{{job.startingfrom|date("M Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</span>
+                            <div class="timeline-content">
+                                <h3 class="title">{{job.jobtitle}}</h3>
+                                <h5>{{job.institution}}{{" / " ~ job.location}}</h5>
+                                <p class="description">
+                                <hr />
+                                    {% if job.roles is empty %}
+                                      {% if app.user and app.user != null and app.user == musician %}
+                                              You haven't added any roles that you did in this job. Please <a href="{{ path('role_new', {'job_id': job.id}) }}">Add some roles </a>
+                                      {% else %}
+                                              Did all the required roles that a {{job.jobtitle}} should do. You can <a target="_blank" href="http://www.google.com/search?q={{job.jobtitle|replace({' ': '+'}) }}+Job+Description">search on google</a> what the roles are.
+                                      {% endif %}
+                                    {% else %}
+                                        <ul class="text-left">
+                                            {% for role in job.roles %}
+                                            <li>{{role.role}}</li>
+                                            {% endfor %}
+                                            {% if app.user and app.user != null and app.user == musician %}<li><a href="{{ path('role_new', {'job_id': job.id}) }}">Add roles</a></li>{% endif %}
+                                        </ul>
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <br /><br />
+                        </div>
+                        
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        
+           
+          </div>
+        </div>
+      </div>
+
+    </div><!-- End Experience Section -->
+
+
+    <!-- ======= Education Section ======= -->
+    <div id="education" class="text-left paddsection">
+
+      <div class="container">
+        <div class="section-title text-center">
+          <h2>Education</h2>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+            
+            <div class="col-md-12 col-lg-12">
+              <div id="tracking-pre"></div>
+              <div id="tracking">
+                  <div class="tracking-list">
+                  {% for edu in educ %}
+                    <div class="tracking-item">
+                        <div class="tracking-icon status-intransit">
+                          <svg class="svg-inline--fa fa-circle fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                              <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>
+                          </svg>
+                          <!-- <i class="fas fa-circle"></i> -->
+                        </div>
+                        <div class="tracking-date"><h6>{{edu.fromyear|date("M Y")}} - <span>{{edu.toyear|date("M Y")}}</span></h6></div>
+                        <div class="tracking-content">
+                          <h3 class="title">{{edu.coursename}}</h3>
+                          <span>{{edu.institution}} | {{edu.location}}</span>
+                          {% include "reusable/edu_form.html.twig" %}
+                          <p>{% include "reusable/edu_skills.html.twig" with {'class': 'skillssm'} %}</p>
+                        </div>
+                    </div>
+                  {% endfor %}
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
+
+    </div><!-- End Education Section -->
+
+    {% if musician.projects %}
+    <!-- ======= Projects Section ======= -->
+    <div id="projects" class="text-center paddsection">
+
+      <div class="container">
+        <div class="section-title text-center">
+          <h2>Projects</h2>
+        </div>
+      </div>
+      {% for project in musician.projects %}
+      <div class="container">
+        <div class="journal-block">
+          <div class="row text-left">
+
+            <div class="col-lg-4 col-md-6">
+              <div class="journal-info">
+
+                <img src="{{ project.projectimage == null or project.projectimage == "" ? asset('devportfolio/images/project.jpg') : project.imagelink }}" id="project_image_{{project.id}}" class="img-responsive" alt="img">
+
+              </div>
+            </div>
+            <div class="col-lg-8 col-md-6">
+              <div class="journal-info">
+                <div class="journal-txt">
+
+                  <h3>{{project.projecttitle}}</h3><hr />
+                  <p class="separator">{{project.projectdescription}}
+                  </p>
+
+                </div>
+                <hr />
+                {# {% if app.user and app.user != null and app.user == musician and app.user.settings %} #}
+                {% include "reusable/project_form.html.twig" %}
+                {% if project.projectimage != null and project.projectimage != "" %}
+                  <button class="btn btn-sm btn-default" id="change_projPhoto_{{project.id}}">Change Project Image</button>
+                {% endif %}
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div><!-- End Projects Section -->
+    {% endif %}
+
+    <!-- ======= Album Section ======= -->
+    {% if (musician.settings and musician.isproandactive == 'true') or (musician.settings and musician.ismuskeandactive == 'true') %}
+    <div id="album" class="text-center paddsection">
+
+      <div class="container">
+        <div class="section-title text-center">
+          <h2>Album</h2>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="portfolio-container">
+            {% if fourPhotos|length > 1 %}
+              {% for photo in fourPhotos %}
+              <div class="col-lg-4 col-md-6 portfolio-thumbnail">
+                <a class="popup-img" href="{{photo.photopath}}">
+                  <img src="{{photo.thumbnailpath}}" alt="img">
+                </a>
+              </div>
+              {% endfor %}
+            {% else %}
+            <p>There are currently no photos in this gallery</p>
+              {% if app.user and app.user != null and app.user == musician %}
+              <a href="{{ path('gallery_new')}}" class="btn btn-primary">Add Photos</a>
+              {% endif %}
+            {% endif %}
+            </div>
+            <div class="col-md-12">
+            {% if fourPhotos|length > 1 %}<a href="{{ path('gallery_index', {'username': musician.username })}}" class="btn btn-primary">See More Photos</a>{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- End Album Section -->
+    {% endif %}
+
+    <!-- ======= Skills Section ======= -->
+    <div id="skill">
+      <div class="container">
+        <div class="section-title text-center">
+          <h2>Skills</h2>
+        </div>
+      </div>
+
+      <div class="container">
+
+        <div class="owl-theme text-center">
+          <ul class="skills">
+            {% include "reusable/_simpleskills_.html.twig" %}
+          </ul>
+        </div>
+
+      </div>
+
+    </div><!-- End Skills Section -->
+
+
+    <!-- ======= Contact Section ======= -->
+    <div id="contact" class="paddsection">
+      <div class="container">
+        <div class="contact-block1">
+          <div class="row">
+
+            <div class="col-lg-6">
+              <div class="contact-contact">
+
+                <h2 class="mb-30">GET IN TOUCH</h2>
+
+                <ul class="contact-details">
+                  <li><span>{{musician.fullname}}</span></li>
+                  <li><span>{{musician.settings.placeofwork}}</span></li>
+                  <li><span>{{musician.phone}}</span></li>
+                  <li><span>{{musician.email}}</span></li>
+                  <li><span>muske.co.ke/{{musician.username}}</span></li>
+                </ul>
+
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                <div class="row">
+
+                  <div class="col-lg-6">
+                    <div class="form-group contact-block1">
+                      <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                      <div class="validate"></div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                      <div class="validate"></div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                      <div class="validate"></div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <textarea class="form-control" name="message" rows="12" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                      <div class="validate"></div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 mb-3">
+                    <div class="loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">Your message has been sent. Thank you!</div>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <input type="submit" class="btn btn-defeault btn-send" value="Send message">
+                  </div>
+
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <div id="footer" class="text-center">
+    <div class="container">
+      <div class="socials-media text-center">
+
+        <ul class="list-unstyled">
+          <li><a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-facebook"></i></a></li>
+          <li><a href="{{musician.settings.twitter  == null or musician.settings.twitter == "" ? '#' : musician.settings.twitter | external_link}}"><i class="ion-social-twitter"></i></a></li>
+          <li><a href="{{musician.settings.instagram  == null or musician.settings.instagram == "" ? '#' : musician.settings.instagram | external_link}}"><i class="ion-social-instagram"></i></a></li>
+          <li><a href="{{musician.settings.linkedin  == null or musician.settings.linkedin == "" ? '#' : musician.settings.linkedin | external_link}}"><i class="ion-social-linkedin"></i></a></li>
+          <li><a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-tumblr"></i></a></li>
+          <li><a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-dribbble"></i></a></li>
+        </ul>
+
+      </div>
+
+      <p>&copy; Copyrights Music Services Kenya. All rights reserved.</p>
+
+      <div class="credits">
+        <!--
+        All the links in the footer should remain intact.
+        You can delete the links only if you purchased the pro version.
+        Licensing information: https://bootstrapmade.com/license/
+        Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Folio
+      -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+
+    </div>
+  </div><!-- End Footer -->
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+  $(document).on("click", '[id^="proj_"]', function(){
+
+      var project = jQuery(this).attr("id");
+      var splitted = project.split('_'); //changeRow_Qt_1504
+      var id = splitted[1] //1504
+
+  // function saveDoc() {
+      var inputFile = document.getElementById('documento_'+id);
+      var file = inputFile.files[0];
+      var data = new FormData();
+      data.append('doc', file, file.name);
+      $.ajax({
+          url: "{{ path('upload_project_image') }}",
+          type: "POST",
+          data: data,
+          processData: false,
+          contentType: false,
+          cache: false,
+          success: function (data){
+              console.log(data);
+              console.log("saved information");
+              $.ajax({
+                  url:"{{ (path('upload_project_image')) }}",
+                  type: "POST",
+                  dataType: "json",
+                  data: {
+                      "id": id,
+                      "filename": data,
+                  },
+                  async: true,
+                  success: function (data)
+                  {
+                      console.log(data);
+                      console.log("saved another information");
+                      $("#project_image"+"_"+id).attr("src", data).css("maxWidth", '250px');
+                  },
+                  error: function () {
+                      $("#warning").html("<b>something's wrong</b>");
+                  }
+              });
+
+          },
+          error: function () {
+              $("#warning").html("<b>something's wrong</b>");
+          }
+
+      });
+
+  });
+  </script>
+
+  <script>
+  $(document).on("click", '[id^="upload_doc_"]', function(){
+
+      var project = jQuery(this).attr("id");
+      var splitted = project.split('_'); //changeRow_Qt_1504
+      var id = splitted[2] //1504
+
+  // function saveDoc() {
+      var inputFile = document.getElementById('doc_edu_'+id);
+      var file = inputFile.files[0];
+      var data = new FormData();
+      data.append('doc', file, file.name);
+      $.ajax({
+          url: "{{ path('upload_education_document') }}",
+          type: "POST",
+          data: data,
+          processData: false,
+          contentType: false,
+          cache: false,
+          success: function (data){
+              console.log(data);
+              console.log("saved information");
+              $.ajax({
+                  url:"{{ (path('upload_education_document')) }}",
+                  type: "POST",
+                  dataType: "json",
+                  data: {
+                      "id": id,
+                      "filename": data,
+                  },
+                  async: true,
+                  success: function (data)
+                  {
+                      console.log(data);
+                      console.log("saved another information");
+                      // $("#project_image"+"_"+id).attr("src", data).css("maxWidth", '250px');
+                      $("#alert_"+id).html(
+                          '<div class="alert alert-success" role="alert">' +
+                              'You have successfully uploaded the file.' +
+                          '</div>'
+                      );
+                      $("#document_form_"+id).hide();
+                      $("#download_doc_"+id).attr("href", data);
+                      
+                  },
+                  error: function () {
+                      $("#warning").html("<b>something's wrong</b>");
+                  }
+              });
+
+          },
+          error: function () {
+              $("#warning").html("<b>something's wrong</b>");
+          }
+
+      });
+
+  });
+  </script>
+
+
+  <script>
+  $(document).on("click", '[id^="change_doc_"]', function(){
+
+      var project = jQuery(this).attr("id");
+      var splitted = project.split('_'); //changeRow_Qt_1504
+      var id = splitted[2] //1504
+
+      $("#document_form_"+id).show();
+      
+  });
+</script>
+
+  <script>
+  $(document).on("click", '[id^="change_projPhoto_"]', function(){
+
+      var project = jQuery(this).attr("id");
+      var splitted = project.split('_'); //changeRow_Qt_1504
+      var id = splitted[2] //1504
+
+      $("#project_form_"+id).show();
+      
+  });
+</script>
+
+
+{% endblock %}

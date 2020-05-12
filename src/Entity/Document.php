@@ -33,6 +33,11 @@ class Document
 
     private $docpath;
 
+    public function __toString() {
+        return $this->doc;
+    }
+
+
     public function getDocpath(){
         $url = "http://localhost:8000/uploads/documents/$this->doc";
         $this->docpath = $url;

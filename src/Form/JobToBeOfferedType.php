@@ -13,8 +13,6 @@ class JobToBeOfferedType extends AbstractType
     {
         $builder
             ->add('jobtitle')
-            ->add('medium')
-            ->add('musician')
         ;
     }
 

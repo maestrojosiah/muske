@@ -93,6 +93,11 @@ class Settings
      */
     private $placeofwork;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $bgphoto;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -274,6 +279,18 @@ class Settings
     public function setPlaceofwork(?string $placeofwork): self
     {
         $this->placeofwork = $placeofwork;
+
+        return $this;
+    }
+
+    public function getBgphoto(): ?string
+    {
+        return $this->bgphoto;
+    }
+
+    public function setBgphoto(?string $bgphoto): self
+    {
+        $this->bgphoto = $bgphoto;
 
         return $this;
     }

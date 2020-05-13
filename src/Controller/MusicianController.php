@@ -17,6 +17,7 @@ use Knp\Snappy\Image;
 use Symfony\Component\Routing;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use App\Service\OrganizeThings; 
+use Sonata\SeoBundle\Seo\SeoPageInterface;
 
 class MusicianController extends AbstractController
 {
@@ -276,10 +277,12 @@ class MusicianController extends AbstractController
     /**
      * @Route("/{username}/{download}", name="musician_show", methods={"GET"})
      */
-    public function show($username, $download = '', UrlGeneratorInterface $generator, OrganizeThings $organizeThings): Response
+    public function show($username, $download = '', SeoPageInterface $seoPage, OrganizeThings $organizeThings): Response
     {
 
         $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->findByUsername($username)[0];
+        $jobsString = $this->getJobsAsString($musician);
+        $skillsString = $this->getSkillsAsString($musician);
 
         if(count($musician->getUploadedphotos()) >= 3){
             $fourPhotos =  $this->getDoctrine()->getManager()->getRepository('App:Gallery')
@@ -290,14 +293,25 @@ class MusicianController extends AbstractController
         
         $jobs = $organizeThings->organizedJobsAccordingToSettings($musician);
         $educ = $organizeThings->organizedEducationAccordingToSettings($musician);
+        
+        $seoPage
+            ->setTitle($musician->getFullname())
+            ->addMeta('name', 'keywords', $skillsString)
+            ->addMeta('name', 'description', $musician->getAbout())
+            ->addMeta('property', 'og:title', 'Musician')
+            ->addMeta('property', 'og:type', 'Resume')
+            ->addMeta('property', 'og:url',  $this->generateUrl('musician_show', [
+                'username' => $musician->getUsername() //->getPermalinkGenerator()->generate($musician, true)
+            ], true))
+            ->addMeta('property', 'og:description', $jobsString)
+        ;
 
-
-        $photourl = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto();
+        $photourl = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto().".png";
         $status = is_file($photourl);
         $pdf_template = $musician->getPdfTheme() ? $musician->getPdfTheme() : 'simpleOne.html.twig' ;
+        $web_template = $musician->getWebTheme() ? $musician->getWebTheme() : 'musician/show' ;
         $theme = $this->getDoctrine()->getManager()->getRepository('App:PdfTheme')->findByTemplate($pdf_template)[0];
         $themename = str_replace(" ", "_", $theme->getTitle());
-        $web_template = "musician/show";
 
         $array_data = [
             'musician' => $musician,
@@ -601,6 +615,30 @@ class MusicianController extends AbstractController
             'Content-Disposition'   => 'inline; filename='.$filename.'.jpg'
         )
         );        
+    }
+
+    public function getJobsAsString($musician){
+        $jobs2bo = [];
+        foreach ($musician->getJobsToBeOffered() as $job ) {
+            $jobs2bo[] = $job->getJobtitle();
+        }
+        $jobs2bo[] = $musician->getSettings() ? $musician->getSettings()->getPlaceofwork() : '' ;
+        $jobsString = implode(", ", $jobs2bo);
+
+        return $jobsString;
+    
+    }
+
+    public function getSkillsAsString($musician){
+        $skills = [];
+        foreach ($musician->getSkills() as $skill ) {
+            $skills[] = $skill->getSkillname();
+        }
+
+        $skillsString = implode(", ", $skills);
+
+        return $skillsString;
+    
     }
 
 

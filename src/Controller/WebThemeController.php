@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/web/theme")
+ * @Route("/web/online/theme")
  */
 class WebThemeController extends AbstractController
 {
@@ -20,8 +20,11 @@ class WebThemeController extends AbstractController
      */
     public function index(WebThemeRepository $webThemeRepository): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $musician = $this->getUser();
         return $this->render('web_theme/index.html.twig', [
             'web_themes' => $webThemeRepository->findAll(),
+            'musician' => $musician,
         ]);
     }
 

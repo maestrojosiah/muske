@@ -112,6 +112,7 @@ class Musician implements UserInterface
     private $logourl;
     private $isproandactive;
     private $ismuskeandactive;
+    private $hassettings;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Settings", mappedBy="musician", cascade={"persist", "remove"})
@@ -435,7 +436,12 @@ class Musician implements UserInterface
 
     public function getEmail(): ?string
     {
-        return $this->email;
+        if($this->isProAndActive()){
+            return $this->email;
+        } else {
+            return "musician@muske.co.ke";
+        }
+        
     }
 
     public function setEmail(?string $email): self
@@ -447,7 +453,11 @@ class Musician implements UserInterface
 
     public function getPhone(): ?string
     {
-        return $this->phone;
+        if($this->isProAndActive()){
+            return $this->phone;
+        } else {
+            return "Call MuSKe | 0705285959";
+        }
     }
 
     public function setPhone(?string $phone): self
@@ -646,6 +656,17 @@ class Musician implements UserInterface
         }
 
         return $this;
+    }
+
+    public function hasSettings(){
+        if($this->getSettings()){
+            $fact = true;
+        } else {
+            $fact = false;
+        }
+        
+        $this->hassettings = $fact;
+        return $this->hassettings;
     }
 
     public function isProAndActive(){

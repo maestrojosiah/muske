@@ -1,0 +1,32 @@
+sonata_seo:
+    encoding:         UTF-8
+    page:
+        title:            Musician Resume Collection
+        default:          sonata.seo.page.default
+        metas:
+            name:
+                keywords:             Music instruments instructors piano guitar violin choirs trainers conductors voice sightreading sightsinging advertize search music theory nairobi kiambu thika
+                description:          This is a comprehensive resource on finding a music job or finding a music instructor or any kind of musician. Easily and quickly build your resume as a musician or find a qualified music instructor of any field in this musician resume collection.
+                robots:               index, follow
+
+            property:
+                # Facebook application settings
+                #'fb:app_id':          XXXXXX
+                #'fb:admins':          admin1, admin2
+
+                # Open Graph information
+                # see http://developers.facebook.com/docs/opengraphprotocol/#types or http://ogp.me/
+                'og:site_name':       Music Services Kenya (MuSKe)
+                'og:description':     The largest musician resume resource in Kenya. Advertize yourself as a music instructor of any instrument or field. Find a qualified musician reviewed by MuSKe.
+
+            http-equiv:
+                'Content-Type':         text/html; charset=utf-8
+                #'X-Ua-Compatible':      IE=EmulateIE7
+
+            charset:
+                UTF-8:    ''
+
+        head:
+            'xmlns':              http://www.w3.org/1999/xhtml
+            'xmlns:og':           http://opengraphprotocol.org/schema/
+            'xmlns:fb':           "http://www.facebook.com/2008/fbml"

@@ -14,6 +14,7 @@ easy_admin:
             - { entity: 'Role', label: "Jobs you can do" }            
             - { entity: 'Gallery', label: "Photos and Videos" }            
             - { entity: 'PdfTheme', label: "Pdf Resume" }            
+            - { entity: 'WebTheme', label: "Web Theme" }            
             # - { label: 'Some Task', route: 'user_some_task' }
             # - { label: 'Other Task', route: 'other_task', params: { max: 7 } }
 
@@ -117,6 +118,15 @@ easy_admin:
             list:
                 actions: ['list', 'edit', 'search', 'delete', 'show', 'new']
                 title: "Resume"            
+                fields: [{property: 'template', label: 'Template'}, {property: 'screenshot', label: 'Screenshot'}, {property: 'title', label: 'Title'}]                        
+            form:
+                fields: [{property: 'template', label: 'Template'}, {property: 'screenshot', label: 'Screenshot'}, {property: 'title', label: 'Title'}]                        
+        WebTheme:
+            class: App\Entity\WebTheme
+            label: 'Web Theme'
+            list:
+                actions: ['list', 'edit', 'search', 'delete', 'show', 'new']
+                title: "Web Resume"            
                 fields: [{property: 'template', label: 'Template'}, {property: 'screenshot', label: 'Screenshot'}, {property: 'title', label: 'Title'}]                        
             form:
                 fields: [{property: 'template', label: 'Template'}, {property: 'screenshot', label: 'Screenshot'}, {property: 'title', label: 'Title'}]                        

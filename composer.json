@@ -10,6 +10,7 @@
         "h4cc/wkhtmltopdf-amd64": "^0.12.4",
         "knplabs/knp-snappy-bundle": "^1.7",
         "sensio/framework-extra-bundle": "^5.5",
+        "sonata-project/seo-bundle": "^2.10",
         "symfony/asset": "5.0.*",
         "symfony/console": "5.0.*",
         "symfony/dotenv": "5.0.*",

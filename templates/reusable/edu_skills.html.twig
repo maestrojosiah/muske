@@ -1,11 +1,14 @@
  <ul class="{{class}}">
 {% if edu.document != null and (musician.isproandactive == 'true' or musician.ismuskeandactive == 'true') and (app.user and app.user != null and app.user == musician) %}              
     <li><a id="download_doc_{{edu.id}}" href="{{ path('download_pdf', {'file': edu.document.doc} ) }}" download> Download supporting document </a></li>
+    <li><a id="change_doc_{{edu.id}}">Change Document</a></li>
 {% endif %}            
 {% if edu.specialties is empty %}
     {% if app.user and app.user != null and app.user == musician %}
+    <br />
         You haven't added any skills that you learned in this institution. Please <a href="{{ path('specialty_new', {'education_id': edu.id}) }}">Add some skills </a>
     {% else %}
+    <br />
         Learned a lot of things that are found under {{edu.coursename}} course. You can <a target="_blank" href="http://www.google.com/search?q={{edu.coursename|replace({' ': '+'}) }}+Course+Description+{{edu.institution|replace({' ': '+'})}}">search on google</a> what some of the skills are.
     {% endif %}
 {% else %}
@@ -16,7 +19,6 @@
     {% endfor %}
     {% if app.user and app.user != null and app.user == musician %}
     <li><a href="{{ path('specialty_new', {'education_id': edu.id}) }}">Add skills</a></li>
-    <li><a id="change_doc_{{edu.id}}">Change Document</a></li>
     {% endif %}                
 {% endif %}
 </ul>

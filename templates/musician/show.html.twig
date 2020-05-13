@@ -394,19 +394,19 @@
                             <a href="https://github.com/" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}" target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i></a>
+                            <a href="{{ musician.hassettings ? musician.settings.facebook | external_link : '#'}}" target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="{{musician.settings.linkedin  == null or musician.settings.linkedin == "" ? '#' : musician.settings.linkedin | external_link}}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            <a href="{{ musician.hassettings ? musician.settings.linkedin | external_link : '#'}}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="{{ musician.hassettings ? musician.settings.facebook | external_link : '#'}}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="{{musician.settings.twitter  == null or musician.settings.twitter == "" ? '#' : musician.settings.twitter | external_link}}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="{{ musician.hassettings ? musician.settings.twitter | external_link : '#'}}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a href="{{musician.settings.instagram  == null or musician.settings.instagram == "" ? '#' : musician.settings.instagram | external_link}}" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a href="{{ musician.hassettings ? musician.settings.instagram | external_link : '#'}}" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                         </li>
                     </ul>
                 </div>

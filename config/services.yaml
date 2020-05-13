@@ -7,6 +7,7 @@ parameters:
     brochures_directory: '%kernel.project_dir%/public/uploads/photos'
     gallery_directory: '%kernel.project_dir%/public/uploads/gallery'
     document_directory: '%kernel.project_dir%/public/uploads/documents'
+    projects_directory: '%kernel.project_dir%/public/uploads/projects'
 
 services:
     # default configuration for services in *this* file
@@ -33,3 +34,6 @@ services:
     #     public: false
     #     tags:
     #         - { name: twig.extension }
+
+    Sonata\SeoBundle\Seo\SeoPageInterface:
+        alias: "sonata.seo.page.default"

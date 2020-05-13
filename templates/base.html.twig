@@ -2,7 +2,9 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        {{ sonata_seo_title() }}
+        {{ sonata_seo_metadatas() }}
+        {{ sonata_seo_head_attributes() }}
         <link rel="stylesheet" type="text/css" href="{{asset('bootstrap/css/bootstrap.min.css')}}" />
         <link rel="stylesheet" type="text/css" href="{{asset('css/carousel.css')}}" />
         {% block stylesheets %}{% endblock %}

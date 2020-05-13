@@ -254,12 +254,12 @@
         <p class="typed-items" data-typed-person="Musician">{% for job_role in musician.jobstobeoffered %}{{job_role.jobtitle}} {% if loop.index < musician.jobstobeoffered|length %},{% endif %}{% endfor %}</p>
 
         <ul class="list-unstyled list-social">
-          <li><a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-facebook"></i></a></li>
-          <li><a href="{{musician.settings.twitter  == null or musician.settings.twitter == "" ? '#' : musician.settings.twitter | external_link}}"><i class="ion-social-twitter"></i></a></li>
-          <li><a href="{{musician.settings.instagram  == null or musician.settings.instagram == "" ? '#' : musician.settings.instagram | external_link}}"><i class="ion-social-instagram"></i></a></li>
-          <li><a href="{{musician.settings.linkedin  == null or musician.settings.linkedin == "" ? '#' : musician.settings.linkedin | external_link}}"><i class="ion-social-linkedin"></i></a></li>
-          <li><a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-tumblr"></i></a></li>
-          <li><a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-dribbble"></i></a></li>
+          <li><a href="{{musician.settings and (musician.settings.facebook  == null or musician.settings.facebook == "") ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-facebook"></i></a></li>
+          <li><a href="{{musician.settings and (musician.settings.twitter  == null or musician.settings.twitter == "") ? '#' : musician.settings.twitter | external_link}}"><i class="ion-social-twitter"></i></a></li>
+          <li><a href="{{musician.settings and (musician.settings.instagram  == null or musician.settings.instagram == "") ? '#' : musician.settings.instagram | external_link}}"><i class="ion-social-instagram"></i></a></li>
+          <li><a href="{{musician.settings and (musician.settings.linkedin  == null or musician.settings.linkedin == "") ? '#' : musician.settings.linkedin | external_link}}"><i class="ion-social-linkedin"></i></a></li>
+          <li><a href="{{musician.settings and (musician.settings.facebook  == null or musician.settings.facebook == "") ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-tumblr"></i></a></li>
+          <li><a href="{{musician.settings and (musician.settings.facebook  == null or musician.settings.facebook == "") ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-dribbble"></i></a></li>
         </ul>
       </div>
     </div>
@@ -505,7 +505,8 @@
 
     </div><!-- End Album Section -->
     {% endif %}
-
+    <hr />
+    
     <!-- ======= Skills Section ======= -->
     <div id="skill">
       <div class="container">
@@ -607,12 +608,12 @@
       <div class="socials-media text-center">
 
         <ul class="list-unstyled">
-          <li><a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-facebook"></i></a></li>
-          <li><a href="{{musician.settings.twitter  == null or musician.settings.twitter == "" ? '#' : musician.settings.twitter | external_link}}"><i class="ion-social-twitter"></i></a></li>
-          <li><a href="{{musician.settings.instagram  == null or musician.settings.instagram == "" ? '#' : musician.settings.instagram | external_link}}"><i class="ion-social-instagram"></i></a></li>
-          <li><a href="{{musician.settings.linkedin  == null or musician.settings.linkedin == "" ? '#' : musician.settings.linkedin | external_link}}"><i class="ion-social-linkedin"></i></a></li>
-          <li><a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-tumblr"></i></a></li>
-          <li><a href="{{musician.settings.facebook  == null or musician.settings.facebook == "" ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-dribbble"></i></a></li>
+          <li><a href="{{  musician.hassettings ? musician.settings.facebook | external_link : '#'}}"><i class="ion-social-facebook"></i></a></li>
+          <li><a href="{{  musician.hassettings ? musician.settings.twitter | external_link : '#'}}"><i class="ion-social-twitter"></i></a></li>
+          <li><a href="{{  musician.hassettings ? musician.settings.instagram | external_link : '#'}}"><i class="ion-social-instagram"></i></a></li>
+          <li><a href="{{  musician.hassettings ? musician.settings.linkedin | external_link : '#'}}"><i class="ion-social-linkedin"></i></a></li>
+          <li><a href="{{  musician.hassettings ? musician.settings.facebook | external_link : '#'}}"><i class="ion-social-tumblr"></i></a></li>
+          <li><a href="{{  musician.hassettings ? musician.settings.facebook | external_link : '#'}}"><i class="ion-social-dribbble"></i></a></li>
         </ul>
 
       </div>

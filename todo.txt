@@ -23,23 +23,18 @@ same with Document.php
 same with PfdTheme.php
 restore the sending of email in src/Updates by uncommenting the return statement
 change wkhtmltopdf path in .env
+notification by email when end of pro : cron job
+Mail Reminder of incomplete accounts once a month : cron job
+make email musician@muske.co.ke
 
 
 seobundle
-notification by email when end of pro : cron job
 Help link goes first to faq... faq should have contacts as the last option 
-Mail Reminder of incomplete accounts once a month : cron job
 unsubscribe link : https://muske.co.ke/musician/unsubscribe/{{username}} used in email conf twig
 check if subscribed before sending any email
-complete email templates
-salary is still nowhere in the resume
 consider blog
-select photo for background from gallery
-alter cv addresses accordingly : change what to display in entity
 special characters in pdf downloads
-change profile download back to pdf
 copy link button in profile
-if project image exists, hide form
 
 
 faq:

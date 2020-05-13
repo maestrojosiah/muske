@@ -7,7 +7,6 @@ use App\Form\JobType;
 use App\Form\RoleType;
 use App\Form\EducationType;
 use App\Form\SpecialtyType;
-use App\Form\DocumentType;
 use App\Form\SkillType;
 use App\Form\ProjectType;
 use App\Form\JobToBeOfferedType;
@@ -59,15 +58,7 @@ class AdminController extends AbstractController
                         $entity[] = $spec;
                     }
                 }
-                break;
-            case 'documents':
-                $educ = $organizeThings->organizedEducationAccordingToSettings($musician);
-                $entity = [];
-                foreach ($educ as $edu) {
-                    $entity[] = $edu->getDocument();
-                }
-                break;
-    
+                break;    
             case 'skills':
                 $entity = $musician->getSkills();
                 break;
@@ -85,7 +76,7 @@ class AdminController extends AbstractController
                 break;
         }
 
-        $sidebar_menu = [ 'Job Experience'=>['jobs', 'roles'], 'Education'=>['education', 'specialties', 'documents'], 'skills', 'projects', 'myJobs', 'photos' ];
+        $sidebar_menu = [ 'Job Experience'=>['jobs', 'roles'], 'Education'=>['education', 'specialties'], 'skills', 'projects', 'myJobs', 'photos' ];
 
         return $this->render('admin/index.html.twig', [
             'musician' => $musician,
@@ -100,6 +91,7 @@ class AdminController extends AbstractController
      */
     public function edit(Request $request, $entity_name, $id): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $usable_entity_name = rtrim(ucfirst($entity_name), "s");
         $musician = $this->getUser();
         switch ($entity_name) {
@@ -127,10 +119,6 @@ class AdminController extends AbstractController
                 $entity = $this->getDoctrine()->getManager()->getRepository("App:Specialty")->find($id);
                 $form = $this->createForm(SpecialtyType::class, $entity);
                 break;
-            case 'documents':
-                $entity = $this->getDoctrine()->getManager()->getRepository("App:Document")->find($id);
-                $form = $this->createForm(DocumentType::class, $entity);
-                break;
             case 'projects':
                 $entity = $this->getDoctrine()->getManager()->getRepository("App:Project")->find($id);
                 $form = $this->createForm(ProjectType::class, $entity);
@@ -153,7 +141,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('musician_admin_index', ['entity' => $entity_name]);
         }
 
-        $sidebar_menu = [ 'Job Experience'=>['jobs', 'roles'], 'Education'=>['education', 'specialties', 'documents'], 'skills', 'projects', 'myJobs', 'photos' ];
+        $sidebar_menu = [ 'Job Experience'=>['jobs', 'roles'], 'Education'=>['education', 'specialties'], 'skills', 'projects', 'myJobs', 'photos' ];
 
         return $this->render('admin/edit.html.twig', [
             'entity' => $entity,
@@ -169,6 +157,7 @@ class AdminController extends AbstractController
      */
     public function delete(Request $request, $entity_name, $id): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         switch ($entity_name) {
             case 'jobs':
                 $entity = $this->getDoctrine()->getManager()->getRepository("App:Job")->find($id);
@@ -178,7 +167,10 @@ class AdminController extends AbstractController
                 break;
             case 'photos':
                 $entity = $this->getDoctrine()->getManager()->getRepository("App:Gallery")->find($id);
-                
+                $current_photo_path = $this->getParameter('gallery_directory')."/".$entity->getPhoto();
+                $current_photo_thumb_path = $this->getParameter('gallery_directory')."/thumbs/".$entity->getPhoto().".png";
+                unlink($current_photo_path);
+                unlink($current_photo_thumb_path);
                 break;
             case 'roles':
                 $entity = $this->getDoctrine()->getManager()->getRepository("App:Role")->find($id);
@@ -188,9 +180,6 @@ class AdminController extends AbstractController
                 break;
             case 'specialties':
                 $entity = $this->getDoctrine()->getManager()->getRepository("App:Specialty")->find($id);
-                break;
-            case 'documents':
-                $entity = $this->getDoctrine()->getManager()->getRepository("App:Document")->find($id);
                 break;
             case 'projects':
                 $entity = $this->getDoctrine()->getManager()->getRepository("App:Project")->find($id);

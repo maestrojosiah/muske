@@ -1,4 +1,4 @@
-<form class="btnxsm" style="padding:0px!important" method="post" action="{{ path('admin_delete', {'entity_name': lastPartUrl, 'id': val.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form class="btnxsm" style="padding:0px!important" method="post" action="{{ path('admin_delete', {'entity_name': lastPartUrl, 'id': val.id}) }}" onsubmit="return confirm('Are you sure you want to delete {{val}}?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ val.id) }}">
     <button class="btn btn-danger"><i class="icon_trash"></i></button>

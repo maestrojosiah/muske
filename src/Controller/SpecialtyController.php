@@ -30,6 +30,7 @@ class SpecialtyController extends AbstractController
      */
     public function new(Request $request, $education_id): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $edus = $this->getUser()->getEducation();
         $default_education = $this->getDoctrine()->getManager()->getRepository('App:Education')->find($education_id);
         $specialty = new Specialty();

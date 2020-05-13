@@ -86,7 +86,7 @@ class Project
 
     public function imagelink(): ?string
     {
-        $url = "http://localhost:8000/uploads/photos/$this->projectimage";
+        $url = "http://localhost:8000/uploads/projects/$this->projectimage";
 
         return $url;
 

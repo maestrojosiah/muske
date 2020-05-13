@@ -122,6 +122,29 @@ class AjaxController extends AbstractController
     }
 
     /**
+     * @Route("/save/web/template", name="save_web_template")
+     */
+    public function saveWebTheme(Request $request)
+    {
+        if($request->request->get('theme_template')){
+
+            $theme_template = $this->sanitizeInput($request->request->get('theme_template'));
+
+            $musician = $this->getUser();
+    
+            $entityManager = $this->getDoctrine()->getManager();
+            $musician->setWebTheme($theme_template);
+            $entityManager->persist($musician);
+            $entityManager->flush();
+           
+            return new JsonResponse($theme_template);
+        }
+        
+
+    }
+
+
+    /**
      * @Route("/save/education", name="save_education")
      */
     public function saveEducation(Request $request)
@@ -294,8 +317,12 @@ class AjaxController extends AbstractController
             $email = $musician->getEmail();
             
             $username = $this->base64url_encode($musician->getUsername());
-            if($activationManager->sendActivationEmail($email, $username)){
-                $this->addFlash('success', "Account created successfully! Please check your email for an account activation link. (Check spam folder if you can't find it) ");
+            if($musician->getConfirmed() == 'true'){
+                //do nothing
+            } else {
+                if($activationManager->sendActivationEmail($email, $username)){
+                    $this->addFlash('success', "Account created successfully! Please check your email for an account activation link. (Check spam folder if you can't find it) ");
+                }
             }
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -353,10 +380,10 @@ class AjaxController extends AbstractController
         
         if($file){
             $filename = md5(uniqid()).'.'.$file->guessExtension();
-            // Move the file to the directory where brochures are stored
+        // Move the file to the directory where brochures are stored
             try {
                 $file->move(
-                    $this->getParameter('brochures_directory'),
+                    $this->getParameter('projects_directory'),
                     $filename
                 );
             } catch (FileException $e) {
@@ -371,6 +398,10 @@ class AjaxController extends AbstractController
 
             $filename = $this->sanitizeInput($request->request->get('filename'));
             $project = $this->getDoctrine()->getManager()->getRepository('App:Project')->find($project_id);
+            if($project->getProjectimage() != null ) {
+                $current_photo_path = $this->getParameter('projects_directory')."/".$project->getProjectimage();
+                unlink($current_photo_path);
+            }
             $project->setProjectimage($filename);
             $em = $this->getDoctrine()->getManager();
             $em->persist($project);
@@ -653,6 +684,31 @@ class AjaxController extends AbstractController
         return $this->render('musician/reset_password.html.twig', []);
     }
 
+    /**
+     * @Route("/musician/activate/{username}", name="musician_confirm_email")
+     */
+    public function confirmEmail(Request $request, $username): Response
+    {
+        $decoded_username = $this->base64url_decode($username);
+        $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->findByUsername($decoded_username)[0];
+        if($musician){
+            $entityManager = $this->getDoctrine()->getManager();
+            $musician->setConfirmed("true");
+            $entityManager->persist($musician);
+            $entityManager->flush();            
+            $message = "Your email has been successfully confirmed.";
+            $success = true;
+        } else {
+            $message = "That username doesn't exist in our database. Whatever you're doing!.";
+            $success = false;
+        }
+        return $this->render('musician/confirm_email.html.twig', [
+            'success' => $success,
+            'message' => $message,
+            'username' => $decoded_username
+        ]);
+    }
+
     
     public function makeThumbnails($updir, $img, $thumbnail_width="300", $thumbnail_height="200")
     {
@@ -878,7 +934,7 @@ class AjaxController extends AbstractController
             $email = $musician->getEmail();
             $data = [];
 
-            if($membershipManager->sendMembershipConfirmation($email, $membership)){
+            if($membershipManager->sendMembershipConfirmation($email, $membership, $musician->getUsername())){
                 $this->addFlash('success', 'Notification mail was sent successfully');
                 $data['sent'] = "<p style='color:green'>A confirmation message has been sent to your email. (Check spam folder if you can't find it)</p>";
             } else {

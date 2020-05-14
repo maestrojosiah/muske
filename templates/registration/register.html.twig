@@ -39,24 +39,20 @@
                                                     {{ form_errors(registrationForm.username) }}
                                                     {{ form_errors(registrationForm.plainPassword) }}
 													<span class="input-group-addon">
-														<i class="material-icons">face</i>
+														<i class="material-icons">Username</i>
 													</span>
 													<div class="form-group label-floating">
-			                                          {# <label class="control-label">First Name <small>(required)</small></label> #}
                                                       {{ form_label(registrationForm.username, 'Username (single name. Your page will be https://muske/co.ke/username)', {'label_attr': {'class': 'control-label'}})}}
-			                                          {# <input name="firstname" type="text" class="form-control"> #}
                                                       {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control'}}) }}                                                      
 			                                        </div>
 												</div>
 
 												<div class="input-group">
 													<span class="input-group-addon">
-														<i class="material-icons">record_voice_over</i>
+														<i class="material-icons">Password</i>
 													</span>
 													<div class="form-group label-floating">
-													  {# <label class="control-label">Password</label> #}
                                                       {{ form_label(registrationForm.plainPassword.first, 'Password', {'label_attr': {'class': 'control-label'}})}}
-													  {# <input name="lastname" type="text" class="form-control"> #}
                                                       {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
 													</div>
 												</div>
@@ -64,12 +60,10 @@
 		                                	<div class="col-sm-10 col-sm-offset-1">
 												<div class="input-group">
 													<span class="input-group-addon">
-														<i class="material-icons">email</i>
+														<i class="material-icons">Repeat password</i>
 													</span>
 													<div class="form-group label-floating">
-			                                            {# <label class="control-label">Email <small>(required)</small></label> #}
                                                         {{ form_label(registrationForm.plainPassword.second, 'Repeat Password', {'label_attr': {'class': 'control-label'}})}}
-			                                            {# <input name="email" type="email" class="form-control"> #}                                                        
                                                         {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
 			                                        </div>
 												</div>

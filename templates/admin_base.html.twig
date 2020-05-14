@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-  
         <!-- Bootstrap CSS -->
         <link href="{{ asset('NiceAdmin/css/bootstrap.min.css') }}" rel="stylesheet">
         <!-- bootstrap theme -->
@@ -14,6 +13,7 @@
         <link href="{{ asset('NiceAdmin/css/style.css') }}" rel="stylesheet">
         <link href="{{ asset('NiceAdmin/css/style-responsive.css') }}" rel="stylesheet" />
         <link href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" />
+        {% include "favicon.html.twig" %}
 
         {% block stylesheets %}{% endblock %}
     </head>

@@ -154,6 +154,11 @@ class Musician implements UserInterface
      */
     private $webTheme;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="musician")
+     */
+    private $ratings;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -164,6 +169,7 @@ class Musician implements UserInterface
         $this->projects = new ArrayCollection();
         $this->uploadedphotos = new ArrayCollection();
         $this->documents = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     public function __toString() {
@@ -444,6 +450,13 @@ class Musician implements UserInterface
         
     }
 
+    public function getRealEmail(): ?string
+    {
+        return $this->email;
+        
+    }
+
+
     public function setEmail(?string $email): self
     {
         $this->email = $email;
@@ -458,6 +471,11 @@ class Musician implements UserInterface
         } else {
             return "Call MuSKe | 0705285959";
         }
+    }
+
+    public function getRealPhone(): ?string
+    {
+        return $this->phone;
     }
 
     public function setPhone(?string $phone): self
@@ -744,6 +762,37 @@ class Musician implements UserInterface
     public function setWebTheme(?string $webTheme): self
     {
         $this->webTheme = $webTheme;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rating[]
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings[] = $rating;
+            $rating->setMusician($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): self
+    {
+        if ($this->ratings->contains($rating)) {
+            $this->ratings->removeElement($rating);
+            // set the owning side to null (unless already changed)
+            if ($rating->getMusician() === $this) {
+                $rating->setMusician(null);
+            }
+        }
 
         return $this;
     }

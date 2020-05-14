@@ -50,7 +50,7 @@
         <div id="lightgallery" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled infinite-container infinite-loading">
 
           {% for photo in photos %}
-          <div class="col infinite-item" data-src="{{photo.type == "video" ? photo.photo : photo.photopath}}" data-sub-html="<h4>{{photo.musician.fullname}}</h4><p>{{photo.description}}</p>">
+          <div class="col infinite-item" data-src="{{photo.type == "video" ? photo.photo : photo.photopath}}" data-sub-html="<h4>{{photo.musician.fullname}}</h4><p>{{photo.description}}</p><a id='makeBg_{{photo.id}}' type='button' class='common'>{{musician.hassettings and musician.settings.bgphoto == photo.photo ? 'Current Background' : 'Make Your Online Resume Background'}}</a>">
             <div class="card shadow-sm">
               <a href="{% if photo.type == "video" %}{{photo.photo}}{% endif %}">
                   {% if photo.type == "video" %}
@@ -61,6 +61,8 @@
               </a>
               <div class="card-body">
                 <p class="card-text">{{photo.description}}</p>
+                <input id="imagetoBg_{{photo.id}}" type="hidden" value="{{photo.photo}}" />
+                <input id="imagetoBg_{{photo.id}}" type="hidden" value="{{photo.photo}}" />
               </div>
             </div>
           </div>
@@ -128,5 +130,38 @@
     });
     
     </script>
+
+	<script>
+
+    $(document).on("click", '[id^="makeBg_"]', function(){
+        var project = jQuery(this).attr("id");
+        var splitted = project.split('_'); 
+        var id = splitted[1] 
+
+		    var imagetoBg = $("#imagetoBg_"+id).val();              
+
+			$.ajax({
+				url:'{{ (path('save_web_background')) }}',
+				type: "POST",
+				dataType: "json",
+				data: {
+					"imagetoBg": imagetoBg,
+				},
+				async: true,
+				success: function (data)
+				{
+					console.log(data.msg);
+					console.log("saved settings");
+          $("#makeBg_"+id).html(data.msg).addClass('text-'+data.msgtype);
+				},
+				error: function () {
+					$("#warning").html("<b>something's wrong</b>");
+				}
+			});
+
+	});
+
+	</script>
+
 
 {% endblock %}

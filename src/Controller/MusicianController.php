@@ -62,7 +62,7 @@ class MusicianController extends AbstractController
         } 
         
         // define email phone age and full name
-        $musician_email = $musician->getEmail();
+        $musician_email = $musician->getRealEmail();
         $musician_phone = $musician->getPhone();
         $musician_age = $musician->getAge();
         $musician_fullname = $musician->getFullname();
@@ -295,13 +295,13 @@ class MusicianController extends AbstractController
         $educ = $organizeThings->organizedEducationAccordingToSettings($musician);
         
         $seoPage
-            ->setTitle($musician->getFullname())
+            ->setTitle($musician->getFullname()." | Resume")
             ->addMeta('name', 'keywords', $skillsString)
             ->addMeta('name', 'description', $musician->getAbout())
             ->addMeta('property', 'og:title', 'Musician')
             ->addMeta('property', 'og:type', 'Resume')
             ->addMeta('property', 'og:url',  $this->generateUrl('musician_show', [
-                'username' => $musician->getUsername() //->getPermalinkGenerator()->generate($musician, true)
+                'username' => $musician->getUsername() 
             ], true))
             ->addMeta('property', 'og:description', $jobsString)
         ;
@@ -480,7 +480,7 @@ class MusicianController extends AbstractController
         // for placeholding if data exists
 
         // define email phone age and full name
-        $musician_email = $musician->getEmail();
+        $musician_email = $musician->getRealEmail();
         $musician_phone = $musician->getPhone();
         $musician_age = $musician->getAge();
         $musician_fullname = $musician->getFullname();

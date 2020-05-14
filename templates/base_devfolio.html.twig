@@ -2,10 +2,10 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        {{ sonata_seo_title() }}
+        {{ sonata_seo_metadatas() }}
+        {{ sonata_seo_head_attributes() }}
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <!-- Favicons -->
-        <link href="{{ asset('devfolio/assets/img/favicon.png') }}" rel="icon">
-        <link href="{{ asset('devfolio/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
         <!-- Vendor CSS Files -->
         <link href="{{ asset('devfolio/assets/vendor/ionicons/css/ionicons.min.css') }}" rel="stylesheet">
@@ -13,6 +13,7 @@
         {% include "common_css.html.twig" %}
 
         <!-- Template Main CSS File -->
+        {% include "favicon.html.twig" %}
         <link href="{{ asset('devfolio/assets/css/style.css') }}" rel="stylesheet">
         {% block stylesheets %}{% endblock %}
     </head>

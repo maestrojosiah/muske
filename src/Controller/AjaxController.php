@@ -20,7 +20,9 @@ use App\Entity\Specialty;
 use App\Entity\Settings;
 use App\Entity\Gallery;
 use App\Entity\Document;
+use App\Entity\Rating;
 use App\Updates\ResetPwdManager;
+use App\Updates\MessageFromResume;
 use App\Updates\MembershipManager;
 use App\Updates\ActivationManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -143,6 +145,57 @@ class AjaxController extends AbstractController
 
     }
 
+    /**
+     * @Route("/save/web/background", name="save_web_background")
+     */
+    public function saveWebBg(Request $request)
+    {
+        if($request->request->get('imagetoBg')){
+
+            $imagetoBg = $this->sanitizeInput($request->request->get('imagetoBg'));
+
+            $musician = $this->getUser();
+            $settings = $musician->getSettings();
+            $message = "";
+            $data = [];
+
+            if($settings){
+
+                $photo_path = $this->getParameter('gallery_directory')."/".$imagetoBg;
+                $photo_size = filesize($photo_path);
+                $readable_size = $this->human_filesize($photo_size);
+                if($photo_size > 300000){
+                    $data['msg'] = "That file is too big and will make your website take ages to load. Please upload an image that is lesser than 300kb.";
+                    $data['msgtype'] = 'danger';
+                } else {
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $settings->setBgphoto($imagetoBg);
+                    $entityManager->persist($musician);
+                    $entityManager->flush();    
+                    $data['msg'] = "background changed";
+                    $data['msgtype'] = 'success';
+                }
+
+
+                return new JsonResponse($data);
+            } else {
+                $data['msg'] = "You don't have any settings yet to save your options. Go to your profile and create some settings first.";
+                $data['msgtype'] = 'danger';
+                return new JsonResponse($data);
+            }
+    
+           
+            
+        }
+        
+
+    }
+
+    public function human_filesize($bytes, $decimals = 2) {
+      $sz = 'BKMGTP';
+      $factor = floor((strlen($bytes) - 1) / 3);
+      return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
+    }
 
     /**
      * @Route("/save/education", name="save_education")
@@ -314,7 +367,7 @@ class AjaxController extends AbstractController
             $exp_salary == "" ? "nil" : $exp_salary;
 
             $musician = $this->getUser();
-            $email = $musician->getEmail();
+            $email = $musician->getRealEmail();
             
             $username = $this->base64url_encode($musician->getUsername());
             if($musician->getConfirmed() == 'true'){
@@ -667,6 +720,48 @@ class AjaxController extends AbstractController
 
     }
 
+    /**
+     * @Route("/save/rating", name="save_rating")
+     */
+    public function saveRating(Request $request)
+    {
+        if($request->request->get('ratingval')){
+
+            $ratingval = $this->sanitizeInput($request->request->get('ratingval'));
+            $ratername = $this->sanitizeInput($request->request->get('ratername'));
+            $rateremail = $this->sanitizeInput($request->request->get('rateremail'));
+            $musician_id = $this->sanitizeInput($request->request->get('musician_id'));
+            $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->find($musician_id);
+            $ratings = $this->getDoctrine()->getManager()->getRepository('App:Rating')->findAll();
+            $entityManager = $this->getDoctrine()->getManager();
+
+            if($ratings){
+                foreach ($ratings as $rate ) {
+                    if($rate->getRateremail() == $rateremail && $rate->getMusician() == $musician){
+                        $rating = $rate;
+                    } else {
+                        $rating = new Rating();
+                    }
+                }
+    
+            } else {
+                $rating = new Rating();
+            }
+            
+
+            $rating->setMusician($musician);
+            $rating->setRatingval($ratingval);
+            $rating->setRater($ratername);
+            $rating->setRateremail($rateremail);
+            $entityManager->persist($rating);
+            $entityManager->flush();
+           
+            return new JsonResponse($ratername);
+        }
+        
+
+    }
+
 
 
     public function sanitizeInput($input){
@@ -785,8 +880,9 @@ class AjaxController extends AbstractController
                 $username = $this->base64url_encode($musician[0]->getUsername());
                 if($resetPwdManager->sendResetEmail($email, $username)){
                     $this->addFlash('success', 'Notification mail was sent successfully');
+                    $data['found'] = "Please check your email for a link to reset your password. (Check spam folder if you can't find it)";
                 }
-                $data['found'] = "Please check your email for a link to reset your password. (Check spam folder if you can't find it)";
+                
             } else {
                 $data['found'] = "We can not find that email in our system.";
             }
@@ -800,6 +896,41 @@ class AjaxController extends AbstractController
 
     }
     
+    /**
+     * @Route("/musician/receive/message", name="musician_receive_message", methods={"GET", "POST"})
+     */
+    public function sendResumeMessage(MessageFromResume $messageFromResume, Request $request)
+    {
+        
+        if($request->request->get('senderemail')){
+
+            $senderemail = $this->sanitizeInput($request->request->get('senderemail'));
+            $sendername = $this->sanitizeInput($request->request->get('sendername'));
+            $subject = $this->sanitizeInput($request->request->get('subject'));
+            $message = $this->sanitizeInput($request->request->get('message'));
+            $musician_id = $this->sanitizeInput($request->request->get('musician_id'));
+            $data = [];
+
+            $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->find($musician_id);
+
+            if($musician){
+                if($messageFromResume->sendEmailMessage($musician->getRealEmail(), $musician->getUsername(), $sendername, $senderemail, $message, $subject)){
+                    // $this->addFlash('success', 'Notification mail was sent successfully');
+                    $data['found'] = "Message has been sent";
+                }
+                
+            } else {
+                $data['found'] = "We can not find that email in our system.";
+            }
+           
+
+            return new JsonResponse($data['found']);
+
+        }
+
+    }
+    
+
 
     /**
      * @Route("/musician/password/new/{encoded_username}", name="musician_new_password", methods={"GET", "POST"})
@@ -931,7 +1062,7 @@ class AjaxController extends AbstractController
             $entityManager->persist($setting);
             $entityManager->flush();
 
-            $email = $musician->getEmail();
+            $email = $musician->getRealEmail();
             $data = [];
 
             if($membershipManager->sendMembershipConfirmation($email, $membership, $musician->getUsername())){

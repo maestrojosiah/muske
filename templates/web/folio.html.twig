@@ -76,11 +76,18 @@
 
 
 </style>
-
+{% set bgPhoto = asset('img/class_brown.jpg') %}
 <style type="text/css">
 
+  .rating-header {
+      margin-top: -10px;
+      margin-bottom: 10px;
+  }
   #hero {
-    background: url("{{ asset('img/class_brown.jpg')}}") repeat scroll center center/cover;
+    /* background: url("{{ asset('img/class_brown.jpg')}}") repeat scroll center center/cover; */
+    background: url("{{musician.hassettings and musician.settings.bgphoto != null ? musician.settings.photopath : bgPhoto }}");
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100vh;
     width: 100%;
   }
@@ -235,8 +242,10 @@
         <ul class="nav-menu list-unstyled">
           <li><a href="#header" class="smoothScroll">Home</a></li>
           <li><a href="#about" class="smoothScroll">About</a></li>
-          <li><a href="#portfolio" class="smoothScroll">Portfolio</a></li>
-          <li><a href="#journal" class="smoothScroll">Blog</a></li>
+          <li><a href="#experience" class="smoothScroll">Experience</a></li>
+          <li><a href="#education" class="smoothScroll">Education</a></li>
+          <li><a href="#album" class="smoothScroll">Gallery</a></li>
+          <li><a href="#skills" class="smoothScroll">Skills</a></li>
           <li><a href="#contact" class="smoothScroll">Contact</a></li>
         </ul>
 
@@ -508,7 +517,7 @@
     <hr />
     
     <!-- ======= Skills Section ======= -->
-    <div id="skill">
+    <div id="skills">
       <div class="container">
         <div class="section-title text-center">
           <h2>Skills</h2>
@@ -534,36 +543,89 @@
         <div class="contact-block1">
           <div class="row">
 
-            <div class="col-lg-6">
-              <div class="contact-contact">
-
-                <h2 class="mb-30">GET IN TOUCH</h2>
-
-                <ul class="contact-details">
-                  <li><span>{{musician.fullname}}</span></li>
-                  <li><span>{{musician.settings.placeofwork}}</span></li>
-                  <li><span>{{musician.phone}}</span></li>
-                  <li><span>{{musician.email}}</span></li>
-                  <li><span>muske.co.ke/{{musician.username}}</span></li>
-                </ul>
-
-              </div>
+          <div class="container">
+            <div class="section-title text-center">
+              <h2>Connect</h2>
             </div>
+          </div>
 
             <div class="col-lg-6">
-              <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <form  role="form" class="php-email-form">
                 <div class="row">
 
                   <div class="col-lg-6">
                     <div class="form-group contact-block1">
-                      <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                      <input type="text" name="name" class="form-control" id="ratername" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
                       <div class="validate"></div>
                     </div>
                   </div>
 
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                      <input type="email" class="form-control" name="email" id="rateremail" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                      <div class="validate"></div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <div class="form-group">
+
+                      <div class="form-group" id="rating-ability-wrapper">
+                        <label class="control-label" for="rating">
+                        <span class="field-label-header">How would you rate {{musician.fullname}}?</span><br>
+                        <span class="field-label-info"></span>
+                        <input type="hidden" id="selected_rating" name="selected_rating" value="" required="required">
+                        </label>
+                        <h2 class="bold rating-header" style="">
+                        <span class="selected-rating">0</span><small> / 5</small>
+                        </h2>
+                        <button type="button" class="btnrating btn btn-default btn-lg" data-attr="1" id="rating-star-1">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btnrating btn btn-default btn-lg" data-attr="2" id="rating-star-2">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btnrating btn btn-default btn-lg" data-attr="3" id="rating-star-3">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btnrating btn btn-default btn-lg" data-attr="4" id="rating-star-4">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btnrating btn btn-default btn-lg" data-attr="5" id="rating-star-5">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </button>
+                      </div>                    
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 mb-3">
+                    <div class="error-message-rating"></div>
+                    <div id="rating-submitted" class="sent-message">Your rating has been submitted. Thank you!</div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <input type="button" id="submit-rating" class="btn btn-special btn-send" value="Submit Rating">
+                  </div>
+
+                </div>
+              </form>
+            </div>
+
+
+            <div class="col-lg-6">
+              <form action="" role="form" class="php-email-form">
+                <div class="row">
+
+                  <div class="col-lg-6">
+                    <div class="form-group contact-block1">
+                      <input type="text" name="name" class="form-control" id="sendername" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                      <div class="validate"></div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <input type="email" class="form-control" name="email" id="senderemail" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
                       <div class="validate"></div>
                     </div>
                   </div>
@@ -577,19 +639,19 @@
 
                   <div class="col-lg-12">
                     <div class="form-group">
-                      <textarea class="form-control" name="message" rows="12" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                      <textarea class="form-control" id="message" name="message" rows="12" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
                       <div class="validate"></div>
                     </div>
                   </div>
 
                   <div class="col-lg-12 mb-3">
-                    <div class="loading">Loading</div>
-                    <div class="error-message"></div>
-                    <div class="sent-message">Your message has been sent. Thank you!</div>
+                    <div class="loading">Sending...</div>
+                    <div class="error-message-msg"></div>
+                    <div id="sent-message" class="sent-message">Your message has been sent. Thank you!</div>
                   </div>
 
                   <div class="col-lg-12">
-                    <input type="submit" class="btn btn-defeault btn-send" value="Send message">
+                    <input type="button" id="send-my-email" class="btn btn-special btn-send" value="Send message">
                   </div>
 
                 </div>
@@ -614,12 +676,18 @@
           <li><a href="{{  musician.hassettings ? musician.settings.linkedin | external_link : '#'}}"><i class="ion-social-linkedin"></i></a></li>
           <li><a href="{{  musician.hassettings ? musician.settings.facebook | external_link : '#'}}"><i class="ion-social-tumblr"></i></a></li>
           <li><a href="{{  musician.hassettings ? musician.settings.facebook | external_link : '#'}}"><i class="ion-social-dribbble"></i></a></li>
+          <li><i class="ion-ios-contact"></i> : <span>{{musician.fullname}}</span></li>
+          <li><i class="ion-ios-briefcase"></i> : <span>{{musician.settings.placeofwork}}</span></li>
+          <li><i class="ion-android-call"></i> : <span>{{musician.phone}}</span></li>
+          <li><i class="ion-android-mail"></i> : <span>{{musician.email}}</span></li>
+          <li><i class="ion-ios-world"></i> : <span>muske.co.ke/{{musician.username}}</span></li>
         </ul>
 
-      </div>
+
+
 
       <p>&copy; Copyrights Music Services Kenya. All rights reserved.</p>
-
+      <p>{{musician.username}} | {% if app.user and app.user != null and app.user == musician %} <a href="{{path("app_logout")}}">Logout</a> {% else %} <a href="{{path("homepage")}}">Login</a>{% endif %}</p>
       <div class="credits">
         <!--
         All the links in the footer should remain intact.
@@ -686,71 +754,71 @@
 
       });
 
-  });
-  </script>
+    });
+</script>
 
-  <script>
-  $(document).on("click", '[id^="upload_doc_"]', function(){
+<script>
+    $(document).on("click", '[id^="upload_doc_"]', function(){
 
-      var project = jQuery(this).attr("id");
-      var splitted = project.split('_'); //changeRow_Qt_1504
-      var id = splitted[2] //1504
+        var project = jQuery(this).attr("id");
+        var splitted = project.split('_'); //changeRow_Qt_1504
+        var id = splitted[2] //1504
 
-  // function saveDoc() {
-      var inputFile = document.getElementById('doc_edu_'+id);
-      var file = inputFile.files[0];
-      var data = new FormData();
-      data.append('doc', file, file.name);
-      $.ajax({
-          url: "{{ path('upload_education_document') }}",
-          type: "POST",
-          data: data,
-          processData: false,
-          contentType: false,
-          cache: false,
-          success: function (data){
-              console.log(data);
-              console.log("saved information");
-              $.ajax({
-                  url:"{{ (path('upload_education_document')) }}",
-                  type: "POST",
-                  dataType: "json",
-                  data: {
-                      "id": id,
-                      "filename": data,
-                  },
-                  async: true,
-                  success: function (data)
-                  {
-                      console.log(data);
-                      console.log("saved another information");
-                      // $("#project_image"+"_"+id).attr("src", data).css("maxWidth", '250px');
-                      $("#alert_"+id).html(
-                          '<div class="alert alert-success" role="alert">' +
-                              'You have successfully uploaded the file.' +
-                          '</div>'
-                      );
-                      $("#document_form_"+id).hide();
-                      $("#download_doc_"+id).attr("href", data);
-                      
-                  },
-                  error: function () {
-                      $("#warning").html("<b>something's wrong</b>");
-                  }
-              });
+    // function saveDoc() {
+        var inputFile = document.getElementById('doc_edu_'+id);
+        var file = inputFile.files[0];
+        var data = new FormData();
+        data.append('doc', file, file.name);
+        $.ajax({
+            url: "{{ path('upload_education_document') }}",
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data){
+                console.log(data);
+                console.log("saved information");
+                $.ajax({
+                    url:"{{ (path('upload_education_document')) }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "id": id,
+                        "filename": data,
+                    },
+                    async: true,
+                    success: function (data)
+                    {
+                        console.log(data);
+                        console.log("saved another information");
+                        // $("#project_image"+"_"+id).attr("src", data).css("maxWidth", '250px');
+                        $("#alert_"+id).html(
+                            '<div class="alert alert-success" role="alert">' +
+                                'You have successfully uploaded the file.' +
+                            '</div>'
+                        );
+                        $("#document_form_"+id).hide();
+                        $("#download_doc_"+id).attr("href", data);
+                        
+                    },
+                    error: function () {
+                        $("#warning").html("<b>something's wrong</b>");
+                    }
+                });
 
-          },
-          error: function () {
-              $("#warning").html("<b>something's wrong</b>");
-          }
+            },
+            error: function () {
+                $("#warning").html("<b>something's wrong</b>");
+            }
 
-      });
+        });
 
-  });
-  </script>
+    });
+</script>
 
 
-  <script>
+<script>
   $(document).on("click", '[id^="change_doc_"]', function(){
 
       var project = jQuery(this).attr("id");
@@ -762,16 +830,134 @@
   });
 </script>
 
-  <script>
-  $(document).on("click", '[id^="change_projPhoto_"]', function(){
+<script>
+    $(document).on("click", '[id^="change_projPhoto_"]', function(){
 
-      var project = jQuery(this).attr("id");
-      var splitted = project.split('_'); //changeRow_Qt_1504
-      var id = splitted[2] //1504
+        var project = jQuery(this).attr("id");
+        var splitted = project.split('_'); //changeRow_Qt_1504
+        var id = splitted[2] //1504
 
-      $("#project_form_"+id).show();
+        $("#project_form_"+id).show();
+        
+    });
+
+    jQuery(document).ready(function($){
+        
+      $(".btnrating").on('click',(function(e) {
       
-  });
+        var previous_value = $("#selected_rating").val();
+        
+        var selected_value = $(this).attr("data-attr");
+        $("#selected_rating").val(selected_value);
+        
+        $(".selected-rating").empty();
+        $(".selected-rating").html(selected_value);
+        
+        for (i = 1; i <= selected_value; ++i) {
+        $("#rating-star-"+i).toggleClass('btn-default');
+        $("#rating-star-"+i).toggleClass('btn-warning');
+        }
+        
+        for (ix = 1; ix <= previous_value; ++ix) {
+        $("#rating-star-"+ix).toggleClass('btn-default');
+        $("#rating-star-"+ix).toggleClass('btn-warning');
+        }
+      
+      }));
+    
+      
+    });
+
+</script>
+
+<script>
+
+	$( "#submit-rating" ).click(function() {
+
+    if(!$("#ratername").val()|| !$("#rateremail").val() ){
+      $(".error-message-rating").show().text("Name and email are required for rating");
+      $("#ratername").focus();
+      throw new Error("Please enter your name and email");
+    }
+
+    
+		var ratingval = $("#selected_rating").val();
+		var ratername = $("#ratername").val();
+		var rateremail = $("#rateremail").val();
+		var musician_id = {{musician.id}};
+
+    console.log(ratingval);
+
+			$.ajax({
+				url:'{{ (path('save_rating')) }}',
+				type: "POST",
+				dataType: "json",
+				data: {
+					"ratingval": ratingval,
+					"ratername": ratername,
+					"rateremail": rateremail,
+					"musician_id": musician_id,
+				},
+				async: true,
+				success: function (data)
+				{
+					console.log(data);
+					console.log("saved rating");
+          $( "#rating-submitted" ).show()
+          $(".error-message-rating").hide()
+				},
+				error: function () {
+					$("#error-message").show().html("<b>something's wrong</b>");
+				}
+			});
+
+	});
+
+</script>
+
+<script>
+
+	$( "#send-my-email" ).click(function() {
+
+    if(!$("#sendername").val() || !$("#senderemail").val() || !$("#subject").val() || !$("#message").val() ){
+      $(".error-message-msg").show().text("Name, email, subject and message are all required for rating");
+      throw new Error("Please enter all details");
+    }
+
+		var sendername = $("#sendername").val();
+		var senderemail = $("#senderemail").val();
+		var message = $("#message").val();
+		var subject = $("#subject").val();
+		var musician_id = {{musician.id}};
+
+    $(".loading").show();
+			$.ajax({
+				url:'{{ (path('musician_receive_message')) }}',
+				type: "POST",
+				dataType: "json",
+				data: {
+					"sendername": sendername,
+					"senderemail": senderemail,
+					"message": message,
+					"subject": subject,
+					"musician_id": musician_id,
+				},
+				async: true,
+				success: function (data)
+				{
+					console.log(data);
+					console.log("message sent");
+          $( "#sent-message" ).show();
+          $(".error-message-msg").hide()
+          $(".loading").hide();
+				},
+				error: function () {
+					$("#error-message").show().html("<b>something's wrong</b>");
+				}
+			});
+
+	});
+
 </script>
 
 

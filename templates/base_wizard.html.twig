@@ -2,6 +2,9 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        {{ sonata_seo_title() }}
+        {{ sonata_seo_metadatas() }}
+        {{ sonata_seo_head_attributes() }}
         <title>{% block title %}Welcome!{% endblock %}</title>
 
         <!--     Fonts and icons     -->
@@ -11,6 +14,7 @@
         <!-- CSS Files -->
         <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet" />
         <link href="{{ asset('css/material-bootstrap-wizard.css')}}" rel="stylesheet" />
+        {% include "favicon.html.twig" %}
 
         <style>
         .skills ul{

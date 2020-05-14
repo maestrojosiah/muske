@@ -97,6 +97,7 @@ class Settings
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $bgphoto;
+    private $photopath;
 
     public function getId(): ?int
     {
@@ -295,5 +296,13 @@ class Settings
         return $this;
     }
 
+    public function getPhotoPath(): ?string
+    {
+        $url = "http://localhost:8000/uploads/gallery/$this->bgphoto";
+
+        $this->photopath = $url;
+        return $this->photopath;
+
+    }
 
 }

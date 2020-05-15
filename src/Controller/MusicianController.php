@@ -63,7 +63,7 @@ class MusicianController extends AbstractController
         
         // define email phone age and full name
         $musician_email = $musician->getRealEmail();
-        $musician_phone = $musician->getPhone();
+        $musician_phone = $musician->getRealPhone();
         $musician_age = $musician->getAge();
         $musician_fullname = $musician->getFullname();
         $skills = $musician->getSkills()[0];

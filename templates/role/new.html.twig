@@ -146,7 +146,7 @@
 					$("#job_role").val('');
 					// location.href = "{{ path('location_new')}}";
 					$(".for_roles ul").append("<li>"+data+"</li>");
-					
+					$("#job_role").focus();
 				},
 				error: function () {
 					$("#warning").html("<b>something's wrong</b>");

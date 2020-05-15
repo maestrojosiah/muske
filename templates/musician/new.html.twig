@@ -389,7 +389,6 @@
 
     });
     </script>
-
     <script>
     $( "#save_skill" ).click(function() {
 
@@ -416,6 +415,7 @@
 			$("#experience").val('')
 			$("#info-text-skill").text("Great! Keep adding more skills...");
 			$(".for_skills ul").append("<li>"+data+"</li>");
+			$("#skillname").focus();
 		},
 		error: function () {
 			// $("#warning").html("<b>something's wrong</b>");
@@ -462,7 +462,7 @@
 					$("#course").val('');
 					$("#info-text-education").text("Great! Keep adding more...");
 					$(".for_education ul").append("<li>"+data+"</li>");
-
+                    $("#institution").focus();
 				},
 				error: function () {
 					$("#warning").html("<b>something's wrong</b>");
@@ -509,6 +509,7 @@
 					$("#current_or_not").val('');
 					$("#info-text-job").text("Great! Keep adding more...");
 					$(".for_jobs ul").append("<li>"+data+"</li>");
+					$("#institution_job").focus();
 
 				},
 				error: function () {
@@ -544,7 +545,7 @@
 					$("#role").val('');
 					$("#medium").val('');
 					$(".for_roles ul").append("<li>"+data+"</li>");
-
+                    $("#role").focus();
 				},
 				error: function () {
 					$("#warning").html("<b>something's wrong</b>");
@@ -554,7 +555,6 @@
 	});
 
 	</script>
-
 
 	<script>
 

@@ -113,6 +113,8 @@ class Musician implements UserInterface
     private $isproandactive;
     private $ismuskeandactive;
     private $hassettings;
+    private $realemail;
+    private $realphone;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Settings", mappedBy="musician", cascade={"persist", "remove"})
@@ -452,7 +454,8 @@ class Musician implements UserInterface
 
     public function getRealEmail(): ?string
     {
-        return $this->email;
+        $this->realemail = $this->email;
+        return $this->realemail;
         
     }
 
@@ -475,7 +478,8 @@ class Musician implements UserInterface
 
     public function getRealPhone(): ?string
     {
-        return $this->phone;
+        $this->realphone = $this->phone;
+        return $this->realphone;
     }
 
     public function setPhone(?string $phone): self

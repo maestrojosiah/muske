@@ -69,6 +69,8 @@ class SpecialtyController extends AbstractController
      */
     public function edit(Request $request, Specialty $specialty): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $form = $this->createForm(SpecialtyType::class, $specialty);
         $form->handleRequest($request);
 

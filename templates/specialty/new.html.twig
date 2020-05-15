@@ -144,6 +144,7 @@
 					$("#edu_skill").val('');
 					// location.href = "{{ path('location_new')}}";
 					$(".for_skills ul").append("<li>"+data+"</li>");
+					$("#edu_skill").focus();
 				},
 				error: function () {
 					$("#warning").html("<b>something's wrong</b>");

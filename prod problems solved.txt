@@ -1,0 +1,12 @@
+prod problems solved
+
+make sure database is created
+make sure environment is set to prod
+it may help to add $_SERVER['APP_ENV'] = "prod"; in index.php
+htaccess to redirect to public and load all assets:
+
+RewriteOptions inherit
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !public/
+RewriteRule (.*) /public/$1 [L]
+

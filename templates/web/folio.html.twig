@@ -412,7 +412,8 @@
                         </div>
                         <div class="tracking-date"><h6>{{edu.fromyear|date("M Y")}} - <span>{{edu.toyear|date("M Y")}}</span></h6></div>
                         <div class="tracking-content">
-                          <h3 class="title">{{edu.coursename}}</h3>
+                          <h3 class="title">{{edu.degree}}</h3>
+                          <h5 class="title">{{edu.coursename}}</h5>
                           <span>{{edu.institution}} | {{edu.location}}</span>
                           {% include "reusable/edu_form.html.twig" %}
                           <p>{% include "reusable/edu_skills.html.twig" with {'class': 'skillssm'} %}</p>

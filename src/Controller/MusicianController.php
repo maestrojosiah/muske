@@ -18,6 +18,8 @@ use Symfony\Component\Routing;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use App\Service\OrganizeThings; 
 use Sonata\SeoBundle\Seo\SeoPageInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class MusicianController extends AbstractController
 {
@@ -136,8 +138,8 @@ class MusicianController extends AbstractController
                 if($musician->getPhoto() != null ) {
                     $current_photo_path = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
                     $current_photo_thumb_path = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto();
-                    unlink($current_photo_path);
-                    unlink($current_photo_thumb_path);
+                    if(file_exists($current_photo_path)){ unlink($current_photo_path); }
+                    if(file_exists($current_photo_thumb_path)){ unlink($current_photo_thumb_path); }
                 }
                
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -298,7 +300,7 @@ class MusicianController extends AbstractController
             ->setTitle($musician->getFullname()." | Resume")
             ->addMeta('name', 'keywords', $skillsString)
             ->addMeta('name', 'description', $musician->getAbout())
-            ->addMeta('property', 'og:title', 'Musician')
+            ->addMeta('property', 'og:title', $musician->getFullname().' | Resume')
             ->addMeta('property', 'og:type', 'Resume')
             ->addMeta('property', 'og:url',  $this->generateUrl('musician_show', [
                 'username' => $musician->getUsername() 
@@ -322,7 +324,7 @@ class MusicianController extends AbstractController
 
         if($download == 'pdf'){
             if($status){
-                return $this->toPdf("pdf/$pdf_template", $array_data, $musician->getUsername().'_'.$themename."_Resume");
+                return $this->pdfGenerator("pdf/$pdf_template", $array_data, $musician->getUsername().'_'.$themename."_Resume");
             } else {
                 return $this->redirectToRoute('error', ['error_msg' => "Broken links prevents the pdf from downloading. Upload your profile photo"]);
             }
@@ -481,7 +483,7 @@ class MusicianController extends AbstractController
 
         // define email phone age and full name
         $musician_email = $musician->getRealEmail();
-        $musician_phone = $musician->getPhone();
+        $musician_phone = $musician->getRealPhone();
         $musician_age = $musician->getAge();
         $musician_fullname = $musician->getFullname();
         $skills = $musician->getSkills();
@@ -588,6 +590,45 @@ class MusicianController extends AbstractController
        
     } 
 
+    /**
+     * @Route("/musician/dompdf/test", name="dompdf_test")
+     */
+    public function pdfGenerator($path = '', $array = [], $filename): Response
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        $pdfOptions->set('isRemoteEnabled', TRUE);
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        $contxt = stream_context_create([ 
+            'ssl' => [ 
+                'verify_peer' => FALSE, 
+                'verify_peer_name' => FALSE,
+                'allow_self_signed'=> TRUE
+            ] 
+        ]);
+        $dompdf->setHttpContext($contxt);        
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView($path, $array);
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        $dompdf->set_option('isHtml5ParserEnabled', true);
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("$filename.pdf", [
+            // "Attachment" => true
+            "Attachment" => false
+        ]);
+    }
 
     public function toPdf($path = '', $array = [], $filename): Response
     {

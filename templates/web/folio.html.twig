@@ -70,8 +70,12 @@
     .main-timeline8 .timeline:last-child{margin:0!important}
     .main-timeline8 .timeline-icon{right:auto;left:-14.5px}
     .main-timeline8 .year{border-radius:50px 0 0 50px}
-    .main-timeline8 .year:before{border-left:none;border-right:35px solid transparent;left:auto;right:0}
-    .main-timeline8 .timeline-content{margin:0 35px 0 45px}
+    .main-timeline8 .year:before{border-left:none;border-right:15px solid transparent;left:auto;right:0}
+    .main-timeline8 .timeline:nth-child(2n) .timeline-content{text-align:right;margin:0 15px 0 5px}
+    .main-timeline8 .timeline:nth-child(2n) .year:before{border-left:none;border-right:15px solid transparent;left:auto;right:0}
+    .main-timeline8 .timeline-content{margin:0 15px 0 5px}
+    .tracking-item{margin-left:0px!important;}
+    .main-timeline8 .year{font-size:18px;}
     }
 
 
@@ -234,7 +238,7 @@
       <div class="container">
 
         <div class="logo">
-          <a href="index.html"><img src="assets/img//logo.png" alt="logo"></a>
+          <a href="{{path('homepage')}}"><img src="{{musician.logourl}}" alt="logo"></a>
         </div>
 
         <div class="responsive"><i data-icon="m" class="ion-navicon-round"></i></div>
@@ -267,7 +271,7 @@
           <li><a href="{{musician.settings and (musician.settings.twitter  == null or musician.settings.twitter == "") ? '#' : musician.settings.twitter | external_link}}"><i class="ion-social-twitter"></i></a></li>
           <li><a href="{{musician.settings and (musician.settings.instagram  == null or musician.settings.instagram == "") ? '#' : musician.settings.instagram | external_link}}"><i class="ion-social-instagram"></i></a></li>
           <li><a href="{{musician.settings and (musician.settings.linkedin  == null or musician.settings.linkedin == "") ? '#' : musician.settings.linkedin | external_link}}"><i class="ion-social-linkedin"></i></a></li>
-          <li><a href="{{musician.settings and (musician.settings.facebook  == null or musician.settings.facebook == "") ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-tumblr"></i></a></li>
+          <li><a href="https://api.whatsapp.com/send?phone={{musician.phone}} "><i class="ion-social-whatsapp"></i></a></li>
           <li><a href="{{musician.settings and (musician.settings.facebook  == null or musician.settings.facebook == "") ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-dribbble"></i></a></li>
         </ul>
       </div>
@@ -313,10 +317,10 @@
                 {% if musician.settings and musician.settings.online == 'true' %} <li> Online Lessons Available  </li>{% endif %}
                 {% if musician.settings and musician.settings.placeofwork != null %} <li> {{musician.settings.placeofwork}}  </li>{% endif %}
                 {% if app.user == null %}
-                <li><a target="_blank" href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}" class="btn-rounded-white">Download Resume</a></li>
+                <li><a target="_blank" href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}" class="btn btn-lg btn-primary">Download Resume</a></li>
                 {% endif %}
                 {% if app.user and app.user != null and app.user == musician %}
-                    <li><a class="btn btn-sm btn-rounded-white" href="{{ path('musician_profile')}}" target="_blank">Profile Page</a></li>
+                    <li><a class="btn btn-lg btn-primary" href="{{ path('musician_profile')}}" target="_blank">Profile Page</a></li>
                 {% endif %}
             </ul>
 

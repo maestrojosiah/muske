@@ -453,7 +453,7 @@ class AjaxController extends AbstractController
             $project = $this->getDoctrine()->getManager()->getRepository('App:Project')->find($project_id);
             if($project->getProjectimage() != null ) {
                 $current_photo_path = $this->getParameter('projects_directory')."/".$project->getProjectimage();
-                unlink($current_photo_path);
+                if(file_exists($current_photo_path)){ unlink($current_photo_path); }
             }
             $project->setProjectimage($filename);
             $em = $this->getDoctrine()->getManager();
@@ -1042,7 +1042,17 @@ class AjaxController extends AbstractController
 
                 $ending = clone $started;
                 $ending->modify('+365 days'); 
-                $pro = new Pro();
+
+                $prevPro = $entityManager
+                ->getRepository('App:Pro')
+                ->findBy(
+                    array('musician' => $musician)
+                )[0];                
+                if($prevPro) {
+                    $pro = $prevPro;
+                } else {
+                    $pro = new Pro();
+                }
                 $pro->setMusician($musician);
                 $pro->setStarted($started);
                 $pro->setEnding($ending);

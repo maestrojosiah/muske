@@ -131,7 +131,13 @@
       height: 20px;
       z-index: 400;
   }  
+
+  @media only screen and (max-width:767px){.main-timeline8{overflow:visible}
+
+  }-
+
 </style>
+
 {% endblock %}
 {% block body %}
 
@@ -149,7 +155,7 @@
       <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link js-scroll active" href="index.html">Home</a>
+            <a class="nav-link js-scroll active" href="{{path('homepage')}}">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll" href="#about">About</a>
@@ -178,7 +184,7 @@
       <div class="table-cell">
         <div class="container">
           <!--<p class="display-6 color-d">Hello, world!</p>-->
-          <h1 class="intro-title mb-4">I am {{musician.fullname}}</h1>
+          <h1 class="intro-title mb-4">{{musician.fullname}}</h1>
           <p class="intro-subtitle"><span class="text-slider-items">{% for job_role in musician.jobstobeoffered %}{{job_role.jobtitle}} {% if loop.index < musician.jobstobeoffered|length %},{% endif %}{% endfor %}</span><strong class="text-slider"></strong></p>
           <!-- <p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="#about" role="button">Learn More</a></p> -->
         </div>
@@ -271,7 +277,7 @@
                 <div class="col-2 text-center bottom d-inline-flex justify-content-center align-items-center">
                   <div class="circle font-weight-bold">{{loop.index}}</div>
                 </div>
-                <div class="col-6">
+                <div class="col-md-6">
                   {% include "reusable/edu_form.html.twig" %}
                   <h5>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</h5>
                   <p>{{edu.degree}} in {{edu.coursename}}, <strong> {{edu.institution}} </strong>, {{edu.location}}</p>
@@ -293,7 +299,7 @@
               {% endif %}
             {% elseif loop.index is even %}
               <div class="row align-items-center justify-content-end how-it-works d-flex">
-                <div class="col-6 text-right">
+                <div class="col-md-6 text-right">
                   {% include "reusable/edu_form.html.twig" %}
                   <h5>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</h5>
                   <p>{{edu.degree}} in {{edu.coursename}}, <strong> {{edu.institution}} </strong>, {{edu.location}}</p>
@@ -321,7 +327,7 @@
           {% endfor %}
         </div>
       </div>
-    </section><!-- End Experienc Section -->
+    </section><!-- End Experience Section -->
     <hr />
 
     <!-- ======= Experience Section ======= -->
@@ -347,7 +353,7 @@
             {% for job in jobs %}
               <li>
                 <h4>{{job.jobtitle}}</h4>
-                <a target="_blank" href="https://www.totoprayogo.com/#">{{job.institution}}{{" / " ~ job.location}}</a>
+                <a target="_blank" href="#">{{job.institution}}{{" / " ~ job.location}}</a>
                 <a href="#" class="float-right">{{job.startingfrom|date("M Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</a>
                 <p>
                 {% if job.roles is empty %}

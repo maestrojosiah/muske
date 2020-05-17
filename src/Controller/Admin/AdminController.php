@@ -169,9 +169,9 @@ class AdminController extends AbstractController
                 $entity = $this->getDoctrine()->getManager()->getRepository("App:Gallery")->find($id);
                 $current_photo_path = $this->getParameter('gallery_directory')."/".$entity->getPhoto();
                 $current_photo_thumb_path = $this->getParameter('gallery_directory')."/thumbs/".$entity->getPhoto().".png";
-                unlink($current_photo_path);
-                unlink($current_photo_thumb_path);
-                break;
+                if(file_exists($current_photo_path)){ unlink($current_photo_path); }
+                if(file_exists($current_photo_thumb_path)){ unlink($current_photo_thumb_path); }
+            break;
             case 'roles':
                 $entity = $this->getDoctrine()->getManager()->getRepository("App:Role")->find($id);
                 break;

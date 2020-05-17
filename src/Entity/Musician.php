@@ -692,7 +692,7 @@ class Musician implements UserInterface
     }
 
     public function isProAndActive(){
-        if($this->getPro()){
+        if($this->getSettings() && $this->getSettings()->getPro() == 'true'){
             $ending = $this->getPro()->getEnding();
             $now = new \DateTime("now");
             $fact = false;

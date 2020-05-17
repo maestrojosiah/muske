@@ -1,4 +1,4 @@
 			<p> {{musician.about}}</p>
-			<p>{% if musician.settings and musician.settings.tsc == 'true' %} <li> TSC Certified  </li>{% endif %} </p>
-			<p>{% if musician.settings and musician.settings.online == 'true' %} <li> Online Lessons Available  </li>{% endif %} </p>
-			<p>{% if musician.settings and musician.settings.placeofwork != null %} <li> {{musician.settings.placeofwork}}  </li>{% endif %} </p>
+			<p>{% if musician.settings and musician.settings.tsc == 'true' %}  TSC Certified  {% endif %} </p>
+			<p>{% if musician.settings and musician.settings.online == 'true' %}  Online Lessons Available  {% endif %} </p>
+			<p>{% if musician.settings and musician.settings.placeofwork != null %}  {{musician.settings.placeofwork}}  {% endif %} </p>

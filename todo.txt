@@ -10,12 +10,9 @@ user can download own resume
 
 
 pro:
-live chat
 website visitors can download resume
 direct link to social media pages or profiles
 project link
-whatsapp chat with musician
-call me button
 
 prod:
 change http://localhost from musician.php getPhoto();
@@ -27,22 +24,29 @@ restore the sending of email in src/Updates by uncommenting the return statement
 change wkhtmltopdf path in .env
 notification by email when end of pro : cron job
 Mail Reminder of incomplete accounts once a month : cron job
+composer requires that was done in dev
 
 Help link goes first to faq... faq should have contacts as the last option 
 unsubscribe link : https://muske.co.ke/musician/unsubscribe/{{username}} used in email conf twig
+notification - you have unsubscribed from emails. Subscribe again
 check if subscribed before sending any email
 consider blog
 special characters in pdf downloads
 copy link button in profile
 links to outside websites
 after choosing advertize, have options - new advert, track advert
-disable button when sending mails esp at registration, upload supporting doc
-focus on first field after submitting
+disable button when saving info, sending mails esp at registration, upload supporting doc
 Add information about your work history
 remove target="_blank"
 rating in resume
-work on responsiveness of timelines and forms
 mpesa integration
+whatsapp chat with musician
+call me button - make it yourself
+live chat
+restrict registration with space on username
+trim username
+blog
+short url
 
 faq:
 Is basic account free?

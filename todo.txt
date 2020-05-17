@@ -35,15 +35,12 @@ special characters in pdf downloads
 copy link button in profile
 links to outside websites
 after choosing advertize, have options - new advert, track advert
-disable button when saving info, sending mails esp at registration, upload supporting doc
-Add information about your work history
+disable button when sending mails
 remove target="_blank"
 rating in resume
 mpesa integration
-whatsapp chat with musician
 call me button - make it yourself
 live chat
-restrict registration with space on username
 trim username
 blog
 short url
@@ -61,25 +58,5 @@ How do i change the image background in my resume website
 how do i sort my jobs according to date?
 how do i sort my education background according to date?
 how do i upload a profile photo?
-
-
-; cPanel-generated php ini directives, do not edit
-; Manual editing of this file may result in unexpected behavior.
-; To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
-; For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
-
-allow_url_fopen = On
-allow_url_include = On
-display_errors = Off
-enable_dl = Off
-file_uploads = On
-max_execution_time = 90
-max_input_time = 90
-max_input_vars = 1000
-memory_limit = 128M
-post_max_size = 96M
-session.gc_maxlifetime = 1440
-session.save_path = "/var/cpanel/php/sessions/ea-php73"
-upload_max_filesize = 64M
-zlib.output_compression = Off
-disable_functions = show_sorce
+how do I delete my account?
+How do I delete or edit information for my Resume?

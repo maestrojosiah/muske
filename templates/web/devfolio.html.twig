@@ -134,7 +134,7 @@
 
   @media only screen and (max-width:767px){.main-timeline8{overflow:visible}
 
-  }-
+  }
 
 </style>
 
@@ -755,6 +755,7 @@
       var project = jQuery(this).attr("id");
       var splitted = project.split('_'); //changeRow_Qt_1504
       var id = splitted[2] //1504
+      $(this).prop('disabled', true);
 
   // function saveDoc() {
       var inputFile = document.getElementById('doc_edu_'+id);
@@ -792,7 +793,7 @@
                       );
                       $("#document_form_"+id).hide();
                       $("#download_doc_"+id).attr("href", data);
-                      
+                      $(this).prop('disabled', false);
                   },
                   error: function () {
                       $("#warning").html("<b>something's wrong</b>");

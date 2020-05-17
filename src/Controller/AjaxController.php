@@ -992,17 +992,20 @@ class AjaxController extends AbstractController
 
             if (preg_match('/[^A-Za-z0-9.#\\-$]/', $username)) {
                 $message = "<p style='color:red'>Your username should not have spaces or special characters</p>";
+                $result = 'error';
             } else {
 
                 if(in_array($username, $usernames)){
                     $message = "<p style='color:red'>That username is already taken</p>";
+                    $result = 'error';
                 } else {
                     $message = "<p style='color:green'>Username is available</p>";
+                    $result = 'success';
                 }
 
             }
 
-            return new JsonResponse($message);
+            return new JsonResponse([$result, $message]);
 
     
         }

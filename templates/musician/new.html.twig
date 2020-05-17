@@ -174,7 +174,7 @@
 		                                </div>
 		                            </div>
 		                            <div class="tab-pane" id="job">
-		                                <h4 class="info-text" id="info-text-job">Add information about all your jobs. </h4>
+		                                <h4 class="info-text" id="info-text-job">Add information about your work history. </h4>
 		                                <div class="row">
 		                                	<div class="col-sm-5 col-sm-offset-1">
 		                                    	<div class="form-group label-floating">
@@ -416,6 +416,7 @@
 			$("#info-text-skill").text("Great! Keep adding more skills...");
 			$(".for_skills ul").append("<li>"+data+"</li>");
 			$("#skillname").focus();
+			$("#save_skill").prop('disabled', false);
 		},
 		error: function () {
 			// $("#warning").html("<b>something's wrong</b>");
@@ -463,6 +464,7 @@
 					$("#info-text-education").text("Great! Keep adding more...");
 					$(".for_education ul").append("<li>"+data+"</li>");
                     $("#institution").focus();
+					$("#save_education").prop('disabled', false);
 				},
 				error: function () {
 					$("#warning").html("<b>something's wrong</b>");
@@ -510,6 +512,7 @@
 					$("#info-text-job").text("Great! Keep adding more...");
 					$(".for_jobs ul").append("<li>"+data+"</li>");
 					$("#institution_job").focus();
+					$("#save_job").prop('disabled', false);
 
 				},
 				error: function () {
@@ -546,6 +549,7 @@
 					$("#medium").val('');
 					$(".for_roles ul").append("<li>"+data+"</li>");
                     $("#role").focus();
+					$("#save_role").prop('disabled', false);
 				},
 				error: function () {
 					$("#warning").html("<b>something's wrong</b>");
@@ -578,6 +582,7 @@
 					console.log("saved salary");
 					$("#cur_salary").val('');
 					$("#exp_salary").val('');
+					$("#save_salary").prop('disabled', false);
 					location.href = "{{ path('finalize_musician')}}";
 				},
 				error: function () {
@@ -623,4 +628,13 @@
 		});    
     });
 	</script>
+
+<script>
+    $(document).on("click", '[id^="save_"]', function(){
+
+		$(this).prop('disabled', true);
+
+    });
+</script>
+
 {% endblock %}

@@ -91,7 +91,7 @@
 		                        </div>
 		                        <div class="wizard-footer">
 	                            	<div class="pull-right">
-                                        <button class="btn btn-next btn-fill btn-primary btn-wd">Register</button>
+                                        <button id="register_button" class="btn btn-next btn-fill btn-primary btn-wd">Register</button>
 	                                    {# <input type='button' class='btn btn-next btn-fill btn-primary btn-wd' name='next' value='Next' />
 	                                    <input type='button' class='btn btn-finish btn-fill btn-primary btn-wd' name='finish' value='Finish' /> #}
 	                                </div>
@@ -139,7 +139,13 @@
 				success: function (data)
 				{
 					console.log(data);
-					$("#notify").html(data);
+					$("#notify").html(data[1]);
+					if(data[0] == 'error'){
+						$("#register_button").prop('disabled', true);
+					}
+					if(data[0] == 'success'){
+						$("#register_button").prop('disabled', false);
+					}
 				},
 				error: function () {
 					$("#warning").html("<b>something's wrong</b>");

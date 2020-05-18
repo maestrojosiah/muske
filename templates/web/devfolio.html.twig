@@ -137,6 +137,7 @@
   }
 
 </style>
+{% include "reusable/call_me_styles.html.twig" %}
 
 {% endblock %}
 {% block body %}
@@ -172,6 +173,9 @@
           <li class="nav-item">
             <a class="nav-link js-scroll" href="#projects">Projects</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll" href="#contacts">Contacts</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -187,6 +191,7 @@
           <h1 class="intro-title mb-4">{{musician.fullname}}</h1>
           <p class="intro-subtitle"><span class="text-slider-items">{% for job_role in musician.jobstobeoffered %}{{job_role.jobtitle}} {% if loop.index < musician.jobstobeoffered|length %},{% endif %}{% endfor %}</span><strong class="text-slider"></strong></p>
           <!-- <p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="#about" role="button">Learn More</a></p> -->
+          {% include "reusable/call_me_code.html.twig" %}
         </div>
       </div>
     </div>
@@ -226,7 +231,7 @@
                       <br />
                       {% endif %}
                       {% if app.user and app.user != null and app.user == musician %}
-                          <a class="btn btn-lg btn-primary btn-rounded-white" href="{{ path('musician_profile')}}" target="_blank">Profile Page</a>
+                          <a class="btn btn-lg btn-primary btn-rounded-white" href="{{ path('musician_profile')}}">Profile Page</a>
                       {% endif %}
                       {% if musician.settings and musician.settings.tsc == 'true' %} <button class="btn btn-success btn-sm"> TSC Certified  </button>{% endif %}<hr />
                       {% if musician.settings and musician.settings.online == 'true' %} <button class="btn btn-success btn-sm"> Online Lessons Available  </button>{% endif %}<hr />
@@ -331,7 +336,7 @@
     <hr />
 
     <!-- ======= Experience Section ======= -->
-    <section id="Experience" class="services-mf route">
+    <section id="experience" class="services-mf route">
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
@@ -398,7 +403,7 @@
 
     {% if musician.projects %}
     <!-- ======= Projects Section ======= -->
-    <div class="container">
+    <div id="projects" class="container">
       <div class="row">
         <div class="col-sm-12">
           <div class="title-box text-center">
@@ -530,7 +535,7 @@
     </section><!-- End Blog Section -->
 
     <!-- ======= Contact Section ======= -->
-    <section class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(assets/img/overlay-bg.jpg)">
+    <section id="contacts" class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(assets/img/overlay-bg.jpg)">
       <div class="overlay-mf"></div>
       <div class="container">
         <div class="row">
@@ -942,4 +947,7 @@
     });
 
 </script>
+
+{% include "reusable/call_me_script.html.twig" %}
+
 {% endblock %}

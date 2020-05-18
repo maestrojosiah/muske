@@ -1,0 +1,92 @@
+
+<script>
+
+  $( document ).ready(function() {
+    var intervalShow;
+    startInterval();
+
+    function startInterval() {
+
+      intervalShow = window.setInterval(function() {
+          $("#call-btn").html(function(i, html){
+              return html == '<i class="fa fa-fw fa-phone faa-horizontal animated"></i>' ? "<span class='faa-horizontal animated' style='font-size:12px; text-align:center;  white-space:nowrap; margin-left:-8px;'>CALL YOU?</span>" : '<i class="fa fa-fw fa-phone faa-horizontal animated"></i>';
+          })      
+        }, 2000);
+
+    }
+
+    function stopInterval() {
+      clearInterval(intervalShow);
+    }
+
+    function openForm() {
+      $("#call-text").hide();
+      $(".fa-phone").hide();
+      $("#call-btn").css({ width: '500px', 'padding-top': '10px', 'padding-bottom': '10px' })
+      $("#close").show();
+      $("#call-btn").removeClass('closed').addClass('opened');
+      $("#call-btn").addClass('bg-dark text-white')
+      $("#call-btn").html('<span style="width:200px; font-size:14px; height:20px; white-space:nowrap;">I will call you back shortly</span>&nbsp;&nbsp;<input type="text" id="btn-input" style="width:120px; height:20px; font-size:10px;" placeholder="Phone Number." />&nbsp;&nbsp;<button id="call-me-now" class="btn btn-success btn-sm">Call me!</button>');
+      $("#btn-input").focus();
+      $("#call-btn").addClass("full-width");
+      $('#call-btn').removeAttr('id');
+      stopInterval();
+    }
+
+    $( "#call-btn" ).click(function() {
+      openForm();
+    });
+
+    $(document).on("click", '#call-btn', function(){
+      openForm();
+    });
+
+    $( "#close" ).click(function() {
+      $(".removeableId").css({ width: '70px', 'padding-top': '10px', 'padding-bottom': '10px' })
+      $("#close").hide();
+      $(".removeableId").removeClass('opened').addClass('closed');
+      $(".removeableId").html('<i class="fa fa-fw fa-phone faa-horizontal animated"></i>');
+      $(".removeableId").removeClass('bg-dark text-white')
+      $(".removeableId").removeClass("full-width");
+      $('.removeableId').attr('id', 'call-btn');
+      startInterval()
+      
+    });
+
+    $(document).on('click', '#call-me-now', function(){ 
+     
+      var client_phone_number =  ($("#btn-input").val());
+      var musician_id = "{{musician.id}}";
+      $(this).prop('disabled', true);
+      $(this).html("please wait");
+
+        $.ajax({
+          url:'{{ (path("call_me_back")) }}',
+          type: "POST",
+          dataType: "json",
+          data: {
+            "client_phone_number": client_phone_number,
+            "musician_id": musician_id,
+          },
+          async: true,
+          success: function (data)
+          {
+            console.log(data);
+            $(".removeableId").html("<span style='font-size:14px'>I will call you back as soon as possible.</span>");
+            $(this).prop('disabled', false);
+            $(this).html("Request Sent");
+          },
+          error: function () {
+            $("#error-message").show().html("<b>something's wrong</b>");
+          }
+        });
+    });
+
+
+
+
+
+  });    
+
+</script>
+

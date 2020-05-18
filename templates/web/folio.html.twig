@@ -5,6 +5,71 @@
 {% block stylesheets %}
 
 <style type="text/css">
+
+        .centered {
+
+          text-align: center;
+          line-height: 50px!important;
+          height: 70px;
+          letter-spacing: 0px!important;
+        } 
+
+        }
+        .btn-circle
+        {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 12px;
+            line-height: 1.428571429;
+            border-radius: 15px;
+        }
+        .btn-circle.btn-lg
+        {
+            width: 50px;
+            height: 50px;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 25px;
+        }
+        .btn-circle.btn-xl
+        {
+            width: 70px;
+            height: 70px;
+            padding: 10px 16px;
+            font-size: 24px;
+            line-height: 1.33;
+            border-radius: 35px;
+        }
+
+        /* HORIZONTAL */
+        @keyframes horizontal {
+          0%{transform:translate(0,0)}
+          6%{transform:translate(5px,0)}
+          12%{transform:translate(0,0)}
+          18%{transform:translate(5px,0)}
+          24%{transform:translate(0,0)}
+          30%{transform:translate(5px,0)}
+          36%,100%{transform:translate(0,0)}
+        }
+        .faa-horizontal.animated,
+        .faa-horizontal.animated-hover:hover,
+        .faa-parent.animated-hover:hover > .faa-horizontal {
+          animation: horizontal 2s ease infinite;
+        }
+        .faa-horizontal.animated.faa-fast,
+        .faa-horizontal.animated-hover.faa-fast:hover,
+        .faa-parent.animated-hover:hover > .faa-horizontal.faa-fast {
+          animation: horizontal 1s ease infinite;
+        }
+        .faa-horizontal.animated.faa-slow,
+        .faa-horizontal.animated-hover.faa-slow:hover,
+        .faa-parent.animated-hover:hover > .faa-horizontal.faa-slow {
+          animation: horizontal 3s ease infinite;
+        }
+
         .skills ul{
             display:block;
             margin:0 auto;
@@ -228,6 +293,8 @@
   }
   }
 </style>
+
+{% include "reusable/call_me_styles.html.twig" %}
 {% endblock %}
 
 {% block body %}
@@ -274,6 +341,7 @@
           <li><a href="https://api.whatsapp.com/send?phone={{musician.phone}} "><i class="ion-social-whatsapp"></i></a></li>
           <li><a href="{{musician.settings and (musician.settings.facebook  == null or musician.settings.facebook == "") ? '#' : musician.settings.facebook | external_link}}"><i class="ion-social-dribbble"></i></a></li>
         </ul>
+        {% include "reusable/call_me_code.html.twig" %}
       </div>
     </div>
   </div><!-- End Hero -->
@@ -317,10 +385,10 @@
                 {% if musician.settings and musician.settings.online == 'true' %} <li> Online Lessons Available  </li>{% endif %}
                 {% if musician.settings and musician.settings.placeofwork != null %} <li> {{musician.settings.placeofwork}}  </li>{% endif %}
                 {% if app.user == null %}
-                <li><a target="_blank" href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}" class="btn btn-lg btn-primary">Download Resume</a></li>
+                <li><a style="background-color:#007bff!important;" target="_blank" href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}" class="btn btn-lg btn-primary">Download Resume</a></li>
                 {% endif %}
                 {% if app.user and app.user != null and app.user == musician %}
-                    <li><a class="btn btn-lg btn-primary" href="{{ path('musician_profile')}}" target="_blank">Profile Page</a></li>
+                    <li><a style="background-color:#007bff!important;" class="btn btn-lg btn-primary" href="{{ path('musician_profile')}}">Profile Page</a></li>
                 {% endif %}
             </ul>
 
@@ -966,5 +1034,5 @@
 
 </script>
 
-
+{% include "reusable/call_me_script.html.twig" %}
 {% endblock %}

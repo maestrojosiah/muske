@@ -9,6 +9,11 @@
             margin-bottom: 10px;
         }
 
+        .btnrating {
+            font-size:24px;
+        }
+        
+
         #lead{
             background: url("{{musician.hassettings and musician.settings.bgphoto != null ? musician.settings.photopath : bgPhoto }}");
             background-repeat: no-repeat;
@@ -100,6 +105,8 @@
         }
 
     </style>
+    {% include "reusable/call_me_styles.html.twig" %}
+
 {% endblock %}
 {% block body %}
 
@@ -146,8 +153,10 @@
             <br />
             {% endif %}
             {% if app.user and app.user != null and app.user == musician %}
-                <a class="btn btn-sm btn-rounded-white" href="{{ path('musician_profile')}}" target="_blank">Profile Page</a>
+                <a class="btn-rounded-white" href="{{ path('musician_profile')}}">Profile Page</a>
             {% endif %}
+            
+
         </div>
         <!-- End #lead-content -->
 
@@ -176,6 +185,7 @@
                         {% if musician.settings and musician.settings.tsc == 'true' %} <li> TSC Certified  </li>{% endif %}
                         {% if musician.settings and musician.settings.online == 'true' %} <li> Online Lessons Available  </li>{% endif %}
                         {% if musician.settings and musician.settings.placeofwork != null %} <li> {{musician.settings.placeofwork}}  </li>{% endif %}
+                        <li style="background-color:white;">{% include "reusable/call_me_code.html.twig" %}</li>
                     </ul>
                 </div>
             </div>
@@ -297,7 +307,7 @@
                                 <hr />
                                 {% include "reusable/project_form.html.twig" %}
                                 {% if project.projectimage != null and project.projectimage != "" %}
-                                <button class="btn btn-sm btn-default" id="change_projPhoto_{{project.id}}">Change Project Image</button>
+                                <button style="color:black!important" class="btn-rounded-white" id="change_projPhoto_{{project.id}}">Change Project Image</button>
                                 {% endif %}
                                 
                             </div>
@@ -727,5 +737,7 @@
     });
 
 </script>
+
+{% include "reusable/call_me_script.html.twig" %}
 
 {% endblock %}

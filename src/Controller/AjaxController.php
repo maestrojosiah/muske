@@ -25,6 +25,7 @@ use App\Updates\ResetPwdManager;
 use App\Updates\MessageFromResume;
 use App\Updates\MembershipManager;
 use App\Updates\ActivationManager;
+use App\Updates\CallMeBack;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Repository\MusicianRepository;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -925,6 +926,34 @@ class AjaxController extends AbstractController
            
 
             return new JsonResponse($data['found']);
+
+        }
+
+    }
+    
+    /**
+     * @Route("/musician/receive/callback", name="call_me_back")
+     */
+    public function sendCallBack(CallMeBack $callMeBack, Request $request)
+    {
+        
+        if($request->request->get('client_phone_number')){
+
+            $client_phone_number = $this->sanitizeInput($request->request->get('client_phone_number'));
+            $musician_id = $this->sanitizeInput($request->request->get('musician_id'));
+
+            $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->find($musician_id);
+
+            if($musician){
+                if($callMeBack->sendEmailMessage($musician->getEmail(), $musician->getFullname(), $client_phone_number, $musician->getUsername())){
+                    // $this->addFlash('success', 'Notification mail was sent successfully');
+                    $message = "Email has ben sent successfully";
+                }
+                
+            } 
+           
+
+            return new JsonResponse($message);
 
         }
 

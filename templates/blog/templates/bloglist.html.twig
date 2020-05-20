@@ -1,0 +1,28 @@
+	    <section class="blog-list px-3 py-5 p-md-5">
+		    <div class="container">
+			{% for post in posts %}
+			    <div class="item mb-5">
+				    <div class="media">
+					    <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="
+						{% if file_exists(assetDirectory ~ '/blog/thumbs/' ~ post.image ~ ".png") %}
+							{{ asset('uploads/blog/thumbs/' ~ post.image ~ ".png") }}
+						{% else %}
+							{{asset('/uploads/blog/play_thumbnail.png')}}
+						{% endif %}" alt="image">
+					    <div class="media-body">
+						    <h3 class="title mb-1"><a href="{{path('post_show', {'id': post.id})}}">{{post.title}}</a></h3>
+						    <div class="meta mb-1"><span class="date">{{post.submitted|date("F jS \\a\\t g:ia")}}</span><span class="time">5 min read</span><span class="comment"><a href="#">{{post.comments|length}} comments</a></span></div>
+						    <div class="intro">{{post.content|slice(0, 219)|raw}}...</div>
+						    <a class="more-link" href="{{path('post_show', {'id': post.id})}}">Read more &rarr;</a>
+					    </div><!--//media-body-->
+				    </div><!--//media-->
+			    </div><!--//item-->
+			{% endfor %}
+			{% if all_articles|length > limit %}
+			<nav class="blog-nav nav nav-justified my-5" style="margin-top:0px!important">
+				<a class="nav-link-prev nav-item nav-link rounded-left" href="{{ path('blog', {'username': musician.username, 'page': data.prevPage })}}">Previous<i class="arrow-prev fas fa-long-arrow-alt-left"></i></a>
+				<a class="nav-link-next nav-item nav-link rounded" href="{{ path('blog', {'username': musician.username, 'page': data.nextPage })}}">Next<i class="arrow-next fas fa-long-arrow-alt-right"></i></a>
+			</nav>
+			{% endif %}
+		    </div>
+	    </section>

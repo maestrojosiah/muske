@@ -135,7 +135,7 @@
                 <a href="#skills">Skills</a>
             </li>
             <li>
-                <a href="#contact">Contact</a>
+                <a href="#contacts">Contact</a>
             </li>
         </ul>
     </header>
@@ -325,15 +325,7 @@
     <!-- End #projects -->
     {% endif %}
 
-    <div id="skills">
-        <h2 class="heading">Skills</h2>
-        <ul>
-            {% for skill in musician.skills %}
-            <li>{{skill.skillname}} | <i>{{skill.levelofskill}}</i> | {{skill.experienceofskill}}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    <!-- End #skills -->
+    
     {% if (musician.settings and musician.isproandactive == 'true') or (musician.settings and musician.ismuskeandactive == 'true') %}
     <div id="album_intro"  style="text-align: center; margin-bottom: 50px;" class="background-alt">
         
@@ -366,7 +358,57 @@
     <!-- /.album_intro -->
 
 
-    <div id="contact" class="container">
+    <div id="skills">
+        <h2 class="heading">Skills</h2>
+        <ul>
+            {% for skill in musician.skills %}
+            <li>{{skill.skillname}} | <i>{{skill.levelofskill}}</i> | {{skill.experienceofskill}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- End #skills -->
+
+    {% if musician.isproandactive and blogPosts|length >= 3 %}
+    <!-- ======= Journal Section ======= -->
+    <div id="journal" class="text-left paddsection" style="text-align: center; margin-bottom: 50px;">
+
+        <h2 class="heading">Blog</h2>
+
+      <div class="container">
+        <div class="journal-block">
+          <div class="row">
+
+            {% for post in blogPosts %}
+            <div class="col-lg-4 col-md-6">
+              <div class="journal-info">
+
+                <a href="{{ path('post_show', {'id': post.id})}}"><img src="
+                  {% if file_exists(assetDirectory ~ '/blog/thumbs/' ~ post.image ~ ".png") %}
+                    {{ asset('uploads/blog/thumbs/' ~ post.image ~ ".png") }}
+                  {% else %}
+                    {{asset('/uploads/blog/play_thumbnail.png')}}
+                  {% endif %}" style="width:100%" class="img-responsive" alt="img"></a>
+
+                <div class="journal-txt">
+
+                  <h4><a href="{{ path('post_show', {'id': post.id})}}">{{post.title}}</a></h4>
+                  <p class="separator">{{post.content|slice(0, 119)|raw}}...
+                  </p>
+
+                </div>
+
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div><!-- End Journal Section -->
+    {% endif %}
+
+
+    <div id="contacts" class="container">
         <div class="row">
             <div class="col-md-6">
                 <h2>Contact {{musician.settings and musician.isproandactive ? musician.fullname : "Form" }}</h2>
@@ -435,6 +477,7 @@
 
     </div>
     <!-- End #contact -->
+
 
     <footer>
         <div class="container">

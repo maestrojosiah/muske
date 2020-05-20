@@ -1,0 +1,59 @@
+{% extends 'base_blog.html.twig' %}
+
+{% block title %}Create an Article{% endblock %}
+
+{% block body %}
+    {% include "blog/templates/header.html.twig" %}
+
+    <div class="main-wrapper">
+
+		<div class="container">
+			<div class="row">
+				
+				<div class="col-md-8 col-md-offset-2">
+					
+					<h2 class="heading">Create Article</h2>
+					<h6><a href="{{ path('post_new_with_video')}}">Create with Video instead of Picture?</a></h6>
+					
+					{{ form_start(form) }}
+						
+						<div class="form-group has-error">
+							<label for="slug">Article Image <span class="require">*</span> <small>(Landscape image less than 1MB.)</small></label>
+							{{ form_widget(form.image, {'attr': {'class': 'form-control', 'required': 'required'}})}}
+							<span class="help-block">{{ form_errors(form.image)}}</span>
+						</div>
+						
+						<div class="form-group">
+							<label for="title">Article Title <span class="require">*</span></label>
+							{{ form_widget(form.title, {'attr': {'class': 'form-control', 'required': 'required'}})}}
+						</div>
+						
+						<div class="form-group">
+							<label for="description">Article Content <span class="require">*</span></label>
+							{{ form_widget(form.content, {'attr': {'class': 'form-control', 'required': 'required'}})}}
+						</div>
+
+						<div class="form-group">
+							<label for="tags">Atricle Tags <span class="require">*</span></label>
+							{{ form_widget(form.tags, {'attr': {'class': 'form-control', 'required': 'required'}})}}
+						</div>
+												
+						<div class="form-group">
+							<p><span class="require">*</span> - required fields</p>
+						</div>
+						
+						<div class="form-group">
+							<button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+							<a href="{{ path('blog', {'username': musician.username}) }}" class="btn btn-default">
+								Cancel
+							</a>
+						</div>
+						
+					{{ form_end(form) }}
+				</div>
+				
+			</div>
+		</div>
+
+	</div>
+{% endblock %}

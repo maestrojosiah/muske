@@ -1,0 +1,59 @@
+{% extends 'base_blog.html.twig' %}
+
+{% block title %}Edit an Article{% endblock %}
+
+{% block body %}
+    {% include "blog/templates/header.html.twig" %}
+
+    <div class="main-wrapper">
+
+		<div class="container">
+			<div class="row">
+				
+				<div class="col-md-8 col-md-offset-2">
+					
+					<h2 class="heading">Edit Article</h2>
+					<h6><a href="{{ path('post_edit', {'id': post.id})}}">Edit with Picture instead of Video?</a></h6>
+					
+					{{ form_start(form) }}
+						
+						<div class="form-group has-error">
+							<label for="slug">Link to video <span class="require">*</span> <small>eg https://youtu.be/x7sljGl (Works with youtube only)</small></label>
+							{{ form_widget(form.image, {'attr': {'class': 'form-control', 'required': 'required'}})}}
+							<span class="help-block">{{ form_errors(form.image)}}</span>
+						</div>
+						
+						<div class="form-group">
+							<label for="title">Article Title <span class="require">*</span></label>
+							{{ form_widget(form.title, {'attr': {'class': 'form-control', 'required': 'required'}})}}
+						</div>
+						
+						<div class="form-group">
+							<label for="description">Article Content <span class="require">*</span></label>
+							{{ form_widget(form.content, {'attr': {'class': 'form-control', 'required': 'required'}})}}
+						</div>
+						
+						<div class="form-group">
+							<label for="tags">Atricle Tags <span class="require">*</span></label>
+							{{ form_widget(form.tags, {'attr': {'class': 'form-control', 'required': 'required'}})}}
+						</div>
+
+						<div class="form-group">
+							<p><span class="require">*</span> - required fields</p>
+						</div>
+						
+						<div class="form-group">
+							<button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+							<a href="{{ path('blog', {'username': musician.username}) }}" class="btn btn-default">
+								Cancel
+							</a>
+						</div>
+						
+					{{ form_end(form) }}
+				</div>
+				
+			</div>
+		</div>
+
+	</div>
+{% endblock %}

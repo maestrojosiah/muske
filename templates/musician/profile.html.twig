@@ -29,7 +29,8 @@
                
           <div class="panel panel-default">
             <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>
-            <div class="panel-body"><a target="_blank" href="https://muske.co.ke/{{musician.username}}">https://muske.co.ke/{{musician.username}}</a></div>
+            <div class="panel-body"><a href="{{ path('musician_show', {'username': musician.username} ) }}">https://muske.co.ke/{{musician.username}}</a></div>
+            <div class="panel-body"><a href="{{ path('blog', {'username': musician.username} ) }}">https://muske.co.ke/{{musician.username}}/blog</a></div>
           </div></li>
           
                                    

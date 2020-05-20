@@ -14,12 +14,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Knp\Snappy\Pdf;
 use Knp\Snappy\Image;
-use Symfony\Component\Routing;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use App\Repository\JobRepository;
 use App\Service\OrganizeThings; 
 use Sonata\SeoBundle\Seo\SeoPageInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use App\Repository\GalleryRepository;
+use App\Repository\PdfThemeRepository;
+use App\Repository\EducationRepository;
+use App\Repository\DocumentRepository;
+use App\Repository\PostRepository;
 
 class MusicianController extends AbstractController
 {
@@ -279,22 +283,30 @@ class MusicianController extends AbstractController
     /**
      * @Route("/{username}/{download}", name="musician_show", methods={"GET"})
      */
-    public function show($username, $download = '', SeoPageInterface $seoPage, OrganizeThings $organizeThings): Response
+    public function show(
+        MusicianRepository $musicianRepository, 
+        GalleryRepository $galleryRepository, 
+        PdfThemeRepository $pdfThemeRepository,
+        PostRepository $postRepository,
+        $username, $download = '', 
+        SeoPageInterface $seoPage, 
+        OrganizeThings $organizeThings
+        ): Response
     {
 
-        $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->findByUsername($username)[0];
+        $musician = $musicianRepository->findByUsername($username)[0];
         $jobsString = $this->getJobsAsString($musician);
         $skillsString = $this->getSkillsAsString($musician);
 
         if(count($musician->getUploadedphotos()) >= 3){
-            $fourPhotos =  $this->getDoctrine()->getManager()->getRepository('App:Gallery')
-            ->findFourPhotos($musician);
+            $fourPhotos =  $galleryRepository->findFourPhotos($musician);
         } else {
             $fourPhotos = [];
         }
         
         $jobs = $organizeThings->organizedJobsAccordingToSettings($musician);
         $educ = $organizeThings->organizedEducationAccordingToSettings($musician);
+        $blogPosts = $postRepository->getThreePosts($musician);
         
         $seoPage
             ->setTitle($musician->getFullname()." | Resume")
@@ -312,7 +324,7 @@ class MusicianController extends AbstractController
         $status = is_file($photourl);
         $pdf_template = $musician->getPdfTheme() ? $musician->getPdfTheme() : 'simpleOne.html.twig' ;
         $web_template = $musician->getWebTheme() ? $musician->getWebTheme() : 'musician/show' ;
-        $theme = $this->getDoctrine()->getManager()->getRepository('App:PdfTheme')->findByTemplate($pdf_template)[0];
+        $theme = $pdfThemeRepository->findByTemplate($pdf_template)[0];
         $themename = str_replace(" ", "_", $theme->getTitle());
 
         $array_data = [
@@ -320,6 +332,7 @@ class MusicianController extends AbstractController
             'jobs' => $jobs,
             'educ' => $educ,
             'fourPhotos' => $fourPhotos,
+            'blogPosts' => $blogPosts,
         ];
 
         if($download == 'pdf'){
@@ -344,7 +357,12 @@ class MusicianController extends AbstractController
     /**
      * @Route("/musician/action/profile", name="musician_profile", methods={"GET"})
      */
-    public function profile(): Response
+    public function profile(
+        JobRepository $jobRepository, 
+        EducationRepository $educationRepository, 
+        DocumentRepository $documentRepository,
+        GalleryRepository $galleryRepository
+        ): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $musician = $this->getUser();
@@ -383,8 +401,7 @@ class MusicianController extends AbstractController
             // in case settings is not available
             $jobOrder = $musician->getSettings()->getJobOrder() ? $musician->getSettings()->getJobOrder() : "id";
             $jobSort = $musician->getSettings()->getJobOrderBy() ? $musician->getSettings()->getJobOrderBy() : "ASC";
-            $jobs_array = $this->getDoctrine()->getManager()->getRepository('App:Job')
-                ->findByGivenField($jobOrder, $jobSort, $musician);
+            $jobs_array = $jobRepository->findByGivenField($jobOrder, $jobSort, $musician);
             foreach ($jobs_array as $key => $job) {
                 if(count($job->getRoles()) > 0){
                     $roles_array[$key] = $job->getRoles();
@@ -395,8 +412,7 @@ class MusicianController extends AbstractController
             // in case settings is not available
             $eduOrder = $musician->getSettings()->getEduOrder() ? $musician->getSettings()->getEduOrder() : "id";
             $eduSort = $musician->getSettings()->getEduOrderBy() ? $musician->getSettings()->getEduOrderBy() : "ASC";
-            $edu_array = $this->getDoctrine()->getManager()->getRepository('App:Education')
-                ->findByGivenField($eduOrder, $eduSort, $musician);
+            $edu_array = $educationRepository->findByGivenField($eduOrder, $eduSort, $musician);
             foreach ($edu_array as $key => $edu) {
                 if(count($edu->getSpecialties()) > 0){
                     $skills_array[$key] = $edu->getSpecialties();
@@ -406,11 +422,9 @@ class MusicianController extends AbstractController
     
         }
 
-        $doc_array = $this->getDoctrine()->getManager()->getRepository('App:Document')
-            ->findByGivenField("id", "ASC", $musician);
+        $doc_array = $documentRepository->findByGivenField("id", "ASC", $musician);
             
-        $gallery_array = $this->getDoctrine()->getManager()->getRepository('App:Gallery')
-            ->findByGivenField("id", "ASC", $musician);
+        $gallery_array = $galleryRepository->findByGivenField("id", "ASC", $musician);
         
 
         return $this->render('musician/profile.html.twig', [
@@ -593,7 +607,7 @@ class MusicianController extends AbstractController
     /**
      * @Route("/musician/dompdf/test", name="dompdf_test")
      */
-    public function pdfGenerator($path = '', $array = [], $filename): Response
+    public function pdfGenerator($path = '', $array = [], $filename)
     {
         // Configure Dompdf according to your needs
         $pdfOptions = new Options();

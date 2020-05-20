@@ -317,7 +317,7 @@
           <li><a href="#education" class="smoothScroll">Education</a></li>
           <li><a href="#album" class="smoothScroll">Gallery</a></li>
           <li><a href="#skills" class="smoothScroll">Skills</a></li>
-          <li><a href="#contact" class="smoothScroll">Contact</a></li>
+          <li><a href="#contacts" class="smoothScroll">Contact</a></li>
         </ul>
 
       </div>
@@ -609,9 +609,51 @@
 
     </div><!-- End Skills Section -->
 
+    {% if musician.isproandactive and blogPosts|length >= 3 %}
+    <!-- ======= Journal Section ======= -->
+    <div id="journal" class="text-left paddsection">
+
+      <div class="container">
+        <div class="section-title text-center">
+          <h2>Blog Posts</h2>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="journal-block">
+          <div class="row">
+
+            {% for post in blogPosts %}
+            <div class="col-lg-4 col-md-6">
+              <div class="journal-info">
+
+                <a href="{{ path('post_show', {'id': post.id})}}"><img src="
+                  {% if file_exists(assetDirectory ~ '/blog/thumbs/' ~ post.image ~ ".png") %}
+                    {{ asset('uploads/blog/thumbs/' ~ post.image ~ ".png") }}
+                  {% else %}
+                    {{asset('/uploads/blog/play_thumbnail.png')}}
+                  {% endif %}" style="width:100%" class="img-responsive" alt="img"></a>
+
+                <div class="journal-txt">
+
+                  <h4><a href="{{ path('post_show', {'id': post.id})}}">{{post.title}}</a></h4>
+                  <p class="separator">{{post.content|slice(0, 119)|raw}}...
+                  </p>
+
+                </div>
+
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div><!-- End Journal Section -->
+    {% endif %}
 
     <!-- ======= Contact Section ======= -->
-    <div id="contact" class="paddsection">
+    <div id="contacts" class="paddsection">
       <div class="container">
         <div class="contact-block1">
           <div class="row">

@@ -161,6 +161,11 @@ class Musician implements UserInterface
      */
     private $ratings;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="musician")
+     */
+    private $posts;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -172,6 +177,7 @@ class Musician implements UserInterface
         $this->uploadedphotos = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->ratings = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function __toString() {
@@ -795,6 +801,37 @@ class Musician implements UserInterface
             // set the owning side to null (unless already changed)
             if ($rating->getMusician() === $this) {
                 $rating->setMusician(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setMusician($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+            // set the owning side to null (unless already changed)
+            if ($post->getMusician() === $this) {
+                $post->setMusician(null);
             }
         }
 

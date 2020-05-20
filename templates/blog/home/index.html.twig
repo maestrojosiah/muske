@@ -1,0 +1,17 @@
+{% extends 'base_blog.html.twig' %}
+
+{% block title %}Blog | {#{{musician.username}}#}{% endblock %}
+
+{% block body %}
+
+    {% include "blog/templates/header.html.twig" %}
+
+    <div class="main-wrapper">
+
+        {% include "blog/templates/title.html.twig" %}
+        {% include "blog/templates/bloglist.html.twig" %}
+        {% include "blog/templates/footer.html.twig" %}
+        
+    </div><!--//main-wrapper-->    
+       
+{% endblock %}

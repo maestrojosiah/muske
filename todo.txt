@@ -29,7 +29,6 @@ Help link goes first to faq... faq should have contacts as the last option
 unsubscribe link : https://muske.co.ke/musician/unsubscribe/{{username}} used in email conf twig
 notification - you have unsubscribed from emails. Subscribe again
 check if subscribed before sending any email
-consider blog
 special characters in pdf downloads
 links to outside websites
 after choosing advertize, have options - new advert, track advert
@@ -37,6 +36,7 @@ disable button when sending mails
 rating in resume
 mpesa integration
 live chat - somewhere to add code for tawk.to
+
 
 faq:
 Is basic account free?

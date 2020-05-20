@@ -1,0 +1,45 @@
+    <header class="header text-center">	    
+	    <h1 class="blog-name pt-lg-4 mb-0"><a href="{{ path('musician_show', {'username': musician.username})}}">{{musician.fullname}}</a></h1>
+        
+	    <nav class="navbar navbar-expand-lg navbar-dark" >
+           
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div id="navigation" class="collapse navbar-collapse flex-column" >
+				<div class="profile-section pt-3 pt-lg-0">
+				    <img class="profile-image mb-3 rounded-circle mx-auto" src="{{ asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') }}" alt="image" >			
+					
+					<div class="bio mb-3">{{musician.about|slice(0, 120)}}...<br><a href="{{ path('musician_show', {'username': musician.username })}}#about">Find out more about me</a></div><!--//bio-->
+					<ul class="social-list list-inline py-3 mx-auto">
+			            <li class="list-inline-item"><a href="{{ musician.hassettings ? musician.settings.facebook | external_link : '#' }}"><i class="fab fa-twitter fa-fw"></i></a></li>
+			            <li class="list-inline-item"><a href="{{ musician.hassettings ? musician.settings.linkedin | external_link : '#' }}"><i class="fab fa-linkedin-in fa-fw"></i></a></li>
+			            <li class="list-inline-item"><a href="{{ musician.hassettings ? musician.settings.instagram | external_link : '#' }}"><i class="fab fa-instagram fa-fw"></i></a></li>
+			            <li class="list-inline-item"><a href="{{ musician.hassettings ? musician.settings.twitter | external_link : '#' }}"><i class="fab fa-twitter fa-fw"></i></a></li>
+			            <li class="list-inline-item"><a href="https://api.whatsapp.com/send?phone={{musician.phone}}"><i class="fab fa-whatsapp fa-fw"></i></a></li>
+			        </ul><!--//social-list-->
+			        <hr> 
+				</div><!--//profile-section-->
+				
+				<ul class="navbar-nav flex-column text-left">
+					<li class="nav-item">
+					    <a class="nav-link" href="{{ path('blog', {'username': musician.username} ) }}"><i class="fas fa-home fa-fw mr-2"></i>Articles</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="{{ path('musician_show', {'username': musician.username} ) }}"><i class="fas fa-home fa-fw mr-2"></i>My Online Resume</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="{{ path('musician_show', {'username': musician.username} ) }}#gallery"><i class="fas fa-bookmark fa-fw mr-2"></i>My Gallery </a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="{{ path('musician_show', {'username': musician.username} ) }}#about"><i class="fas fa-user fa-fw mr-2"></i>About Me</a>
+					</li>
+				</ul>
+				
+				<div class="my-2 my-md-3">
+				    <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username} ) }}#contact" target="_blank">Get in Touch</a>
+				</div>
+			</div>
+		</nav>
+    </header>

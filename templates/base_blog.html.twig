@@ -15,7 +15,10 @@
     
     <!-- FontAwesome JS-->
 	<script defer src="{{ asset('blog/assets/fontawesome/js/all.min.js')}}"></script>
-    
+    	
+	<!-- google recaptcha -->
+ 	<script src="https://www.google.com/recaptcha/api.js"></script>
+
     <!-- Theme CSS -->  
     <link id="theme-style" rel="stylesheet" href="{{ asset('blog/assets/css/theme-3.css')}}">
     {% block stylesheets %}{% endblock %}
@@ -26,10 +29,12 @@
 
     {% block body %}{% endblock %}
 
+
     <!-- Javascript -->          
     <script src="{{ asset('blog/assets/plugins/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('blog/assets/plugins/popper.min.js') }}"></script> 
     <script src="{{ asset('blog/assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script> 
+
     <script>
     $(document).on("click", '[id^="leave-"]', function(){
 

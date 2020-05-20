@@ -16,19 +16,13 @@
                                     <div class="form-group">
                                         <textarea id="comment" class="form-control" placeholder="Your comment" rows="3"></textarea>
                                     </div>
-                                    <button type="button" id="submit-comment-{{post.id}}" class="btn btn-primary g-recaptcha" data-sitekey="6LesFvoUAAAAAGoLnHyrR5zZ6DOdH8Ln4B5Jfy6G" data-callback='onSubmit' data-action='submit'>Submit</button>
+                                    <div class="g-recaptcha" data-sitekey="6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP"></div>
+                                    <button type="button" id="submit-comment-{{post.id}}" class="btn btn-primary">Submit</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <!-- end comment form -->
-                    <!-- recaptcha comment -->                    
-                    <script>
-                        function onSubmit(token) {
-                            document.getElementById("comment-form-{{post.id}}").submit();
-                        }
-                    </script>
-                    <!-- end recaptcha comment -->                    
 
                     <div class="card">
                         <div class="card-body">
@@ -85,19 +79,13 @@
                                             <div class="form-group">
                                                 <textarea class="form-control" id="reply-{{comment.id}}" rows="2"></textarea>
                                             </div>
-                                            <button type="button" id="submit-reply-{{comment.id}}" class="btn btn-primary g-recaptcha" data-sitekey="6LesFvoUAAAAAGoLnHyrR5zZ6DOdH8Ln4B5Jfy6G" data-callback='onSubmit' data-action='submit'>Submit</button>
+                                            <div class="g-recaptcha" data-sitekey="6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP"></div>
+                                            <button type="button" id="submit-reply-{{comment.id}}" class="btn btn-primary">Submit</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- end reply form -->
-                                <!-- recaptcha reply -->                    
-                                <script>
-                                    function onSubmit(token) {
-                                        document.getElementById("reply-form-{{comment.id}}").submit();
-                                    }
-                                </script>
-                                <!-- end recaptcha reply -->                    
 
                                 <!-- just in reply -->
                                 <div id="just-in-reply-{{comment.id}}" class="card card-inner" style="margin-left:4rem; margin-top:15px; display:none">

@@ -17,7 +17,7 @@
 	<script defer src="{{ asset('blog/assets/fontawesome/js/all.min.js')}}"></script>
     	
 	<!-- google recaptcha -->
- 	<script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <!-- Theme CSS -->  
     <link id="theme-style" rel="stylesheet" href="{{ asset('blog/assets/css/theme-3.css')}}">
@@ -72,6 +72,7 @@
 					"commenter_name": commenter_name,
 					"commenter_email": commenter_email,
 					"post_id": id,
+					g-recaptcha-response: grecaptcha.getResponse()
 				},
 				async: true,
 				success: function (data)

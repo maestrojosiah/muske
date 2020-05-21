@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use ReCaptcha\ReCaptcha;
 
 /**
  * @Route("/reply")
@@ -31,7 +32,14 @@ class ReplyController extends AbstractController
      */
     public function new(Request $request)
     {
-        if($request->request->get('reply')){
+        
+        $recaptcha = new ReCaptcha('6LeFG_oUAAAAAKp2WYl_tACZd0Bvorf4D8RGTtsD');
+        $resp = $recaptcha->verify($request->request->get('grecaptcha'), $request->getClientIp());   
+        $message = $resp;
+        if (!$resp->isSuccess()) {
+            // Do something if the submit wasn't valid ! Use the message to show something
+            $message = "The reCAPTCHA wasn't entered correctly. Go back and try it again.";
+        } else {
             $data = [];
             $content = $this->sanitizeInput($request->request->get('reply'));
             $replier_name = $this->sanitizeInput($request->request->get('replier_name'));
@@ -52,9 +60,10 @@ class ReplyController extends AbstractController
             $data['name'] = $replier_name;
             $data['content'] = $content;
             $data['time'] = "just now";
-           
-            return new JsonResponse($data);
+           return new JsonResponse($data);
         }
+        return new JsonResponse($message);
+        
         
 
     }

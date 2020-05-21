@@ -24,6 +24,7 @@ restore the sending of email in src/Updates by uncommenting the return statement
 notification by email when end of pro : cron job
 Mail Reminder of incomplete accounts once a month : cron job
 composer requires that was done in dev
+cron job to delete var/log/prod.log
 
 Help link goes first to faq... faq should have contacts as the last option 
 unsubscribe link : https://muske.co.ke/musician/unsubscribe/{{username}} used in email conf twig
@@ -42,6 +43,7 @@ email after comment
 have name and email in place if logged in
 buttons not lined up in phone
 disable blog buttons on click
+your email will not be shared
 
 
 faq:

@@ -8,6 +8,7 @@
         "dompdf/dompdf": "^0.8.5",
         "easycorp/easyadmin-bundle": "^2.3",
         "friendsofsymfony/ckeditor-bundle": "^2.2",
+        "google/recaptcha": "^1.2",
         "h4cc/wkhtmltoimage-amd64": "^0.12.4",
         "h4cc/wkhtmltopdf-amd64": "^0.12.4",
         "knplabs/knp-snappy-bundle": "^1.7",

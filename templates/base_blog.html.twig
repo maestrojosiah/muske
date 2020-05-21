@@ -17,7 +17,7 @@
 	<script defer src="{{ asset('blog/assets/fontawesome/js/all.min.js')}}"></script>
     	
 	<!-- google recaptcha -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<script src="https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit" async defer></script>
 
     <!-- Theme CSS -->  
     <link id="theme-style" rel="stylesheet" href="{{ asset('blog/assets/css/theme-3.css')}}">
@@ -28,7 +28,7 @@
 <body>
 
     {% block body %}{% endblock %}
-
+    {% block capt %}{% set captchas = [] %}{% endblock %}
 
     <!-- Javascript -->          
     <script src="{{ asset('blog/assets/plugins/jquery-3.4.1.min.js') }}"></script>
@@ -48,91 +48,7 @@
     });
     </script>
 
-
-    {% block javascripts %}{% endblock %}
-
-	<script>
-
-	$(document).on("click", '[id^="submit-comment-"]', function(){
-
-        var project = jQuery(this).attr("id");
-        var splitted = project.split('-'); //changeRow_Qt_1504
-        var id = splitted[2] //1504
-
-		var comment = $("#comment").val();              
-		var commenter_name = $("#commenter-name").val();              
-		var commenter_email = $("#commenter-email").val();
-        
-			$.ajax({
-				url:'{{ (path('comment_new')) }}',
-				type: "POST",
-				dataType: "json",
-				data: {
-					"comment": comment,
-					"commenter_name": commenter_name,
-					"commenter_email": commenter_email,
-					"post_id": id,
-					g-recaptcha-response: grecaptcha.getResponse()
-				},
-				async: true,
-				success: function (data)
-				{
-					console.log(data);
-					$("#comment-form-"+id).hide();
-                    $("#just-in-comment").show();
-					$("#just-in-content").text(data.content);
-					$("#just-in-name").html("<strong>"+data.name+"</strong>");
-				},
-				error: function () {
-					$("#warning").html("<b>something's wrong</b>");
-				}
-			});
-
-	});
-
-	</script>
-
-	<script>
-
-	$(document).on("click", '[id^="submit-reply-"]', function(){
-
-        var project = jQuery(this).attr("id");
-        var splitted = project.split('-'); //changeRow_Qt_1504
-        var id = splitted[2] //1504
-
-		var reply = $("#reply-"+id).val();              
-		var replier_name = $("#replier-name-"+id).val();              
-		var replier_email = $("#replier-email-"+id).val();
-        
-			$.ajax({
-				url:'{{ (path('reply_new')) }}',
-				type: "POST",
-				dataType: "json",
-				data: {
-					"reply": reply,
-					"replier_name": replier_name,
-					"replier_email": replier_email,
-					"comment_id": id,
-				},
-				async: true,
-				success: function (data)
-				{
-					console.log(data);
-					$("#reply-form-"+id).hide();
-                    $("#just-in-reply-"+id).show();
-					$("#just-in-reply-content-"+id).text(data.content);
-					$("#just-in-reply-name-"+id).html("<strong>"+data.name+"</strong>");
-				},
-				error: function () {
-					$("#warning").html("<b>something's wrong</b>");
-				}
-			});
-
-	});
-
-	</script>
-
-
+{% block javascripts %} {% endblock %}
 
 </body>
 </html> 

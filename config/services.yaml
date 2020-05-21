@@ -9,6 +9,7 @@ parameters:
     document_directory: '%kernel.project_dir%/public/uploads/documents'
     projects_directory: '%kernel.project_dir%/public/uploads/projects'
     blog_directory: '%kernel.project_dir%/public/uploads/blog'
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
     # default configuration for services in *this* file

@@ -1,3 +1,4 @@
+				{% set captchas = [] %}
 				<div class="blog-comments-section">
                     <!-- comment form -->
                     <div id="comment-form-{{post.id}}" class="card" style="margin-bottom:15px; display:none;">
@@ -16,8 +17,8 @@
                                     <div class="form-group">
                                         <textarea id="comment" class="form-control" placeholder="Your comment" rows="3"></textarea>
                                     </div>
-                                    <div class="g-recaptcha" data-sitekey="6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP"></div>
-                                    <button type="button" id="submit-comment-{{post.id}}" class="btn btn-primary">Submit</button>
+                                    <div id="RecaptchaField0"></div>
+                                    <button type="button" id="submit-comment-{{post.id}}-captcha-0" class="btn btn-primary">Submit</button>
                                 </form>
                             </div>
                         </div>
@@ -45,6 +46,8 @@
                                 
                             <!-- comments from db -->
                             {% for comment in post.comments|sort|reverse %}
+                            {% set captcha = loop.index %}
+                            {% set captchas = captchas|merge([captcha]) %}
                             <div class="row">
                                 <div class="col-md-2 text-center">
                                     <img src="https://image.ibb.co/jw55Ex/def_face.jpg" style="width:50px; height:50px;" class="img img-rounded img-fluid"/>
@@ -79,8 +82,8 @@
                                             <div class="form-group">
                                                 <textarea class="form-control" id="reply-{{comment.id}}" rows="2"></textarea>
                                             </div>
-                                            <div class="g-recaptcha" data-sitekey="6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP"></div>
-                                            <button type="button" id="submit-reply-{{comment.id}}" class="btn btn-primary">Submit</button>
+                                            <div id="RecaptchaField{{captcha}}"></div>
+                                            <button type="button" id="submit-reply-{{comment.id}}-captcha-{{captcha}}" class="btn btn-primary">Submit</button>
                                             </form>
                                         </div>
                                     </div>
@@ -130,3 +133,101 @@
                         </div>
                     </div>
 				</div><!--//blog-comments-section-->
+
+    {% block javascripts %}
+    <script src="{{ asset('blog/assets/plugins/jquery-3.4.1.min.js') }}"></script>
+
+	<script>
+
+	$(document).on("click", '[id^="submit-comment-"]', function(){
+
+        console.log('clicked');
+        var project = jQuery(this).attr("id");
+        var splitted = project.split('-'); //changeRow_Qt_1504
+        var id = splitted[2] //1504
+
+		var comment = $("#comment").val();              
+		var commenter_name = $("#commenter-name").val();              
+		var commenter_email = $("#commenter-email").val();
+        
+			$.ajax({
+				url:'{{ (path('comment_new')) }}',
+				type: "POST",
+				dataType: "json",
+				data: {
+					"comment": comment,
+					"commenter_name": commenter_name,
+					"commenter_email": commenter_email,
+					"post_id": id,
+					"grecaptcha": grecaptcha.getResponse(0)
+				},
+				async: true,
+				success: function (data)
+				{
+					console.log(data);
+					$("#comment-form-"+id).hide();
+                    $("#just-in-comment").show();
+					$("#just-in-content").text(data.content);
+					$("#just-in-name").html("<strong>"+data.name+"</strong>");
+				},
+				error: function () {
+					console.log("error");
+				}
+			});
+
+	});
+
+	</script>
+
+	<script>
+
+	$(document).on("click", '[id^="submit-reply-"]', function(){
+
+        console.log('clicked');
+        var project = jQuery(this).attr("id");
+        var splitted = project.split('-'); 
+        var id = splitted[2]; 
+        var captcha = splitted[4];
+
+		var reply = $("#reply-"+id).val();              
+		var replier_name = $("#replier-name-"+id).val();              
+		var replier_email = $("#replier-email-"+id).val();
+        
+			$.ajax({
+				url:'{{ (path('reply_new')) }}',
+				type: "POST",
+				dataType: "json",
+				data: {
+					"reply": reply,
+					"replier_name": replier_name,
+					"replier_email": replier_email,
+					"comment_id": id,
+					"grecaptcha": grecaptcha.getResponse(captcha)
+				},
+				async: true,
+				success: function (data)
+				{
+					console.log(data);
+					$("#reply-form-"+id).hide();
+                    $("#just-in-reply-"+id).show();
+					$("#just-in-reply-content-"+id).text(data.content);
+					$("#just-in-reply-name-"+id).html("<strong>"+data.name+"</strong>");
+				},
+				error: function () {
+					console.log("error");
+				}
+			});
+
+	});
+
+	</script>
+
+    <script type="text/javascript">
+        var CaptchaCallback = function() {
+                grecaptcha.render('RecaptchaField0', {'sitekey' : '6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP'});
+            {% for i in 1..captchas|length %}
+                grecaptcha.render('RecaptchaField{{i}}', {'sitekey' : '6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP'});
+            {% endfor %}
+        };
+    </script>
+{% endblock %}

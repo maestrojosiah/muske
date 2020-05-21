@@ -5,20 +5,20 @@
                         <div class="card-body">
                             <div class="row">
                                 <form class="col-md-12">
-                                <h4>Leave a Comment</h4>
+                                <h4>Leave a Comment</h4><small>Your email will not be visible.</small>
                                     <div class="row form-group">
                                         <div class="col">
-                                        <input type="text" id="commenter-name" class="form-control" placeholder="Your Name">
+                                        <input type="text" id="commenter-name" class="form-control" placeholder="Your Name" {% if app.user and app.user == musician %} value="{{musician.fullname}}" {% endif %}>
                                         </div>
                                         <div class="col">
-                                        <input type="email" id="commenter-email" class="form-control" placeholder="Your Email">
+                                        <input type="email" id="commenter-email" class="form-control" placeholder="Your Email" {% if app.user and app.user == musician %} value="{{musician.email}}" {% endif %}>
                                         </div>
                                     </div>                                
                                     <div class="form-group">
                                         <textarea id="comment" class="form-control" placeholder="Your comment" rows="3"></textarea>
                                     </div>
                                     <div id="RecaptchaField0"></div>
-                                    <button type="button" id="submit-comment-{{post.id}}-captcha-0" class="btn btn-primary">Submit</button>
+                                    <button type="button" style="margin-top:15px;" id="submit-comment-{{post.id}}-captcha-0" class="btn btn-primary">Submit</button>
                                 </form>
                             </div>
                         </div>
@@ -60,30 +60,34 @@
                                 <div class="clearfix"></div>
                                     <p>{{comment.content}}</p>
                                     <p>
+                                        {# if logged in #}
+					                    {% if app.user and app.user == musician %}
+                                        {% include "blog/comment/_delete_form.html.twig" %}
+                                        {% endif %}{# end if logged in #}
                                         <a id="leave-reply-{{comment.id}}" class="float-right btn btn-outline-primary ml-2"> <i class="fa fa-reply"></i> Reply</a>
                                     </p>
                                 </div>
                             </div>
                                 <hr />
                                 <!-- reply form -->
-                                <div id="reply-form-{{comment.id}}" class="card card-inner" style="margin-left:4rem; margin-top:15px; display:none;">
+                                <div id="reply-form-{{comment.id}}" class="card card-inner" style="margin-top:15px; display:none;">
                                     <div class="card-body">
                                         <div class="row">
                                             <form class="col-md-12">
-                                            <h5>Reply</h5>
+                                            <h5>Reply</h5><small>Your email will not be visible.</small>
                                                 <div class="row form-group">
                                                     <div class="col">
-                                                    <input type="text" id="replier-name-{{comment.id}}" class="form-control" placeholder="Your Name">
+                                                    <input type="text" id="replier-name-{{comment.id}}" class="form-control" placeholder="Your Name" {% if app.user and app.user == musician %} value="{{musician.fullname}}" {% endif %}>
                                                     </div>
                                                     <div class="col">
-                                                    <input type="email" id="replier-email-{{comment.id}}" class="form-control" placeholder="Your Email">
+                                                    <input type="email" id="replier-email-{{comment.id}}" class="form-control" placeholder="Your Email" {% if app.user and app.user == musician %} value="{{musician.email}}" {% endif %}>
                                                     </div>
                                                 </div>                                
                                             <div class="form-group">
                                                 <textarea class="form-control" id="reply-{{comment.id}}" rows="2"></textarea>
                                             </div>
                                             <div id="RecaptchaField{{captcha}}"></div>
-                                            <button type="button" id="submit-reply-{{comment.id}}-captcha-{{captcha}}" class="btn btn-primary">Submit</button>
+                                            <button type="button" style="margin-top:15px;" id="submit-reply-{{comment.id}}-captcha-{{captcha}}" class="btn btn-primary">Submit</button>
                                             </form>
                                         </div>
                                     </div>
@@ -91,7 +95,7 @@
                                 <!-- end reply form -->
 
                                 <!-- just in reply -->
-                                <div id="just-in-reply-{{comment.id}}" class="card card-inner" style="margin-left:4rem; margin-top:15px; display:none">
+                                <div id="just-in-reply-{{comment.id}}" class="card card-inner" style="margin-top:15px; display:none">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-2 text-center">
@@ -109,7 +113,7 @@
 
                                 <!-- replies from db -->
                                 {% for reply in comment.replies %}
-                                <div class="card card-inner" style="margin-left:4rem; margin-top:15px;">
+                                <div class="card card-inner" style="margin-top:15px;">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-2 text-center">
@@ -119,6 +123,13 @@
                                             <div class="col-md-10">
                                                 <p><a href="#"><strong>{{reply.name}}</strong></a></p>
                                                 <p>{{reply.content}}</p>
+                                                <p>
+                                                    {# if logged in #}
+                                                    {% if app.user and app.user == musician %}
+                                                    {% include "blog/reply/_delete_form.html.twig" %}
+                                                    {% endif %}{# end if logged in #}
+                                                </p>
+
                                             </div>
                                         </div>
                                     </div>
@@ -135,13 +146,13 @@
 				</div><!--//blog-comments-section-->
 
     {% block javascripts %}
-    <script src="{{ asset('blog/assets/plugins/jquery-3.4.1.min.js') }}"></script>
+<script src="{{ asset('blog/assets/plugins/jquery-3.4.1.min.js') }}"></script>
 
-	<script>
+<script>
 
 	$(document).on("click", '[id^="submit-comment-"]', function(){
 
-        console.log('clicked');
+        $(this).prop('disabled', 'true');
         var project = jQuery(this).attr("id");
         var splitted = project.split('-'); //changeRow_Qt_1504
         var id = splitted[2] //1504
@@ -169,6 +180,7 @@
                     $("#just-in-comment").show();
 					$("#just-in-content").text(data.content);
 					$("#just-in-name").html("<strong>"+data.name+"</strong>");
+                    $(this).prop('disabled', 'false');
 				},
 				error: function () {
 					console.log("error");
@@ -177,13 +189,13 @@
 
 	});
 
-	</script>
+</script>
 
-	<script>
+<script>
 
 	$(document).on("click", '[id^="submit-reply-"]', function(){
 
-        console.log('clicked');
+        $(this).prop('disabled', 'true');
         var project = jQuery(this).attr("id");
         var splitted = project.split('-'); 
         var id = splitted[2]; 
@@ -212,6 +224,7 @@
                     $("#just-in-reply-"+id).show();
 					$("#just-in-reply-content-"+id).text(data.content);
 					$("#just-in-reply-name-"+id).html("<strong>"+data.name+"</strong>");
+                    $(this).prop('disabled', 'false');
 				},
 				error: function () {
 					console.log("error");
@@ -220,14 +233,14 @@
 
 	});
 
-	</script>
+</script>
 
-    <script type="text/javascript">
-        var CaptchaCallback = function() {
-                grecaptcha.render('RecaptchaField0', {'sitekey' : '6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP'});
-            {% for i in 1..captchas|length %}
-                grecaptcha.render('RecaptchaField{{i}}', {'sitekey' : '6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP'});
-            {% endfor %}
-        };
-    </script>
+<script type="text/javascript">
+    var CaptchaCallback = function() {
+            grecaptcha.render('RecaptchaField0', {'sitekey' : '6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP'});
+        {% for i in 1..captchas|length %}
+            grecaptcha.render('RecaptchaField{{i}}', {'sitekey' : '6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP'});
+        {% endfor %}
+    };
+</script>
 {% endblock %}

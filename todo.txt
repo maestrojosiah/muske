@@ -37,13 +37,7 @@ disable button when sending mails
 rating in resume
 mpesa integration
 live chat - somewhere to add code for tawk.to
-work on og:title for blog post
 share on main sites to social media
-email after comment
-have name and email in place if logged in
-buttons not lined up in phone
-disable blog buttons on click
-your email will not be shared
 
 
 faq:

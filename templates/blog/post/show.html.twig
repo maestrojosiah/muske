@@ -1,7 +1,18 @@
 {% extends 'base_blog.html.twig' %}
 
 {% block title %}{{post.title}}{% endblock %}
-
+{% block stylesheets %}
+<style>
+.card-inner {
+    margin-left:3rem; 
+}
+@media only screen and (max-width:567px){.main-timeline8{overflow:visible}
+.card-inner {
+    margin-left:.5rem; 
+}
+}
+</style>
+{% endblock %}
 {% block body %}
 
     {% include "blog/templates/header.html.twig" %}

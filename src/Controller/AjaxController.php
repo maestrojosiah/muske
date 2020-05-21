@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Entity\Skill;
 use App\Entity\Pro;
 use App\Entity\Education;
@@ -783,10 +782,10 @@ class AjaxController extends AbstractController
     /**
      * @Route("/musician/activate/{username}", name="musician_confirm_email")
      */
-    public function confirmEmail(Request $request, $username): Response
+    public function confirmEmail(Request $request, MusicianRepository $musicianRepository, $username): Response
     {
         $decoded_username = $this->base64url_decode($username);
-        $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->findByUsername($decoded_username)[0];
+        $musician = $musicianRepository->findByUsername($decoded_username)[0];
         if($musician){
             $entityManager = $this->getDoctrine()->getManager();
             $musician->setConfirmed("true");
@@ -866,7 +865,7 @@ class AjaxController extends AbstractController
     /**
      * @Route("/musician/password/reset", name="musician_reset_password", methods={"GET", "POST"})
      */
-    public function resetPassword(ResetPwdManager $resetPwdManager, Request $request)
+    public function resetPassword(ResetPwdManager $resetPwdManager, MusicianRepository $musicianRepository, Request $request)
     {
         
         if($request->request->get('req')){
@@ -875,7 +874,7 @@ class AjaxController extends AbstractController
             $email = $this->sanitizeInput($request->request->get('email'));
             $data = [];
 
-            $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->findByEmail($email);
+            $musician = $musicianRepository->findByEmail($email);
 
             if($musician){
                 $username = $this->base64url_encode($musician[0]->getUsername());

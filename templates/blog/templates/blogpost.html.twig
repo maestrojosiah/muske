@@ -20,13 +20,17 @@
 				    </figure>
 				    <div class="blog-article">{{post.content|raw}}</div>
 			    </div>
-				<div style="padding-top:15px; padding-bottom:15px; ">
+				<div style="padding-top:15px; padding-bottom:15px;">
+					{# if logged in #}
+					{% if app.user and app.user == musician %}
 					{% include "blog/post/_delete_form.html.twig" %}
 					<a href="{{ path('post_edit', {'id': post.id })}}" id="edit-post" class="float-right btn btn-outline-primary ml-2"> <i class="fa fa-edit"></i> Edit</a>
+					{% endif %}{# end if logged in #}
 					<a id="leave-comment-{{post.id}}" class="float-right btn btn-outline-primary ml-2"> <i class="fa fa-comment"></i> Comment</a>
 					<a id="like" class="float-right btn text-white btn-info"> <i class="fa fa-heart"></i> Like</a>
+					<p style="clear:both;"></p>
 				</div>
-
+					
 			    <nav class="blog-nav nav nav-justified my-5">
 				<a class="nav-link-prev nav-item nav-link rounded-left" href="{{ prevPost is null ? '#' : path('post_show', {'id': prevPost.id, 'title': prevPost.title })}}">Previous<i class="arrow-prev fas fa-long-arrow-alt-left"></i></a>
 				<a class="nav-link-next nav-item nav-link rounded-right" href="{{ nextPost is null ? '#' : path('post_show', {'id': nextPost.id, 'title': nextPost.title })}}">Next<i class="arrow-next fas fa-long-arrow-alt-right"></i></a>

@@ -8,7 +8,7 @@ fos_ck_editor:
     default_config: my_config        
     configs:
         my_config:
-            toolbar: [ ["Maximize"], ["Cut"], ["Copy"], ["Paste"], ["Find"], ["Replace"], ["Styles"], ["Format"] "/", ["Bold"], ["Italic"], ["Underline"], ["Subscript"], ["Superscript"], ["NumberedList"], ["BulletedList"], ["Indent"], ["Blockquote"] "/", ["JustifyLeft"], ["JustifyCenter"], ["JustifyRight"], ["Link"], ["Unlink"], ["Image"], ["Iframe"], ["Font"], ["FontSize"] ]
+            toolbar: [ ["Bold"], ["Italic"], ["Underline"], ["NumberedList"], ["BulletedList"], ["Blockquote"] , ["JustifyLeft"], ["JustifyCenter"], ["JustifyRight"] ]
             # filebrowserUploadRoute: "post_new"
 
     input_sync: true

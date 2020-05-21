@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use ReCaptcha\ReCaptcha;
+use App\Updates\CommentReplyMailer;
 
 /**
  * @Route("/comment")
@@ -30,7 +31,7 @@ class CommentController extends AbstractController
     /**
      * @Route("/new", name="comment_new", methods={"GET","POST"})
      */
-    public function new(Request $request)
+    public function new(Request $request, CommentReplyMailer $commentReplyMailer)
     {
 
         $recaptcha = new ReCaptcha('6LeFG_oUAAAAAKp2WYl_tACZd0Bvorf4D8RGTtsD');
@@ -62,7 +63,12 @@ class CommentController extends AbstractController
             $data['content'] = $content;
             $data['time'] = "just now";
            
-            
+            // send email to the commenter email
+            if($commentReplyMailer->sendEmailMessage($post->getMusician()->getEmail(), $post->getMusician()->getFullname(), $commenter_email, $commenter_name, $content, "Article")){
+                // $this->addFlash('success', 'Notification mail was sent successfully');
+                $message = "Email has ben sent successfully";
+            }
+
         }
         return new JsonResponse($data);
 
@@ -103,13 +109,15 @@ class CommentController extends AbstractController
      */
     public function delete(Request $request, Comment $comment): Response
     {
+        $post = $comment->getPost();
+
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($comment);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('comment_index');
+        return $this->redirectToRoute('post_show', ['id' => $post->getId(), 'title' => $post->getTitle()]);
     }
 
     public function sanitizeInput($input){
@@ -117,21 +125,6 @@ class CommentController extends AbstractController
         return $cleanInput;
 
     }
-    function verifyCaptcha($grecaptcha){
-        if($grecaptcha):
-            //your site secret key
-            $secret = '6LeFG_oUAAAAAKp2WYl_tACZd0Bvorf4D8RGTtsD';
-            //get verify response data
-            $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$grecaptcha);
-            $responseData = json_decode($verifyResponse);
-            if($responseData->success):
-                return "success";
-            else:
-                return "verification failed";
-            endif;
-        else:
-             return "invalid captcha";
-        endif;
-    
-    }
+
+
 }

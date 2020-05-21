@@ -6,16 +6,17 @@
                             <div class="row">
                                 <form class="col-md-12">
                                 <h4>Leave a Comment</h4><small>Your email will not be visible.</small>
+                                <p style="display:none" id="error_comment"></p>
                                     <div class="row form-group">
                                         <div class="col">
-                                        <input type="text" id="commenter-name" class="form-control" placeholder="Your Name" {% if app.user and app.user == musician %} value="{{musician.fullname}}" {% endif %}>
+                                        <input type="text" required="required" id="commenter-name" class="form-control" placeholder="Your Name" {% if app.user and app.user == musician %} value="{{musician.fullname}}" {% endif %}>
                                         </div>
                                         <div class="col">
-                                        <input type="email" id="commenter-email" class="form-control" placeholder="Your Email" {% if app.user and app.user == musician %} value="{{musician.email}}" {% endif %}>
+                                        <input type="email" required="required" id="commenter-email" class="form-control" placeholder="Your Email" {% if app.user and app.user == musician %} value="{{musician.email}}" {% endif %}>
                                         </div>
                                     </div>                                
                                     <div class="form-group">
-                                        <textarea id="comment" class="form-control" placeholder="Your comment" rows="3"></textarea>
+                                        <textarea id="comment" required="required" class="form-control" placeholder="Your comment" rows="3"></textarea>
                                     </div>
                                     <div id="RecaptchaField0"></div>
                                     <button type="button" style="margin-top:15px;" id="submit-comment-{{post.id}}-captcha-0" class="btn btn-primary">Submit</button>
@@ -75,16 +76,17 @@
                                         <div class="row">
                                             <form class="col-md-12">
                                             <h5>Reply</h5><small>Your email will not be visible.</small>
+                                            <p style="display:none" id="error_reply"></p>    
                                                 <div class="row form-group">
                                                     <div class="col">
-                                                    <input type="text" id="replier-name-{{comment.id}}" class="form-control" placeholder="Your Name" {% if app.user and app.user == musician %} value="{{musician.fullname}}" {% endif %}>
+                                                    <input required="required" type="text" id="replier-name-{{comment.id}}" class="form-control" placeholder="Your Name" {% if app.user and app.user == musician %} value="{{musician.fullname}}" {% endif %}>
                                                     </div>
                                                     <div class="col">
-                                                    <input type="email" id="replier-email-{{comment.id}}" class="form-control" placeholder="Your Email" {% if app.user and app.user == musician %} value="{{musician.email}}" {% endif %}>
+                                                    <input required="required" type="email" id="replier-email-{{comment.id}}" class="form-control" placeholder="Your Email" {% if app.user and app.user == musician %} value="{{musician.email}}" {% endif %}>
                                                     </div>
                                                 </div>                                
                                             <div class="form-group">
-                                                <textarea class="form-control" id="reply-{{comment.id}}" rows="2"></textarea>
+                                                <textarea required="required" class="form-control" id="reply-{{comment.id}}" rows="2"></textarea>
                                             </div>
                                             <div id="RecaptchaField{{captcha}}"></div>
                                             <button type="button" style="margin-top:15px;" id="submit-reply-{{comment.id}}-captcha-{{captcha}}" class="btn btn-primary">Submit</button>
@@ -161,6 +163,8 @@
 		var commenter_name = $("#commenter-name").val();              
 		var commenter_email = $("#commenter-email").val();
         
+        if(comment.length && commenter_name.length && commenter_email.length){
+
 			$.ajax({
 				url:'{{ (path('comment_new')) }}',
 				type: "POST",
@@ -187,6 +191,11 @@
 				}
 			});
 
+        } else {
+            $("#error_comment").show();
+            $("#error_comment").html("<span class='text-danger'>You need to fill all the fields</span>");
+        }
+
 	});
 
 </script>
@@ -205,6 +214,8 @@
 		var replier_name = $("#replier-name-"+id).val();              
 		var replier_email = $("#replier-email-"+id).val();
         
+        if(comment.length && commenter_name.length && commenter_email.length){
+
 			$.ajax({
 				url:'{{ (path('reply_new')) }}',
 				type: "POST",
@@ -230,6 +241,11 @@
 					console.log("error");
 				}
 			});
+
+        } else {
+            $("#error_reply").show();
+            $("#error_reply").html("<span class='text-danger'>You need to fill all the fields</span>");
+        }
 
 	});
 

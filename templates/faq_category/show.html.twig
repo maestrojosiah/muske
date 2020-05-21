@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FaqCategory{% endblock %}
+
+{% block body %}
+    <h1>FaqCategory</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ faq_category.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ faq_category.title }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('faq_category_index') }}">back to list</a>
+
+    <a href="{{ path('faq_category_edit', {'id': faq_category.id}) }}">edit</a>
+
+    {{ include('faq_category/_delete_form.html.twig') }}
+{% endblock %}

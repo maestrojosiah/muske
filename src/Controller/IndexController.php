@@ -18,10 +18,10 @@ class IndexController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $musician = $this->getUser();
-            return $this->redirectToRoute('musician_show', ['username' => $musician]);
-       }
+    //     if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+    //         $musician = $this->getUser();
+    //         return $this->redirectToRoute('musician_show', ['username' => $musician]);
+    //    }
 
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',

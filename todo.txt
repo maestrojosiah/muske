@@ -3,30 +3,13 @@ uU-6X2vL+7F0fg
 p - 1980
 199.231.86.11
 
-year/month format on education
-
-basic:
-user can download own resume
-
-
-pro:
-website visitors can download resume
-direct link to social media pages or profiles
-project link
 
 prod:
-change http://localhost from musician.php getPhoto();
-change http://localhost from project.php getProjectimage();\
-same with Gallery.php
-same with Document.php
-same with PfdTheme.php
-restore the sending of email in src/Updates by uncommenting the return statement
 notification by email when end of pro : cron job
 Mail Reminder of incomplete accounts once a month : cron job
 composer requires that was done in dev
 cron job to delete var/log/prod.log
 
-Help link goes first to faq... faq should have contacts as the last option 
 unsubscribe link : https://muske.co.ke/musician/unsubscribe/{{username}} used in email conf twig
 notification - you have unsubscribed from emails. Subscribe again
 check if subscribed before sending any email
@@ -38,20 +21,7 @@ rating in resume
 mpesa integration
 live chat - somewhere to add code for tawk.to
 share on main sites to social media
-
+personalize cover photo for pro only
 
 faq:
-Is basic account free?
-Is muske account free?
-Is pro account free?
-What is the difference between basic, muske and pro accounts?
-Why does muske account have more benefits than basic account?
-If you get me a job as a muske account member, what percentage of income generated will I get?
-Why do I need a pro account if I can get jobs with muske and basic account?
-how do i change my web and downloadable resume themes
-How do i change the image background in my resume website
-how do i sort my jobs according to date?
-how do i sort my education background according to date?
-how do i upload a profile photo?
-how do I delete my account?
-How do I delete or edit information for my Resume?
+

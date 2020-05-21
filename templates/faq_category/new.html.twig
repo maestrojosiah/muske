@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New FaqCategory{% endblock %}
+
+{% block body %}
+    <h1>Create new FaqCategory</h1>
+
+    {{ include('faq_category/_form.html.twig') }}
+
+    <a href="{{ path('faq_category_index') }}">back to list</a>
+{% endblock %}

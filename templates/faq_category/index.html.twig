@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FaqCategory index{% endblock %}
+
+{% block body %}
+    <h1>FaqCategory index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for faq_category in faq_categories %}
+            <tr>
+                <td>{{ faq_category.id }}</td>
+                <td>{{ faq_category.title }}</td>
+                <td>
+                    <a href="{{ path('faq_category_show', {'id': faq_category.id}) }}">show</a>
+                    <a href="{{ path('faq_category_edit', {'id': faq_category.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('faq_category_new') }}">Create new</a>
+{% endblock %}

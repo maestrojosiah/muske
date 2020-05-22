@@ -266,7 +266,8 @@
                         {{skill.instrumentorskill}}
                     </li>
                 {% endfor %}
-                {% if app.user and app.user != null and app.user == musician %}
+                {% if edu.document != null and (musician.isproandactive == 'true' or musician.ismuskeandactive == 'true') and (app.user and app.user != null and app.user == musician) %}              
+                {# {% if app.user and app.user != null and app.user == musician %} #}
                 <li><a href="{{ path('specialty_new', {'education_id': edu.id}) }}">Add skills</a></li>
                 <li><a id="change_doc_{{edu.id}}">Change Document</a></li>
                 {% endif %}                

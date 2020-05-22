@@ -2,6 +2,7 @@ muskecok
 uU-6X2vL+7F0fg
 p - 1980
 199.231.86.11
+ssh muskecok@199.231.86.11 -p 1980
 
 
 prod:
@@ -22,6 +23,11 @@ mpesa integration
 live chat - somewhere to add code for tawk.to
 share on main sites to social media
 personalize cover photo for pro only
+difficult to find about me from
+website and blog links in phone (smaller screen) look ugly
+add skills form didn't seem to deactivate the buttons
+what is 'change document' doing there when i havent uploaded any instrument?
+
 
 faq:
 

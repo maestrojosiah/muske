@@ -27,6 +27,10 @@ class Role
      */
     private $job;
 
+    public function __toString() {
+        return $this->role;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

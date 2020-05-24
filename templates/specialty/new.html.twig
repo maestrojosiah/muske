@@ -145,6 +145,7 @@
 					// location.href = "{{ path('location_new')}}";
 					$(".for_skills ul").append("<li>"+data+"</li>");
 					$("#edu_skill").focus();
+					$("#save_edu_skill").prop('disabled', false);
 				},
 				error: function () {
 					$("#warning").html("<b>something's wrong</b>");
@@ -155,6 +156,13 @@
 
 	</script>
 
+	<script>
+		$(document).on("click", '[id^="save_"]', function(){
+
+			$(this).prop('disabled', true);
+
+		});
+	</script>
 
 
 {% endblock %}

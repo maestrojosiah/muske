@@ -29,8 +29,8 @@
                
           <div class="panel panel-default">
             <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>
-            <div class="panel-body"><a href="{{ path('musician_show', {'username': musician.username} ) }}">https://muske.co.ke/{{musician.username}}</a></div>
-            <div class="panel-body"><a href="{{ path('blog', {'username': musician.username} ) }}">https://muske.co.ke/{{musician.username}}/blog</a></div>
+            <div class="panel-body"><a href="{{ path('musician_show', {'username': musician.username} ) }}">Your Resume Website</a></div>
+            {% if musician.hassettings and musician.isproandactive %}<div class="panel-body"><a href="{{ path('blog', {'username': musician.username} ) }}">Your Blog</a></div>{% endif %}
           </div></li>
           
                                    
@@ -94,7 +94,7 @@
                   <hr>
                   <form class="form" action="##" method="post" id="">
                       <div class="form-group">                          
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                             <label for="order_job"><h4>Order Your Jobs by:</h4></label>
                             <select class="form-control" id="order_job">
                               <option value="id"  {% if musician.settings and musician.settings.jobOrder == 'null' or musician.settings and musician.settings.jobOrder == 'id' %} selected {% endif %}>How you added them</option>
@@ -105,7 +105,7 @@
                       </div>
                       <div class="form-group">
                           
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                             <label for="order_job_by"><h4>Sort your Jobs...</h4></label>
                             <select class="form-control" id="order_job_by">
                               <option value="" {{ musician.settings and musician.settings.jobOrderBy == null ? 'selected' : '' }} {{ musician.settings and musician.settings.jobOrderBy == '' ? 'selected' : '' }}>Select One</option>
@@ -116,7 +116,7 @@
                       </div>
           
                       <div class="form-group">                          
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                             <label for="order_education"><h4>Order Your Education by:</h4></label>
                             <select class="form-control" id="order_education">
                               <option value="id"  {{ musician.settings and musician.settings.eduOrder == 'id' ? 'selected' : '' }} {{ musician.settings and musician.settings.eduOrder == '' ? 'selected' : '' }}>How you added them</option>
@@ -126,7 +126,7 @@
                           </div>
                       </div>
                       <div class="form-group">
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                             <label for="order_education_by"><h4>Sort your Education...</h4></label>
                             <select class="form-control " id="order_education_by">
                               <option value="" {{ musician.settings and musician.settings.eduOrderBy == '' ? 'selected' : '' }} {{ musician.settings and musician.settings.eduOrderBy == null ? 'selected' : '' }}>Select One</option> 
@@ -136,7 +136,7 @@
                           </div>
                       </div>
                       <div class="form-group">                          
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                             <label for="tsc"><h4>Do you have a TSC number?</h4></label>
                             <select class="form-control {% if musician.settings and musician.settings.tsc == null or musician.settings and musician.settings.tsc == "" %} is-invalid {% endif %}" id="tsc">
                               <option value="" {{ musician.settings and musician.settings.tsc == '' ? 'selected' : '' }}{{ musician.settings and musician.settings.tsc == null ? 'selected' : '' }}>Select Answer</option>
@@ -148,7 +148,7 @@
 
                       <div class="form-group">
                           
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                             <label for="online"><h4>Can you offer online lessons?</h4></label>
                             <select class="form-control {% if musician.settings and musician.settings.online == null or musician.settings and musician.settings.online == "" %} is-invalid {% endif %}" id="online">
                               <option value="" {{ musician.settings and musician.settings.online == '' ? 'selected' : '' }}{{ musician.settings and musician.settings.online == null ? 'selected' : '' }}>Select Answer</option>
@@ -160,7 +160,7 @@
 
                       <div class="form-group">
                           
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                               <label for="wheretowork"><h4>Where do you stay / wish to work?</h4></label>
                               <input type="text" value="{{musician.settings and musician.settings.placeofwork ? musician.settings.placeofwork : ""}}" class="form-control {% if musician.settings and musician.settings.placeofwork == null or musician.settings and musician.settings.placeofwork == "" %}is-invalid{% endif %}" id="wheretowork" placeholder="Eg: Nairobi, Kiambu, Thika" title="Separate using comma">
                           </div>
@@ -168,7 +168,7 @@
           
                       <div class="form-group">
                           
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                             <label for="accounttype"><h4>You account type</h4></label>
                             <select class="form-control" id="accounttype">
                               <option value="basic" {{musician.isproandactive == 'false' and musician.ismuskeandactive == 'false' ? 'selected' : ''}}>Basic</option>
@@ -180,42 +180,42 @@
                       {% if app.user and app.user != null and app.user == musician and app.user.settings and app.user.isproandactive == 'true' %}
                       <div class="form-group">
                           
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                               <label for="twitter"><h4>Twitter URL</h4></label>
                               <input value="{{musician.settings and musician.settings.twitter ? musician.settings.twitter : ""}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                               <label for="facebook"><h4>Facebook URL</h4></label>
                               <input value="{{musician.settings and musician.settings.facebook ? musician.settings.twitter : ""}}" type="text" class="form-control" id="facebook" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                               <label for="linkedin"><h4>Linkedin URL</h4></label>
                               <input value="{{musician.settings and musician.settings.linkedin ? musician.settings.linkedin : ""}}" type="text" class="form-control" id="linkedin" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                               <label for="instagram"><h4>Instagram URL</h4></label>
                               <input value="{{musician.settings and musician.settings.instagram ? musician.settings.instagram : ""}}" type="text" class="form-control" id="instagram" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                               <label for="youtube"><h4>Youtube URL</h4></label>
                               <input value="{{musician.settings and musician.settings.youtube ? musician.settings.youtube : ""}}" type="text" class="form-control" id="youtube" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>
                       <div class="form-group">
                           
-                          <div class="col-xs-6">
+                          <div class="col-sm-12 col-md-6 ">
                               <label for="twitter"><h4>Twitter link</h4></label>
                               <input value="{{musician.settings and musician.settings.twitter ? musician.settings.twitter : ""}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>

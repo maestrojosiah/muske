@@ -147,6 +147,7 @@
 					// location.href = "{{ path('location_new')}}";
 					$(".for_roles ul").append("<li>"+data+"</li>");
 					$("#job_role").focus();
+					$("#save_role").prop('disabled', false);
 				},
 				error: function () {
 					$("#warning").html("<b>something's wrong</b>");
@@ -157,6 +158,13 @@
 
 	</script>
 
+	<script>
+		$(document).on("click", '[id^="save_"]', function(){
+
+			$(this).prop('disabled', true);
+
+		});
+	</script>
 
 
 {% endblock %}

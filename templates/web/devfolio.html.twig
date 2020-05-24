@@ -133,7 +133,9 @@
   }  
 
   @media only screen and (max-width:767px){.main-timeline8{overflow:visible}
-
+   #before-job-date {
+     font-size:8px;
+   }
   }
 
 </style>
@@ -285,7 +287,7 @@
                 <div class="col-md-6">
                   {% include "reusable/edu_form.html.twig" %}
                   <h5>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</h5>
-                  <p>{{edu.degree}} in {{edu.coursename}}, <strong> {{edu.institution}} </strong>, {{edu.location}}</p>
+                  <p>{{edu.degree}} in {{edu.coursename}} <hr /> <strong> {{edu.institution}} </strong>, {{edu.location}}</p>
                   {% include "reusable/edu_skills.html.twig" with {'class': 'skills'} %}
                 </div>
               </div>
@@ -307,7 +309,7 @@
                 <div class="col-md-6 text-right">
                   {% include "reusable/edu_form.html.twig" %}
                   <h5>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</h5>
-                  <p>{{edu.degree}} in {{edu.coursename}}, <strong> {{edu.institution}} </strong>, {{edu.location}}</p>
+                  <p>{{edu.degree}} in {{edu.coursename}} <hr /> <strong> {{edu.institution}} </strong>, {{edu.location}}</p>
                   {% include "reusable/edu_skills.html.twig" with {'class': 'skills'} %}                  
                 </div>
                 <div class="col-2 text-center full d-inline-flex justify-content-center align-items-center">
@@ -359,7 +361,7 @@
               <li>
                 <h4>{{job.jobtitle}}</h4>
                 <a target="_blank" href="#">{{job.institution}}{{" / " ~ job.location}}</a>
-                <a href="#" class="float-right">{{job.startingfrom|date("M Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</a>
+                <br /><a href="#" class="float-right small">{{job.startingfrom|date("M Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</a>
                 <p>
                 {% if job.roles is empty %}
                     {% if app.user and app.user != null and app.user == musician %}

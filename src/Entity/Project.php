@@ -37,6 +37,10 @@ class Project
      */
     private $projectimage;
 
+    public function __toString() {
+        return $this->projecttitle;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -22,12 +22,8 @@ rating in resume
 mpesa integration
 live chat - somewhere to add code for tawk.to
 share on main sites to social media
-personalize cover photo for pro only
 difficult to find about me from
-website and blog links in phone (smaller screen) look ugly
-add skills form didn't seem to deactivate the buttons
-what is 'change document' doing there when i havent uploaded any instrument?
-
+change all code that uses http://localhost:8000
 
 faq:
 

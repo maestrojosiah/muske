@@ -39,6 +39,10 @@ class Gallery
      */
     private $type;
 
+    public function __toString() {
+        return $this->photo;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

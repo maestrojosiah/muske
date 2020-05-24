@@ -27,6 +27,10 @@ class Specialty
      */
     private $education;
 
+    public function __toString() {
+        return $this->instrumentorskill;
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

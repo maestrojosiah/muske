@@ -26,7 +26,7 @@
       $("#close").show();
       $("#call-btn").removeClass('closed').addClass('opened');
       $("#call-btn").addClass('bg-dark text-white')
-      $("#call-btn").html('<span style="width:200px; font-size:14px; height:20px; white-space:nowrap;">I will call you back shortly</span>&nbsp;&nbsp;<input type="text" id="btn-input" style="width:120px; height:20px; font-size:10px;" placeholder="Phone Number." />&nbsp;&nbsp;<button id="call-me-now" class="btn btn-success btn-sm">Call me!</button>');
+      $("#call-btn").html('<span style="width:200px; font-size:14px; height:20px; white-space:nowrap;">I will call you back shortly</span>&nbsp;&nbsp;<input type="text" id="btn-input" style="width:120px; height:20px; font-size:10px;" placeholder="Phone Number." />&nbsp;&nbsp;<button id="call-me-now" class="btn-c btn-success btn-sm">Call me!</button>');
       $("#btn-input").focus();
       $("#call-btn").addClass("full-width");
       $('#call-btn').removeAttr('id');
@@ -42,7 +42,7 @@
     });
 
     $( "#close" ).click(function() {
-      $(".removeableId").css({ width: '70px', 'padding-top': '10px', 'padding-bottom': '10px' })
+      $(".removeableId").css({ width: '80px', 'padding-top': '10px', 'padding-bottom': '10px' })
       $("#close").hide();
       $(".removeableId").removeClass('opened').addClass('closed');
       $(".removeableId").html('<i class="fa fa-fw fa-phone faa-horizontal animated"></i>');

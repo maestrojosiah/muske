@@ -81,7 +81,7 @@ class WebTheme
     
     public function themeurl(): ?string
     {
-        $url = "http://localhost:8000/img/screenshots/$this->screenshot";
+        $url = "https://muske.co.ke/img/screenshots/$this->screenshot";
         $this->themeurl = $url;
 
         return $this->themeurl;

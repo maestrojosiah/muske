@@ -13,14 +13,16 @@
 <div class="container bootstrap snippet">
     <div class="row">
   		<div class="col-sm-10"><h2>{{musician.fullname}} ({{musician.username}})</h2></div>
-    	<div class="col-sm-2"><a href="{{path('musician_show', {'username': musician.username})}}" class="pull-right"><img title="your page" class="img-circle img-responsive" src="{{musician.logourl}}"></a></div>
+      {% set logourl = asset('img/logo_only_white_sq.png') %}
+    	<div class="col-sm-2"><a href="{{path('musician_show', {'username': musician.username})}}" class="pull-right"><img title="your page" class="img-circle img-responsive" src="{{logourl}}"></a></div>
     </div>
     <div class="row">
   		<div class="col-sm-3"><!--left col-->
               
 
       <div class="text-center">
-        <img id="prof_pic" src="{{musician.thumbnailurl}}" class="avatar img-circle img-thumbnail" alt="avatar">
+        {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+        <img id="prof_pic" src="{{thumbnailurl}}" class="avatar img-circle img-thumbnail" alt="avatar">
         <h6>Upload a different photo...</h6>
         <input id="change_prof_pic" type="file" class="text-center center-block file-upload">
         <br /><button class="btn btn-primary" type="button" id="upload_profile_pic" style="display:none;">Upload</button>

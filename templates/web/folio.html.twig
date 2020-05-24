@@ -148,6 +148,8 @@
 
 </style>
 {% set bgPhoto = asset('img/class_brown.jpg') %}
+{% set photopath = asset('uploads/gallery/' ~ musician.settings.bgphoto) %}
+
 <style type="text/css">
 
   .rating-header {
@@ -156,7 +158,7 @@
   }
   #hero {
     /* background: url("{{ asset('img/class_brown.jpg')}}") repeat scroll center center/cover; */
-    background: url("{{musician.hassettings and musician.settings.bgphoto != null ? musician.settings.photopath : bgPhoto }}");
+    background: url("{{musician.hassettings and musician.settings.bgphoto != null ? photopath : bgPhoto }}");
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
@@ -307,7 +309,8 @@
       <div class="container">
 
         <div class="logo">
-          <a href="{{path('homepage')}}"><img src="{{musician.logourl}}" alt="logo"></a>
+        {% set logourl = asset('img/logo_only_white_sq.png') %}
+          <a href="{{path('homepage')}}"><img src="{{logourl}}" alt="logo"></a>
         </div>
 
         <div class="responsive"><i data-icon="m" class="ion-navicon-round"></i></div>
@@ -358,7 +361,8 @@
           <div class="col-lg-4 ">
             <div class="div-img-bg">
               <div class="about-img">
-                <img src="{{musician.thumbnailurl}}" class="img-responsive" alt="me">
+                {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+                <img src="{{thumbnailurl}}" class="img-responsive" alt="me">
               </div>
             </div>
           </div>
@@ -518,8 +522,8 @@
 
             <div class="col-lg-4 col-md-6">
               <div class="journal-info">
-
-                <img src="{{ project.projectimage == null or project.projectimage == "" ? asset('devportfolio/images/project.jpg') : project.imagelink }}" id="project_image_{{project.id}}" class="img-responsive" alt="img">
+                {% set imagelink = asset('uploads/projects/' ~ project.projectimage) %}
+                <img src="{{ project.projectimage == null or project.projectimage == "" ? asset('devportfolio/images/project.jpg') : imagelink }}" id="project_image_{{project.id}}" class="img-responsive" alt="img">
 
               </div>
             </div>
@@ -567,9 +571,11 @@
             <div class="portfolio-container">
             {% if fourPhotos|length > 1 %}
               {% for photo in fourPhotos %}
+              {% set photo_path = asset('uploads/gallery/' ~ photo.photo) %}
+              {% set photo_thumbnailpath = asset('uploads/gallery/thumbs/' ~ photo.photo ~ '.png') %}              
               <div class="col-lg-4 col-md-6 portfolio-thumbnail">
-                <a class="popup-img" href="{{photo.photopath}}">
-                  <img src="{{photo.thumbnailpath}}" alt="img">
+                <a class="popup-img" href="{{photo_path}}">
+                  <img src="{{photo_thumbnailpath}}" alt="img">
                 </a>
               </div>
               {% endfor %}

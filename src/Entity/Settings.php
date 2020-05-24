@@ -298,7 +298,7 @@ class Settings
 
     public function getPhotoPath(): ?string
     {
-        $url = "http://localhost:8000/uploads/gallery/$this->bgphoto";
+        $url = "https://muske.co.ke/uploads/gallery/$this->bgphoto";
 
         $this->photopath = $url;
         return $this->photopath;

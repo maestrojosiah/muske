@@ -90,7 +90,7 @@ class Project
 
     public function imagelink(): ?string
     {
-        $url = "http://localhost:8000/uploads/projects/$this->projectimage";
+        $url = "https://muske.co.ke/uploads/projects/$this->projectimage";
 
         return $url;
 

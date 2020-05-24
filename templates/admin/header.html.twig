@@ -15,7 +15,8 @@
           <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="profile-ava">
-                                <img alt="" width='25' height='25' src="{{musician.thumbnailurl}}">
+                                {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+                                <img alt="" width='25' height='25' src="{{thumbnailurl}}">
                             </span>
                             <span class="username">{{musician.username}}</span>
                             <b class="caret"></b>

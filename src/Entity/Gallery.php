@@ -55,7 +55,7 @@ class Gallery
 
     public function getThumbnailpath(): ?string
     {
-        $url = "http://localhost:8000/uploads/gallery/thumbs/".$this->photo.".png";
+        $url = "https://muske.co.ke/uploads/gallery/thumbs/".$this->photo.".png";
 
         $this->thumbnailpath = $url;
         return $this->thumbnailpath;
@@ -64,7 +64,7 @@ class Gallery
 
     public function getPhotoPath(): ?string
     {
-        $url = "http://localhost:8000/uploads/gallery/$this->photo";
+        $url = "https://muske.co.ke/uploads/gallery/$this->photo";
 
         $this->photopath = $url;
         return $this->photopath;

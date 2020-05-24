@@ -50,13 +50,15 @@
         <div id="lightgallery" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled infinite-container infinite-loading">
 
           {% for photo in photos %}
-          <div class="col infinite-item" data-src="{{photo.type == "video" ? photo.photo : photo.photopath}}" data-sub-html="<h4>{{photo.musician.fullname}}</h4><p>{{photo.description}}</p>{% if photo.type == 'photo'  and musician.hassettings and musician.isproandactive and (app.user and app.user == musician) %}<a id='makeBg_{{photo.id}}' type='button' class='common'>{{musician.hassettings and musician.settings.bgphoto == photo.photo == 'photo' ? 'Current Background' : 'Make This ' ~ photo.type ~ ' Your resume coverphoto'}}</a>{% endif %}">
+          {% set photopath = asset('uploads/gallery/' ~ photo.photo) %}
+          {% set thumbnailpath = asset('uploads/gallery/thumbs/' ~ photo.photo ~ '.png') %}
+          <div class="col infinite-item" data-src="{{photo.type == "video" ? photo.photo : photopath}}" data-sub-html="<h4>{{photo.musician.fullname}}</h4><p>{{photo.description}}</p>{% if photo.type == 'photo'  and musician.hassettings and musician.isproandactive and (app.user and app.user == musician) %}<a id='makeBg_{{photo.id}}' type='button' class='common'>{{musician.hassettings and musician.settings.bgphoto == photo.photo == 'photo' ? 'Current Background' : 'Make This ' ~ photo.type ~ ' Your resume coverphoto'}}</a>{% endif %}">
             <div class="card shadow-sm">
               <a href="{% if photo.type == "video" %}{{photo.photo}}{% endif %}">
                   {% if photo.type == "video" %}
                     <img width="100%" height="225" class="card-img-top img-responsive" text="Thumbnail" src="{{ asset('img/play_thumbnail.png')}}" />
                   {% else %}
-                    <img width="100%" height="225" class="card-img-top img-responsive" text="Thumbnail" src="{{photo.thumbnailpath}}" />
+                    <img width="100%" height="225" class="card-img-top img-responsive" text="Thumbnail" src="{{thumbnailpath}}" />
                   {% endif %}
               </a>
               <div class="card-body">

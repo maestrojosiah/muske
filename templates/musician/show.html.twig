@@ -13,9 +13,9 @@
             font-size:24px;
         }
         
-
+        {% set photopath = asset('uploads/gallery/' ~ musician.settings.bgphoto) %}
         #lead{
-            background: url("{{musician.hassettings and musician.settings.bgphoto != null ? musician.settings.photopath : bgPhoto }}");
+            background: url("{{musician.hassettings and musician.settings.bgphoto != null ? photopath : bgPhoto }}");
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -175,7 +175,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                    <img src="{{ musician.photourl }}" width="50%" height="50%" background="#777" color="#777" style="border-radius: 50%; max-width: 300px"  >
+                    {% set photourl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+                    <img src="{{ photourl }}" width="50%" height="50%" background="#777" color="#777" style="border-radius: 50%; max-width: 300px"  >
                 </div>
                 <div class="col-md-9">
                     <p>
@@ -291,8 +292,8 @@
 
                             <div class="col-lg-4 col-md-6">
                             <div class="journal-info">
-
-                                <img src="{{ project.projectimage == null or project.projectimage == "" ? asset('devportfolio/images/project.jpg') : project.imagelink }}" id="project_image_{{project.id}}" class="img-responsive" alt="img">
+                                {% set imagelink = asset('uploads/projects/' ~ project.projectimage) %}
+                                <img src="{{ project.projectimage == null or project.projectimage == "" ? asset('devportfolio/images/project.jpg') : imagelink }}" id="project_image_{{project.id}}" class="img-responsive" alt="img">
 
                             </div>
                             </div>
@@ -336,9 +337,11 @@
           <div class="row text-center text-lg-left">
           {% if fourPhotos|length > 1 %}
             {% for photo in fourPhotos %}
+            {% set photo_path = asset('uploads/gallery/' ~ photo.photo) %}
+            {% set photo_thumbnailpath = asset('uploads/gallery/thumbs/' ~ photo.photo ~ '.png') %}
             <div class="col-lg-4 col-md-4 col-xs-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="{{photo.thumbnailpath}}" alt="">
+            <a href="{{photo_path}}" class="d-block mb-4 h-100">
+                <img class="img-fluid img-thumbnail" src="{{photo_thumbnailpath}}" alt="">
             </a>
             
             </div>

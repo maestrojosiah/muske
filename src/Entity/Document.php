@@ -39,7 +39,7 @@ class Document
 
 
     public function getDocpath(){
-        $url = "http://localhost:8000/uploads/documents/$this->doc";
+        $url = "https://muske.co.ke/uploads/documents/$this->doc";
         $this->docpath = $url;
         return $this->docpath;
     }

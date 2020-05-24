@@ -183,8 +183,9 @@
     </div>
   </nav>
   {% set bgPhoto = asset('devportfolio/images/class.jpg') %}
+  {% set photopath = asset('uploads/gallery/' ~ musician.settings.bgphoto) %}
   <!-- ======= Intro Section ======= -->
-  <div id="home" class="intro route bg-image" style="background-image: url('{{musician.hassettings and musician.settings.bgphoto != null ? musician.settings.photopath : bgPhoto }}')">
+  <div id="home" class="intro route bg-image" style="background-image: url('{{musician.hassettings and musician.settings.bgphoto != null ? photopath : bgPhoto }}')">
     <div class="overlay-itro"></div>
     <div class="intro-content display-table">
       <div class="table-cell">
@@ -217,7 +218,8 @@
                   <div class="row">
                     <div class="col-sm-6 col-md-5">
                       <div class="about-img">
-                        <img src="{{musician.thumbnailurl}}" class="img-fluid rounded b-shadow-a" alt="">
+                        {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+                        <img src="{{thumbnailurl}}" class="img-fluid rounded b-shadow-a" alt="">
                       </div>
                     </div>                    
                     <div class="col-sm-6 col-md-7">
@@ -467,11 +469,13 @@
           {% if fourPhotos|length > 1 %}
           
             {% for photo in fourPhotos %}
+            {% set photo_path = asset('uploads/gallery/' ~ photo.photo) %}
+            {% set photo_thumbnailpath = asset('uploads/gallery/thumbs/' ~ photo.photo ~ '.png') %}
             <div class="col-md-4">
               <div class="work-box">
-                <a href="{{photo.photopath}}" data-gall="portfolioGallery" class="venobox">
+                <a href="{{photo_path}}" data-gall="portfolioGallery" class="venobox">
                   <div class="work-img">
-                    <img src="{{photo.thumbnailpath}}" alt="" class="img-fluid">
+                    <img src="{{photo_thumbnailpath}}" alt="" class="img-fluid">
                   </div>
                   <div class="work-content">
                     <div class="row">

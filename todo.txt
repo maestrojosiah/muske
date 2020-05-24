@@ -27,8 +27,6 @@ live chat - somewhere to add code for tawk.to
 share on main sites to social media
 difficult to find about me from
 change all code that uses http://localhost:8000
-
-changed something here
-changed another thing
+...
 faq:
 

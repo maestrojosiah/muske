@@ -676,7 +676,7 @@
                                 <span class="field-label-info"></span>
                                 <input type="hidden" id="selected_rating" name="selected_rating" value="" required="required">
                                 </label>
-                                <h2 class="bold rating-header" style="">
+                                <h2 class="bold rating-header">
                                 <span class="selected-rating">0</span><small> / 5</small>
                                 </h2>
                                 <button type="button" class="btnrating btn btn-default btn-lg" data-attr="1" id="rating-star-1">
@@ -900,12 +900,12 @@
 		var ratingval = $("#selected_rating").val();
 		var ratername = $("#ratername").val();
 		var rateremail = $("#rateremail").val();
-		var musician_id = {{musician.id}};
+		var musician_id = "{{musician.id}}";
 
     console.log(ratingval);
 
 			$.ajax({
-				url:'{{ (path('save_rating')) }}',
+				url:"{{ (path('save_rating')) }}",
 				type: "POST",
 				dataType: "json",
 				data: {
@@ -944,11 +944,11 @@
 		var senderemail = $("#senderemail").val();
 		var message = $("#message").val();
 		var subject = $("#subject").val();
-		var musician_id = {{musician.id}};
+		var musician_id = "{{musician.id}}";
 
     $(".loading").show();
 			$.ajax({
-				url:'{{ (path('musician_receive_message')) }}',
+				url:"{{ (path('musician_receive_message')) }}",
 				type: "POST",
 				dataType: "json",
 				data: {

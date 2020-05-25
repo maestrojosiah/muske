@@ -293,7 +293,7 @@
                             <div class="col-lg-4 col-md-6">
                             <div class="journal-info">
                                 {% set imagelink = asset('uploads/projects/' ~ project.projectimage) %}
-                                <img src="{{ project.projectimage == null or project.projectimage == "" ? asset('devportfolio/images/project.jpg') : imagelink }}" id="project_image_{{project.id}}" class="img-responsive" alt="img">
+                                <img src="{{ project.projectimage == null or project.projectimage == "" ? asset('devportfolio/images/project.jpg') : imagelink }}" id="project_image_{{project.id}}" class="img-responsive" alt="{{project.projecttitle}}">
 
                             </div>
                             </div>
@@ -341,7 +341,7 @@
             {% set photo_thumbnailpath = asset('uploads/gallery/thumbs/' ~ photo.photo ~ '.png') %}
             <div class="col-lg-4 col-md-4 col-xs-6">
             <a href="{{photo_path}}" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="{{photo_thumbnailpath}}" alt="">
+                <img class="img-fluid img-thumbnail" src="{{photo_thumbnailpath}}" alt="{{photo.description}}">
             </a>
             
             </div>
@@ -391,7 +391,7 @@
                     {{ asset('uploads/blog/thumbs/' ~ post.image ~ ".png") }}
                   {% else %}
                     {{asset('/uploads/blog/play_thumbnail.png')}}
-                  {% endif %}" style="width:100%" class="img-responsive" alt="img"></a>
+                  {% endif %}" style="width:100%" class="img-responsive" alt="{{post.title}}"></a>
 
                 <div class="journal-txt">
 

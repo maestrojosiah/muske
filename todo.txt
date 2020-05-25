@@ -29,10 +29,3 @@ share on main sites to social media
 difficult to find about me from
 
 
-
-
-
-{% set thumbnailurl = asset('uploads/photos/thumbs/' ~ photo.photo ~ '.png') %}
-...
-faq:
-alt=

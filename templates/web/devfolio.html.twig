@@ -219,7 +219,7 @@
                     <div class="col-sm-6 col-md-5">
                       <div class="about-img">
                         {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
-                        <img src="{{thumbnailurl}}" class="img-fluid rounded b-shadow-a" alt="">
+                        <img src="{{thumbnailurl}}" class="img-fluid rounded b-shadow-a" alt="{{musician.fullname}}">
                       </div>
                     </div>                    
                     <div class="col-sm-6 col-md-7">
@@ -429,7 +429,7 @@
               {% for project in musician.projects %}
               <div class="testimonial-box">
                 <div class="author-test">
-                  <img src="assets/img/testimonial-2.jpg" alt="" class="rounded-circle b-shadow-a">
+                  <img src="assets/img/testimonial-2.jpg" alt="{{project.projecttitle}}" class="rounded-circle b-shadow-a">
                   <span class="author">{{project.projecttitle}}</span>
                 </div>
                 <div class="content-test">
@@ -475,7 +475,7 @@
               <div class="work-box">
                 <a href="{{photo_path}}" data-gall="portfolioGallery" class="venobox">
                   <div class="work-img">
-                    <img src="{{photo_thumbnailpath}}" alt="" class="img-fluid">
+                    <img src="{{photo_thumbnailpath}}" alt="{{photo.description}}" class="img-fluid">
                   </div>
                   <div class="work-content">
                     <div class="row">
@@ -568,7 +568,7 @@
                     {{ asset('uploads/blog/thumbs/' ~ post.image ~ ".png") }}
                   {% else %}
                     {{asset('/uploads/blog/play_thumbnail.png')}}
-                  {% endif %}" style="width:100%" alt="" class="img-fluid"></a>
+                  {% endif %}" style="width:100%" alt="{{post.title}}" class="img-fluid"></a>
               </div>
               <div class="card-body">
                 <div class="card-category-box">

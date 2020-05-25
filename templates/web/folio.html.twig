@@ -362,7 +362,7 @@
             <div class="div-img-bg">
               <div class="about-img">
                 {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
-                <img src="{{thumbnailurl}}" class="img-responsive" alt="me">
+                <img src="{{thumbnailurl}}" class="img-responsive" alt="{{musician.fullname}}">
               </div>
             </div>
           </div>
@@ -523,7 +523,7 @@
             <div class="col-lg-4 col-md-6">
               <div class="journal-info">
                 {% set imagelink = asset('uploads/projects/' ~ project.projectimage) %}
-                <img src="{{ project.projectimage == null or project.projectimage == "" ? asset('devportfolio/images/project.jpg') : imagelink }}" id="project_image_{{project.id}}" class="img-responsive" alt="img">
+                <img src="{{ project.projectimage == null or project.projectimage == "" ? asset('devportfolio/images/project.jpg') : imagelink }}" id="project_image_{{project.id}}" class="img-responsive" alt="{{project.projecttitle}}">
 
               </div>
             </div>
@@ -575,7 +575,7 @@
               {% set photo_thumbnailpath = asset('uploads/gallery/thumbs/' ~ photo.photo ~ '.png') %}              
               <div class="col-lg-4 col-md-6 portfolio-thumbnail">
                 <a class="popup-img" href="{{photo_path}}">
-                  <img src="{{photo_thumbnailpath}}" alt="img">
+                  <img src="{{photo_thumbnailpath}}" alt="{{photo.description}}">
                 </a>
               </div>
               {% endfor %}
@@ -640,7 +640,7 @@
                     {{ asset('uploads/blog/thumbs/' ~ post.image ~ ".png") }}
                   {% else %}
                     {{asset('/uploads/blog/play_thumbnail.png')}}
-                  {% endif %}" style="width:100%" class="img-responsive" alt="img"></a>
+                  {% endif %}" style="width:100%" class="img-responsive" alt="{{post.title}}"></a>
 
                 <div class="journal-txt">
 

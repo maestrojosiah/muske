@@ -25,7 +25,6 @@ disable button when sending mails
 rating in resume
 mpesa integration
 live chat - somewhere to add code for tawk.to
-share on main sites to social media
 difficult to find about me from
 
 

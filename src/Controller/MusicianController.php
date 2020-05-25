@@ -337,7 +337,7 @@ class MusicianController extends AbstractController
 
         if($download == 'pdf'){
             if($status){
-                return $this->pdfGenerator("pdf/$pdf_template", $array_data, $musician->getUsername().'_'.$themename."_Resume");
+                return $this->toPdf("pdf/$pdf_template", $array_data, $musician->getUsername().'_'.$themename."_Resume");
             } else {
                 return $this->redirectToRoute('error', ['error_msg' => "Broken links prevents the pdf from downloading. Upload your profile photo"]);
             }
@@ -607,42 +607,42 @@ class MusicianController extends AbstractController
     /**
      * @Route("/musician/dompdf/test", name="dompdf_test")
      */
-    public function pdfGenerator($path = '', $array = [], $filename)
-    {
-        // Configure Dompdf according to your needs
-        $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
-        $pdfOptions->set('isRemoteEnabled', TRUE);
+    // public function pdfGenerator($path = '', $array = [], $filename)
+    // {
+    //     // Configure Dompdf according to your needs
+    //     $pdfOptions = new Options();
+    //     $pdfOptions->set('defaultFont', 'Arial');
+    //     $pdfOptions->set('isRemoteEnabled', TRUE);
 
-        // Instantiate Dompdf with our options
-        $dompdf = new Dompdf($pdfOptions);
-        $contxt = stream_context_create([ 
-            'ssl' => [ 
-                'verify_peer' => FALSE, 
-                'verify_peer_name' => FALSE,
-                'allow_self_signed'=> TRUE
-            ] 
-        ]);
-        $dompdf->setHttpContext($contxt);        
+    //     // Instantiate Dompdf with our options
+    //     $dompdf = new Dompdf($pdfOptions);
+    //     $contxt = stream_context_create([ 
+    //         'ssl' => [ 
+    //             'verify_peer' => FALSE, 
+    //             'verify_peer_name' => FALSE,
+    //             'allow_self_signed'=> TRUE
+    //         ] 
+    //     ]);
+    //     $dompdf->setHttpContext($contxt);        
         
-        // Retrieve the HTML generated in our twig file
-        $html = $this->renderView($path, $array);
+    //     // Retrieve the HTML generated in our twig file
+    //     $html = $this->renderView($path, $array);
         
-        // Load HTML to Dompdf
-        $dompdf->loadHtml($html);
-        $dompdf->set_option('isHtml5ParserEnabled', true);
-        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-        $dompdf->setPaper('A4', 'portrait');
+    //     // Load HTML to Dompdf
+    //     $dompdf->loadHtml($html);
+    //     $dompdf->set_option('isHtml5ParserEnabled', true);
+    //     // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+    //     $dompdf->setPaper('A4', 'portrait');
 
-        // Render the HTML as PDF
-        $dompdf->render();
+    //     // Render the HTML as PDF
+    //     $dompdf->render();
 
-        // Output the generated PDF to Browser (force download)
-        $dompdf->stream("$filename.pdf", [
-            // "Attachment" => true
-            "Attachment" => false
-        ]);
-    }
+    //     // Output the generated PDF to Browser (force download)
+    //     $dompdf->stream("$filename.pdf", [
+    //         // "Attachment" => true
+    //         "Attachment" => false
+    //     ]);
+    // }
 
     public function toPdf($path = '', $array = [], $filename): Response
     {

@@ -30,9 +30,10 @@
 
                
           <div class="panel panel-default">
-            <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>
+            <div class="panel-heading">Quick Links <i class="fa fa-link fa-1x"></i></div>
             <div class="panel-body"><a href="{{ path('musician_show', {'username': musician.username} ) }}">Your Resume Website</a></div>
             {% if musician.hassettings and musician.isproandactive %}<div class="panel-body"><a href="{{ path('blog', {'username': musician.username} ) }}">Your Blog</a></div>{% endif %}
+            <div class="panel-body"><a href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}">Download Your Resume</a></div>
           </div></li>
           
                                    
@@ -44,7 +45,6 @@
                 <li><a data-toggle="tab" href="#reviews">Reviews</a></li>
                 <li><a href="{{ path('musician_admin_index')}}">Admin Page</a></li>
                 <li><a href="{{ path('musician_edit', {'username': musician.username})}}">Resume info</a></li>
-                <li><a href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}">Download Your Resume</a></li>
                 <li><a href="{{ path('gallery_index', {'username': musician.username})}}">Gallery</a></li>
                 {% if app.user and app.user != null and app.user == musician %}<li> <a href="{{path("app_logout")}}">Logout</a> {% else %} <a href="{{path("homepage")}}">Login</a></li>{% endif %}
                 
@@ -288,7 +288,7 @@ $(document).ready(function() {
 		var accounttype = $("#accounttype").val();              
 
 			$.ajax({
-				url:'{{ (path('save_settings')) }}',
+				url:"{{ (path('save_settings')) }}",
 				type: "POST",
 				dataType: "json",
 				data: {

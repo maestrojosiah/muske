@@ -1,4 +1,4 @@
-
+        {% if musician.hassettings and (musician.isproandactive or musician.ismuskeandactive) %}
         <div id="call-me-back">
           <p  id="call-btn" class="btn-c btn-success btn-circle btn-xl closed centered removeableId">
             <i class="fa fa-fw fa-phone faa-horizontal animated"></i>
@@ -7,4 +7,5 @@
             &times;
           </span>
         </div>
+        {% endif %}
 

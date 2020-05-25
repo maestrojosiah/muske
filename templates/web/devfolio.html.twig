@@ -540,6 +540,7 @@
       </div>
     </section><!-- End Blog Section -->
 
+    {% if musician.isproandactive and blogPosts|length >= 0 %}
     <!-- ======= Blog Section ======= -->
     <section id="blog" class="blog-mf sect-pt4 route">
       <div class="container">
@@ -588,7 +589,7 @@
       </div>
     </section>
     <!-- End Blog Section -->
-
+    {% endif %}
 
 
     <!-- ======= Contact Section ======= -->

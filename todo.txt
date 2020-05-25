@@ -13,6 +13,7 @@ notification by email when end of pro : cron job
 Mail Reminder of incomplete accounts once a month : cron job
 composer requires that was done in dev
 cron job to delete var/log/prod.log
+email address for pro members-
 
 unsubscribe link : https://muske.co.ke/musician/unsubscribe/{{username}} used in email conf twig
 notification - you have unsubscribed from emails. Subscribe again

@@ -119,9 +119,9 @@ easy_admin:
             label: 'Musicians'
             list:
                 title: "Musicians"            
-                fields: [{property: 'fullname', label: 'Full Name'}, {property: 'username', label: 'Username'}, {property: 'email', label: 'Email'}, {property: 'confirmed', label: 'Email Confirmation'}, {property: 'subscribed', label: 'Subscription'}]                        
+                fields: [{property: 'fullname', label: 'Full Name'}, {property: 'username', label: 'Username'}, {property: 'realemail', label: 'Email'}, {property: 'confirmed', label: 'Email Confirmation'}, {property: 'subscribed', label: 'Subscription'}]                        
             form:
-                fields: [{property: 'fullname', label: 'Full Name'}, {property: 'username', label: 'Username'}, {property: 'email', label: 'Email'}, {property: 'confirmed', label: 'Email Confirmation'}, {property: 'subscribed', label: 'Subscription'}] 
+                fields: [{property: 'fullname', label: 'Full Name'}, {property: 'username', label: 'Username'}, {property: 'realemail', label: 'Email'}, {property: 'confirmed', label: 'Email Confirmation'}, {property: 'subscribed', label: 'Subscription'}] 
         PdfTheme:
             class: App\Entity\PdfTheme
             label: 'Pdf Resume'

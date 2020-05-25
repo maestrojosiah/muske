@@ -57,7 +57,6 @@
 			margin-left:.5em;
 			}
 		h1{
-			margin:1em 0 1em 9.5em;
 			font-size:1.75em;
 			}
 		h2 {
@@ -81,8 +80,7 @@
 {% endblock %}
 {% block body %}
 
-	<h1>{{musician.fullname}}</h1>
-	<div id="address">
+	<div id="address" style="margin-bottom: 80px;">
 		{% include "reusable/_threecolumnaddress_.html.twig" %}
 	</div>
 	

@@ -96,6 +96,10 @@ body div ul {
 #meta {
 	display: none;
 }
+a {
+	text-decoration: none;
+	color:black;
+}
 </style>
 {% endblock %}
 {% block body %}
@@ -106,7 +110,8 @@ body div ul {
 {{musician.phone}}<br><a href="mailto:{{musician.email}}">{{musician.email}}</a>
 </p>
 <p id="bio_right">
-123 Any Street<br>City, State 99999</p>
+	https://muske.co.ke/{{musician.username}}
+</p>
 
 <h2>ABOUT</h2>
 <p class="data">{{musician.about}}.</p>
@@ -114,7 +119,7 @@ body div ul {
 <h2>EXPERIENCE</h2>
 {% for job in jobs %}
 <div class="job">
-	<p class="date">{{job.startingfrom|date("F Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y")}}</p>
+	<p class="date">{{job.startingfrom|date("M Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y")}}</p>
 	<div class="job_data">
 		<h3>{{job.institution}}</h3>
 		<p class="location">{{job.location}}</p>

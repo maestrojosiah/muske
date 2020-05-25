@@ -1,18 +1,8 @@
-		<div>
-			<h3>Local Address</h3>
-			335 Name Street, Unit #<br>
-			Town, Province, N2H 3Y6<br>
-			1-519-500-8252
-		</div>
-		<div id="first">
-			<h3>Credentials</h3>
-			3A, Your Major, <abbr title="University of Waterloo">UW</abbr><br>
-			<a href="mailto:{{musician.email}}">{{musician.email}}</a><br>
-			<a href="https://muske.co.ke/{{musician.username}}">muske.co.ke/{{musician.username}}</a>
-		</div>
-		<div>
-			<h3>Permanent Address</h3>
-			62 6th Avenue <br>
-			Town, Ontario, N4N 2V6<br>
-			1-519-500-4833
-		</div>
+		
+		<section style="width:90%; text-align:center; margin:auto; margin-bottom:10px;">
+			<h1>{{musician.fullname}}</h1>
+			<h3>{% if musician.settings and musician.settings.placeofwork != null %}{{musician.settings.placeofwork}}{% endif %}</h3>
+			Phone: <abbr title="University of Waterloo">{{musician.phone}}</abbr><br>
+			Email: <a style="text-decoration: none; color:black; " href="mailto:{{musician.email}}">{{musician.email}}</a><br>
+			Website: <a style="text-decoration: none; color:black; " href="https://muske.co.ke/{{musician.username}}">muske.co.ke/{{musician.username}}</a>
+		</section>

@@ -15,6 +15,7 @@ easy_admin:
             - { entity: 'Gallery', label: "Photos and Videos" }            
             - { entity: 'PdfTheme', label: "Pdf Resume" }            
             - { entity: 'WebTheme', label: "Web Theme" }            
+            - { entity: 'Musician', label: "Musicians" }            
             # - { label: 'Some Task', route: 'user_some_task' }
             # - { label: 'Other Task', route: 'other_task', params: { max: 7 } }
 
@@ -112,6 +113,15 @@ easy_admin:
                 fields: [{property: 'photo', label: 'Media'}, {property: 'description', label: 'Description'}]                        
             form:
                 fields: [{property: 'photo', label: 'Media'}, {property: 'description', label: 'Description'}]                        
+        Musician:
+            disabled_actions: ['new']
+            class: App\Entity\Musician
+            label: 'Musicians'
+            list:
+                title: "Musicians"            
+                fields: [{property: 'fullname', label: 'Full Name'}, {property: 'username', label: 'Username'}, {property: 'email', label: 'Email'}, {property: 'confirmed', label: 'Email Confirmation'}, {property: 'subscribed', label: 'Subscription'}]                        
+            form:
+                fields: [{property: 'fullname', label: 'Full Name'}, {property: 'username', label: 'Username'}, {property: 'email', label: 'Email'}, {property: 'confirmed', label: 'Email Confirmation'}, {property: 'subscribed', label: 'Subscription'}] 
         PdfTheme:
             class: App\Entity\PdfTheme
             label: 'Pdf Resume'

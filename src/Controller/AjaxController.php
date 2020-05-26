@@ -29,6 +29,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Repository\MusicianRepository;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use App\Repository\ProRepository;
 
 class AjaxController extends AbstractController
 {
@@ -1045,7 +1046,7 @@ class AjaxController extends AbstractController
     /**
      * @Route("/change/membership", name="change_membership")
      */
-    public function changeMembership(MembershipManager $membershipManager, Request $request)
+    public function changeMembership(MembershipManager $membershipManager, ProRepository $proRepository, Request $request)
     {
         if($request->request->get('membership')){
 
@@ -1076,11 +1077,9 @@ class AjaxController extends AbstractController
                 $ending = clone $started;
                 $ending->modify('+365 days'); 
 
-                $prevPro = $entityManager
-                ->getRepository('App:Pro')
-                ->findBy(
+                $prevPro = $proRepository->findOneBy(
                     array('musician' => $musician)
-                )[0];                
+                );                
                 if($prevPro) {
                     $pro = $prevPro;
                 } else {

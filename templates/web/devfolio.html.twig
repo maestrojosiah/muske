@@ -761,7 +761,7 @@
 {% block javascripts %}
 {% if musician.settings and musician.settings.tawkTo != null %}
     <script type="text/javascript">
-        {{musician.settings.tawkTo}}
+        {{musician.settings.tawkTo|raw}}
     </script>
     
 {% else %}

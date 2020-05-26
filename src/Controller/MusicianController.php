@@ -294,7 +294,7 @@ class MusicianController extends AbstractController
         ): Response
     {
 
-        $musician = $musicianRepository->findByUsername($username)[0];
+        $musician = $musicianRepository->findOneByUsername($username);
         $jobsString = $this->getJobsAsString($musician);
         $skillsString = $this->getSkillsAsString($musician);
 
@@ -324,7 +324,7 @@ class MusicianController extends AbstractController
         $status = is_file($photourl);
         $pdf_template = $musician->getPdfTheme() ? $musician->getPdfTheme() : 'simpleOne.html.twig' ;
         $web_template = $musician->getWebTheme() ? $musician->getWebTheme() : 'musician/show' ;
-        $theme = $pdfThemeRepository->findByTemplate($pdf_template)[0];
+        $theme = $pdfThemeRepository->findOneByTemplate($pdf_template);
         $themename = str_replace(" ", "_", $theme->getTitle());
 
         $array_data = [

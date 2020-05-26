@@ -650,12 +650,12 @@ class AjaxController extends AbstractController
 
             $settings = $entityManager
 			->getRepository('App:Settings')
-			->findBy(
+			->findOneBy(
 				array('musician' => $musician)
             );
             
             if($settings){
-                $setting = $settings[0];
+                $setting = $settings;
             } else {
                 $setting = new Settings();
             }
@@ -788,7 +788,7 @@ class AjaxController extends AbstractController
     public function confirmEmail(Request $request, MusicianRepository $musicianRepository, $username): Response
     {
         $decoded_username = $this->base64url_decode($username);
-        $musician = $musicianRepository->findByUsername($decoded_username)[0];
+        $musician = $musicianRepository->findOneByUsername($decoded_username);
         if($musician){
             $entityManager = $this->getDoctrine()->getManager();
             $musician->setConfirmed("true");
@@ -1058,12 +1058,12 @@ class AjaxController extends AbstractController
 
             $settings = $entityManager
 			->getRepository('App:Settings')
-			->findBy(
+			->findOneBy(
 				array('musician' => $musician)
             );
             
             if($settings){
-                $setting = $settings[0];
+                $setting = $settings;
             } else {
                 $setting = new Settings();
             }

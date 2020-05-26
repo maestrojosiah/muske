@@ -25,7 +25,7 @@ class GalleryController extends AbstractController
         $data = [];
 
         $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')
-        ->findByUsername($username)[0];
+        ->findOneByUsername($username);
         // $photos = $musician->getUploadedphotos();
         $photos = $galleryRepository
             ->findBy(

@@ -22,7 +22,7 @@ class BlogController extends AbstractController
         $offset = $page * $limit - $limit;
         $data = [];
 
-        $musician = $musicianRepository->findByUsername($username)[0];
+        $musician = $musicianRepository->findOneByUsername($username);
 
         $posts = $postRepository
             ->findBy(

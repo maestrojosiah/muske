@@ -25,21 +25,16 @@
             
         {% block javascripts %}{% endblock %}
 
-        <!-- BEGIN PHP Live! HTML Code [V3] -->
-        <span style="color: #0000FF; text-decoration: underline; line-height: 0px !important; cursor: pointer; position: fixed; bottom: 0px; right: 20px; z-index: 20000000;" id="phplive_btn_1590428584"></span>
-        <script data-cfasync="false" type="text/javascript">
-
+        <!-- live shat starts -->
+        <script>var LHC_API = LHC_API||{};
+        LHC_API.args = {mode:'widget',lhc_base_url:'//livechat.muske.co.ke/index.php/',wheight:450,wwidth:350,pheight:520,pwidth:500,domain:'muske.co.ke',leaveamessage:true,check_messages:false};
         (function() {
-        var phplive_e_1590428584 = document.createElement("script") ;
-        phplive_e_1590428584.type = "text/javascript" ;
-        phplive_e_1590428584.async = true ;
-        phplive_e_1590428584.src = "https://phplive.muske.co.ke/js/phplive_v2.js.php?v=0%7C1590428584%7C0%7C&" ;
-        document.getElementById("phplive_btn_1590428584").appendChild( phplive_e_1590428584 ) ;
-        if ( [].filter ) { document.getElementById("phplive_btn_1590428584").addEventListener( "click", function(){ phplive_launch_chat_0() } ) ; } else { document.getElementById("phplive_btn_1590428584").attachEvent( "onclick", function(){ phplive_launch_chat_0() } ) ; }
-        })() ;
-
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.setAttribute('crossorigin','anonymous'); po.async = true;
+        var date = new Date();po.src = '//livechat.muske.co.ke/design/defaulttheme/js/widgetv2/index.js?'+(""+date.getFullYear() + date.getMonth() + date.getDate());
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
         </script>
-        <!-- END PHP Live! HTML Code [V3] -->
+        <!-- live chat ends -->
              
     </body>
 </html>

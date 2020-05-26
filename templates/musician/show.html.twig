@@ -528,7 +528,7 @@
 
 {% if musician.settings and musician.settings.tawkTo != null %}
     <script type="text/javascript">
-        {{musician.settings.tawkTo}}
+        {{musician.settings.tawkT|raw}}
     </script>
     
 {% else %}
@@ -550,7 +550,6 @@
         <!-- END PHP Live! HTML Code [V3] -->                
 
 {% endif %}
-
 <script>
     $(document).on("click", '[id^="proj_"]', function(){
 

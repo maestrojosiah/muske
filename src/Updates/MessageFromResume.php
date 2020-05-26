@@ -34,8 +34,8 @@ class MessageFromResume
 			]),'text/html'
 		);
 
-		// return $this->mailer->send($message) > 0;
-		return true;
+		return $this->mailer->send($message) > 0;
+		// return true;
 	}   
 
 	

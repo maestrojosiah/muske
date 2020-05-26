@@ -641,6 +641,7 @@ class AjaxController extends AbstractController
             $tsc = $this->sanitizeInput($request->request->get('tsc'));
             $wheretowork = $this->sanitizeInput($request->request->get('wheretowork'));
             $accounttype = $this->sanitizeInput($request->request->get('accounttype'));
+            $tawk_to = $this->sanitizeInput($request->request->get('tawk_to'));
 
             $musician = $this->getUser();
     
@@ -681,6 +682,7 @@ class AjaxController extends AbstractController
             $setting->setYoutube($youtube);
             $setting->setInstagram($instagram);
             $setting->setOnline($online);
+            $setting->setTawkTo($tawk_to);
             $setting->setTsc($tsc);
             $setting->setPlaceofwork($wheretowork);
             $setting->setMusician($musician);

@@ -222,6 +222,13 @@
                               <input value="{{musician.settings and musician.settings.twitter ? musician.settings.twitter : ""}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
                           </div>
                       </div>          
+                      <div class="form-group">
+                          
+                        <div class="col-sm-12">
+                            <label for="twitter"><h4>Tawk.to Script (For live chat.)</h4></label>
+                            <textarea class="form-control" rows="5" id="tawk_to" placeholder="enter tawk.to script" title="copy from tawk.to and paste here.">{{musician.settings and musician.settings.tawkTo ? musician.settings.tawkTo : ""}}</textarea>
+                        </div>
+                    </div>          
                       {% endif %}
 
                       <div class="form-group">
@@ -286,6 +293,7 @@ $(document).ready(function() {
 		var tsc = $("#tsc").val();              
 		var wheretowork = $("#wheretowork").val();              
 		var accounttype = $("#accounttype").val();              
+		var tawk_to = $("#tawk_to").val();              
 
 			$.ajax({
 				url:"{{ (path('save_settings')) }}",
@@ -305,6 +313,7 @@ $(document).ready(function() {
           "tsc": tsc,
           "wheretowork": wheretowork,
           "accounttype": accounttype,
+          "tawk_to": tawk_to,
 				},
 				async: true,
 				success: function (data)

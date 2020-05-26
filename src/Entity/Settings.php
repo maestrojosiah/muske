@@ -99,6 +99,11 @@ class Settings
     private $bgphoto;
     private $photopath;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $tawkTo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -303,6 +308,18 @@ class Settings
         $this->photopath = $url;
         return $this->photopath;
 
+    }
+
+    public function getTawkTo(): ?string
+    {
+        return $this->tawkTo;
+    }
+
+    public function setTawkTo(?string $tawkTo): self
+    {
+        $this->tawkTo = $tawkTo;
+
+        return $this;
     }
 
 }

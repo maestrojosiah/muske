@@ -18,15 +18,14 @@
         <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>        
         {% block javascripts %}{% endblock %}
 
-        <script type="text/javascript">
-        var LHCBROWSEOFFEROptions = {domain:'muske.co.ke'};
+        <script>var LHC_API = LHC_API||{};
+        LHC_API.args = {mode:'widget',lhc_base_url:'//livechat.muske.co.ke/index.php/',wheight:450,wwidth:350,pheight:520,pwidth:500,domain:'muske.co.ke',leaveamessage:true,check_messages:false};
         (function() {
-        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-        var referrer = (document.referrer) ? encodeURIComponent(document.referrer.substr(document.referrer.indexOf('://')+1)) : '';
-        var location  = (document.location) ? encodeURIComponent(window.location.href.substring(window.location.protocol.length)) : '';
-        po.src = '//livechat.muske.co.ke/index.php/browseoffer/getstatus/(size)/450/(height)/450/(units)/pixels/(showoverlay)/true?r='+referrer+'&l='+location;
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.setAttribute('crossorigin','anonymous'); po.async = true;
+        var date = new Date();po.src = '//livechat.muske.co.ke/design/defaulttheme/js/widgetv2/index.js?'+(""+date.getFullYear() + date.getMonth() + date.getDate());
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
         })();
         </script>
+
     </body>
 </html>

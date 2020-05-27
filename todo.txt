@@ -27,7 +27,8 @@ mpesa integration
 difficult to find about me from
 add free email account to benefits
 blog link on resume page (pro)
-password protect blog post
+password protect blog post (one time password)
+option to shade cover-photo or not
 
 phplive
 maestrojosiah - overall admin Eirwmr-33

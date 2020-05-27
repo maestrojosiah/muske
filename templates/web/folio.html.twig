@@ -73,7 +73,7 @@
             display:block;
             margin:0 auto;
             padding:0;
-            max-width:800px
+            max-width:800px;
         }
         .skills li{
             display:inline-block;
@@ -127,6 +127,11 @@
     .main-timeline8 .timeline:nth-child(4n) .timeline-icon{border-color:#f98d9c}
     .main-timeline8 .timeline:nth-child(4n) .year{background:#755A4F}
     .main-timeline8 .timeline:nth-child(4n) .year:before{border-top-color:#BD9281}
+    @media screen and (max-width: 991px) {
+      #prof_image {border-radius: 50%;max-width: 200px;max-height: 200px;}
+      #about .div-img-bg{border:0px;}
+      #about{padding-top: 50px;}
+    }
     @media only screen and (max-width:767px){.main-timeline8{overflow:visible}
     .main-timeline8:before{top:0;left:0}
     .main-timeline8 .timeline:nth-child(2),.main-timeline8 .timeline:nth-child(even),.main-timeline8 .timeline:nth-child(odd){margin:0}
@@ -142,8 +147,11 @@
     .main-timeline8 .year{font-size:18px;}
     #about .div-img-bg{border:0px;}
     #about{padding-top:40px;}
+    #prof_image {border-radius: 50%;max-width: 200px;max-height: 200px;}
+
     }
 
+/* 776 - 999 */
 
 </style>
 {% set bgPhoto = asset('img/class_brown.jpg') %}
@@ -308,7 +316,7 @@
       <div class="container">
 
         <div class="logo">
-        {% set logourl = asset('img/logo_only_white_sq.png') %}
+        {% set logourl = asset('img/logo_only_transparent_black.png') %}
           <a href="{{path('homepage')}}"><img src="{{logourl}}" alt="logo"></a>
         </div>
 
@@ -329,10 +337,10 @@
   </nav><!-- End Navbar -->
 
   <!-- ======= Hero Section ======= -->
-  <div id="hero" class="home">
+  <div id="hero" style="position:relative;" class="home">
 
     <div class="container">
-      <div class="hero-content">
+      <div class="hero-content" style="position: relative; transform: none; left: auto; top: auto; z-index:10;">
         <h1>{{musician.fullname}}</h1>
         <h3><span class="typed"></span></h3>
         <p class="typed-items" data-typed-person="Musician">{% for job_role in musician.jobstobeoffered %}{{job_role.jobtitle}} {% if loop.index < musician.jobstobeoffered|length %},{% endif %}{% endfor %}</p>
@@ -348,6 +356,7 @@
         {% include "reusable/call_me_code.html.twig" %}
       </div>
     </div>
+    <div style="position:absolute; top:0; bottom:0; left:0; right:0; background:rgba(77, 60, 28, 0.7); width:100%; height:100%; z-index:1;" id="lead-overlay"></div>
   </div><!-- End Hero -->
 
   <main id="main">
@@ -359,9 +368,9 @@
 
           <div class="col-lg-4 ">
             <div class="div-img-bg">
-              <div class="about-img">
+              <div class="about-img" style="text-align:center;">
                 {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
-                <img src="{{thumbnailurl}}" class="img-responsive" alt="{{musician.fullname}}">
+                <img id="prof_image" src="{{thumbnailurl}}" class="img-responsive" alt="{{musician.fullname}}">
               </div>
             </div>
           </div>
@@ -834,21 +843,7 @@
     
 {% else %}
 
-        <!-- BEGIN PHP Live! HTML Code [V3] -->
-        <span style="color: #0000FF; text-decoration: underline; line-height: 0px !important; cursor: pointer; position: fixed; top: 50%; right: 0px; z-index: 20000000;" id="phplive_btn_1590492179"></span>
-        <script data-cfasync="false" type="text/javascript">
-
-        (function() {
-        var phplive_e_1590492179 = document.createElement("script") ;
-        phplive_e_1590492179.type = "text/javascript" ;
-        phplive_e_1590492179.async = true ;
-        phplive_e_1590492179.src = "https://phplive.muske.co.ke/js/phplive_v2.js.php?v=0%7C1590492179%7C0%7C&" ;
-        document.getElementById("phplive_btn_1590492179").appendChild( phplive_e_1590492179 ) ;
-        if ( [].filter ) { document.getElementById("phplive_btn_1590492179").addEventListener( "click", function(){ phplive_launch_chat_0() } ) ; } else { document.getElementById("phplive_btn_1590492179").attachEvent( "onclick", function(){ phplive_launch_chat_0() } ) ; }
-        })() ;
-
-        </script>
-        <!-- END PHP Live! HTML Code [V3] -->                
+  {% include "reusable/phplive.html.twig" %}       
 
 {% endif %}
 

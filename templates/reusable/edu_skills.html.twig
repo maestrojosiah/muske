@@ -1,8 +1,4 @@
  <ul class="{{class}}">
-{% if edu.document != null and (musician.isproandactive == 'true' or musician.ismuskeandactive == 'true') and (app.user and app.user != null and app.user == musician) %}              
-    <li><a id="download_doc_{{edu.id}}" href="{{ path('download_pdf', {'file': edu.document.doc} ) }}" download> Download supporting document </a></li>
-    <li><a id="change_doc_{{edu.id}}">Change Document</a></li>
-{% endif %}            
 {% if edu.specialties is empty %}
     {% if app.user and app.user != null and app.user == musician %}
     <br />
@@ -21,4 +17,8 @@
     <li><a href="{{ path('specialty_new', {'education_id': edu.id}) }}">Add skills</a></li>
     {% endif %}                
 {% endif %}
+{% if edu.document != null and (musician.isproandactive == 'true' or musician.ismuskeandactive == 'true') and (app.user and app.user != null and app.user == musician) %}              
+    <li><a id="download_doc_{{edu.id}}" href="{{ path('download_pdf', {'file': edu.document.doc} ) }}" download> Download supporting document </a></li>
+    <li><a id="change_doc_{{edu.id}}">Change Document</a></li>
+{% endif %}            
 </ul>

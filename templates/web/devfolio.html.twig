@@ -23,7 +23,24 @@
       background:#e4e4ea;
       list-style:none;
       cursor:default;
-      font-size:1.2em
+      font-size:1.1em
+  }
+
+  .skillsbg ul{
+      display:block;
+      margin:0 auto;
+      padding:0;
+      max-width:800px
+  }
+  .skillsbg li{
+      display:inline-block;
+      margin:7px;
+      padding:5px 10px;
+      color:#374054;
+      background:#e4e4ea;
+      list-style:none;
+      cursor:default;
+      font-size:.7em
   }
 
 
@@ -149,7 +166,8 @@
   <!-- ======= Header/ Navbar ======= -->
   <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll" href="#page-top">MuSKe</a>
+      {% set logourl = asset('img/logo_only_transparent_black.png') %}
+      <a class="navbar-brand js-scroll" href="#page-top"><img style="width:100px; height:50px;" src="{{logourl}}" alt="logo"></a>
       <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span></span>
         <span></span>
@@ -290,7 +308,7 @@
                   {% include "reusable/edu_form.html.twig" %}
                   <h5>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</h5>
                   <p>{{edu.degree}} in {{edu.coursename}} <hr /> <strong> {{edu.institution}} </strong>, {{edu.location}}</p>
-                  {% include "reusable/edu_skills.html.twig" with {'class': 'skills'} %}
+                  {% include "reusable/edu_skills.html.twig" with {'class': 'skillsbg'} %}
                 </div>
               </div>
               {% if loop.index < educ|length %}
@@ -312,7 +330,7 @@
                   {% include "reusable/edu_form.html.twig" %}
                   <h5>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</h5>
                   <p>{{edu.degree}} in {{edu.coursename}} <hr /> <strong> {{edu.institution}} </strong>, {{edu.location}}</p>
-                  {% include "reusable/edu_skills.html.twig" with {'class': 'skills'} %}                  
+                  {% include "reusable/edu_skills.html.twig" with {'class': 'skillsbg'} %}                  
                 </div>
                 <div class="col-2 text-center full d-inline-flex justify-content-center align-items-center">
                   <div class="circle font-weight-bold">{{loop.index}}</div>
@@ -429,7 +447,6 @@
               {% for project in musician.projects %}
               <div class="testimonial-box">
                 <div class="author-test">
-                  <img src="assets/img/testimonial-2.jpg" alt="{{project.projecttitle}}" class="rounded-circle b-shadow-a">
                   <span class="author">{{project.projecttitle}}</span>
                 </div>
                 <div class="content-test">
@@ -766,21 +783,7 @@
     
 {% else %}
 
-        <!-- BEGIN PHP Live! HTML Code [V3] -->
-        <span style="color: #0000FF; text-decoration: underline; line-height: 0px !important; cursor: pointer; position: fixed; top: 50%; right: 0px; z-index: 20000000;" id="phplive_btn_1590492179"></span>
-        <script data-cfasync="false" type="text/javascript">
-
-        (function() {
-        var phplive_e_1590492179 = document.createElement("script") ;
-        phplive_e_1590492179.type = "text/javascript" ;
-        phplive_e_1590492179.async = true ;
-        phplive_e_1590492179.src = "https://phplive.muske.co.ke/js/phplive_v2.js.php?v=0%7C1590492179%7C0%7C&" ;
-        document.getElementById("phplive_btn_1590492179").appendChild( phplive_e_1590492179 ) ;
-        if ( [].filter ) { document.getElementById("phplive_btn_1590492179").addEventListener( "click", function(){ phplive_launch_chat_0() } ) ; } else { document.getElementById("phplive_btn_1590492179").attachEvent( "onclick", function(){ phplive_launch_chat_0() } ) ; }
-        })() ;
-
-        </script>
-        <!-- END PHP Live! HTML Code [V3] -->                
+  {% include "reusable/phplive.html.twig" %}       
 
 {% endif %}
 

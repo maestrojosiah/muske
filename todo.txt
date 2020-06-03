@@ -27,9 +27,17 @@ mpesa integration
 difficult to find about me from
 add free email account to benefits
 blog link on resume page (pro)
-password protect blog post (one time password)
+password protect blog post (save password associated to IP address)
 option to shade cover-photo or not
+select a template first before starting to create
+https://resume.io/app/auth/sign-up/templates
 
 phplive
 maestrojosiah - overall admin Eirwmr-33
 operator - maestro - jshbr7@gmail.com - Eirwmr-33 - Customer support
+seen
+opened
+interested
+sent resumes
+
+

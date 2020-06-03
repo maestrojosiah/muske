@@ -56,6 +56,26 @@ class Advert
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $code;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $submitted;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $institution;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $location;
+
 
     public function getId(): ?int
     {
@@ -154,6 +174,54 @@ class Advert
     public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    public function getSubmitted(): ?\DateTimeInterface
+    {
+        return $this->submitted;
+    }
+
+    public function setSubmitted(\DateTimeInterface $submitted): self
+    {
+        $this->submitted = $submitted;
+
+        return $this;
+    }
+
+    public function getInstitution(): ?string
+    {
+        return $this->institution;
+    }
+
+    public function setInstitution(string $institution): self
+    {
+        $this->institution = $institution;
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }

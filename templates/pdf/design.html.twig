@@ -1,113 +1,260 @@
-{% extends 'pdfBase.html.twig' %}
 
-{% block title %}Resume{% endblock %}
-{% block stylesheets %}
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>muske</title>
+    <style>::after,::before{-webkit-box-sizing:border-box;box-sizing:border-box}h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem}p{margin-top:0;margin-bottom:1rem}ul{margin-top:0;margin-bottom:1rem}strong{font-weight:bolder}a{color:#3399f3;text-decoration:none;background-color:transparent}a:hover{color:#0c73cd;text-decoration:underline}img{vertical-align:middle;border-style:none}h3,h4,h5,h6{margin-bottom:.5rem;font-weight:500;line-height:1.2;color:#2d2d2d}h3{font-size:1.75rem}h4{font-size:1.5rem}h5{font-size:1.25rem}h6{font-size:1rem}.img-fluid{max-width:100%;height:auto}.container{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}@media (min-width:576px){.container{max-width:540px}}@media (min-width:768px){.container{max-width:720px}}@media (min-width:992px){.container{max-width:960px}}@media (min-width:1200px){.container{max-width:1140px}}@media (min-width:576px){.container{max-width:540px}}@media (min-width:768px){.container{max-width:720px}}@media (min-width:992px){.container{max-width:960px}}@media (min-width:1200px){.container{max-width:1140px}}.row{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-15px;margin-left:-15px}.col,.col-md-2,.col-md-3,.col-md-4,.col-md-8,.col-md-9,.col-sm-12{position:relative;width:100%;padding-right:15px;padding-left:15px}.col{-ms-flex-preferred-size:0;flex-basis:0;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;min-width:0;max-width:100%}
+    @media (min-width:576px){.col-sm-12{-webkit-box-flex:0;-ms-flex:0 0 100%;flex:0 0 100%;max-width:100%}}@media (min-width:768px){.col-md-2{-webkit-box-flex:0;-ms-flex:0 0 16.6666666667%;flex:0 0 16.6666666667%;max-width:16.6666666667%}.col-md-3{-webkit-box-flex:0;-ms-flex:0 0 25%;flex:0 0 25%;max-width:25%}.col-md-4{-webkit-box-flex:0;-ms-flex:0 0 33.3333333333%;flex:0 0 33.3333333333%;max-width:33.3333333333%}.col-md-8{-webkit-box-flex:0;-ms-flex:0 0 66.6666666667%;flex:0 0 66.6666666667%;max-width:66.6666666667%}.col-md-9{-webkit-box-flex:0;-ms-flex:0 0 75%;flex:0 0 75%;max-width:75%}}.card{position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;min-width:0;word-wrap:break-word;background-color:#fff;background-clip:border-box;border:1px solid rgba(0,0,0,.125);border-radius:.25rem}.card>.list-group{border-top:inherit;border-bottom:inherit}.card>.list-group:last-child{border-bottom-width:0;border-bottom-right-radius:calc(.25rem - 1px);border-bottom-left-radius:calc(.25rem - 1px)}.card-body{-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;min-height:1px;padding:1.25rem}.card-text:last-child{margin-bottom:0}.card-header{padding:.75rem 1.25rem;margin-bottom:0;background-color:rgba(0,0,0,.03);border-bottom:1px solid rgba(0,0,0,.125)}.card-header:first-child{border-radius:calc(.25rem - 1px) calc(.25rem - 1px) 0 0}.card-header+.list-group .list-group-item:first-child{border-top:0}.list-group{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;padding-left:0;margin-bottom:0;border-radius:.25rem}.list-group-item{position:relative;display:block;padding:.75rem 1.25rem;background-color:#fff;border:1px solid rgba(0,0,0,.125)}.list-group-item:first-child{border-top-left-radius:inherit;border-top-right-radius:inherit}.list-group-item:last-child{border-bottom-right-radius:inherit;border-bottom-left-radius:inherit}.list-group-item:disabled{color:#777;pointer-events:none;background-color:#fff}.list-group-item+.list-group-item{border-top-width:0}.list-group-flush{border-radius:0}.list-group-flush>.list-group-item{border-width:0 0 1px}.list-group-flush>.list-group-item:last-child{border-bottom-width:0}.mb-0{margin-bottom:0!important}.text-left{text-align:left!important}.text-capitalize{text-transform:capitalize!important}
+    @media print{::after,::before{text-shadow:none!important;-webkit-box-shadow:none!important;box-shadow:none!important}a:not(.btn){text-decoration:underline}img{page-break-inside:avoid}h3,p{orphans:3;widows:3}h3{page-break-after:avoid}.container{min-width:992px!important}}.card h4,.card h5,.card h6{color:inherit}.fa{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:inline-block;font-style:normal;font-variant:normal;text-rendering:auto;line-height:1}.fa-envelope:before{content:"\f0e0"}.fa-globe:before{content:"\f0ac"}.fa-phone:before{content:"\f095"}.fa{font-family:"Font Awesome 5 Free"}.fa{font-weight:900}.fa{display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.fa-close:before{content:"\f00d"}.fa-phone:before{content:"\f095"}.fa-globe:before{content:"\f0ac"}.fa-envelope:before{content:"\f0e0"}#close-icon{font-size:20px;z-index:10000;width:20px;height:20px;position:absolute;top:50px;right:50px;display:none;color:#000!important;cursor:pointer}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:both;animation-fill-mode:both}.swing{-webkit-transform-origin:top center;transform-origin:top center;-webkit-animation-name:swing;animation-name:swing}.container.resume{margin:100px auto auto auto;width:21cm}@media (max-width:767px){.container.resume{margin:50px auto auto auto;width:auto}}.profile-pic{border-radius:50%;margin-top:10px}.container.resume{font-size:14px;font-family:inherit}.resume h5{color:#f57d7d;font-size:18px;font-weight:bolder}.resume h4{font-size:17px;font-weight:700;font-family:initial}.resume h6{font-size:12px;font-weight:700}.spaced-links{margin-right:10px;font-size:12px}.top-row{margin-bottom:50px}.card{margin-top:20px;border:none}.resume .list-group-item{border-bottom:1px solid #f57d7d}#resume-page{position:absolute;top:0;right:0;bottom:0;left:0;height:130%;background-color:#fff;display:none}
+    #close-icon{font-size:20px;z-index:10000;width:20px;height:20px;position:absolute;top:50px;right:50px;display:none;color:#000!important;cursor:pointer}#resume{width:21cm;margin:100px auto auto auto}
+    @media (max-width:767px){ #resume{width:inherit;margin:50px auto auto auto}}
+    @media (max-width:575px){.row.item{border-bottom:1px solid #e4dbdb;margin-bottom:20px}}
+    @media (max-width:767px){.row.header.top-row{text-align:center}}@-webkit-keyframes swing{20%{-webkit-transform:rotate(15deg);transform:rotate(15deg)}40%{-webkit-transform:rotate(-10deg);transform:rotate(-10deg)}60%{-webkit-transform:rotate(5deg);
+    transform:rotate(5deg)}80%{-webkit-transform:rotate(-5deg);transform:rotate(-5deg)}to{-webkit-transform:rotate(0);transform:rotate(0)}}@keyframes swing{20%{-webkit-transform:rotate(15deg);transform:rotate(15deg)}40%{-webkit-transform:rotate(-10deg);transform:rotate(-10deg)}60%{-webkit-transform:rotate(5deg);transform:rotate(5deg)}80%{-webkit-transform:rotate(-5deg);transform:rotate(-5deg)}to{-webkit-transform:rotate(0);transform:rotate(0)}}
+    @font-face{font-family:"Font Awesome 5 Free";font-style:normal;font-weight:400;font-display:auto;src:url(http://127.0.0.1:8000/fonts/fa-regular-400.eot);src:url(http://127.0.0.1:8000/fonts/fa-regular-400.eot#iefix) format("embedded-opentype"),url(http://127.0.0.1:8000/fonts/fa-regular-400.woff2) format("woff2"),url(http://127.0.0.1:8000/fonts/fa-regular-400.woff)
+     format("woff"),url(http://127.0.0.1:8000/fonts/fa-regular-400.ttf) format("truetype"),url(http://127.0.0.1:8000/fonts/fa-regular-400.svg#fontawesome) format("svg")}@font-face{font-family:"Font Awesome 5 Free";font-style:normal;font-weight:900;font-display:auto;src:url(http://127.0.0.1:8000/fonts/fa-solid-900.eot);src:url(http://127.0.0.1:8000/fonts/fa-solid-900.eot#iefix) format("embedded-opentype"),url(http://127.0.0.1:8000/fonts/fa-solid-900.woff2) format("woff2"),url(http://127.0.0.1:8000/fonts/fa-solid-900.woff) format("woff"),url(http://127.0.0.1:8000/fonts/fa-solid-900.ttf) format("truetype"),url(http://127.0.0.1:8000/fonts/fa-solid-900.svg#fontawesome) format("svg")}@font-face{font-family:FontAwesome;src:url(http://127.0.0.1:8000/fonts/fontawesome-webfont.eot?v=4.7.0);src:url(http://127.0.0.1:8000/fonts/fontawesome-webfont.eot#iefix&v=4.7.0) format('embedded-opentype'),url(http://127.0.0.1:8000/fonts/fontawesome-webfont.woff2?v=4.7.0) format('woff2'),url(http://127.0.0.1:8000/fonts/fontawesome-webfont.woff?v=4.7.0) format('woff'),url(http://127.0.0.1:8000/fonts/fontawesome-webfont.ttf?v=4.7.0) format('truetype'),url(http://127.0.0.1:8000/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular) format('svg');font-weight:400;font-style:normal}</style>
+</head>
 
-     <style type="text/css">
-        * { margin: 0; padding: 0; }
-        body { font: 16px Helvetica, Sans-Serif; line-height: 24px; background: url(images/noise.jpg); }
-        .clear { clear: both; }
-        #page-wrap { width: 800px; margin: 40px auto 60px; }
-        #pic { float: right; margin: 0 0 0 0; width:30%; }
-        h1 { margin: 0 0 16px 0; padding: 0 0 16px 0; font-size: 42px; font-weight: bold; letter-spacing: -2px; border-bottom: 1px solid #999; }
-        h2 { font-size: 20px; margin: 0 0 6px 0; position: relative; }
-        span { font-style: italic; font-family: Georgia, Serif; font-size: 16px; color: #999; font-weight: normal; }
-        h2 span { position: absolute; bottom: 0; right: 0; font-style: italic; font-family: Georgia, Serif; font-size: 16px; color: #999; font-weight: normal; }
-        p { margin: 0 0 16px 0; }
-        a { color: #999; text-decoration: none; border-bottom: 1px dotted #999; }
-        a:hover { border-bottom-style: solid; color: black; }
-        ul { margin: 0 0 32px 17px; }
-        #objective { width: 500px; float: left; }
-        #objective p { font-family: Georgia, Serif; font-style: italic; color: #666; }
-        dt { font-style: italic; font-weight: bold; font-size: 18px; text-align: right; padding: 0 26px 0 0; width: 150px; float: left; height: 100px; border-right: 1px solid #999;  }
-        dd { width: 600px; float: right; }
-        dd.clear { float: none; margin: 0; height: 15px; }
-     </style>
-     
-{% endblock %}
-{% block body %}
-
-    <div id="page-wrap">
-    
-        <img src="{{musician.thumbnailurl}}" alt="{{musician.fullname}}" id="pic" />
-    
-        <div id="contact-info" class="vcard">
-        
-            <!-- Microformats! -->
-        
-            <h1 class="fn" style="padding-top:5px;">{{musician.fullname}}</h1>
-        
-            <p>
-                Cell: <span class="tel">{{musician.phone}}</span><br />
-                Email: <a class="email" href="mailto:{{musician.email}}">{{musician.email}}</a>
-            </p>
+<body>
+    <div id="full-page-container">
+        <div id="cover" class="bordered" style="background-image: url(&quot;/drumset-half.jpg&quot;);">
+            <div class="row img-row">
+                <div class="col-sm-4 text-center align-self-center" id="for-pic"><img id="prof-pic" src="/default-avatar.png"></div>
+                <div class="col-sm-8 col-md-6 text-light align-self-center" id="heading-col">
+                    <div>
+                        <h1 class="text-white">John Smith</h1>
+                        <h4>Musician<a class="btn btn-info pull-right" role="button" href="profile.html">Your Profile Page</a></h4>
+                    </div>
+                </div>
+            </div>
         </div>
-                
-        <div id="objective">
-            <p>
-                {{musician.about}}
-            </p>
+        <div class="container bordered" id="full-page" style="background-image: url(&quot;/class-min.jpg&quot;);background-position: center;background-size: cover;background-repeat: no-repeat;">
+            <div class="row half-height">
+                <div class="col-sm-6 col-md-6 align-self-center piece text-center" data-bs-hover-animate="bounce" id="for-resume" style="background-image: url(&quot;/asfalt-light.png&quot;);">
+                    <div class="row full-height">
+                        <div class="col align-self-center"><span class="circle-border"><i class="fa fa-graduation-cap"></i></span>
+                            <p class="text-white icon-text">RESUME</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 piece align-self-center text-center" data-bs-hover-animate="bounce" style="background-image: url(&quot;/45-degree-fabric-light.png&quot;);">
+                    <div class="row full-height">
+                        <div class="col align-self-center"><span class="circle-border"><i class="fa fa-photo"></i></span>
+                            <p class="text-white icon-text">PORTFOLIO</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 piece align-self-center text-center" data-bs-hover-animate="bounce">
+                    <div class="row full-height">
+                        <div class="col align-self-center"><span class="circle-border"><i class="fa fa-themeisle"></i></span>
+                            <p class="text-white icon-text">BLOG</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 piece align-self-center text-center" data-bs-hover-animate="bounce">
+                    <div class="row full-height">
+                        <div class="col align-self-center"><span class="circle-border"><i class="fa fa-location-arrow"></i></span>
+                            <p class="text-white icon-text">CONTACT</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="clear"></div>
-        
-        <dl>
-            <dd class="clear"></dd>
-            
-            <dt>Education</dt>
-            {% for edu in educ %}
-            <dd>
-                <h2>{{edu.institution}} - {{edu.location}}</h2>
-                <p><strong>{{edu.degree}}:</strong> {{edu.coursename}}<br />
-                   {{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</p>
-            </dd>
-            {% endfor %}
-            
-            <dd class="clear"></dd>
-             {% if musician.projects is not empty %}
-            <dt>Projects</dt>
-            <dd>
-            {% for project in musician.projects %}
-                <h2>{{project.projecttitle}}</h2>
-                <p>{{project.projectdescription}}</p>
-            {% endfor %}
-            </dd>
-            {% endif %}
-            
-            <dd class="clear"></dd>
-            
-            <dt>Experience</dt>
-            <dd>
-            {% for job in jobs %}
-                <h2>{{job.jobtitle}} </h2> <span>{{job.institution}}{{" / " ~ job.location}} - {{job.startingfrom|date("F Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y") }}</span>
-                <ul>
-                {% for role in job.roles %}
-                    <li>{{role.role}}</li>
-                {% endfor %}
-                </ul>
-            {% endfor %}
-            </dd>
-
-            <dd class="clear"></dd>
-            
-            <dt>Skills</dt>
-            <dd>{% include "reusable/_simpleskills_.html.twig" %}</dd>
-            
-            <dd class="clear"></dd>
-            
-            <dt>Specialty</dt>
-            <dd>{% include "reusable/_simplespecialty_.html.twig" %}</dd>
-            
-            <dd class="clear"></dd>
-
-            <dt>References</dt>
-            <dd>Available on request</dd>
-            
-            <dd class="clear"></dd>
-        </dl>
-        
-        <div class="clear"></div>
-    
     </div>
+    <div class="swing animated" id="resume-page" style="display: block;">
+        <div class="container resume" id="resume">
+            <div class="row">
+                <div class="col-sm-12 col-md-9">
+                    <div class="row header top-row">
+                        <div class="col-md-2"><img class="img-fluid profile-pic" src="/default-avatar.png"></div>
+                        <div class="col">
+                            <h3 style="font-family: Alice, serif;">John Hennings</h3>
+                            <h5>Musician</h5><a class="spaced-links" href="#">&nbsp;<i class="fa fa-phone"></i>&nbsp;0704545454</a><a class="spaced-links" href="#">&nbsp;<i class="fa fa-envelope"></i>&nbsp;someone@email.com</a><a class="spaced-links" href="#">&nbsp;<i class="fa fa-globe"></i>&nbsp;www.sth.com</a></div>
+                    </div>
+                    <div class="card about">
+                        <div class="card-header">
+                            <h5 class="mb-0">Profile</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                                scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,&nbsp;<br></p>
+                        </div>
+                    </div>
+                    <div class="card content">
+                        <div class="card-header">
+                            <h5 class="mb-0">Experience</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Nairobi</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>Company name Inc</h4>
+                                    <ul>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Mombasa</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>Company name Inc</h4>
+                                    <ul>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Elsewhere</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>Company name Inc</h4>
+                                    <ul>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card content">
+                        <div class="card-header">
+                            <h5 class="mb-0">Education</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Paragraph</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>The Institution name</h4>
+                                    <p>Batchelor of something in something</p>
+                                </div>
+                            </div>
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Paragraph</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>University name</h4>
+                                    <p>Batchelor of something in something</p>
+                                </div>
+                            </div>
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Paragraph</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>High school name</h4>
+                                    <p>Batchelor of something in something</p>
+                                </div>
+                            </div>
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Paragraph</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>Another institution</h4>
+                                    <p>Batchelor of something in something</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card content">
+                        <div class="card-header">
+                            <h5 class="mb-0">Projects</h5>
+                        </div>
+                        <div class="card-body">
+                            <h4>Project title</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.Donec nec justo eget
+                                felis facilisis fermentum. <br><br>Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis.<br></p>
+                        </div>
+                    </div>
+                    <div class="card content">
+                        <div class="card-header">
+                            <h5 class="mb-0">Referees</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 text-left">
+                                    <h4>Mr. Someone</h4>
+                                    <h6>This and that institution</h6>
+                                    <h6>07374834738</h6>
+                                </div>
+                                <div class="col-md-4 text-left">
+                                    <h4>Mr. Someone</h4>
+                                    <h6>This and that institution</h6>
+                                    <h6>07374834738</h6>
+                                </div>
+                                <div class="col-md-4 text-left">
+                                    <h4>Mr. Someone</h4>
+                                    <h6>This and that institution</h6>
+                                    <h6>07374834738</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <div class="card details top-row">
+                        <div class="card-header">
+                            <h5 class="mb-0">Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-capitalize card-text">John Co Ltd<br>P.o. Box 23323-00200<br>Nairobi, Kenya</p>
+                        </div>
+                    </div>
+                    <div class="card skills">
+                        <div class="card-header">
+                            <h5 class="mb-0">Skills</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span>List Group Item 1</span></li>
+                            <li class="list-group-item"><span>List Group Item 2</span></li>
+                            <li class="list-group-item"><span>List Group Item 3</span></li>
+                        </ul>
+                    </div>
+                    <div class="card skills">
+                        <div class="card-header">
+                            <h5 class="mb-0">Specialties</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span>List Group Item 1</span></li>
+                            <li class="list-group-item"><span>List Group Item 2</span></li>
+                            <li class="list-group-item"><span>List Group Item 3</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="close-icon" style="display: block;"><i class="fa fa-close"></i></div>
+    </div>
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/bs-init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="/resume.js"></script>
+    <script src="/theme.js"></script>
+    <script id="bs-live-reload" data-sseport="38451" data-lastchange="1591204486820" src="/js/livereload.js"></script>
 
-{% endblock %}
+
+</body></html>

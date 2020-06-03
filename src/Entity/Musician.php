@@ -166,6 +166,11 @@ class Musician implements UserInterface
      */
     private $posts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Track::class, mappedBy="musician")
+     */
+    private $tracks;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -178,6 +183,7 @@ class Musician implements UserInterface
         $this->documents = new ArrayCollection();
         $this->ratings = new ArrayCollection();
         $this->posts = new ArrayCollection();
+        $this->tracks = new ArrayCollection();
     }
 
     public function __toString() {
@@ -832,6 +838,37 @@ class Musician implements UserInterface
             // set the owning side to null (unless already changed)
             if ($post->getMusician() === $this) {
                 $post->setMusician(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Track[]
+     */
+    public function getTracks(): Collection
+    {
+        return $this->tracks;
+    }
+
+    public function addTrack(Track $track): self
+    {
+        if (!$this->tracks->contains($track)) {
+            $this->tracks[] = $track;
+            $track->setMusician($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrack(Track $track): self
+    {
+        if ($this->tracks->contains($track)) {
+            $this->tracks->removeElement($track);
+            // set the owning side to null (unless already changed)
+            if ($track->getMusician() === $this) {
+                $track->setMusician(null);
             }
         }
 

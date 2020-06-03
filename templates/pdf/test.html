@@ -4,6 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>muske</title>
     <style>
+        /*! CSS Used from: http://127.0.0.1:8000/bootstrap/css/bootstrap.min.css */
+        /*! @import https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&display=swap */
+        /*! CSS Used from: https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&display=swap */
+        /*! end @import */
         *,*::before,*::after{-webkit-box-sizing:border-box;box-sizing:border-box;}
         h3,h4,h5,h6{margin-top:0;margin-bottom:0.5rem;}
         p{margin-top:0;margin-bottom:1rem;}
@@ -85,24 +89,30 @@
         .container{min-width:992px!important;}
         }
         .card h4,.card h5,.card h6{color:inherit;}
+        /*! CSS Used from: http://127.0.0.1:8000/fonts/fontawesome-all.min.css */
         .fa{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:inline-block;font-style:normal;font-variant:normal;text-rendering:auto;line-height:1;}
         .fa-envelope:before{content:"\f0e0";}
         .fa-globe:before{content:"\f0ac";}
         .fa-phone:before{content:"\f095";}
         .fa{font-family:"Font Awesome 5 Free";}
         .fa{font-weight:900;}
+        /*! CSS Used from: http://127.0.0.1:8000/fonts/font-awesome.min.css */
         .fa{display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
         .fa-close:before{content:"\f00d";}
         .fa-phone:before{content:"\f095";}
         .fa-globe:before{content:"\f0ac";}
         .fa-envelope:before{content:"\f0e0";}
+        /*! CSS Used from: http://127.0.0.1:8000/advert.css */
         #close-icon{font-size:20px;z-index:10000;width:20px;height:20px;position:absolute;top:50px;right:50px;display:none;color:black!important;cursor:pointer;}
+        /*! CSS Used from: https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css */
         .animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:both;animation-fill-mode:both;}
         .swing{-webkit-transform-origin:top center;transform-origin:top center;-webkit-animation-name:swing;animation-name:swing;}
+        /*! CSS Used from: http://127.0.0.1:8000/styles.css */
         .container.resume{margin:100px auto auto auto;width:21cm;}
         @media (max-width: 767px){
         .container.resume{margin:50px auto auto auto;width:auto;}
         }
+        /*! CSS Used from: http://127.0.0.1:8000/themes.css */
         .profile-pic{border-radius:50%;margin-top:10px;}
         .container.resume{font-size:14px;font-family:inherit;}
         .resume h5{color:#f57d7d;font-size:18px;font-weight:bolder;}
@@ -112,6 +122,7 @@
         .top-row{margin-bottom:50px;}
         .card{margin-top:20px;border:none;}
         .resume .list-group-item{border-bottom:1px solid #f57d7d;}
+        /*! CSS Used from: http://127.0.0.1:8000/web_theme.css */
         #resume-page{position:absolute;top:0;right:0;bottom:0;left:0;height:130%;background-color:#fff;display:none;}
         #close-icon{font-size:20px;z-index:10000;width:20px;height:20px;position:absolute;top:50px;right:50px;display:none;color:black!important;cursor:pointer;}
         #resume{width:21cm;margin:100px auto auto auto;}
@@ -124,12 +135,19 @@
         @media (max-width: 767px){
         .row.header.top-row{text-align:center;}
         }
+        /*! CSS Used keyframes */
+        @-webkit-keyframes swing{20%{-webkit-transform:rotate(15deg);transform:rotate(15deg);}40%{-webkit-transform:rotate(-10deg);transform:rotate(-10deg);}60%{-webkit-transform:rotate(5deg);transform:rotate(5deg);}80%{-webkit-transform:rotate(-5deg);transform:rotate(-5deg);}to{-webkit-transform:rotate(0deg);transform:rotate(0deg);}}
+        @keyframes swing{20%{-webkit-transform:rotate(15deg);transform:rotate(15deg);}40%{-webkit-transform:rotate(-10deg);transform:rotate(-10deg);}60%{-webkit-transform:rotate(5deg);transform:rotate(5deg);}80%{-webkit-transform:rotate(-5deg);transform:rotate(-5deg);}to{-webkit-transform:rotate(0deg);transform:rotate(0deg);}}
+        /*! CSS Used fontfaces */
+        @font-face{font-family:"Font Awesome 5 Free";font-style:normal;font-weight:400;font-display:auto;src:url(http://127.0.0.1:8000/fonts/fa-regular-400.eot);src:url(http://127.0.0.1:8000/fonts/fa-regular-400.eot#iefix) format("embedded-opentype"),url(http://127.0.0.1:8000/fonts/fa-regular-400.woff2) format("woff2"),url(http://127.0.0.1:8000/fonts/fa-regular-400.woff) format("woff"),url(http://127.0.0.1:8000/fonts/fa-regular-400.ttf) format("truetype"),url(http://127.0.0.1:8000/fonts/fa-regular-400.svg#fontawesome) format("svg");}
+        @font-face{font-family:"Font Awesome 5 Free";font-style:normal;font-weight:900;font-display:auto;src:url(http://127.0.0.1:8000/fonts/fa-solid-900.eot);src:url(http://127.0.0.1:8000/fonts/fa-solid-900.eot#iefix) format("embedded-opentype"),url(http://127.0.0.1:8000/fonts/fa-solid-900.woff2) format("woff2"),url(http://127.0.0.1:8000/fonts/fa-solid-900.woff) format("woff"),url(http://127.0.0.1:8000/fonts/fa-solid-900.ttf) format("truetype"),url(http://127.0.0.1:8000/fonts/fa-solid-900.svg#fontawesome) format("svg");}
+        @font-face{font-family:'FontAwesome';src:url('http://127.0.0.1:8000/fonts/fontawesome-webfont.eot?v=4.7.0');src:url('http://127.0.0.1:8000/fonts/fontawesome-webfont.eot#iefix&v=4.7.0') format('embedded-opentype'),url('http://127.0.0.1:8000/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),url('http://127.0.0.1:8000/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),url('http://127.0.0.1:8000/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),url('http://127.0.0.1:8000/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');font-weight:normal;font-style:normal;}
 
     </style>
     </head>
 
 <body>
-    <div class="animated" id="resume-page" style="display: block;">
+    <div class="swing animated" id="resume-page" style="display: block;">
         <div class="container resume" id="resume">
             <div class="row">
                 <div class="col-sm-12 col-md-9">

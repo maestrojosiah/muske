@@ -5,7 +5,7 @@
 
 <style>
 /*! CSS Used from: http://127.0.0.1:8000/bootstrap/css/bootstrap.min.css */
-/*! @import https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&display=swap */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&display=swap')
 /*! CSS Used from: https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&display=swap */
 /*! end @import */
 *,*::before,*::after{-webkit-box-sizing:border-box;box-sizing:border-box;}
@@ -109,7 +109,7 @@ h2,h3{page-break-after:avoid;}
     <div class="row" id="header">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-1" id="for-prof-image"><img id="profile-image" src="/black portrait.jpg"></div>
+                <div class="col-1" id="for-prof-image"><img id="profile-image" src="{{musician.thumbnailurl}}"></div>
                 <div class="col-11">
                     <div id="name-and-title">
                         <h2>Joash Crotchet</h2>

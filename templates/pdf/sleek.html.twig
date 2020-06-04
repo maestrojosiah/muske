@@ -133,124 +133,193 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container" id="theme-two">
-        <div class="row" id="header">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-1" id="for-prof-image"><img id="profile-image" src="/black portrait.jpg"></div>
-                    <div class="col-11">
-                        <div id="name-and-title">
-                            <h2>Joash Crotchet</h2>
-                            <h3>Musician</h3>
+    <div class="animated" id="resume-page" style="display: block;">
+        <div class="container resume" id="resume">
+            <div class="row">
+                <div class="col-sm-12 col-md-9">
+                    <div class="row header top-row">
+                        <div class="col-md-2"><img class="img-fluid profile-pic" src="{{musician.thumbnailurl}}"></div>
+                        <div class="col">
+                            <h3 style="font-family: Alice, serif;">John Hennings</h3>
+                            <h5>Musician</h5><a class="spaced-links" href="#">&nbsp;<i class="fa fa-phone"></i>&nbsp;0704545454</a><a class="spaced-links" href="#">&nbsp;<i class="fa fa-envelope"></i>&nbsp;someone@email.com</a><a class="spaced-links" href="#">&nbsp;<i class="fa fa-globe"></i>&nbsp;www.sth.com</a></div>
+                    </div>
+                    <div class="card about">
+                        <div class="card-header">
+                            <h5 class="mb-0">Profile</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                                scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,&nbsp;<br></p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title"><i class="fa fa-user-circle-o"></i>&nbsp;Profile</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.&nbsp;Nullam id dolor id nibh ultricies vehicula ut id elit.
-                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.&nbsp;Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas
-                            eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title"><i class="fa fa-briefcase"></i>&nbsp;Employment History</h4>
-                        <div>
-                            <h5 class="text-muted mb-2">Some company name</h5>
-                            <h6 class="text-muted mb-2">October 2016 - November 2020</h6>
-                            <ul>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas&nbsp;Cras justo odio, dapibus ac facilisis in, egestas</li>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                            </ul>
+                    <div class="card content">
+                        <div class="card-header">
+                            <h5 class="mb-0">Experience</h5>
                         </div>
-                        <div>
-                            <h5 class="text-muted mb-2">Some company name</h5>
-                            <h6 class="text-muted mb-2">October 2016 - November 2020</h6>
-                            <ul>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas&nbsp;Cras justo odio, dapibus ac facilisis in, egestas</li>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title"><i class="fa fa-graduation-cap"></i>&nbsp;Education</h4>
-                        <div>
-                            <h5 class="text-muted mb-2">Bachelor in music and dance, Kenyatta University</h5>
-                            <h6 class="text-muted mb-2">Bachelor in music and dance, Kenyatta University</h6>
-                            <ul>
-                                <li>Graduated&nbsp;Cras justo odio</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h5 class="text-muted mb-2">Diploma in bla bla, Some University</h5>
-                            <h6 class="text-muted mb-2">Bachelor in music and dance, Kenyatta University</h6>
-                            <ul></ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title"><i class="fa fa-bullhorn"></i>&nbsp;Referees</h4>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">John Smith</h5>
-                                        <h6 class="text-muted card-subtitle mb-2">Company name</h6>
-                                        <p>Contacts</p>
-                                    </div>
+                        <div class="card-body">
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Nairobi</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>Company name Inc</h4>
+                                    <ul>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br></li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">John Smith</h5>
-                                        <h6 class="text-muted card-subtitle mb-2">Company name</h6>
-                                        <p>Contacts</p>
-                                    </div>
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Mombasa</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>Company name Inc</h4>
+                                    <ul>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br></li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">John Smith</h5>
-                                        <h6 class="text-muted card-subtitle mb-2">Company name</h6>
-                                        <p>Contacts</p>
-                                    </div>
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Elsewhere</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>Company name Inc</h4>
+                                    <ul>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Aliquam tincidunt mauris eu risus.<br></li>
+                                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<br></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="text-muted card-subtitle mb-2">Details</h5>
-                        <p class="card-text">Firstname Lastname<br>P.O. Box 23432 - 00100,<br>Nairobi,<br>Kenya</p>
+                    <div class="card content">
+                        <div class="card-header">
+                            <h5 class="mb-0">Education</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Paragraph</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>The Institution name</h4>
+                                    <p>Batchelor of something in something</p>
+                                </div>
+                            </div>
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Paragraph</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>University name</h4>
+                                    <p>Batchelor of something in something</p>
+                                </div>
+                            </div>
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Paragraph</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>High school name</h4>
+                                    <p>Batchelor of something in something</p>
+                                </div>
+                            </div>
+                            <div class="row item">
+                                <div class="col-md-4 date-and-place">
+                                    <h6>Sep 2020 - Aug 2024</h6>
+                                    <p>Paragraph</p>
+                                </div>
+                                <div class="col-md-8 list-details">
+                                    <h4>Another institution</h4>
+                                    <p>Batchelor of something in something</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card content">
+                        <div class="card-header">
+                            <h5 class="mb-0">Projects</h5>
+                        </div>
+                        <div class="card-body">
+                            <h4>Project title</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.Donec nec justo eget
+                                felis facilisis fermentum. <br><br>Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis.<br></p>
+                        </div>
+                    </div>
+                    <div class="card content">
+                        <div class="card-header">
+                            <h5 class="mb-0">Referees</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 text-left">
+                                    <h4>Mr. Someone</h4>
+                                    <h6>This and that institution</h6>
+                                    <h6>07374834738</h6>
+                                </div>
+                                <div class="col-md-4 text-left">
+                                    <h4>Mr. Someone</h4>
+                                    <h6>This and that institution</h6>
+                                    <h6>07374834738</h6>
+                                </div>
+                                <div class="col-md-4 text-left">
+                                    <h4>Mr. Someone</h4>
+                                    <h6>This and that institution</h6>
+                                    <h6>07374834738</h6>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="text-muted card-subtitle mb-2">Languages</h6>
-                        <ul class="list-group">
-                            <li class="list-group-item skill-list"><span>Language 1</span></li>
+                <div class="col-sm-12 col-md-3">
+                    <div class="card details top-row">
+                        <div class="card-header">
+                            <h5 class="mb-0">Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-capitalize card-text">John Co Ltd<br>P.o. Box 23323-00200<br>Nairobi, Kenya</p>
+                        </div>
+                    </div>
+                    <div class="card skills">
+                        <div class="card-header">
+                            <h5 class="mb-0">Skills</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span>List Group Item 1</span></li>
+                            <li class="list-group-item"><span>List Group Item 2</span></li>
+                            <li class="list-group-item"><span>List Group Item 3</span></li>
+                        </ul>
+                    </div>
+                    <div class="card skills">
+                        <div class="card-header">
+                            <h5 class="mb-0">Specialties</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span>List Group Item 1</span></li>
+                            <li class="list-group-item"><span>List Group Item 2</span></li>
+                            <li class="list-group-item"><span>List Group Item 3</span></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col"></div>
         </div>
+        <div id="close-icon" style="display: block;"><i class="fa fa-close"></i></div>
     </div>
+
+
 {% endblock %}

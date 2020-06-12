@@ -1,0 +1,800 @@
+{% extends 'base_profile.html.twig' %}
+
+{% block title %}{{musician.fullname}}{% endblock %}
+{% block stylesheets %}
+    {% set bgPhoto = asset('devportfolio/images/class.jpg') %}
+    {% set photopath = asset('uploads/gallery/' ~ musician.settings.bgphoto) %}
+    <style>
+        .rating-header {
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+
+        .btnrating {
+            font-size:24px;
+        }
+        
+        
+        #lead{
+            background: url("{{musician.hassettings and musician.settings.bgphoto != null ? photopath : bgPhoto }}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .skills ul{
+            display:block;
+            margin:0 auto;
+            padding:0;
+            max-width:800px
+        }
+        .skills li{
+            display:inline-block;
+            margin:7px;
+            padding:5px 10px;
+            color:#374054;
+            background:#e4e4ea;
+            list-style:none;
+            cursor:default;
+            font-size:1.2em
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px
+        }
+
+        .alert h4 {
+            margin-top: 0;
+            color: inherit
+        }
+
+        .alert .alert-link {
+            font-weight: 700
+        }
+
+        .alert>p,
+        .alert>ul {
+            margin-bottom: 0
+        }
+
+        .alert>p+p {
+            margin-top: 5px
+        }
+
+        .alert-dismissable,
+        .alert-dismissible {
+            padding-right: 35px
+        }
+
+        .alert-dismissable .close,
+        .alert-dismissible .close {
+            position: relative;
+            top: -2px;
+            right: -21px;
+            color: inherit
+        }
+
+        .alert-success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6
+        }
+
+        .alert-success hr {
+            border-top-color: #c9e2b3
+        }
+
+        .alert-success .alert-link {
+            color: #2b542c
+        }
+
+
+        .alert-info {
+            color: #31708f;
+            background-color: #d9edf7;
+            border-color: #bce8f1
+        }
+
+        .alert-info hr {
+            border-top-color: #a6e1ec
+        }
+
+        .alert-info .alert-link {
+            color: #245269
+        }
+
+    </style>
+    {% include "reusable/call_me_styles.html.twig" %}
+
+{% endblock %}
+{% block body %}
+
+    <div id="mobile-menu-open" class="shadow-large">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+    </div>
+    <!-- End #mobile-menu-toggle -->
+    <header>
+        <div id="mobile-menu-close">
+            <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
+        </div>
+        <ul id="menu" class="shadow">
+            <li>
+                <a href="#about">About</a>
+            </li>
+            <li>
+                <a href="#experience">Experience</a>
+            </li>
+            <li>
+                <a href="#education">Education</a>
+            </li>
+            <li>
+                <a href="#projects">Projects</a>
+            </li>
+            <li>
+                <a href="#skills">Skills</a>
+            </li>
+            <li>
+                <a href="#contacts">Contact</a>
+            </li>
+        </ul>
+    </header>
+    <!-- End header -->
+
+    <div id="lead">
+        <div id="lead-content">
+            <h1>{{musician.fullname}}</h1><br />
+            {% for job_role in musician.jobstobeoffered %}
+            <h4 style="display:inline; color:white;" >{{job_role.jobtitle}} {% if loop.index < musician.jobstobeoffered|length %} | {% endif %}</h4>
+            {% endfor %}<br /><br />
+            {% if app.user == null %}
+            <a target="_blank" href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}" class="btn-rounded-white">Download Resume</a>
+            <br />
+            <br />
+            {% endif %}
+            {% if app.user and app.user != null and app.user == musician %}
+                <a class="btn-rounded-white" href="{{ path('musician_profile')}}">Profile Page</a>
+            {% endif %}
+            
+
+        </div>
+        <!-- End #lead-content -->
+
+        <div id="lead-overlay"></div>
+
+        <div id="lead-down">
+            <span>
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </span>
+        </div>
+        <!-- End #lead-down -->
+    </div>
+    <!-- End #lead -->
+
+    <div id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    {% set photourl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+                    <img src="{{ photourl }}" width="50%" height="50%" background="#777" color="#777" style="border-radius: 50%; max-width: 300px"  >
+                </div>
+                <div class="col-md-9">
+                    <p>
+                        {{musician.about}}
+                    </p>
+                    <ul class="skills">
+                        {% if musician.settings and musician.settings.tsc == 'true' %} <li> TSC Certified  </li>{% endif %}
+                        {% if musician.settings and musician.settings.online == 'true' %} <li> Online Lessons Available  </li>{% endif %}
+                        {% if musician.settings and musician.settings.placeofwork != null %} <li> {{musician.settings.placeofwork}}  </li>{% endif %}
+                        <li style="background-color:white;">{% include "reusable/call_me_code.html.twig" %}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End #about -->
+
+    <div id="experience" class="background-alt">
+        <h2 class="heading">Experience</h2>
+        <div id="experience-timeline">
+        {% for job in jobs %}
+            <div data-date="{{job.startingfrom|date("F Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y") }}">
+                <h3>{{job.jobtitle}}</h3>
+                <h4>{{job.institution}}{{" / " ~ job.location}}</h4>
+                <p>
+                {% if job.roles is empty %}
+                    {% if app.user and app.user != null and app.user == musician %}
+                        You haven't added any roles that you did in this job. Please <a href="{{ path('role_new', {'job_id': job.id}) }}">Add some roles </a>
+                    {% else %}
+                        Did all the required roles that a {{job.jobtitle}} should do. You can <a target="_blank" href="http://www.google.com/search?q={{job.jobtitle|replace({' ': '+'}) }}+Job+Description">search on google</a> what the roles are.
+                    {% endif %}
+                {% else %}
+                    <ul>
+                        {% for role in job.roles %}
+                        <li>{{role.role}}</li>
+                        {% endfor %}
+                        {% if app.user and app.user != null and app.user == musician %}<li><a href="{{ path('role_new', {'job_id': job.id}) }}">Add roles</a></li>{% endif %}
+                    </ul>
+                {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <!-- End #experience -->
+
+    <div id="education">
+        <h2 class="heading">Education</h2>
+
+        {% for edu in educ %}
+        {# {{dump(edu)}} #}
+        <div class="education-block">
+            <h3>{{edu.institution}}</h3>
+            <span class="education-date">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</span>
+            <h4>{{edu.coursename}} {{edu.degree}}</h4>
+            <span id="alert_{{edu.id}}"></span>
+            {% if app.user and app.user != null and app.user == musician and app.user.settings and (app.user.isproandactive == 'true' or app.user.ismuskeandactive == 'true') %}
+                
+                <form  id="document_form_{{edu.id}}" name="doc" method="post" action enctype="multipart/form-data" {% if edu.document != null %} style="display:none;" {% endif %}>
+                    <div class="row alert alert-info">
+                        <div class="col-md-5">
+                            <h4>Upload supporting document </h4>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="file" id="doc_edu_{{edu.id}}" name="doc_edu_{{edu.id}}" required="required">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-success" id="upload_doc_{{edu.id}}">Upload</button>
+                        </div>
+                    </div>
+                </form> 
+                
+            {% endif %} 
+
+            <ul class="skills">
+            {% if edu.document != null and (musician.isproandactive == 'true' or musician.ismuskeandactive == 'true') and (app.user and app.user != null and app.user == musician) %}              
+                <li><a id="download_doc_{{edu.id}}" href="{{ path('download_pdf', {'file': edu.document.doc} ) }}" download> Download supporting document </a></li>
+            {% endif %}            
+            {% if edu.specialties is empty %}
+                {% if app.user and app.user != null and app.user == musician %}
+                    You haven't added any skills that you learned in this institution. Please <a href="{{ path('specialty_new', {'education_id': edu.id}) }}">Add some skills </a>
+                {% else %}
+                    Learned a lot of things that are found under {{edu.coursename}} course. You can <a target="_blank" href="http://www.google.com/search?q={{edu.coursename|replace({' ': '+'}) }}+Course+Description+{{edu.institution|replace({' ': '+'})}}">search on google</a> what some of the skills are.
+                {% endif %}
+            {% else %}
+                {% for skill in edu.specialties %}
+                    <li>
+                        {{skill.instrumentorskill}}
+                    </li>
+                {% endfor %}
+                {% if edu.document != null and (musician.isproandactive == 'true' or musician.ismuskeandactive == 'true') and (app.user and app.user != null and app.user == musician) %}              
+                {# {% if app.user and app.user != null and app.user == musician %} #}
+                <li><a href="{{ path('specialty_new', {'education_id': edu.id}) }}">Add skills</a></li>
+                <li><a id="change_doc_{{edu.id}}">Change Document</a></li>
+                {% endif %}                
+            {% endif %}
+            </ul>
+        </div>
+        {% endfor %}
+        <!-- End .education-block -->
+    </div>
+    <!-- End #education -->
+    {% if musician.projects %}
+    <div id="projects" class="background-alt">
+        <h2 class="heading">Projects</h2>
+        <div class="container">
+            <div class="row">
+            {% for project in musician.projects %}
+                <div class="project shadow-large">
+                    
+                    <div class="journal-block">
+                        <div class="row text-left">
+
+                            <div class="col-lg-4 col-md-6">
+                            <div class="journal-info">
+                                {% set imagelink = asset('uploads/projects/' ~ project.projectimage) %}
+                                <img src="{{ project.projectimage == null or project.projectimage == "" ? asset('devportfolio/images/project.jpg') : imagelink }}" id="project_image_{{project.id}}" class="img-responsive" alt="{{project.projecttitle}}">
+
+                            </div>
+                            </div>
+                            <div class="col-lg-8 col-md-6">
+                            <div class="journal-info">
+                                <div class="journal-txt">
+
+                                <h3>{{project.projecttitle}}</h3><hr />
+                                <p class="separator">{{project.projectdescription}}
+                                </p>
+
+                                </div>
+                                <hr />
+                                {% include "reusable/project_form.html.twig" %}
+                                {% if project.projectimage != null and project.projectimage != "" and (app.user and app.user == musician) %}
+                                <button style="color:black!important" class="btn-rounded-white" id="change_projPhoto_{{project.id}}">Change Project Image</button>
+                                {% endif %}
+                                
+                            </div>
+                            </div>
+
+                        </div>
+                    </div>
+                                        
+                </div>
+                <!-- End .project -->
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- End #projects -->
+    {% endif %}
+
+    
+    {% if (musician.settings and musician.isproandactive == 'true') or (musician.settings and musician.ismuskeandactive == 'true') %}
+    <div id="album_intro"  style="text-align: center; margin-bottom: 50px;" class="background-alt">
+        
+        <h2 class="heading">Gallery</h2>
+        <div class="container">
+
+          <div class="row text-center text-lg-left">
+          {% if fourPhotos|length > 1 %}
+            {% for photo in fourPhotos %}
+            {% set photo_path = asset('uploads/gallery/' ~ photo.photo) %}
+            {% set photo_thumbnailpath = asset('uploads/gallery/thumbs/' ~ photo.photo ~ '.png') %}
+            <div class="col-lg-4 col-md-4 col-xs-6">
+            <a href="{{photo_path}}" class="d-block mb-4 h-100">
+                <img class="img-fluid img-thumbnail" src="{{photo_thumbnailpath}}" alt="{{photo.description}}">
+            </a>
+            
+            </div>
+            {% endfor %}
+          {% else %}
+            <p>There are currently no photos in this gallery</p>
+            {% if app.user and app.user != null and app.user == musician %}
+            <a href="{{ path('gallery_new')}}" class="btn-rounded-blue">Add Photos</a>
+            {% endif %}
+          {% endif %}
+          {% if fourPhotos|length > 1 %}<a href="{{ path('gallery_index', {'username': musician.username })}}" class="btn-rounded-blue">See More Photos</a>{% endif %}
+          </div>
+        </div>
+        
+
+    </div>
+    {% endif %}
+    <!-- /.album_intro -->
+
+
+    <div id="skills">
+        <h2 class="heading">Skills</h2>
+        <ul>
+            {% for skill in musician.skills %}
+            <li>{{skill.skillname}} | <i>{{skill.levelofskill}}</i> | {{skill.experienceofskill}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- End #skills -->
+
+    {% if musician.isproandactive and blogPosts|length >= 0 %}
+    <!-- ======= Journal Section ======= -->
+    <div id="journal" class="text-left paddsection" style="text-align: center; margin-bottom: 50px;">
+
+        <h2 class="heading">Blog</h2>
+
+      <div class="container">
+        <div class="journal-block">
+          <div class="row">
+
+            {% for post in blogPosts %}
+            <div class="col-lg-4 col-md-6">
+              <div class="journal-info">
+
+                <a href="{{ path('post_show', {'id': post.id, 'title': post.title})}}"><img src="
+                  {% if file_exists(assetDirectory ~ '/blog/thumbs/' ~ post.image ~ ".png") %}
+                    {{ asset('uploads/blog/thumbs/' ~ post.image ~ ".png") }}
+                  {% else %}
+                    {{asset('/uploads/blog/play_thumbnail.png')}}
+                  {% endif %}" style="width:100%" class="img-responsive" alt="{{post.title}}"></a>
+
+                <div class="journal-txt">
+
+                  <h4><a href="{{ path('post_show', {'id': post.id, 'title': post.title})}}">{{post.title}}</a></h4>
+                  <p class="separator">{{post.content|slice(0, 119)|raw}}...
+                  </p>
+
+                </div>
+
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div><!-- End Journal Section -->
+    {% endif %}
+
+
+    <div id="contacts" class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Contact {{musician.settings and musician.isproandactive ? musician.fullname : "Form" }}</h2>
+                <div id="contact-form">
+                    <form method="">
+                        <input type="hidden" id="subject" name="subject" value="Contact request from personal website" />
+                        <input type="text" name="name" id="sendername" placeholder="Your Name" />
+                        <input type="email" id="senderemail" name="replyto" placeholder="Your email" required>
+                        <textarea id="message" name="message" placeholder="Your message" required></textarea>
+                  
+                        <div class="col-lg-12 mb-3">
+                            <div class="loading" style="display:none;">Sending...</div>
+                            <div class="error-message-msg" style="display:none;"></div>
+                            <div id="sent-message" style="display:none;" class="sent-message">Your message has been sent. Thank you!</div>
+                        </div>
+                        <button class="contact-form-button" id="send-my-email" type="button">Send Message</button>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <h2>Leave a Review</h2>
+                <div id="contact-form">
+                    <form method="">
+                        <input type="hidden" name="_subject" value="Contact request from personal website" />
+                        <input type="text" id="ratername" name="replyto" placeholder="Your Name" required>
+                        <input type="email" id="rateremail" name="replyto" placeholder="Your Email" required>
+                      
+                        <div class="form-group" id="rating-ability-wrapper">
+                            <label class="control-label" for="rating">
+                            <span class="field-label-header">How would you rate {{musician.fullname}}?</span><br>
+                            <span class="field-label-info"></span>
+                            <input type="hidden" id="selected_rating" name="selected_rating" value="" required="required">
+                            </label>
+                            <h2 class="bold rating-header">
+                            <span class="selected-rating">0</span><small> / 5</small>
+                            </h2>
+                            <button type="button" class="btnrating btn btn-default btn-lg" data-attr="1" id="rating-star-1">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btnrating btn btn-default btn-lg" data-attr="2" id="rating-star-2">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btnrating btn btn-default btn-lg" data-attr="3" id="rating-star-3">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btnrating btn btn-default btn-lg" data-attr="4" id="rating-star-4">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btnrating btn btn-default btn-lg" data-attr="5" id="rating-star-5">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </button>
+                        </div>     
+
+                        <div class="col-lg-12 mb-3">
+                            <div style="display:none" class="error-message-rating"></div>
+                            <div style="display:none; color:white;" id="rating-submitted" class="sent-message">Your rating has been submitted. Thank you!</div>
+                        </div>
+                        <hr />
+                        <button class="contact-form-button" id="submit-rating" type="button">Submit</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- End #contact -->
+
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 copyright">
+                    <p>
+                        Copyright &copy; {{"now"|date("Y")}} {{musician.username}} | {% if app.user and app.user != null and app.user == musician %} <a href="{{path("app_logout")}}">Logout</a> {% else %} <a href="{{path("homepage")}}">Login</a>{% endif %}
+                    </p>
+                </div>
+                <div class="col-sm-2 top">
+                    <span id="to-top">
+                        <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <div class="col-sm-5 social">
+                    <ul>
+                        <li>
+                            <a href="https://github.com/" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="{{ musician.hassettings ? musician.settings.facebook | external_link : '#'}}" target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="{{ musician.hassettings ? musician.settings.linkedin | external_link : '#'}}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="{{ musician.hassettings ? musician.settings.facebook | external_link : '#'}}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="{{ musician.hassettings ? musician.settings.twitter | external_link : '#'}}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="{{ musician.hassettings ? musician.settings.instagram | external_link : '#'}}" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End footer -->
+{% endblock %}
+{% block javascripts %}
+
+{% if musician.settings and musician.settings.tawkTo != null %}
+    <script type="text/javascript">
+        {{musician.settings.tawkTo|raw}}
+    </script>
+    
+{% else %}
+
+    {% include "reusable/phplive.html.twig" %}       
+
+{% endif %}
+<script>
+    $(document).on("click", '[id^="proj_"]', function(){
+
+        var project = jQuery(this).attr("id");
+        var splitted = project.split('_'); //changeRow_Qt_1504
+        var id = splitted[1] //1504
+
+    // function saveDoc() {
+        var inputFile = document.getElementById('documento_'+id);
+        var file = inputFile.files[0];
+        var data = new FormData();
+        data.append('doc', file, file.name);
+        $.ajax({
+            url: "{{ path('upload_project_image') }}",
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data){
+                console.log(data);
+                console.log("saved information");
+                $.ajax({
+                    url:"{{ (path('upload_project_image')) }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "id": id,
+                        "filename": data,
+                    },
+                    async: true,
+                    success: function (data)
+                    {
+                        console.log(data);
+                        console.log("saved another information");
+                        $("#project_image"+"_"+id).attr("src", data).css("maxWidth", '250px');
+                    },
+                    error: function () {
+                        $("#warning").html("<b>something's wrong</b>");
+                    }
+                });
+
+            },
+            error: function () {
+                $("#warning").html("<b>something's wrong</b>");
+            }
+
+        });
+
+    });
+</script>
+
+<script>
+    $(document).on("click", '[id^="upload_doc_"]', function(){
+
+        var project = jQuery(this).attr("id");
+        var splitted = project.split('_'); //changeRow_Qt_1504
+        var id = splitted[2] //1504
+        $(this).prop('disabled', true);
+
+    // function saveDoc() {
+        var inputFile = document.getElementById('doc_edu_'+id);
+        var file = inputFile.files[0];
+        var data = new FormData();
+        data.append('doc', file, file.name);
+        $.ajax({
+            url: "{{ path('upload_education_document') }}",
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data){
+                console.log(data);
+                console.log("saved information");
+                $.ajax({
+                    url:"{{ (path('upload_education_document')) }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "id": id,
+                        "filename": data,
+                    },
+                    async: true,
+                    success: function (data)
+                    {
+                        console.log(data);
+                        console.log("saved another information");
+                        // $("#project_image"+"_"+id).attr("src", data).css("maxWidth", '250px');
+                        $("#alert_"+id).html(
+                            '<div class="alert alert-success" role="alert">' +
+                                'You have successfully uploaded the file.' +
+                            '</div>'
+                        );
+                        $("#document_form_"+id).hide();
+                        $("#download_doc_"+id).attr("href", data);
+                        $(this).prop('disabled', false);
+                    },
+                    error: function () {
+                        $("#warning").html("<b>something's wrong</b>");
+                    }
+                });
+
+            },
+            error: function () {
+                $("#warning").html("<b>something's wrong</b>");
+            }
+
+        });
+
+    });
+</script>
+
+
+<script>
+    $(document).on("click", '[id^="change_doc_"]', function(){
+
+        var project = jQuery(this).attr("id");
+        var splitted = project.split('_'); //changeRow_Qt_1504
+        var id = splitted[2] //1504
+
+        $("#document_form_"+id).show();
+        
+    });
+</script>
+
+
+<script>
+  $(document).on("click", '[id^="change_projPhoto_"]', function(){
+
+      var project = jQuery(this).attr("id");
+      var splitted = project.split('_'); //changeRow_Qt_1504
+      var id = splitted[2] //1504
+
+      $("#project_form_"+id).show();
+      
+  });
+</script>
+
+<script>
+
+	$( "#submit-rating" ).click(function() {
+
+    if(!$("#ratername").val()|| !$("#rateremail").val() ){
+      $(".error-message-rating").show().text("Name and email are required for rating");
+      $("#ratername").focus();
+      throw new Error("Please enter your name and email");
+    }
+
+    
+		var ratingval = $("#selected_rating").val();
+		var ratername = $("#ratername").val();
+		var rateremail = $("#rateremail").val();
+		var musician_id = "{{musician.id}}";
+
+    console.log(ratingval);
+
+			$.ajax({
+				url:"{{ (path('save_rating')) }}",
+				type: "POST",
+				dataType: "json",
+				data: {
+					"ratingval": ratingval,
+					"ratername": ratername,
+					"rateremail": rateremail,
+					"musician_id": musician_id,
+				},
+				async: true,
+				success: function (data)
+				{
+					console.log(data);
+					console.log("saved rating");
+          $( "#rating-submitted" ).show()
+          $(".error-message-rating").hide()
+				},
+				error: function () {
+					$("#error-message").show().html("<b>something's wrong</b>");
+				}
+			});
+
+	});
+
+</script>
+
+<script>
+
+	$( "#send-my-email" ).click(function() {
+
+    if(!$("#sendername").val() || !$("#senderemail").val() || !$("#subject").val() || !$("#message").val() ){
+      $(".error-message-msg").show().text("Name, email, subject and message are all required for rating");
+      throw new Error("Please enter all details");
+    }
+
+		var sendername = $("#sendername").val();
+		var senderemail = $("#senderemail").val();
+		var message = $("#message").val();
+		var subject = $("#subject").val();
+		var musician_id = "{{musician.id}}";
+
+    $(".loading").show();
+			$.ajax({
+				url:"{{ (path('musician_receive_message')) }}",
+				type: "POST",
+				dataType: "json",
+				data: {
+					"sendername": sendername,
+					"senderemail": senderemail,
+					"message": message,
+					"subject": subject,
+					"musician_id": musician_id,
+				},
+				async: true,
+				success: function (data)
+				{
+					console.log(data);
+					console.log("message sent");
+          $( "#sent-message" ).show();
+          $(".error-message-msg").hide()
+          $(".loading").hide();
+				},
+				error: function () {
+					$("#error-message").show().html("<b>something's wrong</b>");
+				}
+			});
+
+	});
+
+</script>
+
+<script>
+    jQuery(document).ready(function($){
+        
+      $(".btnrating").on('click',(function(e) {
+      
+        var previous_value = $("#selected_rating").val();
+        
+        var selected_value = $(this).attr("data-attr");
+        $("#selected_rating").val(selected_value);
+        
+        $(".selected-rating").empty();
+        $(".selected-rating").html(selected_value);
+        
+        for (i = 1; i <= selected_value; ++i) {
+        $("#rating-star-"+i).toggleClass('btn-default');
+        $("#rating-star-"+i).toggleClass('btn-warning');
+        }
+        
+        for (ix = 1; ix <= previous_value; ++ix) {
+        $("#rating-star-"+ix).toggleClass('btn-default');
+        $("#rating-star-"+ix).toggleClass('btn-warning');
+        }
+      
+      }));
+    
+      
+    });
+
+</script>
+
+{% include "reusable/call_me_script.html.twig" %}
+
+{% endblock %}

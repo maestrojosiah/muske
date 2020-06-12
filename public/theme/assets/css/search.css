@@ -1,0 +1,74 @@
+p {
+}
+
+#search .btn-group .btn {
+  border-right: 2px solid #fff!important;
+}
+
+.for-btn {
+  margin-top: 0;
+  margin-bottom: 2px;
+}
+
+#search .card {
+  background-color: inherit;
+  border: 1px solid #fff;
+  padding-top: 10px;
+  overflow: hidden;
+  position: relative;
+  padding: 20px;
+}
+
+.search-card-img {
+  max-width: 200px;
+  margin: auto;
+}
+
+#search .middle {
+  width: auto;
+}
+
+#search .card-title {
+  font-size: 17px;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+#search .card-text {
+  font-size: 14px;
+}
+
+#search .card-footer {
+  padding: 0;
+}
+
+#search .card-footer .btn-group {
+  width: 100%;
+}
+
+#tags {
+  display: none;
+}
+
+.bg-blue {
+  background-color: #3766ad!important;
+}
+
+.ribbon {
+  width: 160px;
+  height: 32px;
+  font-size: 12px;
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 3px hsla(0,0%,53%,.25);
+  background: #4dbe3b;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  position: absolute;
+  right: -42px;
+  top: 20px;
+  padding-top: 7px;
+  text-transform: uppercase;
+}
+

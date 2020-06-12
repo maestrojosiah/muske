@@ -1,0 +1,46 @@
+.profile-pic {
+  border-radius: 50%;
+  margin-top: 10px;
+}
+
+.container.resume {
+  font-size: 14px;
+  font-family: inherit;
+  border: 1px solid #e3d2d2;
+}
+
+.resume h5 {
+  color: #f57d7d;
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.resume h4 {
+  font-size: 17px;
+  font-weight: bold;
+  font-family: initial;
+}
+
+.resume h6 {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.spaced-links {
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.top-row {
+  margin-bottom: 50px;
+}
+
+.card {
+  margin-top: 20px;
+  border: none;
+}
+
+.resume .list-group-item {
+  border-bottom: 1px solid #f57d7d;
+}
+

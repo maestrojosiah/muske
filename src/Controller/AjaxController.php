@@ -476,12 +476,13 @@ class AjaxController extends AbstractController
     {
 
         $file = $request->files->get('doc');
+        $path_to_save = $request->request->get('path');
         $musician = $this->getUser();
         
         if($file){
             if($musician->getPhoto() != null ) {
-                $current_photo_path = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
-                $current_photo_thumb_path = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto();
+                $current_photo_path = $this->getParameter($path_to_save)."/".$musician->getPhoto();
+                $current_photo_thumb_path = $this->getParameter($path_to_save)."/thumbs/".$musician->getPhoto();
                 if(file_exists($current_photo_path)){ unlink($current_photo_path); }
                 if(file_exists($current_photo_thumb_path)){ unlink($current_photo_thumb_path); }
             }
@@ -490,31 +491,24 @@ class AjaxController extends AbstractController
             // Move the file to the directory where brochures are stored
             try {
                 $file->move(
-                    $this->getParameter('brochures_directory'),
+                    $this->getParameter($path_to_save),
                     $filename
                 );
             } catch (FileException $e) {
                 // ... handle exception if something happens during file upload
             }
 
-            return new JsonResponse($filename);        
-
-        }
-        
-        if($request->request->get('filename')){
-
-            $filename = $this->sanitizeInput($request->request->get('filename'));
             $musician->setPhoto($filename);
             $em = $this->getDoctrine()->getManager();
             $em->persist($musician);
             $em->flush();
 
-            $updir = $this->getParameter('brochures_directory');
+            $updir = $this->getParameter($path_to_save);
             $img = $musician->getPhoto();
             $this->makeThumbnails($updir, $img, 300, 300);
 
 
-            $img_link = $musician->photourl();
+            $img_link = $musician->getPhoto();
 
             return new JsonResponse($img_link);
         }

@@ -1,0 +1,134 @@
+<div class="container resume" id="resume">
+    <div class="row">
+        <div class="col-sm-12 col-md-9">
+            <div class="row header top-row">
+                <div class="col-md-2 d-none d-md-block"><img class="img-fluid profile-pic" src="{{thumbnailurl}}"></div>
+                <div class="col">
+                    <h3 style="font-family: Alice, serif;">{{musician.fullname}}</h3>
+                    <h5>Musician</h5><a class="spaced-links" href="#">&nbsp;<i class="fa fa-phone"></i>&nbsp;0704545454</a><a class="spaced-links" href="#">&nbsp;<i class="fa fa-envelope"></i>&nbsp;someone@email.com</a><a class="spaced-links" href="#">&nbsp;<i class="fa fa-globe"></i>&nbsp;www.sth.com</a></div>
+            </div>
+            <div class="card about">
+                <div class="card-header">
+                    <h5 class="mb-0">Profile</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{musician.about}}&nbsp;<br></p>
+                </div>
+            </div>
+            <div class="card content">
+                <div class="card-header">
+                    <h5 class="mb-0">Experience</h5>
+                </div>
+                <div class="card-body">
+                    {% for job in jobs %}
+                    <div class="row item">
+                        <div class="col-md-4 date-and-place">
+                            <h6>{{job.startingfrom|date("M Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</h6>
+                            <p>{{job.location}}</p>
+                        </div>
+                        <div class="col-md-8 list-details">
+                            <h4>{{job.jobtitle}} at {{job.institution}}</h4>
+                            <ul id="role-list-{{job.id}}">
+                                {% for role in job.roles %}
+                                <li>{{role.role}}.<br></li>
+                                {% endfor %}
+                            </ul>
+                            <form class="for-user" id="role-form-{{job.id}}" style="padding-left: 30px;">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" name="role" placeholder="Add a role" aria-label="Add a role" aria-describedby="basic-addon2">
+                                    <input type="hidden" name="class" value="Role" />
+                                    <input type="hidden" name="extras" value="job#{{job.id}}" />
+                                    <input type="hidden" name="return" value="role" />
+                                    <div class="input-group-append">
+                                      <button id="save-role-{{job.id}}" class="btn btn-outline-secondary" type="button">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="card content">
+                <div class="card-header">
+                    <h5 class="mb-0">Education</h5>
+                </div>
+                <div class="card-body">
+                    {% for edu in educ %}
+                    <div class="row item" id="educ-{{edu.id}}">
+                        <div class="col-md-4 date-and-place">
+                            <h6>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</h6>
+                            <p>{{edu.location}}</p>
+                        </div>
+                        <div class="col-md-8 list-details" style="position: relative; padding-right:20px;">
+                            <h4>{{edu.institution}}</h4>
+                            <p>{{edu.degree}} in {{edu.coursename}}</p>
+                            {% if app.user and app.user != null and app.user == musician and app.user.settings and (app.user.isproandactive == 'true' or app.user.ismuskeandactive == 'true') %}
+                            <form class="for-user" id="document-form-{{edu.id}}" style="position: absolute; top:5px; right:5px;font-size:18px;">
+                                {% set has_doc = edu.document == null ? 'no' : edu.document.id %}
+                                <label title="{{has_doc == 'no' ? 'upload a supporting document' : 'change document'}}" class="{{has_doc == 'no' ? 'text-danger' : 'text-success'}} " id="color-code-{{edu.id}}" for="upload-{{has_doc}}-{{edu.id}}" style="cursor:pointer; "><i class="fa fa-link"></i></label>
+                                <input type="file" name="upload-{{has_doc}}-{{edu.id}}" id="upload-{{has_doc}}-{{edu.id}}" style="display: none;" />
+                            </form>
+                            <a class="for-user" style="position: absolute; top: 30px; right:5px; font-size:18px;" id="download_doc_{{edu.id}}" href="{{ path('download_pdf', {'file': edu.document.doc} ) }}" download><i class="fa fa-download"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% if musician.projects %}
+            <div class="card content">
+                <div class="card-header">
+                    <h5 class="mb-0">Projects</h5>
+                </div>
+                <div class="card-body">
+                    {% for project in musician.projects %}
+                    <h4>{{project.projecttitle}}</h4>
+                    <p>{{project.projectdescription}}.<br>
+                    </p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            <div class="card content d-none d-md-block" style="margin-bottom: 50px;">
+                {% include "reusable/referees.html.twig" %}
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-3">
+            {% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+            <div class="card details top-row">
+                <div class="card-header">
+                    <h5 class="mb-0">Details</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-capitalize card-text">{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</p>
+                </div>
+            </div>
+            {% endif %}
+            <div class="card skills">
+                <div class="card-header">
+                    <h5 class="mb-0">Skills</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for skill in musician.skills %}
+                    <li class="list-group-item"><span>{{skill.skillname}}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card skills">
+                <div class="card-header">
+                    <h5 class="mb-0">Specialties</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for job_role in musician.jobstobeoffered %}
+                        <li class="list-group-item"><span>{{job_role.jobtitle}}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card content d-md-none" style="margin-bottom: 50px;">
+                {% include "reusable/referees.html.twig" %}                    
+            </div>
+
+        </div>
+    </div>
+</div>

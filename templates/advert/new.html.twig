@@ -1,0 +1,420 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Muske | New Advert{% endblock %}
+
+{% block body %}
+
+    <div style="height: 100vh;">
+        <div class="header-blue" style="height: 100%;">
+            <nav class="navbar navbar-light navbar-expand-md navigation-clean-search">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html">Music Services Kenya</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                    <div
+                        class="collapse navbar-collapse" id="navcol-1">
+                        <ul class="nav navbar-nav"></ul>
+                        <a class="btn btn-dark ml-auto action-button" role="button" href="search.html">Search page</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="container hero">
+                <div class="row">
+                    <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
+                        <h1>Advertize!</h1>
+                        <p>You can create a new advert or track an existing one.<br>To track your existing advert, you'll enter your phone number and a secret code that was sent to your email when you created the advert.</p>
+                        <a class="btn btn-primary btn-lg action-button"
+                            role="button" id="for-newAd" href="#">New Advert</a><button class="btn btn-primary btn-lg action-button" id="for-trackAd" type="button">Track Advert</button>
+                    </div>
+                    <div class="col-md-5 col-lg-5 offset-lg-1 offset-xl-0 d-none d-lg-block phone-holder">
+                        <div class="iphone-mockup">
+                            <img class="device" src="{{ asset('theme/assets/img/iphone.svg ') }}">
+                            <div class="screen"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bounce animated" id="newAd-page">
+        <div class="container advert" id="advert">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Advertize</h4>
+                            <h6 class="text-muted card-subtitle mb-2">Find exactly who you need.</h6>
+                            <p class="card-text">You will be able to track this advert. We will send you a code to your email after you submit the ad information. The code will be used for tracking your advertizement.&nbsp;<br><br>If you need help on how to make a captivating
+                                advert, We are always here for you. Call us on 0705285959.
+                            </p>
+                            <hr>
+                            <form id="ad-form">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Person / Institution</label>
+                                            <input id="institution" class="form-control" type="text" autofocus="" placeholder="Institution or Individual name">
+                                            <small class="form-text text-muted">Write your name or the name of the institution</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Location</label>
+                                            <input id="location" class="form-control" type="text" autofocus="" placeholder="eg. Nairobi">
+                                            <small class="form-text text-muted">Where are you based?</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Job Position</label>
+                                            <input id="job_position" class="form-control" type="text" autofocus="" placeholder="eg. Music Director">
+                                            <small class="form-text text-muted">Which job position are you advertizing?</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Last date of advert</label>
+                                            <input id="deadline" class="form-control" type="date">
+                                            <small class="form-text text-muted">Your ad will expire on the date you enter here.</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group"><label>Job Description</label></div>
+                                        <textarea id="job_description" class="form-control form-control-lg" autocomplete="on" spellcheck="true" placeholder="Describe the person you need"></textarea>
+                                        <small class="form-text text-muted">Help text for a form field.</small>
+                                    </div>
+                                    <div
+                                        class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Education Level</label>
+                                            <select id="education_level" class="form-control">
+                                                <optgroup label="- Specify -">
+                                                    <option value="any" selected="">Any Level but Competent</option>
+                                                    <option value="certificate">Certificate</option>
+                                                    <option value="diploma">Diploma</option>
+                                                    <option value="degree">Degree</option>
+                                                    <option value="masters">Masters or above</option>
+                                                </optgroup>
+                                            </select>
+                                            <small
+                                                class="form-text text-muted">Select an education level that you prefer</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Course of study</label>
+                                            <input id="course" class="form-control" type="text" placeholder="eg. Music">
+                                            <small class="form-text text-muted">Which course would you want the musician to have studied?</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Skills required</label>
+                                            <input id="skills" class="form-control" type="text" placeholder="eg. congregation accompaniment">
+                                            <small class="form-text text-muted">Separate with comma: Type the skills that you need the music instructor to have. eg. Playing piano, Teaching a choir etc</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input id="email" class="form-control" type="email" placeholder="email@example.com">
+                                            <small class="form-text text-muted">You will receive the ad tracking code through this email</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone Number</label>
+                                            <input id="phone_number" class="form-control" type="text" placeholder="0700123456">
+                                            <small class="form-text text-muted">We will contact you when we get someone you may need</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <button class="btn btn-primary btn-block" id="save_advert" type="button">Post Advertizement</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row" id="suggestions-ad">
+                            <div class="col-12">
+                                <h3 class="text-center">Suggestions</h3>
+                            </div>
+                            <div class="col-md-4 filter piano guitar saxophone">
+                                <div class="card text-center">
+                                    <img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ asset('theme/assets/img/adv-yourself.jpg ') }}">
+                                    <div class="card-body">
+                                        <h6 class="card-title suggestion-title">John Smith</h6>
+                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit.&nbsp;</p>
+                                    </div>
+                                    <div class="card-footer"><button class="btn btn-primary btn-block" type="button">Resume</button></div>
+                                    <div class="ribbon"><span>Verified</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 filter piano guitar saxophone">
+                                <div class="card text-center">
+                                    <img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ asset('theme/assets/img/adv-yourself.jpg ') }}">
+                                    <div class="card-body">
+                                        <h6 class="card-title suggestion-title">John Smith</h6>
+                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit.&nbsp;</p>
+                                    </div>
+                                    <div class="card-footer"><button class="btn btn-primary btn-block" type="button">Resume</button></div>
+                                    <div class="ribbon"><span>Verified</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 filter piano guitar saxophone">
+                                <div class="card text-center">
+                                    <img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ asset('theme/assets/img/adv-yourself.jpg ') }}">
+                                    <div class="card-body">
+                                        <h6 class="card-title suggestion-title">John Smith</h6>
+                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit.&nbsp;</p>
+                                    </div>
+                                    <div class="card-footer"><button class="btn btn-primary btn-block" type="button">Resume</button></div>
+                                    <div class="ribbon"><span>Verified</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bounce animated" id="trackAd-page">
+        <div class="container advert" id="track">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Track your ad</h4>
+                            <h6 class="text-muted card-subtitle mb-2">See how your advert is doing.</h6>
+                            <p class="card-text">Our job is to ensure your ad reaches as many musicians as possible. Here is a report of how your ad is doing. In case you need help in getting the person you need, we're always here for you. Call us on 0705285959.</p>
+                            <hr>
+                            <form id="ad-form">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-group"><label>Your phone number</label><input class="form-control" type="text" autofocus=""><small class="form-text text-muted">Enter your phone number</small></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group"><label>Your ad tracking ID</label><input class="form-control" type="text"><small class="form-text text-muted">The ID that was sent to your email after you created your advert</small></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="alert alert-danger" role="alert"><span><strong>Either the phone number or the tracking code is incorrect. Try again!</strong></span></div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group"><button class="btn btn-primary btn-block" type="button">View ad progress</button></div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div>
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Seen adverts</a></li>
+                                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Opened adverts</a></li>
+                                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Interested</a></li>
+                                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Sent resumes</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" role="tabpanel" id="tab-1">
+                                        <p>The adverts that have been seen</p>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Location</th>
+                                                        <th>Musician</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>7th June 2020 3:30pm</td>
+                                                        <td>Nairobi, Kiambu</td>
+                                                        <td><a href="#">Resume</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>9th June 2020 3:47pm</td>
+                                                        <td>Nairobi</td>
+                                                        <td><a href="#">Resume</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" role="tabpanel" id="tab-2">
+                                        <p>These have opened and read your ad</p>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Location</th>
+                                                        <th>Musician</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>7th June 2020 3:30pm</td>
+                                                        <td>Nairobi, Kiambu</td>
+                                                        <td><a href="#">Resume</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>9th June 2020 3:47pm</td>
+                                                        <td>Nairobi</td>
+                                                        <td><a href="#">Resume</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" role="tabpanel" id="tab-3">
+                                        <p>These ones took your contact so that they could contact you directly</p>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Location</th>
+                                                        <th>Musician</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>7th June 2020 3:30pm</td>
+                                                        <td>Nairobi, Kiambu</td>
+                                                        <td><a href="#">Resume</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>9th June 2020 3:47pm</td>
+                                                        <td>Nairobi</td>
+                                                        <td><a href="#">Resume</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" role="tabpanel" id="tab-4">
+                                        <p>Content for tab 3.</p>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Location</th>
+                                                        <th>Musician</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>7th June 2020 3:30pm</td>
+                                                        <td>Nairobi, Kiambu</td>
+                                                        <td><a href="#">Resume</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>9th June 2020 3:47pm</td>
+                                                        <td>Nairobi</td>
+                                                        <td><a href="#">Resume</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row" id="suggestions">
+                            <div class="col-12">
+                                <h3 class="text-center">Suggestions</h3>
+                            </div>
+                            <div class="col-md-4 filter piano guitar saxophone">
+                                <div class="card text-center">
+                                    <img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ asset('theme/assets/img/adv-yourself.jpg ') }}">
+                                    <div class="card-body">
+                                        <h6 class="card-title suggestion-title">John Smith</h6>
+                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit.&nbsp;</p>
+                                    </div>
+                                    <div class="card-footer"><button class="btn btn-primary btn-block" type="button">Resume</button></div>
+                                    <div class="ribbon"><span>Verified</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 filter piano guitar saxophone">
+                                <div class="card text-center">
+                                    <img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ asset('theme/assets/img/adv-yourself.jpg ') }}">
+                                    <div class="card-body">
+                                        <h6 class="card-title suggestion-title">John Smith</h6>
+                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit.&nbsp;</p>
+                                    </div>
+                                    <div class="card-footer"><button class="btn btn-primary btn-block" type="button">Resume</button></div>
+                                    <div class="ribbon"><span>Verified</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 filter piano guitar saxophone">
+                                <div class="card text-center">
+                                    <img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ asset('theme/assets/img/adv-yourself.jpg ') }}">
+                                    <div class="card-body">
+                                        <h6 class="card-title suggestion-title">John Smith</h6>
+                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit.&nbsp;</p>
+                                    </div>
+                                    <div class="card-footer"><button class="btn btn-primary btn-block" type="button">Resume</button></div>
+                                    <div class="ribbon"><span>Verified</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="close-icon"><i class="fa fa-close"></i></div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $( "#save_advert" ).click(function() {
+        
+                var institution = $("#institution").val();
+                var location = $("#location").val();
+                var job_position = $("#job_position").val();
+                var deadline = $("#deadline").val();
+                var job_description = $("#job_description").val();
+                var education_level = $("#education_level").val();
+                var course = $("#course").val();
+                var skills = $("#skills").val();
+                var email = $("#email").val();
+                var phone_number = $("#phone_number").val();
+        
+                console.log("started");
+        
+                $.ajax({
+                    url:"{{ (path('save_entity')) }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "institution": institution,
+                        "location": location,
+                        "task": job_position,
+                        "deadline": deadline,
+                        "jobdescription": job_description,
+                        "courselevel": education_level,
+                        "education": course,
+                        "skill": skills,
+                        "email": email,
+                        "phone": phone_number,
+                        "class": "Advert",
+                        "extras": "code-submitted"
+                    },
+                    async: true,
+                    success: function (data)
+                    {
+                        console.log(data);
+                    },
+                    error: function (err) {
+                        console.log(err.responseText);
+                    }
+                });
+        
+        });
+        
+        
+    </script>
+
+{% endblock %}

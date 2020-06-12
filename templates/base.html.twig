@@ -6,19 +6,197 @@
         {{ sonata_seo_metadatas() }}
         {{ sonata_seo_head_attributes() }}
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="{{asset('bootstrap/css/bootstrap.min.css')}}" />
-        <link rel="stylesheet" type="text/css" href="{{asset('css/carousel.css')}}" />
+        <link rel="stylesheet" href="{{ asset('theme/assets/bootstrap/css/bootstrap.min.css ') }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&amp;display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+        <link rel="stylesheet" href="{{ asset('theme/assets/fonts/fontawesome-all.min.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/fonts/font-awesome.min.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/fonts/simple-line-icons.min.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/fonts/fontawesome5-overrides.min.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/advert.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/best-carousel-slide.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/Features-Clean.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/Header-Blue.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/Navigation-Clean.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/Pretty-Footer.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/styles.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/Testimonials.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/theme_two.css ') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/youtube-embed.css ') }}">
         <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5ecb6caf46c8f10012f1e8d8&product=sticky-share-buttons&cms=sop' async='async'></script>
         {% include "favicon.html.twig" %}
+        <style>
+            data-notify{
+                margin-bottom: 0px;
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                width: 100%;
+                height: 5px;
+            }
+        </style>
         {% block stylesheets %}{% endblock %}
+        
     </head>
     <body>
         {% block body %}{% endblock %}
-        <script src="{{ asset('js/jquery.min.js') }}"></script>        
-        <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>        
-        {% block javascripts %}{% endblock %}
+        <script src="{{ asset('theme/assets/js/jquery.min.js ') }}"></script>
+        <script src="{{ asset('theme/assets/bootstrap/js/bootstrap.min.js ') }}"></script>
+        <script src="{{ asset('theme/assets/js/bs-init.js ') }}"></script>
+        <script src="{{ asset('theme/assets/js/advert.js ') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js ') }}"></script>
+        <script src="{{ asset('theme/assets/js/resume.js ') }}"></script>
+        <script src="{{ asset('theme/assets/js/theme.js ') }}"></script>
+        <script src="{{ asset('theme/assets/js/bootstrap-notify.min.js ') }}"></script>
+        <script>
+            function saveDetails(div, target_element='body', append_type='button', append_class='btn btn-secondary', id = ""){
 
-        {% include "reusable/phplive.html.twig" %}       
+                // the form that will be serialized
+                var form = $("#"+div+"-form"+id);
+
+                // the list to be updated after successful ajax
+                var list = $("#"+div+"-list"+id);
+
+                // serialize the form and assign it to var form_data
+                var form_data = $( form ).serializeArray();
+
+                // validate the form 
+                var valid = validateForm(form_data);
+                console.log('valid: ' + valid);
+                
+                // if all forms are filled
+                if(valid === true){
+
+                    // save the data through ajax
+                    $.ajax({
+                        url:'{{ (path("save_entity")) }}',
+                        type: "POST",
+                        dataType: "json",
+                        data: form_data,
+                        async: true,
+                        success: function (data)
+                        {
+                            console.log(data);
+                            $("#saved").val("true");
+                            if ($(list).length){ // if the list to be updated exists, append a button
+                                $(list).append("<"+append_type+" class='"+append_class+"'> "+data+"</"+append_type+">");
+                            }
+                            $.notify({
+                                icon: 'glyphicon glyphicon-ok',
+                                title: 'Success!',
+                                message: 'Information has been updated',
+                                url: '#',
+                                target: '_blank'
+                            },{
+                                element: target_element,
+                                type: "success",
+                                allow_dismiss: true,
+                                newest_on_top: false,
+                                placement: {
+                                    from: 'bottom',
+                                    align: 'center'
+                                }
+                            });
+                        },
+                        error: function (err) {
+                            console.log("there is a problem: "+err.responseText);
+                            $.notify({
+                                icon: 'glyphicon glyphicon-warning-sign',
+                                title: 'Error!',
+                                message: 'Something is wrong',
+                                url: '#',
+                                target: '_blank'
+                            },{
+                                element: target_element,
+                                type: "warning",
+                                allow_dismiss: true,
+                                newest_on_top: false,
+                                placement: {
+                                    from: 'bottom',
+                                    align: 'center'
+                                }
+                            });
+                        }
+                    });
+
+                } else { // if not all the fields are filled
+
+                    $.notify({
+                        icon: 'glyphicon glyphicon-warning-sign',
+                        title: 'Error!',
+                        message: 'Please fill all the fields',
+                        url: '#',
+                        target: '_blank'
+                    },{
+                        element: target_element,
+                        type: "warning",
+                        allow_dismiss: true,
+                        newest_on_top: true,
+                        placement: {
+                            from: 'bottom',
+                            align: 'center'
+                        }
+                    });
+
+                }
+
+            }	
+        </script>
+        <script>
+            function validateForm(data){
+                var valid = true;
+                $.each(data, function(id, obj) {
+                    if(obj.value === "") {
+                        valid = false;
+                    }
+                });   
+                return valid;         
+            }
+        </script>
+        <script >
+        function uploadPhoto(inputFile, directory, src_id, div, myClass, field, shape, extras, src_type='src|.png' ) {
+
+            var file = inputFile.files[0];
+            var data = new FormData();
+            data.append('file', file, file.name);
+            data.append('path', directory);
+            data.append('myClass', myClass);
+            data.append('field', field);
+            data.append('shape', shape);
+            data.append('extras', extras);
+            
+            var src_type_split = src_type.split('|'); 
+            var src = src_type_split[0];
+            var extension = src_type_split[1];
+
+            $.ajax({
+                url: "{{ path('save_file') }}",
+                type: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data){
+                    console.log(data);
+                    console.log("uploaded image");
+                    $(src_id).attr(src, data + extension);
+                    $.notify({message: 'Saved'},{element: div,type: 'success',placement:{from: 'bottom',align: 'center'}});
+                },
+                error: function (err) {
+                    console.log("there is an err: "+err.responseText);
+                }
+
+            });
+                    
+        };
+
+        </script>
+
+      {% block javascripts %}{% endblock %}
                 
     </body>
 </html>

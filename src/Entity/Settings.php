@@ -39,7 +39,7 @@ class Settings
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $youtube;
+    private $coverphoto;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -104,6 +104,16 @@ class Settings
      */
     private $tawkTo;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $signature;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $appendsignature;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -157,14 +167,14 @@ class Settings
         return $this;
     }
 
-    public function getYoutube(): ?string
+    public function getCoverphoto(): ?string
     {
-        return $this->youtube;
+        return $this->coverphoto;
     }
 
-    public function setYoutube(?string $youtube): self
+    public function setCoverphoto(?string $coverphoto): self
     {
-        $this->youtube = $youtube;
+        $this->coverphoto = $coverphoto;
 
         return $this;
     }
@@ -318,6 +328,30 @@ class Settings
     public function setTawkTo(?string $tawkTo): self
     {
         $this->tawkTo = $tawkTo;
+
+        return $this;
+    }
+
+    public function getSignature(): ?string
+    {
+        return $this->signature;
+    }
+
+    public function setSignature(?string $signature): self
+    {
+        $this->signature = $signature;
+
+        return $this;
+    }
+
+    public function getAppendsignature(): ?string
+    {
+        return $this->appendsignature;
+    }
+
+    public function setAppendsignature(?string $appendsignature): self
+    {
+        $this->appendsignature = $appendsignature;
 
         return $this;
     }

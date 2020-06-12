@@ -171,6 +171,11 @@ class Musician implements UserInterface
      */
     private $tracks;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Referee::class, mappedBy="musician")
+     */
+    private $referees;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -184,6 +189,7 @@ class Musician implements UserInterface
         $this->ratings = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->tracks = new ArrayCollection();
+        $this->referees = new ArrayCollection();
     }
 
     public function __toString() {
@@ -521,7 +527,7 @@ class Musician implements UserInterface
 
     public function photourl(): ?string
     {
-        $url = "https://muske.co.ke/uploads/photos/$this->photo";
+        $url = "http://127.0.0.1:8000/uploads/photos/$this->photo";
         $this->photourl = $url;
 
         return $this->photourl;
@@ -530,7 +536,7 @@ class Musician implements UserInterface
 
     public function thumbnailurl(): ?string
     {
-        $url = "https://muske.co.ke/uploads/photos/thumbs/".$this->photo.".png";
+        $url = "http://127.0.0.1:8000/uploads/photos/thumbs/".$this->photo.".png";
         $this->thumbnailurl = $url;
 
         return $this->thumbnailurl;
@@ -538,7 +544,7 @@ class Musician implements UserInterface
 
     public function logourl(): ?string
     {
-        $url = "https://muske.co.ke/img/logo_only_white_sq.png";
+        $url = "http://127.0.0.1:8000/img/logo_only_white_sq.png";
         $this->logourl = $url;
 
         return $this->logourl;
@@ -869,6 +875,37 @@ class Musician implements UserInterface
             // set the owning side to null (unless already changed)
             if ($track->getMusician() === $this) {
                 $track->setMusician(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Referee[]
+     */
+    public function getReferees(): Collection
+    {
+        return $this->referees;
+    }
+
+    public function addReferee(Referee $referee): self
+    {
+        if (!$this->referees->contains($referee)) {
+            $this->referees[] = $referee;
+            $referee->setMusician($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReferee(Referee $referee): self
+    {
+        if ($this->referees->contains($referee)) {
+            $this->referees->removeElement($referee);
+            // set the owning side to null (unless already changed)
+            if ($referee->getMusician() === $this) {
+                $referee->setMusician(null);
             }
         }
 

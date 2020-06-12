@@ -1,598 +1,110 @@
-{% extends 'base_wizard.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}More Info{% endblock %}
+{% block title %}Music Services Kenya{% endblock %}
 {% block stylesheets %}
-<link rel="stylesheet" type="text/css" href="{{ asset('datepicker/css/bootstrap-datepicker.css')}}" />
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" href="{{ asset('theme/assets/css/form-styles.css ') }}">
+    <link rel="stylesheet" href="{{ asset('theme/assets/fonts/simple-line-icons.min.css ') }}">
+    <link rel="stylesheet" href="{{ asset('theme/assets/css/Steps-Progressbar.css ') }}">
+
 {% endblock %}
 {% block body %}
+{% include "reusable/nav.html.twig" %}
 
-	<div class="image-container set-full-height" style="background-image: url('{{ asset('img/drumset.jpg')}}')">
-
-	    <!--   Big container   -->
-	    <div class="container">
-	        <div class="row">
-		        <div class="col-sm-8 col-sm-offset-2">
-		            <!--      Wizard container        -->
-		            <div class="wizard-container">
-		                <div class="card wizard-card" data-color="blue" id="wizard">
-			                <form action="" method="">
-			                <!--        You can switch " data-color="rose" "  with one of the next bright colors: "blue", "green", "orange", "purple"        -->
-
-		                    	<div class="wizard-header">
-
-		                        	<h3 class="wizard-title">
-		                        		Add More Information
-		                        	</h3>
-									<h5>This information will help us build your portfolio.</h5>
-		                    	</div>
-								<div class="wizard-navigation">
-									<ul>
-			                            <li><a class="toggle" href="#information" data-toggle="tab">Information</a></li>
-			                            <li><a class="toggle" href="#skill" data-toggle="tab">Skills</a></li>
-			                            <li><a class="toggle" href="#education" data-toggle="tab">Education</a></li>
-			                            <li><a class="toggle" href="#job" data-toggle="tab">Jobs</a></li>
-			                            <li><a class="toggle" href="#roles" data-toggle="tab">Roles</a></li>
-			                            <li><a class="toggle" href="#salary" data-toggle="tab">Salary</a></li>
-										
-			                        </ul>
-								</div>
-
-		                        <div class="tab-content">                              
-		                            <div class="tab-pane" id="information">
-		                            	<div class="row">
-		                                	<div class="col-sm-12">
-		                                    	<h4 class="info-text" id="info-text-information"> Let's start with the basic details</h4>
-												{% for message in app.flashes('success') %}
-													<div class="alert alert-success">
-														{{ message }}
-													</div>
-												{% endfor %}												
-		                                	</div>
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-		                                        	{# <label class="control-label">City</label> #}
-                                                    <label class="control-label" for="fullname">Full name</label>
-		                                        	{# <input type="text" class="form-control" id="exampleInputEmail1"> #}
-                                                    <input type="text" class="form-control" id="fullname" value="{{fields.full_name}}">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-		                                        	{# <label class="control-label">City</label> #}
-                                                    <label class="control-label" for="email">Email address</label>
-		                                        	{# <input type="text" class="form-control" id="exampleInputEmail1"> #}
-                                                    <input type="email" class="form-control" id="email" value="{{fields.email}}">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-		                                        	{# <label class="control-label">City</label> #}
-                                                    <label class="control-label" for="phonenumber">Phone number</label>
-		                                        	{# <input type="text" class="form-control" id="exampleInputEmail1"> #}
-                                                    <input type="text" class="form-control" id="phonenumber" value="{{fields.phone}}">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-		                                        	{# <label class="control-label">City</label> #}
-                                                    <label class="control-label" for="age">Age</label>
-		                                        	{# <input type="text" class="form-control" id="exampleInputEmail1"> #}
-                                                    <input type="text" class="form-control" id="age" value="{{fields.age}}">
-		                                    	</div>
-		                                	</div>
-		                            	</div>
-		                            </div>
-		                            <div class="tab-pane" id="skill">
-		                                <h4 class="info-text" id="info-text-skill">Add as many skills as you have. Save each skill. </h4>
-		                            	<div class="row">
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="skillname">Skill (e.g piano, conducting, etc)</label>
-                                                    <input type="text" class="form-control" id="skillname">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="level">Skill Level (e.g beginner, intermediate, advanced)</label>
-                                                    <input type="text" class="form-control" id="level">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="experience">Experience (e.g 1 year, 3 years)</label>
-                                                    <input type="text" class="form-control" id="experience">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-                                                    <button type="button" id="save_skill" class="btn btn-primary">Save This Skill</button>
-		                                    	</div>
-		                                	</div>
-											<div class="skills for_skills">
-												<ul>
-													{% for skill in fields.skills %}
-													<li>{{skill.skillname}}</li>
-													{% endfor %}
-												</ul>
-											</div>
-											<!-- End #skills -->
-
-		                            	</div>
-		                            </div>
-		                            <div class="tab-pane" id="education">
-		                                <h4 class="info-text" id="info-text-education">Information about your education background. </h4>
-		                                <div class="row">
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="institution">Institution</label>
-                                                    <input type="text" class="form-control" id="institution">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="course">Which Course?</label>
-                                                    <input type="text" class="form-control" id="course">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="from_year">From which month/year</label>
-                                                    <input type="text" class="form-control datepicker" id="from_year">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="to_year">To Which month/year</label>
-                                                    <input type="text" class="form-control datepicker" id="to_year">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="level_of_course">Which level (e.g Diploma)</label>
-                                                    <input type="text" class="form-control" id="level_of_course">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="location">Where? (e.g online, Nairobi)</label>
-                                                    <input type="text" class="form-control" id="location">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-                                                    <button type="button" id="save_education" class="btn btn-primary">Save This Information</button>
-		                                    	</div>
-		                                	</div>
-											<div class="skills for_education">
-												<ul>
-													{% for edu in fields.education %}
-													<li>{{edu.coursename}}</li>
-													{% endfor %}
-												</ul>
-											</div>
-		                                </div>
-		                            </div>
-		                            <div class="tab-pane" id="job">
-		                                <h4 class="info-text" id="info-text-job">Add information about your work history. </h4>
-		                                <div class="row">
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="institution_job">Institution</label>
-                                                    <input type="text" class="form-control" id="institution_job">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="job_title">Which Job?</label>
-                                                    <input type="text" class="form-control" id="job_title">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="from_year_job">From which month/year</label>
-                                                    <input type="text" class="form-control datepicker" id="from_year_job">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="to_year_job">To Which month/year</label>
-                                                    <input type="text" class="form-control datepicker" id="to_year_job">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-		                                        	<label class="control-label">Still working there?</label>
-		                                        	<select id="current_or_not" class="form-control">
-		                                            	<option disabled="" selected=""></option>
-		                                            	<option value="current">Yes</option>
-		                                            	<option value="not_current">No </option>
-		                                        	</select>
-		                                    	</div>
-		                                    </div>
-
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="location_job">Where? (e.g Thika, Nairobi)</label>
-                                                    <input type="text" class="form-control" id="location_job">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-                                                    <button type="button" id="save_job" class="btn btn-primary">Save This Job</button>
-		                                    	</div>
-		                                	</div>
-											<div class="skills for_jobs">
-												<ul>
-													{% for job in fields.jobs %}
-													<li>{{job.institution}}</li>
-													{% endfor %}
-												</ul>
-											</div>
-
-		                                </div>
-		                            </div>
-		                            <div class="tab-pane" id="roles">
-		                                <h4 class="info-text" id="info-text-skill">Which jobs can you do? </h4>
-		                            	<div class="row">
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="role">Job title (e.g Choral Conductor, Church Pianist, etc)</label>
-                                                    <input type="text" class="form-control" id="role">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-                                                    <button type="button" id="save_role" class="btn btn-primary">Save This Role</button>
-		                                    	</div>
-		                                	</div>
-											<div class="skills for_roles">
-												<ul>
-													{% for role in fields.roles %}
-													<li>{{role.jobtitle}}</li>
-													{% endfor %}
-												</ul>
-											</div>
-
-		                            	</div>
-		                            </div>
-		                            <div class="tab-pane" id="salary">
-		                                <h4 class="info-text" id="info-text-skill">Lets talk about renumeration (optional but helpful) </h4>
-		                            	<div class="row">
-		                                	<div class="col-sm-5 col-sm-offset-1">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="cur_salary">Current Salary (e.g if applicable)</label>
-                                                    <input type="text" class="form-control" id="cur_salary" value="{{fields.salary}}">
-		                                    	</div>
-		                                	</div>
-		                                	<div class="col-sm-5">
-		                                    	<div class="form-group label-floating">
-                                                    <label class="control-label" for="exp_salary">Expected Salary (e.g 50,000)</label>
-                                                    <input type="text" class="form-control" id="exp_salary" value="{{fields.exp_salary}}">
-		                                    	</div>
-		                                	</div>
-		                            	</div>
-		                            </div>
-		                        </div>
-		                        <div class="wizard-footer">
-	                            	<div class="pull-right">
-                                        {# <button type="button" id="update" class="btn btn-primary">Submit</button> #}
-	                                    <input type='button' class='btn btn-next btn-fill btn-primary btn-wd' name='next'  id="update" value='Next' />
-	                                    <input type='button' class='btn btn-finish btn-fill btn-primary btn-wd' name='finish' id="save_salary" value='Finish' />
-	                                </div>
-	                                <div class="pull-left">
-	                                    <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' />
-	                                </div>
-		                            <div class="clearfix"></div>
-		                        </div>
-			                </form>
-		                </div>
-		            </div> <!-- wizard container -->
-		        </div>
-	        </div> <!-- row -->
-	    </div> <!--  big container -->
-
-	    <div class="footer">
-	        <div class="container text-center">
-	             Template made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creative Tim</a>. Free download <a href="http://www.creative-tim.com/product/bootstrap-wizard">here.</a>
-	        </div>
-	    </div>
-	</div>
-{% endblock %}
-
+	{% include "registration_process/info.html.twig" %}
+	{% include "registration_process/skills.html.twig" %}
+	{% include "registration_process/education.html.twig" %}
+	{% include "registration_process/jobs.html.twig" %}
+	{% include "registration_process/roles.html.twig" %}
+	{% include "reusable/footer.html.twig" %}
+	{% include "registration_process/resume-modal.html.twig" %}
+	<input type="hidden" value="" id="saved" />
+		
+	{% endblock %}
 
 {% block javascripts %}
 
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="{{ asset('datepicker/js/bootstrap-datepicker.js')}}" type="text/javascript"></script>
 
-    <script>
-    $( "#update" ).click(function() {
+	<script>
+		$(document).on("click", '[id^="to-"]', function(){
 
-	var idName = $(".tab-pane.active").attr("id");
+		var project = jQuery(this).attr("id");
+		var splitted = project.split('-'); 
+		var target = splitted[1];
+		var from = splitted[3];
+		var name = $("#fullname").val();
+		var email = $("#email").val();
+		var phone = $("#phone").val();
+		if(name && email && phone){
+			$("#"+target).slideDown(1000);
+			$("#"+from).hide("slow");
+			$("html, body").animate({ scrollTop: 0 }, "slow");
+			console.log("#"+target);
+		} else {
+			alert ("Please provide the basic information - Name, Email and Phone number");
+		}
 
-	console.log("id of the div is: " + idName);
-	
-	if(idName == "information") {
-
-		var fullname = $("#fullname").val();              
-		var email = $("#email").val();              
-		var phonenumber = $("#phonenumber").val();              
-		var age = $("#age").val();              
-
-			$.ajax({
-				url:'{{ (path('update_user')) }}',
-				type: "POST",
-				dataType: "json",
-				data: {
-					"fullname": fullname,
-					"email": email,
-					"phonenumber": phonenumber,
-					"age": age,
-				},
-				async: true,
-				success: function (data)
-				{
-					console.log(data);
-					console.log("saved information");
-				},
-				error: function () {
-					$("#warning").html("<b>something's wrong</b>");
-				}
-			});
-
-
-	}
-
-	if(idName == "salary") {
-
-
-
-	}
-
-    });
-    </script>
-
-    <script>
-    $( ".toggle" ).click(function() {
-
-	var idName = $(".tab-pane.active").attr("id");
-
-	console.log("id of the div is: " + idName);
-	
-	var fullname = $("#fullname").val();              
-	var email = $("#email").val();              
-	var phonenumber = $("#phonenumber").val();              
-	var age = $("#age").val();              
-
-		$.ajax({
-			url:'{{ (path('update_user')) }}',
-			type: "POST",
-			dataType: "json",
-			data: {
-				"fullname": fullname,
-				"email": email,
-				"phonenumber": phonenumber,
-				"age": age,
-			},
-			async: true,
-			success: function (data)
-			{
-				console.log(data);
-				console.log("saved information");
-			},
-			error: function () {
-				$("#warning").html("<b>something's wrong</b>");
-			}
 		});
 
-
-    });
-    </script>
-    <script>
-    $( "#save_skill" ).click(function() {
-
-    var skillname = $("#skillname").val();              
-    var level = $("#level").val();              
-    var experience = $("#experience").val();              
-
-	$.ajax({
-		url:'{{ (path('save_skill')) }}',
-		type: "POST",
-		dataType: "json",
-		data: {
-			"skill": skillname,
-			"level": level,
-			"experience": experience,
-		},
-		async: true,
-		success: function (data)
-		{
-			console.log(data);
-			console.log("saved that");
-			$("#skillname").val('')
-			$("#level").val('')
-			$("#experience").val('')
-			$("#info-text-skill").text("Great! Keep adding more skills...");
-			$(".for_skills ul").append("<li>"+data+"</li>");
-			$("#skillname").focus();
-			$("#save_skill").prop('disabled', false);
-		},
-		error: function () {
-			// $("#warning").html("<b>something's wrong</b>");
-			console.log('somethings wrong');
-	}
-	});
-
-    });
 	</script>
-	
+
 	<script>
+		$(document).on("click", '[id^="save-"]', function(){
+			var myId = jQuery(this).attr("id");
+			var splitted = myId.split('-'); 
+			var div = splitted[1];
+			var form = $("#"+div+"-form");
+			var list = $("#"+div+"-list");
+			saveDetails(div);
 
-	$( "#save_education" ).click(function() {
-
-		var institution = $("#institution").val();              
-		var from_year = $("#from_year").val();              
-		var to_year = $("#to_year").val();              
-		var level_of_course = $("#level_of_course").val();              
-		var location = $("#location").val();              
-		var course = $("#course").val();              
-
-			$.ajax({
-				url:'{{ (path('save_education')) }}',
-				type: "POST",
-				dataType: "json",
-				data: {
-					"institution": institution,
-					"from_year": from_year,
-					"to_year": to_year,
-					"level_of_course": level_of_course,
-					"location": location,
-					"course": course,
-				},
-				async: true,
-				success: function (data)
-				{
-					console.log(data);
-					console.log("saved education");
-					$("#institution").val('');
-					$("#from_year").val('');
-					$("#to_year").val('');
-					$("#level_of_course").val('');
-					$("#location").val('');
-					$("#course").val('');
-					$("#info-text-education").text("Great! Keep adding more...");
-					$(".for_education ul").append("<li>"+data+"</li>");
-                    $("#institution").focus();
-					$("#save_education").prop('disabled', false);
-				},
-				error: function () {
-					$("#warning").html("<b>something's wrong</b>");
+			$.notify({
+				icon: 'glyphicon glyphicon-time',
+				message: 'Please wait...',
+				url: '#',
+				target: '_blank'
+			},{
+				type: "info",
+				allow_dismiss: true,
+				newest_on_top: false,
+				placement: {
+					from: 'bottom',
+					align: 'center'
 				}
 			});
+			$(form)[0].reset();
+			
 
-	});
+		});
 
 	</script>
 
 	<script>
+		$(document).on("click", '[id^=goto-]', function(){
 
-	$( "#save_job" ).click(function() {
+		var project = jQuery(this).attr("id");
+		var splitted = project.split('-'); 
+		var target = splitted[1];
+		var saved = $("#saved").val();
+		
+		if(saved){
+			$("#info").hide();
+			$("#skills").hide();
+			$("#education").hide();
+			$("#jobs").hide();
+			$("#roles").hide();
+			$("#"+target).slideDown("slow");
+			console.log("#"+target);
+			$("html, body").animate({ scrollTop: 0 }, "slow");
+		} else {
+			alert ("Please save the basic information first");
+		}
 
-		var institution_job = $("#institution_job").val();              
-		var from_year_job = $("#from_year_job").val();              
-		var to_year_job = $("#to_year_job").val();              
-		var job_title = $("#job_title").val();              
-		var location_job = $("#location_job").val();              
-		var current_or_not = $("#current_or_not").val();              
-
-			$.ajax({
-				url:'{{ (path('save_job')) }}',
-				type: "POST",
-				dataType: "json",
-				data: {
-					"institution_job": institution_job,
-					"from_year_job": from_year_job,
-					"to_year_job": to_year_job,
-					"job_title": job_title,
-					"location_job": location_job,
-					"current_or_not": current_or_not,
-				},
-				async: true,
-				success: function (data)
-				{
-					console.log(data);
-					console.log("saved job");
-					$("#institution_job").val('');
-					$("#from_year_job").val('');
-					$("#to_year_job").val('');
-					$("#job_title").val('');
-					$("#location_job").val('');
-					$("#current_or_not").val('');
-					$("#info-text-job").text("Great! Keep adding more...");
-					$(".for_jobs ul").append("<li>"+data+"</li>");
-					$("#institution_job").focus();
-					$("#save_job").prop('disabled', false);
-
-				},
-				error: function () {
-					$("#warning").html("<b>something's wrong</b>");
-				}
-			});
-
-	});
+		});
 
 	</script>
 
-
-	<script>
-
-	$( "#save_role" ).click(function() {
-
-		var role = $("#role").val();              
-		var medium = $("#medium").val();              
-
-			$.ajax({
-				url:'{{ (path('save_role')) }}',
-				type: "POST",
-				dataType: "json",
-				data: {
-					"role": role,
-					"medium": medium,
-				},
-				async: true,
-				success: function (data)
-				{
-					console.log(data);
-					console.log("saved job");
-					$("#role").val('');
-					$("#medium").val('');
-					$(".for_roles ul").append("<li>"+data+"</li>");
-                    $("#role").focus();
-					$("#save_role").prop('disabled', false);
-				},
-				error: function () {
-					$("#warning").html("<b>something's wrong</b>");
-				}
-			});
-
-	});
-
-	</script>
-
-	<script>
-
-	$( "#save_salary" ).click(function() {
-
-		var cur_salary = $("#cur_salary").val();              
-		var exp_salary = $("#exp_salary").val();              
-
-			$.ajax({
-				url:'{{ (path('save_salary')) }}',
-				type: "POST",
-				dataType: "json",
-				data: {
-					"cur_salary": cur_salary,
-					"exp_salary": exp_salary,
-				},
-				async: true,
-				success: function (data)
-				{
-					console.log(data);
-					console.log("saved salary");
-					$("#cur_salary").val('');
-					$("#exp_salary").val('');
-					$("#save_salary").prop('disabled', false);
-					location.href = "{{ path('finalize_musician')}}";
-				},
-				error: function () {
-					$("#warning").html("<b>something's wrong</b>");
-				}
-			});
-
-	});
-
-	</script>
 
 	<script>
 	$( function() {
@@ -637,4 +149,11 @@
     });
 </script>
 
+<script>
+
+	$("#to-skills-from-info").click(function() {
+		saveDetails('info');
+	})
+
+</script>
 {% endblock %}

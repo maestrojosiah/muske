@@ -1,238 +1,197 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Music Services Kenya{% endblock %}
+{% block stylesheets %}
+<style>
+  div.jumbotron.hero-nature {
+    background-image: url('{{ asset("img/drumset-half.jpg" ) }}');
+  }
 
-{% block body %}
+  div.jumbotron.hero-photography {
+    background-image: url('{{ asset("img/bass-guitar-half.jpg" ) }}');
+  }
 
-<header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"><img src="{{ asset('img/logo_only.png') }}"></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto mb-2 mb-md-0">
-          <li class="nav-item active">
-            <a class="nav-link" aria-current="page" href="{{path('app_register')}}">Resume</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Find Service</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Advertize</a>
-          </li>          
-          <li class="nav-item">
-            <a class="nav-link" href="{{path('f_a_q_index')}}">FAQ</a>
-          </li>          
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Apps</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="https://triads.muske.co.ke">Chord generator</a>
-              <a class="dropdown-item" href="https://choir.muske.co.ke">Choir manager</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Coming soon</a>
-            </div>            
-          </li>
-        </ul>
-        {% if app.user and app.user != null %} 
-        <ul class="navbar-nav ml-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link" href="{{path('musician_profile')}}">Profile Page</a>
-          </li>  
-        </ul>        
-        {% else %} 
-        <ul class="navbar-nav ml-auto mb-2 mb-md-0">
-          {% include "security/login.html.twig" %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Options</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="{{ path('app_register')}}">Sign Up</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{ path('musician_reset_password')}}"><span class="small">Forgot Password</span></a>
-            </div>            
-          </li>
-        </ul>
-        {% endif %}
-      </div>
-    </div>
-  </nav>
-</header>
-
-<main>
-
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="{{ asset('img/class-half.jpg')}}" width="100%" height="100%" background="#777" color="#777" text="false" title="false" >
-        {# <img src="{{ asset('bundles/acmedemo/img/weather_icons/blizzard.gif') }}" /> #}
-        <div class="container">
-          <div class="carousel-caption text-left">
-            <h1>Musician's Resume.</h1>
-            <p>Create your CV/Resume on to the largest musician's resume database in Kenya. Get a free webpage for yourself and advertize yourself for an opportunity to work for great institutions in Kenya. </p>
-            <p><a class="btn btn-lg btn-primary" href="{{ path('app_register')}}" role="button">Create Resume</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        {# {{< placeholder width="100%" height="100%" background="#777" color="#777" text="false" title="false" >}} #}
-        <img src="{{ asset('img/drumset-half.jpg')}}" width="100%" height="100%" background="#777" color="#777" text="false" title="false" >
-        <div class="container">
-          <div class="carousel-caption">
-            <h1>Find Music Services.</h1>
-            <p>Whether you want music services as an institution or an individual, instrumentalist or instructor, music theory or drums, piano or guitar, they are all here and ready</p>
-            <p><a class="btn btn-lg btn-primary" href="#" role="button">Search Now</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        {# {{< placeholder width="100%" height="100%" background="#777" color="#777" text="false" title="false" >}} #}
-        <img src="{{ asset('img/bass-guitar-half.jpg')}}" width="100%" height="100%" background="#777" color="#777" text="false" title="false" >
-        <div class="container">
-          <div class="carousel-caption text-right">
-            <h1>Advertize a job.</h1>
-            <p>You have a job that you want to advertize and have as many musicians as possible apply? This is your platform. Clearly describe the job and we will ensure all musicians know about it.</p>
-            <p><a class="btn btn-lg btn-primary" href="#" role="button">Advertize Now</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
-
-
-  <!-- Marketing messaging and featurettes
-  ================================================== -->
-  <!-- Wrap the rest of the page in another container to center all the content. -->
-
-  <div class="container marketing">
-
-    <!-- Three columns of text below the carousel -->
-    <div class="row">
-      <div class="col-lg-4">
-        {# {{< placeholder width="140" height="140" background="#777" color="#777" class="rounded-circle" >}} #}
-        <img src="{{ asset('img/adv-yourself.jpg')}}" width="140" height="140" background="#777" color="#777" class="rounded-circle"  >
-        <h2>Free Resume</h2>
-        <p>
-          Create an online resume page that people can visit to see your skills and profession. You can also download it!. We will notify you when someone requests for any of your services through text message and email. It is time to get your skills visible in the only music services website in Kenya.
-        </p>
-        <p><a class="btn btn-secondary" href="{{ path('app_register')}}" role="button">Create Resume &raquo;</a></p>
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        {# {{< placeholder width="140" height="140" background="#777" color="#777" class="rounded-circle" >}} #}
-        <img src="{{ asset('img/find-teacher.jpg')}}" width="140" height="140" background="#777" color="#777" class="rounded-circle"  >
-        <h2>Find a musician</h2>
-        <p>
-          Easily find the music service that you want. Instrumentalist, Choir Trainer, Music theory teacher, guitar instructor, piano instructor, drum instructor, School music teacher, Music Director, etc. It is time to get a musician you can trust from the greatest musician's database in Kenya
-        </p>
-        <p><a class="btn btn-secondary" href="#" role="button">Search Now &raquo;</a></p>
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        {# {{< placeholder width="140" height="140" background="#777" color="#777" class="rounded-circle" >}} #}
-        <img src="{{ asset('img/adv-job.jpg')}}" width="140" height="140" background="#777" color="#777" class="rounded-circle"  >
-        <h2>Advertize a job</h2>
-        <p>
-          You have a job that you want to advertize to the musicians in MuSKe? You are welcome. It is easy to post an advert and we will make sure the best musicians who fit your job description have seen the advertizement. We will post the advert at our notice board and also send it to the musicians.
-        </p>
-        <p><a class="btn btn-secondary" href="#" role="button">Advertize Now &raquo;</a></p>
-      </div><!-- /.col-lg-4 -->
-    </div><!-- /.row -->
-
-
-    <!-- START THE FEATURETTES -->
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">Mentorship. <span class="text-muted">Breakthrough for Musicians.</span></h2>
-        <p>We have the experience in the music market and we would like to see new musicians making it in life without going through the hustle that we went through ourselves. There is ready market and we have many talented musicians around. The only bridge that can make them meet is Music Services Kenya. Now you don't need to look for someone who knows someone who may know who needs your services :), Just create your Resume and wait! We will do the rest for you.</p>
-      </div>
-      <div class="col-md-5">
-        {# <img width="500" height="500" class="featurette-image img-fluid mx-auto" src="" > #}
-        <img src="{{ asset('img/trumpet.jpg')}}" width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto"  >
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
-      <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading-sm">Whatever the musical need, <span class="text-muted">We have the teacher.</span></h2>
-        <p class="lead">Whether you want to learn a musical instrument or you just want to know how to sing, we've got you covered. Learning music theory, Choral conducting, name it! If you want an instrumentalist for your institution, an instructor in any musical field, we give you the teacher and we make sure that you achieve what you want by supervising the works of the musician and offering any help that is needed. Don't wait any longer! Click the search button and get one of the best!</p>
-      </div>
-      <div class="col-md-5 order-md-1">
-        {# {{< placeholder width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto" >}} #}
-        <img src="{{ asset('img/choir.jpg')}}" width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto"  >
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">Advertize. <span class="text-muted">We'll make sure they see it.</span></h2>
-        <p class="lead">So you've searched and you can't find who you want? Or maybe you just want them to look for you! :) No problem. You can easily advertize your job position and we'll make sure they have it in their emails. Each one of them. By the way, we will do the interview for you if you don't mind.</p>
-      </div>
-      <div class="col-md-5">
-        {# {{< placeholder width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto" >}} #}
-        <img src="{{ asset('img/musicians.jpg')}}" width="500" height="500" background="#eee" color="#aaa" class="bd-placeholder-img-lg featurette-image img-fluid mx-auto"  >
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <!-- /END THE FEATURETTES -->
-
-  </div><!-- /.container -->
-
-
-  <!-- FOOTER -->
-  <footer class="container">
-    <div class="row">
-      <div class="col-12 col-md">
-        <small class="d-block mb-3 text-muted">&copy; Music Services Kenya 2020-{{ "now"|date('Y') }}</small>
-      </div>
-      <div class="col-6 col-md">
-        <h5>Features</h5>
-        <ul class="list-unstyled text-small">
-          <li><a class="link-secondary" href="#">Free website page</a></li>
-          <li><a class="link-secondary" href="#">Share page in your social media</a></li>
-          <li><a class="link-secondary" href="#">Look professional</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-md">
-        <h5>Resources</h5>
-        <ul class="list-unstyled text-small">
-          <li><a class="link-secondary" href="#">Download your generated resume</a></li>
-          <li><a class="link-secondary" href="#">Receive music education materials</a></li>
-          <li><a class="link-secondary" href="#">Back up your documents</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-md">
-        <h5>About</h5>
-        <ul class="list-unstyled text-small">
-          <li><a class="link-secondary" href="#">Team</a></li>
-          <li><a class="link-secondary" href="#">Locations</a></li>
-          <li><a class="link-secondary" href="#">Privacy</a></li>
-          <li><a class="link-secondary" href="#">Terms</a></li>
-        </ul>
-      </div>
-    </div>
-    {# <p>&copy; 2017-{{< year >}} Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p> #}
-  </footer>
-</main>
-
+  div.jumbotron.hero-technology {
+    background-image: url('{{ asset("img/class-half.jpg" ) }}');
+  }
+  .container.jumbo-container {
+    background-color: rgb(132,123,115, 0.85)
+  }
+  .with-bg {
+    background-image: url('{{ asset("img/class-min.jpg" ) }}');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;    
+  }
+</style>
 {% endblock %}
+{% block body %}
+    {% include "reusable/nav.html.twig" %}
+    <section id="carousel">
+      <div class="carousel slide" data-ride="carousel" id="carousel-1">
+        <div class="carousel-inner" role="listbox">
+          <div class="carousel-item">
+            <div class="jumbotron pulse animated hero-nature carousel-hero" >
+              <h1 class="hero-title">Find Music Services</h1>
+              <p class="hero-subtitle">Whether you want music services as an institution or an individual, instrumentalist or instructor, music theory or drums, piano or guitar, they are all here and ready<br></p>
+              <p><a class="btn btn-primary hero-button plat" role="button" href="{{ path('search')}}">Search Now</a></p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="jumbotron pulse animated hero-photography carousel-hero" >
+              <h1 class="hero-title">Advertize A Job</h1>
+              <p class="hero-subtitle">You have a job that you want to advertize and have as many musicians as possible apply? This is your platform. Clearly describe the job and we will ensure all musicians know about it.<br></p>
+              <p><a class="btn btn-primary hero-button plat" role="button" href="{{ path('advert_new')}}">Advertize now</a></p>
+            </div>
+          </div>
+          <div class="carousel-item active">
+            <div class="jumbotron pulse animated hero-technology carousel-hero" >
+              <h1 class="hero-title">Create Your Resume</h1>
+              <p class="hero-subtitle">Create your Personal CV/Resume website and access downloads of the same on the largest musician's resume database in Kenya. Get a free webpage for yourself and advertize yourself for an opportunity to work for great institutions
+                in Kenya.<br>
+              </p>
+              <p><a class="btn btn-primary btn-lg hero-button plat" role="button" href="{{ path('choose_theme')}}">Start Now</a></p>
+            </div>
+          </div>
+        </div>
+        <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><i class="fa fa-chevron-left"></i><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next"><i class="fa fa-chevron-right"></i><span class="sr-only">Next</span></a></div>
+        <ol
+          class="carousel-indicators">
+          <li data-target="#carousel-1" data-slide-to="0"></li>
+          <li data-target="#carousel-1" data-slide-to="1"></li>
+          <li data-target="#carousel-1" data-slide-to="2" class="active"></li>
+        </ol>
+      </div>
+    </section>
+    <div class="row three-columns">
+      <div class="col-12">
+        <div class="intro">
+          <h2 class="text-center">Welcome!</h2>
+          <p class="text-center">MuSKe is currently the only musician's platform in Kenya where musicians create their resume for online portfolios and downloading for their personal use. If you're looking for a musician, you're at the right place. If you are looking
+            for a place to advertize yourself or a job position, don't go further.
+          </p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="container">
+          <div class="col-md-4 text-left float-left service">
+            <div class="card" style="background-color: rgb(236,236,234);">
+              <div class="card-body description">
+                <img class="img-fluid descr-photo" src='{{ asset('img/adv-yourself.jpg' ) }}' width="100%">
+                <h4 class="card-title">Free resume</h4>
+                <h6 class="text-muted card-subtitle mb-2">Create your resume and get that professional look</h6>
+                <p class="card-text">Create an online resume page that people can visit to see your skills and profession. You can also download it!. We will notify you when someone requests for any of your services through text message and email. It is time to
+                  get your skills visible in the only music services website in Kenya.<br><a class="btn btn-primary" role="button" href="{{ path('choose_theme')}}">Create Resume</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-center float-left service">
+            <div class="card" style="background-color: rgb(229,230,232);">
+              <div class="card-body description">
+                <img class="img-fluid descr-photo" src='{{ asset('img/adv-job.jpg' ) }}' width="100%">
+                <h4 class="card-title">Get an instructor</h4>
+                <h6 class="text-muted card-subtitle mb-2">Search now for a music service that you need. It is free!</h6>
+                <p class="card-text">Easily find the music service that you want. Instrumentalist, Choir Trainer, Music theory teacher, guitar instructor, piano instructor, drum instructor, School music teacher, Music Director, etc. It is time to get a musician
+                  you can trust from the greatest musician's database in Kenya<br><a class="btn btn-primary" role="button" href="{{ path('search')}}">Search now!</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-right float-left service">
+            <div class="card dark" style="background-color: rgb(88,100,121);">
+              <div class="card-body description">
+                <img class="img-fluid descr-photo" src='{{ asset('img/find-teacher.jpg' ) }}' width="100%">
+                <h4 class="card-title">Advertize!</h4>
+                <h6 class="text-muted card-subtitle mb-2">Advertize a music job position here today</h6>
+                <p class="card-text">You have a job that you want to advertize to the musicians in MuSKe? You are welcome. It is easy to post an advert and we will make sure the best musicians who fit your job description have seen the advertizement. We will post
+                  the advert at our notice board and also send it to the musicians.<br><a class="btn btn-primary" role="button" href="{{ path('advert_new')}}">Advertize now</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron with-bg text-center" >
+      <div class="container jumbo-container">
+        <div class="my-title">
+          <h1 class="text-center text-light">Why Join MuSKe?</h1>
+        </div>
+        <h2 class="text-white">Mentorship.&nbsp;Breakthrough for Musicians.<br></h2>
+        <p>We have the experience in the music market and we would like to see new musicians making it in life without going through the hustle that we went through ourselves. There is ready market and we have many talented musicians around. The only
+          bridge that can make them meet is Music Services Kenya. Now you don't need to look for someone who knows someone who may know who needs your services :), Just create your Resume and wait! We will do the rest for you.<br>
+        </p>
+        <p><a href="{{ path('f_a_q_index')}}" class="btn btn-primary btn-lg" role="button">Learn more</a></p>
+      </div>
+    </div>
+    <div class="testimonials-clean">
+      <div class="container">
+        <div class="intro">
+          <h2 class="text-center">Testimonials </h2>
+          <p class="text-center">Having a MuSKe account will make you have the best platform to advertize yourself as a musician. Read what some of our friends say about how having an online personal website has helped them.</p>
+        </div>
+        <div class="row people">
+          <div class="col-md-6 col-lg-4 item">
+            <div class="box">
+              <p class="description">Getting and maintaining a website has been my biggest nightmare. MuSKe has really helped me have a website that I can maintain with very simple clicks!</p>
+            </div>
+            <div class="author">
+              <img class="rounded-circle" src='{{ asset('img/logo_only_white_sq.png' ) }}'>
+              <h5 class="name">Milcah Kelly</h5>
+              <p class="title">Primary School Music Teacher.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 item">
+            <div class="box">
+              <p class="description">I have always paid people to create resume for me... not any more! Now I can choose from a pool of themes and download my resume instantly.</p>
+            </div>
+            <div class="author">
+              <img class="rounded-circle" src='{{ asset('img/logo_only_white_sq.png' ) }}'>
+              <h5 class="name">Mbai Dennis</h5>
+              <p class="title">Music Theory Instructor.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 item">
+            <div class="box">
+              <p class="description">My social media accounts now have a website link :) Now there's a website link on my resume too! I love how much I can personalize my online personal resume.</p>
+            </div>
+            <div class="author">
+              <img class="rounded-circle" src='{{ asset('img/logo_only_white_sq.png' ) }}'>
+              <h5 class="name">Josiah Birai</h5>
+              <p class="title">Music Theory, Piano and Guitar Instructor.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="my-title" style="margin-top: 20px;">
+      <h1 class="text-center">How to Get Started.</h1>
+    </div>
+    <div class="video-container"><iframe allowfullscreen="" frameborder="0" src="https://www.youtube.com/embed/KSJ7Kfonn7I?loop=1&amp;playlist=KSJ7Kfonn7I" width="853" height="480"></iframe></div>
+    <div class="jumbotron text-center">
+      <div class="row">
+        <div class="col-md-5"><img class="img-fluid" src='{{ asset('img/choir.jpg' ) }}'></div>
+        <div class="col-md-7 align-self-center">
+          <h3>Whatever the musical need,&nbsp;We have the teacher.<br></h3>
+          <p>Whether you want to learn a musical instrument or you just want to know how to sing, we've got you covered. Learning music theory, Choral conducting, name it! If you want an instrumentalist for your institution, an instructor in any musical
+            field, we give you the teacher and we make sure that you achieve what you want by supervising the works of the musician and offering any help that is needed. Don't wait any longer! Click the search button and get one of the best!<br>
+          </p>
+          <p><a href="{{ path('f_a_q_index')}}" class="btn btn-primary btn-lg" role="button">Learn more</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron text-center my-bg-dark last-jumbo">
+      <div class="row">
+        <div class="col-md-7 align-self-center">
+          <h3>Advertize.&nbsp;We'll make sure they see it.<br></h3>
+          <p>So you've searched and you can't find who you want? Or maybe you just want them to look for you! :) No problem. You can easily advertize your job position and we'll make sure they have it in their emails. Each one of them. By the way,
+            we will do the interview for you if you don't mind.<br>
+          </p>
+          <p><a href="{{ path('f_a_q_index')}}" class="btn btn-primary btn-lg" role="button">Learn more</a></p>
+        </div>
+        <div class="col-md-5"><img class="img-fluid" src='{{ asset('img/musiciansbr.jpg' ) }}'></div>
+      </div>
+    </div>
+    {% include "reusable/footer.html.twig" %}
+  {% endblock %}

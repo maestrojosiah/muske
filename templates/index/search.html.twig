@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Music Services Kenya{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('theme/assets/css/search.css ') }}">
+{% endblock %}
+{% block body %}
+    {% include "reusable/nav.html.twig" %}
+    <div class="container">
+        <div class="jumbotron" id="search">
+            <h4>Search now!</h4>
+            <p>Use the categories below to narrow down to the music service that you need.</p>
+            <p class="for-btn">
+                <div class="btn-group btn-group-sm" role="group"><button class="btn btn-primary btn-info filter-button" type="button" data-filter="all">All</button><button class="btn btn-primary btn-info filter-button" type="button" data-filter="choir">Choir</button><button class="btn btn-primary btn-info filter-button"
+                        type="button" data-filter="piano">Piano</button><button class="btn btn-primary btn-info filter-button" type="button" data-filter="guitar">Guitar</button><button class="btn btn-primary btn-info filter-button" type="button" data-filter="saxophone">Saxophone</button>
+                    <button
+                        class="btn btn-primary btn-info filter-button" type="button" data-filter="trumpet">Trumpet</button><button class="btn btn-primary btn-info filter-button" type="button" data-filter="trombone">Trombone</button></div>
+            </p>
+            <p id="you-are-here">All</p>
+            <div class="row">
+                <div class="col-md-4 filter piano guitar saxophone">
+                    <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="assets/img/adv-yourself.jpg"><a class="btn btn-primary middle" role="button" href="web_theme.html">JOHN SMITH&nbsp;</a>
+                        <div class="card-body">
+                            <h5 class="card-title">Profile</h5>
+                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-resume">Resume</button><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-contact">Contact</button></div>
+                        </div>
+                        <div class="ribbon"><span>Verified</span></div>
+                    </div>
+                </div>
+                <div class="col-md-4 filter trumpet choir choral">
+                    <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="assets/img/adv-job.jpg"><a class="btn btn-primary middle" role="button" href="web_theme.html">JOHN SMITH&nbsp;</a>
+                        <div class="card-body">
+                            <h5 class="card-title">Profile</h5>
+                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-resume">Resume</button><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-contact">Contact</button></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 filter choir piano guitar">
+                    <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="assets/img/default-avatar.png"><a class="btn btn-primary middle" role="button" href="web_theme.html">JOHN SMITH&nbsp;</a>
+                        <div class="card-body">
+                            <h5 class="card-title">Profile</h5>
+                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-resume">Resume</button><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-contact">Contact</button></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 filter seminar">
+                    <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="assets/img/adv-yourself.jpg"><a class="btn btn-primary middle" role="button" href="web_theme.html">JOHN SMITH&nbsp;</a>
+                        <div class="card-body">
+                            <h5 class="card-title">Profile</h5>
+                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-resume">Resume</button><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-contact">Contact</button></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 filter">
+                    <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="assets/img/adv-yourself.jpg"><a class="btn btn-primary middle" role="button" href="web_theme.html">JOHN SMITH&nbsp;</a>
+                        <div class="card-body">
+                            <h5 class="card-title">Profile</h5>
+                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-resume">Resume</button><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-contact">Contact</button></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 filter">
+                    <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="assets/img/adv-yourself.jpg"><a class="btn btn-primary middle" role="button" href="web_theme.html">JOHN SMITH&nbsp;</a>
+                        <div class="card-body">
+                            <h5 class="card-title">Profile</h5>
+                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-resume">Resume</button><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-contact">Contact</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="preview-resume">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Resume</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="theme_one.html"></iframe></div>
+                </div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="preview-contact">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Contact</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="contact.html"></iframe></div>
+                </div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
+            </div>
+        </div>
+    </div><span id="tags"><input type="text" id="tags-input"></span>
+    {% include "reusable/footer.html.twig" %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('theme/assets/js/search.js ') }}"></script>
+{% endblock %}

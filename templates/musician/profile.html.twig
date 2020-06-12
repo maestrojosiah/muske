@@ -1,427 +1,432 @@
-{% extends 'base_prof.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}{{musician.fullname}} | Profile{% endblock %}
-{% block stylesheets %}
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-{% endblock %}
+{% block title %}Music Services Kenya{% endblock %}
 {% block body %}
-
-
-<hr>
-<div class="container bootstrap snippet">
-    <div class="row">
-  		<div class="col-sm-10"><h2>{{musician.fullname}} ({{musician.username}})</h2></div>
-      {% set logourl = asset('img/logo_only_white_sq.png') %}
-    	<div class="col-sm-2"><a href="{{path('musician_show', {'username': musician.username})}}" class="pull-right"><img title="your page" class="img-circle img-responsive" src="{{logourl}}"></a></div>
-    </div>
-    <div class="row">
-  		<div class="col-sm-3"><!--left col-->
-              
-
-      <div class="text-center">
-        {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
-        <img id="prof_pic" src="{{thumbnailurl}}" class="avatar img-circle img-thumbnail" alt="avatar">
-        <h6>Upload a different photo...</h6>
-        <input id="change_prof_pic" type="file" class="text-center center-block file-upload">
-        <br /><button class="btn btn-primary" type="button" id="upload_profile_pic" style="display:none;">Upload</button>
-      </div></hr><br>
-
-               
-          <div class="panel panel-default">
-            <div class="panel-heading">Quick Links <i class="fa fa-link fa-1x"></i></div>
-            <div class="panel-body"><a href="{{ path('musician_show', {'username': musician.username} ) }}">Your Resume Website</a></div>
-            {% if musician.hassettings and musician.isproandactive %}<div class="panel-body"><a href="{{ path('blog', {'username': musician.username} ) }}">Your Blog</a></div>{% endif %}
-            <div class="panel-body"><a href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}">Download Your Resume</a></div>
-          </div></li>
-          
-                                   
-        </div><!--/col-3-->
-    	<div class="col-sm-9">
-            <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-                <li><a data-toggle="tab" href="#settings">Settings</a></li>
-                <li><a data-toggle="tab" href="#reviews">Reviews</a></li>
-                <li><a href="{{ path('musician_admin_index')}}">Admin Page</a></li>
-                <li><a href="{{ path('musician_edit', {'username': musician.username})}}">Resume info</a></li>
-                <li><a href="{{ path('gallery_index', {'username': musician.username})}}">Gallery</a></li>
-                {% if app.user and app.user != null and app.user == musician %}<li> <a href="{{path("app_logout")}}">Logout</a> {% else %} <a href="{{path("homepage")}}">Login</a></li>{% endif %}
-                
-              </ul>
-
-          <div class="tab-content">
-            <div class="tab-pane active" id="home">
-                <hr>
-                <div class="col-md-6">
-                    {% if data.complete == false %} <div class="alert alert-warning"><a data-toggle="tab" href="#settings">
-                    Please complete your settings</a></div>
-                    {% endif %}
-                    {% if musician.confirmed == null %} <div class="alert alert-warning"><a href="{{ path('musician_show', {'username': app.user.username })}}#experience">You haven't confirmed your email yet. Please check your email inbox for activation link</a></div>{% endif %}
-                    {% if roles|length < musician.jobs|length %} <div class="alert alert-warning"><a href="{{ path('musician_show', {'username': app.user.username })}}#experience">Please complete setting up your Experience by adding roles to the jobs you've done</a></div>{% endif %}
-                    {% if skills|length < musician.education|length %} <div class="alert alert-warning"><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please complete setting up your Education by adding skills you gained in various learning institutions</a></div>{% endif %}
-                    {% if musician.settings and musician.isproandactive == "true" or musician.settings and musician.ismuskeandactive == "true" %}
-                    {% if documents|length < musician.education|length %} <div class="alert alert-warning"><a href="{{ path('musician_show', {'username': app.user.username })}}#education">Please upload supporting documents to your education. To get the {{membership}} member priviledges, we have to confirm your certifications</a></div>{% endif %}
-                    {% if gallery|length < 1 %} <div class="alert alert-warning"><a href="{{ path('musician_show', {'username': app.user.username })}}#album_intro">You may consider adding photos to your gallery</a></div>{% endif %}
-                    {% endif %}
+<div id="wrapper">
+    <div class="d-flex flex-column" id="content-wrapper">
+      <div id="content">
+        {% include "reusable/user_nav.html.twig" %}
+        <div class="container" id="pad">
+          <h3 class="text-dark mb-4" id="prof-heading">Profile<a class="btn btn-primary pull-right text-white" role="button" href="{{path('musician_show', {'username': musician.username})}}">Your Personal Resume Website</a></h3>
+          <div class="row mb-3">
+            <div class="col-sm-12 col-md-4">
+              <div class="card mb-3" id="prof">
+                <div class="card-body text-center shadow">
+                    {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+                  <img id="prof_pic" class="rounded-circle mb-3 mt-4" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}" width="160" height="160">
+                  <div class="mb-3">
+                    <form id="prof-form">
+                      <div class="form-group">
+                        <label for="myProfPic">Change profile picture</label>
+                        <input type="file" name="photo" class="form-control-file" id="myProfPic">
+                        <button type="button" id="upload-prof" class="btn btn-primary">Upload</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">Your Account</div>
-                    <div class="panel-body">
-                      <div class="col-md-8"><p> You are a {{membership}} member<p></div>
-                      <div class="col-md-4"><a href="{{ path('musician_plan')}}" class="btn btn-md btn-success pull-right" id="test" type="button"> Change</a></div>
-                      <hr />
-                      <div class="col-md-8"><p> Downloadable resume theme : {{musician.pdfTheme == null ? 'Default' : musician.pdfTheme}}</p></div>
-                      <div class="col-md-4"><a href="{{ path('pdf_theme_index')}}" class="btn btn-md btn-success pull-right" id="test" type="button"> Change</a> </div>
-                      <hr />
-                      <div class="col-md-8"><p> Online Resume themes : {{musician.webTheme == null ? 'Default' : musician.webTheme}}</p></div>
-                      <div class="col-md-4"><a href="{{ path('web_theme_index')}}" class="btn btn-md btn-success pull-right" id="test" type="button"> Change</a> </div>
+              </div>
+              <div class="card prof-panel">
+                <div class="card-header">
+                  <h5 class="mb-0">Quick Links</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><span><a href="{{path('musician_show', {'username': musician.username})}}">Your resume website</a></span></li>
+                  <li class="list-group-item"><span><a href="{{path('blog', {'username': musician.username})}}">Your blog</a></span></li>
+                  <li class="list-group-item"><span><a href="{{path('musician_admin_index')}}">Your Admin Page</a></span></li>
+                  <li class="list-group-item"><span><a href="{{path('gallery_index', {'username': musician.username})}}">Your Gallery</a></span></li>
+                  <li class="list-group-item"><span><a href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}">Download resume</a></span></li>
+                </ul>
+              </div>
+              <div class="card prof-panel">
+                <div class="card-header text-white" style="background-color: rgb(78,115,223);">
+                  <h5 class="mb-0">Your account</h5>
+                </div>
+                <div class="card-body special-card-body">
+                  <form>
+                    <div class="form-group">
+                      <label>Account type</label>
+                      <select id="accounttype" class="form-control">
+                        <option value="basic">Basic</option>
+                        <option value="muske" {{ musician.ismuskeandactive ? 'selected' }} >MuSKe</option>
+                        <option value="pro" {{ musician.isproandactive ? 'selected' }} >Pro</option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="card prof-panel">
+                <div class="card-header">
+                  <h5 class="mb-0">Theme Settings</h5>
+                </div>
+                <div class="card-body">
+                  <form id="cover-form">
+                    <div class="form-group">
+                      <label>Cover image</label>
+                      <input id="myCoverphoto" name="coverphoto" type="file" />
+                    </div>
+                    <button class="btn btn-primary" id="upload-coverphoto" type="button">Upload</button>
+                    <hr>
+                  </form>
+                  <form id="bg-form">
+                    <div class="form-group">
+                      <label>Background image</label>
+                      <input id="myBgphoto" name="bgphoto" type="file">
+                    </div>
+                    <button class="btn btn-primary" id="upload-bgphoto" type="button">Upload</button>
+                    <hr>
+                  </form>
+                  <form id="theme-form">
+                    <div class="form-group">
+                      <label>Pdf download theme</label>
+                      <select name="pdfTheme" id="pdf_theme" class="form-control">
+                        {% for theme in pdfThemes %}
+                          <option value="{{theme.template}}" {{ musician.pdfTheme == theme.template ? 'selected' : ''}}="">{{theme.title}}</option>
+                        {% endfor %}
+                      </select>
+                      <input type="hidden" name="class" value="Musician-{{musician.id}}" />
+                      <!-- modal -->
+                      <div class="modal fade" id="screenshotModal" tabindex="-1" role="dialog" aria-labelledby="screenshotModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Theme Template</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <img class="img-fluid" id="template-image" src="{{ asset('img/screenshots/simpleOne.jpg')}}" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end modal -->
+                    </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#screenshotModal">Preview</button>
+                    <button class="btn btn-primary" id="save-theme" type="button">Save</button>
+                    <hr>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-8">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-3">
+                    <div class="card-header py-3">
+                      <p class="text-primary m-0 font-weight-bold">User Settings</p>
+                    </div>
+                    <div class="card-body">
+                      <form id="basic-form">
+                        <div class="form-row">
+                          <div class="col-md-6">
+                            <div class="form-group"><label for="username"><strong>Username</strong></label><input value="{{ musician.username and musician.username != null ? musician.username : '' }}" class="form-control" type="text" placeholder="username" name="username" readonly></div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group"><label for="email"><strong>Email Address</strong></label><input value="{{ musician.realemail and musician.realemail != null ? musician.realemail : '' }}" class="form-control" type="email" placeholder="user@example.com" name="email"></div>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="col-md-6">
+                            <div class="form-group"><label for="fullname"><strong>Fullname</strong><br></label><input value="{{ musician.fullname and musician.fullname != null ? musician.fullname : '' }}" class="form-control" type="text" placeholder="John Doe" name="fullname"></div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group"><label for="phone"><strong>Phone Number</strong></label><input value="{{ musician.realphone and musician.realphone != null ? musician.realphone : '' }}" class="form-control" type="text" placeholder="0705222222" name="phone"></div>
+                          </div>
+                          <input type="hidden" name="class" value="Musician-{{musician.id}}" />
+                        </div>
+                        <div class="form-group"><button class="btn btn-primary btn-sm" id="save-basic" type="button">Save&nbsp;</button></div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="card shadow">
+                    <div class="card-header py-3">
+                      <p class="text-primary m-0 font-weight-bold">Order and Sort settings</p>
+                    </div>
+                    <div class="card-body">
+                      <form id="order-form">
+                        <div class="form-row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="city"><strong>Order jobs by</strong><br></label>
+                              <select name="job_order" class="form-control">
+                                <option value="id"  {% if musician.settings and musician.settings.jobOrder == 'null' or musician.settings and musician.settings.jobOrder == 'id' %} selected {% endif %}>How you added them</option>
+                                <option value="endedin" {{ musician.settings and musician.settings.jobOrder == 'endedin' ? 'selected' : '' }}>Job ending date</option>
+                                <option value="startingfrom" {{ musician.settings and musician.settings.jobOrder == 'startingfrom' ? 'selected' : '' }}>Job starting date</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="country"><strong>Sort jobs by</strong></label>
+                              <select name="job_order_by" class="form-control">
+                                  <option value="" {{ musician.settings and musician.settings.jobOrderBy == null ? 'selected' : '' }} {{ musician.settings and musician.settings.jobOrderBy == '' ? 'selected' : '' }}>Select One</option>
+                                  <option value="DESC" {{ musician.settings and musician.settings.jobOrderBy == 'DESC' ? 'selected' : '' }}>Starting with latest</option>
+                                  <option value="ASC" {{ musician.settings and musician.settings.jobOrderBy == 'ASC' ? 'selected' : '' }}>Ending with latest</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="city"><strong>Order education by</strong><br></label>
+                              <select name="edu_order" class="form-control">
+                                <option value="id"  {{ musician.settings and musician.settings.eduOrder == 'id' ? 'selected' : '' }} {{ musician.settings and musician.settings.eduOrder == '' ? 'selected' : '' }}>How you added them</option>
+                                <option value="toyear" {{ musician.settings and musician.settings.eduOrder == 'toyear' ? 'selected' : '' }}>Education ending date</option>
+                                <option value="fromyear" {{ musician.settings and musician.settings.eduOrder == 'fromyear' ? 'selected' : '' }}>Education starting date</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="country"><strong>Sort education by</strong></label>
+                              <select name="edu_order_by" class="form-control">
+                                <option value="" {{ musician.settings and musician.settings.eduOrderBy == '' ? 'selected' : '' }} {{ musician.settings and musician.settings.eduOrderBy == null ? 'selected' : '' }}>Select One</option> 
+                                <option value="DESC" {{ musician.settings and musician.settings.eduOrderBy == 'DESC' ? 'selected' : '' }}>Starting with latest</option>
+                                <option value="ASC" {{ musician.settings and musician.settings.eduOrderBy == 'ASC' ? 'selected' : '' }}>Ending with latest</option>
+                              </select>
+                            </div>
+                          </div>
+                          <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
+                          <input type="hidden" name="extras" value="musician" />
+                        </div>
+                        <div class="form-group"><button id="save-order" class="btn btn-primary btn-sm" type="button">Save&nbsp;</button></div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="card shadow mb-3 margin-top">
+                    <div class="card-header py-3">
+                      <p class="text-primary m-0 font-weight-bold">Social networks URL settings</p>
+                    </div>
+                    <div class="card-body">
+                      <form id="social-form">
+                        <div class="form-row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="facebook"><strong>Facebook</strong></label>
+                              <input name="facebook" value="{{musician.settings and musician.settings.facebook ? musician.settings.twitter : ""}}" type="text" class="form-control" id="facebook" placeholder="enter url" title="copy from address bar and paste here.">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="twitter"><strong>Twitter</strong></label>
+                              <input name="twitter" value="{{musician.settings and musician.settings.twitter ? musician.settings.twitter : ""}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="linkedin"><strong>Linkedin</strong><br></label>
+                              <input name="linkedin" value="{{musician.settings and musician.settings.linkedin ? musician.settings.linkedin : ""}}" type="text" class="form-control" id="linkedin" placeholder="enter url" title="copy from address bar and paste here.">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="instagram"><strong>Instagram</strong></label>
+                              <input name="instagram" value="{{musician.settings and musician.settings.instagram ? musician.settings.instagram : ""}}" type="text" class="form-control" id="instagram" placeholder="enter url" title="copy from address bar and paste here.">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label for="tawkTo"><strong>Tawk.to script (For live chatting)</strong><br></label>
+                              <textarea name="tawkTo" style="font-size: 12px;" class="form-control" rows="5" id="tawkTo" placeholder="enter tawk.to script" title="copy from tawk.to and paste here.">{{musician.settings and musician.settings.tawkTo ? musician.settings.tawkTo : "Leave this text here if you've got no tawk-to script"}}</textarea>
+                            </div>
+                          </div>
+                        </div>
+                        <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
+                        <input type="hidden" name="extras" value="musician" />
+                        <div class="form-group"><button id="save-social" class="btn btn-primary btn-sm" type="button">Save&nbsp;</button></div>
+                      </form>
                     </div>
                   </div>
                 </div>
-
-                  <hr>
-              
-            </div><!--/tab-pane-->
-            <div class="tab-pane" id="reviews">
-               
-               <h3>Reviews</h3>
-               
-               <hr>
-               
-            </div><!--/tab-pane-->
-            <div class="tab-pane" id="settings">
-            		
-                  <hr>
-                  <form class="form" action="##" method="post" id="">
-                      <div class="form-group">                          
-                          <div class="col-sm-12 col-md-6 ">
-                            <label for="order_job"><h4>Order Your Jobs by:</h4></label>
-                            <select class="form-control" id="order_job">
-                              <option value="id"  {% if musician.settings and musician.settings.jobOrder == 'null' or musician.settings and musician.settings.jobOrder == 'id' %} selected {% endif %}>How you added them</option>
-                              <option value="endedin" {{ musician.settings and musician.settings.jobOrder == 'endedin' ? 'selected' : '' }}>Job ending date</option>
-                              <option value="startingfrom" {{ musician.settings and musician.settings.jobOrder == 'startingfrom' ? 'selected' : '' }}>Job starting date</option>
-                            </select>
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          
-                          <div class="col-sm-12 col-md-6 ">
-                            <label for="order_job_by"><h4>Sort your Jobs...</h4></label>
-                            <select class="form-control" id="order_job_by">
-                              <option value="" {{ musician.settings and musician.settings.jobOrderBy == null ? 'selected' : '' }} {{ musician.settings and musician.settings.jobOrderBy == '' ? 'selected' : '' }}>Select One</option>
-                              <option value="DESC" {{ musician.settings and musician.settings.jobOrderBy == 'DESC' ? 'selected' : '' }}>Starting with latest</option>
-                              <option value="ASC" {{ musician.settings and musician.settings.jobOrderBy == 'ASC' ? 'selected' : '' }}>Ending with latest</option>
-                            </select>
-                          </div>
-                      </div>
-          
-                      <div class="form-group">                          
-                          <div class="col-sm-12 col-md-6 ">
-                            <label for="order_education"><h4>Order Your Education by:</h4></label>
-                            <select class="form-control" id="order_education">
-                              <option value="id"  {{ musician.settings and musician.settings.eduOrder == 'id' ? 'selected' : '' }} {{ musician.settings and musician.settings.eduOrder == '' ? 'selected' : '' }}>How you added them</option>
-                              <option value="toyear" {{ musician.settings and musician.settings.eduOrder == 'toyear' ? 'selected' : '' }}>Education ending date</option>
-                              <option value="fromyear" {{ musician.settings and musician.settings.eduOrder == 'fromyear' ? 'selected' : '' }}>Education starting date</option>
-                            </select>
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <div class="col-sm-12 col-md-6 ">
-                            <label for="order_education_by"><h4>Sort your Education...</h4></label>
-                            <select class="form-control " id="order_education_by">
-                              <option value="" {{ musician.settings and musician.settings.eduOrderBy == '' ? 'selected' : '' }} {{ musician.settings and musician.settings.eduOrderBy == null ? 'selected' : '' }}>Select One</option> 
-                              <option value="DESC" {{ musician.settings and musician.settings.eduOrderBy == 'DESC' ? 'selected' : '' }}>Starting with latest</option>
-                              <option value="ASC" {{ musician.settings and musician.settings.eduOrderBy == 'ASC' ? 'selected' : '' }}>Ending with latest</option>
-                            </select>
-                          </div>
-                      </div>
-                      <div class="form-group">                          
-                          <div class="col-sm-12 col-md-6 ">
-                            <label for="tsc"><h4>Do you have a TSC number?</h4></label>
-                            <select class="form-control {% if musician.settings and musician.settings.tsc == null or musician.settings and musician.settings.tsc == "" %} is-invalid {% endif %}" id="tsc">
-                              <option value="" {{ musician.settings and musician.settings.tsc == '' ? 'selected' : '' }}{{ musician.settings and musician.settings.tsc == null ? 'selected' : '' }}>Select Answer</option>
-                              <option value="false" {{ musician.settings and musician.settings.tsc == 'false' ? 'selected' : '' }}>No</option>
-                              <option value="true"{{ musician.settings and musician.settings.tsc == 'true' ? 'selected' : '' }}>Yes</option>
-                            </select>
-                          </div>
-                      </div>
-
-                      <div class="form-group">
-                          
-                          <div class="col-sm-12 col-md-6 ">
-                            <label for="online"><h4>Can you offer online lessons?</h4></label>
-                            <select class="form-control {% if musician.settings and musician.settings.online == null or musician.settings and musician.settings.online == "" %} is-invalid {% endif %}" id="online">
-                              <option value="" {{ musician.settings and musician.settings.online == '' ? 'selected' : '' }}{{ musician.settings and musician.settings.online == null ? 'selected' : '' }}>Select Answer</option>
-                              <option value="false" {{ musician.settings and musician.settings.online == 'false' ? 'selected' : '' }}>No</option>
-                              <option value="true" {{ musician.settings and musician.settings.online == 'true' ? 'selected' : '' }}>Yes</option>
-                            </select>
-                          </div>
-                      </div>
-
-                      <div class="form-group">
-                          
-                          <div class="col-sm-12 col-md-6 ">
-                              <label for="wheretowork"><h4>Where do you stay / wish to work?</h4></label>
-                              <input type="text" value="{{musician.settings and musician.settings.placeofwork ? musician.settings.placeofwork : ""}}" class="form-control {% if musician.settings and musician.settings.placeofwork == null or musician.settings and musician.settings.placeofwork == "" %}is-invalid{% endif %}" id="wheretowork" placeholder="Eg: Nairobi, Kiambu, Thika" title="Separate using comma">
-                          </div>
-                      </div>
-          
-                      <div class="form-group">
-                          
-                          <div class="col-sm-12 col-md-6 ">
-                            <label for="accounttype"><h4>You account type</h4></label>
-                            <select class="form-control" id="accounttype">
-                              <option value="basic" {{musician.isproandactive == 'false' and musician.ismuskeandactive == 'false' ? 'selected' : ''}}>Basic</option>
-                              <option value="pro" {{musician.isproandactive == 'true' ? 'selected' : ''}}>Pro</option>
-                              <option value="muske" {{musician.ismuskeandactive == 'true' ? 'selected' : ''}}>Muske</option>
-                            </select>
-                          </div>
-                      </div>
-                      {% if app.user and app.user != null and app.user == musician and app.user.settings and app.user.isproandactive == 'true' %}
-                      <div class="form-group">
-                          
-                          <div class="col-sm-12 col-md-6 ">
-                              <label for="twitter"><h4>Twitter URL</h4></label>
-                              <input value="{{musician.settings and musician.settings.twitter ? musician.settings.twitter : ""}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          
-                          <div class="col-sm-12 col-md-6 ">
-                              <label for="facebook"><h4>Facebook URL</h4></label>
-                              <input value="{{musician.settings and musician.settings.facebook ? musician.settings.twitter : ""}}" type="text" class="form-control" id="facebook" placeholder="enter url" title="copy from address bar and paste here.">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          
-                          <div class="col-sm-12 col-md-6 ">
-                              <label for="linkedin"><h4>Linkedin URL</h4></label>
-                              <input value="{{musician.settings and musician.settings.linkedin ? musician.settings.linkedin : ""}}" type="text" class="form-control" id="linkedin" placeholder="enter url" title="copy from address bar and paste here.">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          
-                          <div class="col-sm-12 col-md-6 ">
-                              <label for="instagram"><h4>Instagram URL</h4></label>
-                              <input value="{{musician.settings and musician.settings.instagram ? musician.settings.instagram : ""}}" type="text" class="form-control" id="instagram" placeholder="enter url" title="copy from address bar and paste here.">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          
-                          <div class="col-sm-12 col-md-6 ">
-                              <label for="youtube"><h4>Youtube URL</h4></label>
-                              <input value="{{musician.settings and musician.settings.youtube ? musician.settings.youtube : ""}}" type="text" class="form-control" id="youtube" placeholder="enter url" title="copy from address bar and paste here.">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          
-                          <div class="col-sm-12 col-md-6 ">
-                              <label for="twitter"><h4>Twitter link</h4></label>
-                              <input value="{{musician.settings and musician.settings.twitter ? musician.settings.twitter : ""}}" type="text" class="form-control" id="twitter" placeholder="enter url" title="copy from address bar and paste here.">
-                          </div>
-                      </div>          
-                      <div class="form-group">
-                          
-                        <div class="col-sm-12">
-                            <label for="twitter"><h4>Tawk.to Script (For live chat.)</h4></label>
-                            <textarea class="form-control" rows="5" id="tawk_to" placeholder="enter tawk.to script" title="copy from tawk.to and paste here.">{{musician.settings and musician.settings.tawkTo ? musician.settings.tawkTo : ""}}</textarea>
-                        </div>
-                      </div>          
-                      {% endif %}
-
-                      <div class="form-group">
-                           <div class="col-xs-12">
-                                <br>
-                              	<button class="btn btn-lg btn-success pull-right" id="save_settings" type="button"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                               	<!--<button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>-->
-                            </div>
-                      </div>
-
-              	</form>
               </div>
-               
-            </div><!--/tab-pane-->
-          </div><!--/tab-content-->
+            </div>
+            <div class="col-md-4">
+              <div class="card shadow mb-5 prof-panel">
+                <div class="card-header py-3">
+                  <p class="text-primary m-0 font-weight-bold">Extra Settings</p>
+                </div>
+                <div class="card-body">
+                  <form id="extra-form">
+                    <div class="form-group">
+                      <label>Online lessons</label>
+                      <select name="online" class="form-control">
+                        <option value="" {{ musician.settings and musician.settings.online == '' ? 'selected' : '' }}{{ musician.settings and musician.settings.online == null ? 'selected' : '' }}>Select Answer</option>
+                        <option value="false" {{ musician.settings and musician.settings.online == 'false' ? 'selected' : '' }}>No</option>
+                        <option value="true" {{ musician.settings and musician.settings.online == 'true' ? 'selected' : '' }}>Yes</option>
+                      </select>
+                      <small class="form-text text-muted">Do you conduct online lessons?</small>
+                    </div>
+                    <div
+                      class="form-group">
+                      <label>TSC Number</label>
+                      <select name="tsc" class="form-control">
+                        <option value="" {{ musician.settings and musician.settings.tsc == '' ? 'selected' : '' }}{{ musician.settings and musician.settings.tsc == null ? 'selected' : '' }}>Select Answer</option>
+                        <option value="false" {{ musician.settings and musician.settings.tsc == 'false' ? 'selected' : '' }}>No</option>
+                        <option value="true"{{ musician.settings and musician.settings.tsc == 'true' ? 'selected' : '' }}>Yes</option>
+                      </select>
+                      <small class="form-text text-muted">Do you have a TSC Number?</small>
+                    </div>
+                    <div class="form-group">
+                      <label>Job location</label>
+                      <input type="text" name="placeofwork" value="{{musician.settings and musician.settings.placeofwork ? musician.settings.placeofwork : ""}}" class="form-control" id="wheretowork" placeholder="Eg: Nairobi, Kiambu, Thika" title="Separate using comma">
+                      <small class="form-text text-muted">Which are your preferred job places? eg Kiambu, Nairobi</small>
+                    </div>
+                    <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
+                    <input type="hidden" name="extras" value="musician" />
+                    <div class="form-group"><button id="save-extra" class="btn btn-primary btn-sm" type="button">Save&nbsp;</button></div>
+              </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card shadow mb-5 prof-panel">
+                <div class="card-header py-3">
+                  <p class="text-primary m-0 font-weight-bold">Address Details</p>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <form id="signature-form">
+                        <div class="form-group">
+                          <label for="signature"><strong>You can set the address visibility.</strong><br></label>
+                          <textarea class="form-control" rows="4" name="signature">{{musician.settings.signature|length > 0 ? musician.settings.signature }}</textarea>
+                        </div>
+                        <div class="form-group">
+                          <div class="custom-control custom-switch">
+                            <input type="hidden" name="appendsignature" value="false" />
+                            <input class="custom-control-input" name="appendsignature" value="true" type="checkbox" id="formCheck-1" checked />
+                            <label class="custom-control-label" for="formCheck-1"><strong>Show this in my resume</strong></label>
+                            <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
+                            <input type="hidden" name="extras" value="musician" />        
+                          </div>
+                        </div>
+                        <div class="form-group"><button class="btn btn-primary btn-sm" id="save-signature" type="button">Save Settings</button></div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="bg-white sticky-footer">
+        <div class="container my-auto">
+          <div class="text-center my-auto copyright"><span>Copyright © Brand 2020</span></div>
+        </div>
+      </footer>
+    </div>
+</div>
+  
+{% include "reusable/footer.html.twig" %}
 
-        </div><!--/col-9-->
-    </div><!--/row-->
+{% endblock %}
 
-{% endblock %}                                                      
-{% block javascripts %}													  
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+{% block javascripts %}
 <script>
-$(document).ready(function() {
 
-    
-    var readURL = function(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+$( "#upload-prof" ).click(function() {
 
-            reader.onload = function (e) {
-                $('.avatar').attr('src', e.target.result);
-            }
-    
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    
-
-    $(".file-upload").on('change', function(){
-        readURL(this);
-    });
+  var inputFile = document.getElementById('myProfPic');
+  var directory = 'brochures_directory';
+  var src_id = "#prof_pic";
+  var div = "#prof-form";
+  var myClass = "musician-{{musician.id}}";
+  var field = 'photo';
+  
+  uploadPhoto(inputFile, directory, src_id, div, myClass, field, "", "" );
+  
 });
+
 </script>
 
-	<script>
+<script>
 
-	$( "#save_settings" ).click(function() {
+$( "#upload-coverphoto" ).click(function() {
 
-		var order_job = $("#order_job").val();              
-		var order_job_by = $("#order_job_by").val();              
-		var order_education = $("#order_education").val();              
-		var order_education_by = $("#order_education_by").val();              
-		var facebook = $("#facebook").val();              
-		var twitter = $("#twitter").val();              
-		var linkedin = $("#linkedin").val();              
-		var youtube = $("#youtube").val();              
-		var instagram = $("#instagram").val();              
-		var online = $("#online").val();              
-		var tsc = $("#tsc").val();              
-		var wheretowork = $("#wheretowork").val();              
-		var accounttype = $("#accounttype").val();              
-		var tawk_to = $("#tawk_to").val();              
+  var inputFile = document.getElementById('myCoverphoto');
+  var directory = 'brochures_directory';
+  var src_id = "#div";
+  var div = "#cover-form";
+  var myClass = "Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}";
+  var field = 'coverphoto';
+  var shape = 'rectangle';
+  
+  uploadPhoto(inputFile, directory, src_id, div, myClass, field, shape, "" );
+  
+});
 
-			$.ajax({
-				url:"{{ (path('save_settings')) }}",
-				type: "POST",
-				dataType: "json",
-				data: {
-					"order_job": order_job,
-					"order_job_by": order_job_by,
-          "order_education": order_education,
-          "order_education_by": order_education_by,
-          "facebook": facebook,
-          "twitter": twitter,
-          "linkedin": linkedin,
-          "youtube": youtube,
-          "instagram": instagram,
-          "online": online,
-          "tsc": tsc,
-          "wheretowork": wheretowork,
-          "accounttype": accounttype,
-          "tawk_to": tawk_to,
-				},
-				async: true,
-				success: function (data)
-				{
-					console.log(data);
-					console.log("saved settings");
-          $( "#save_settings" ).html('Saved')
-				},
-				error: function () {
-					$("#warning").html("<b>something's wrong</b>");
+</script>
+
+<script>
+
+$( "#upload-bgphoto" ).click(function() {
+
+  var inputFile = document.getElementById('myBgphoto');
+  var directory = 'brochures_directory';
+  var src_id = "#div";
+  var div = "#bg-form";
+  var myClass = "Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}";
+  var field = 'bgphoto';
+  var shape = '';
+  
+  uploadPhoto(inputFile, directory, src_id, div, myClass, field, shape, "" );
+  
+});
+
+</script>
+
+<script>
+		$(document).on("click", '[id^="save-"]', function(){
+			var myId = jQuery(this).attr("id");
+			var splitted = myId.split('-'); 
+			var div = splitted[1];
+			var form = $("#"+div+"-form");
+			saveDetails(div, form);
+
+			$.notify({
+				icon: 'glyphicon glyphicon-time',
+				message: 'Please wait...',
+				url: '#',
+				target: '_blank'
+			},{
+        element: form,
+				type: "info",
+				allow_dismiss: true,
+				newest_on_top: false,
+        delay: 1000,
+				placement: {
+					from: 'bottom',
+					align: 'center'
 				}
 			});
+			
 
-	});
+		});
 
-	</script>
+</script>
 
+<script>
 
-	<script>
+$( "#accounttype" ).change(function() {
+  var plan = $(this).val();
+  location.href = "/musician/plan_details/"+plan;	
+});
 
-	$( "#upload_profile_pic" ).click(function() {
+$( "#pdf_theme").change(function() {
+  var template = $("#pdf_theme").val();
+  var splitted = template.split('.'); 
+  var name = splitted[0];
+  $("#template-image").attr('src', '/img/screenshots/'+name+'.jpg');
+});
 
-    var inputFile = document.getElementById('change_prof_pic');
-    var file = inputFile.files[0];
-    var data = new FormData();
-    data.append('doc', file, file.name);
-    $.ajax({
-        url: "{{ path('change_profile_picture') }}",
-        type: "POST",
-        data: data,
-        processData: false,
-        contentType: false,
-        cache: false,
-        success: function (data){
-            console.log(data);
-            console.log("uploaded image");
-            $.ajax({
-                url:"{{ (path('change_profile_picture')) }}",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    "filename": data,
-                },
-                async: true,
-                success: function (data)
-                {
-                    console.log(data);
-                    console.log("saved other information");
-                    $("#prof_pic").attr("src", data);
-                    $("#upload_profile_pic").removeClass("btn-primary").addClass("btn-success").text("Uploaded");
-                    
-                },
-                error: function () {
-                    $("#warning").html("<b>something's wrong</b>");
-                }
-            });
+</script>
 
-        },
-        error: function () {
-            $("#warning").html("<b>something's wrong</b>");
-        }
-
-    });
-
-	});
-
-	</script>
-
-	<script>
-
-	$( "#change_prof_pic" ).click(function() {
-
-      $("#upload_profile_pic").show();
-	
-	});
-
-	</script>
-
-	<script>
-
-  $("#wheretowork").one("keypress", function () {
-      $("#wheretowork").removeClass("is-invalid");
-  });
-	</script>
-
-	<script>
-
-	$( "#tsc" ).change(function() {
-    $("#tsc").removeClass("is-invalid");	
-	});
-
-	</script>
-
-	<script>
-
-	$( "#accounttype" ).change(function() {
-    var plan = $(this).val();
-    location.href = "/musician/plan_details/"+plan;	
-	});
-
-	</script>
-
-
-	<script>
-
-	$( "#online" ).change(function() {
-    $("#online").removeClass("is-invalid");	
-	});
-
-	</script>
 {% endblock %}
+

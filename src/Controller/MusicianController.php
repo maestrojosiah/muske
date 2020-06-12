@@ -82,203 +82,24 @@ class MusicianController extends AbstractController
         $skills_auto_fill = array_unique($this->getDoctrine()->getManager()->getRepository('App:Skill')->findall());
         $job_roles_auto_fill = array_unique($this->getDoctrine()->getManager()->getRepository('App:JobToBeOffered')->findall());
 
-        $details_array = [$musician_email, $musician_phone, $musician_age, $musician_fullname, $skills,
-                            $education, $jobs, $roles, $salary, $salary_exp];
         $fields = ["email" => $musician_email,
                     "phone" => $musician_phone,
                     "age" => $musician_age,
                     "full_name" => $musician_fullname,
-                    "salary" => $salary,
-                    "exp_salary" => $salary_exp,
                     "skills" => $musician->getSkills(),
                     "education" => $musician->getEducation(),
                     "jobs" => $musician->getJobs(),
                     "roles" => $musician->getJobstobeoffered()
                 ];
         
-        // to know if all the above have content                            
-        $filter = array_filter($details_array, function($k) {
-            return (isset($k) || !empty($k));
-        }, ARRAY_FILTER_USE_BOTH );
-
-
-        //if the details above are in database, then move to add skills
-        if (count($filter) == 10) {
-            // come back here and check more things 
-            return $this->redirectToRoute('finalize_musician');
-
-        }
-
         return $this->render('musician/new.html.twig', [
             'musician' => $musician,
             'fields' => $fields,
             'skills_auto_fill' => $skills_auto_fill,
             'job_roles_auto_fill' => $job_roles_auto_fill,
-            'filter' => $filter,
             'settings' => $settings,
         ]);
     }
-
-    /**
-     * @Route("/musician/finalize", name="finalize_musician", methods={"GET","POST"})
-     */
-    public function finalize(Request $request, SluggerInterface $slugger)
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        $musician = $this->getUser();
-
-        $form = $this->createForm(MusicianType::class, $musician);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $photoFile */
-            $photoFile = $form->get('photo')->getData();
-
-            // this condition is needed because the 'photo' field is not required
-            // so the image file must be processed only when a file is uploaded
-            if ($photoFile) {
-                //delete the current phowo if available
-                if($musician->getPhoto() != null ) {
-                    $current_photo_path = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
-                    $current_photo_thumb_path = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto();
-                    if(file_exists($current_photo_path)){ unlink($current_photo_path); }
-                    if(file_exists($current_photo_thumb_path)){ unlink($current_photo_thumb_path); }
-                }
-               
-                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $photoFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-                // updates the 'photoFilename' property to store the PDF file name
-                // instead of its contents
-
-                $musician->setPhoto($newFilename);
-
-                $updir = $this->getParameter('brochures_directory');
-                $musician = $this->getUser();
-                // $img = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
-                $img = $musician->getPhoto();
-                $this->makeThumbnails($updir, $img);
-            }
-
-            // ... persist the $product variable or any other work
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($musician);
-            $entityManager->flush();
-
-            // return $this->redirect($this->generateUrl('musician_show', ['username' => $musician->getUsername()]));
-            return $this->redirect($this->generateUrl('musician_profile'));
-        }
-
-        // define email phone age and full name
-        $musician_photo = $musician->getPhoto();
-        $musician_about = $musician->getAbout();
-        $musician_projects = $musician->getProjects()[0];
-
-        $details_array = [$musician_photo, $musician_about, $musician_projects];
-        
-        // to know if all the above have content                            
-        $filter = array_filter($details_array, function($k) {
-            return (isset($k) || !empty($k));
-        }, ARRAY_FILTER_USE_BOTH );
-
-
-        //if the details above are in database, then move to add skills
-        if (count($filter) >= 2) {
-            // come back here and check more things 
-            // return $this->redirectToRoute('musician_show', ['username' => $musician]);
-            return $this->redirectToRoute('musician_profile');
-
-        }
-        
-
-        return $this->render('musician/final.html.twig', [
-            'musician' => $musician,
-            'filter' => $filter,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/musician/final/edit", name="finalize_musician_edit", methods={"GET","POST"})
-     */
-    public function finalize_edit(Request $request, SluggerInterface $slugger)
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        $musician = $this->getUser();
-
-        $form = $this->createForm(MusicianType::class, $musician);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $photoFile */
-            $photoFile = $form->get('photo')->getData();
-
-            // this condition is needed because the 'photo' field is not required
-            // so the image file must be processed only when a file is uploaded
-            if ($photoFile) {
-                //delete the current phowo if available
-                if($musician->getPhoto() != null ) {
-                    $current_photo_path = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
-                    $current_photo_thumb_path = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto();
-                    if(file_exists($current_photo_path)){ unlink($current_photo_path); }
-                    if(file_exists($current_photo_thumb_path)){ unlink($current_photo_thumb_path); }
-    
-                }
-               
-                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $photoFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                // updates the 'photoFilename' property to store the PDF file name
-                // instead of its contents
-                $musician->setPhoto($newFilename);
-                $updir = $this->getParameter('brochures_directory');
-                $musician = $this->getUser();
-                // $img = $this->getParameter('brochures_directory')."/".$musician->getPhoto();
-                $img = $musician->getPhoto();
-                $this->makeThumbnails($updir, $img);
-
-            }
-
-            // ... persist the $product variable or any other work
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($musician);
-            $entityManager->flush();
-
-            return $this->redirect($this->generateUrl('musician_show', ['username' => $musician->getUsername()]));
-        }
-
-
-        return $this->render('musician/final_edit.html.twig', [
-            'musician' => $musician,
-            'form' => $form->createView(),
-        ]);
-    }
-
 
     /**
      * @Route("/{username}/{download}", name="musician_show", methods={"GET"})
@@ -323,7 +144,6 @@ class MusicianController extends AbstractController
         $photourl = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto().".png";
         $status = is_file($photourl);
         $pdf_template = $musician->getPdfTheme() ? $musician->getPdfTheme() : 'simpleOne.html.twig' ;
-        $web_template = $musician->getWebTheme() ? $musician->getWebTheme() : 'musician/show' ;
         $theme = $pdfThemeRepository->findOneByTemplate($pdf_template);
         $themename = str_replace(" ", "_", $theme->getTitle());
 
@@ -348,7 +168,7 @@ class MusicianController extends AbstractController
                 return $this->redirectToRoute('error', ['error_msg' => "Broken links prevents the pdf from downloading. Upload your profile photo"]);
             }
         } else {
-            return $this->render($web_template.'.html.twig', $array_data);
+            return $this->render('musician/show.html.twig', $array_data);
         }
         
 
@@ -361,7 +181,8 @@ class MusicianController extends AbstractController
         JobRepository $jobRepository, 
         EducationRepository $educationRepository, 
         DocumentRepository $documentRepository,
-        GalleryRepository $galleryRepository
+        GalleryRepository $galleryRepository,
+        PdfThemeRepository $pdfThemeRepository
         ): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -426,7 +247,6 @@ class MusicianController extends AbstractController
             
         $gallery_array = $galleryRepository->findByGivenField("id", "ASC", $musician);
         
-
         return $this->render('musician/profile.html.twig', [
             'musician' => $musician,
             'data' => $data,
@@ -435,6 +255,7 @@ class MusicianController extends AbstractController
             'skills' => $skills_array,
             'documents' => $doc_array,
             'gallery' => $gallery_array,
+            'pdfThemes' => $pdfThemeRepository->findAll(),
         ]);
     }
 
@@ -481,52 +302,6 @@ class MusicianController extends AbstractController
             'musician' => $musician,
             'plan' => $plan,
             'membership' => $membership,
-        ]);
-    }
-
-
-    /**
-     * @Route("/musician/{username}/edit", name="musician_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Musician $musician): Response
-    {
-        
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        // for placeholding if data exists
-
-        // define email phone age and full name
-        $musician_email = $musician->getRealEmail();
-        $musician_phone = $musician->getRealPhone();
-        $musician_age = $musician->getAge();
-        $musician_fullname = $musician->getFullname();
-        $skills = $musician->getSkills();
-        $education = $musician->getEducation();
-        $jobs = $musician->getJobs();
-        $roles = $musician->getJobstobeoffered();
-        $salary = $musician->getCurrentsalary();
-        $salary_exp = $musician->getExpectedSalary();
-
-        $skills_auto_fill = $this->getDoctrine()->getManager()->getRepository('App:Skill')->findall();
-        $job_roles_auto_fill = $this->getDoctrine()->getManager()->getRepository('App:JobToBeOffered')->findall();
-
-        $fields = ["email" => $musician_email,
-                    "phone" => $musician_phone,
-                    "age" => $musician_age,
-                    "full_name" => $musician_fullname,
-                    "salary" => $salary,
-                    "exp_salary" => $salary_exp,
-                    "skills" => $skills,
-                    "education" => $education,
-                    "jobs" => $jobs,
-                    "roles" => $roles
-                ];
-
-        return $this->render('musician/edit.html.twig', [
-            'musician' => $musician,
-            'fields' => $fields,
-            'skills_auto_fill' => $skills_auto_fill,
-            'job_roles_auto_fill' => $job_roles_auto_fill,
         ]);
     }
 

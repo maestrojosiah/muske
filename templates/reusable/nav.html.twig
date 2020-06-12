@@ -1,0 +1,31 @@
+    <nav class="navbar navbar-light navbar-expand-md sticky-top navigation-clean">
+      <div class="container">
+        <img class="img-fluid logo" src='{{ asset('img/logo_only_transparent_black.png' ) }}'>
+        <a class="navbar-brand" href="{{ path('homepage')}}">&nbsp; Music Services Kenya</a>
+        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse" id="navcol-1">
+          <ul class="nav navbar-nav text-nowrap ml-auto lg-text">
+            <li class="nav-item" role="presentation"><a class="nav-link" href="{{ path('f_a_q_index')}}">FAQ</a></li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Apps&nbsp;</a>
+              <div class="dropdown-menu" role="menu">
+                <a class="dropdown-item" role="presentation" href="https://triads.muske.co.ke">Chord generator</a>
+                <a class="dropdown-item" role="presentation" href="https://choir.muske.co.ke">Choir manager</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><img class="rounded-circle avatar" src='{{ asset('img/headshot.jpg' ) }}'>&nbsp;</a>
+              <div class="dropdown-menu" role="menu">
+                <a class="dropdown-item" role="presentation" href="{{ path('app_login')}}">Login </a>
+                <a class="dropdown-item" role="presentation" href="{{ path('app_register')}}">Second Item</a>
+                <a class="dropdown-item" role="presentation" href="{{ path('musician_reset_password')}}">Third Item</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>

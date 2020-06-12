@@ -1,0 +1,74 @@
+<div id="education" style="display: none;">
+    <h1 class="text-center reg-heading">Education Background</h1>
+    <h3 class="text-center reg-heading-two">Now add your education background</h3>
+    <hr>
+    <div class="steps-progressbar cursor-pointer">
+        <ul>
+            <li class="previous" id="goto-info">Info</li>
+            <li class="previous" id="goto-skills">Skills</li>
+            <li class="active" id="goto-education">Education</li>
+            <li id="goto-jobs">Jobs</li>
+            <li id="goto-roles">Roles</li>
+        </ul>
+    </div>
+    <div class="register-photo">
+        <div class="form-container">
+            <form id="education-form" class="underlined-inputs">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <legend>Course name</legend><input class="form-control" name="coursename" type="text" id="course" autofocus="" required="" minlength="5"><small class="form-text text-muted">The name of the course. eg. Music theory</small></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <legend>Institution name</legend><input class="form-control" name="institution" type="text" id="institution" required="" minlength="5" inputmode="email"><small class="form-text text-muted">The name of the institution that you took the course</small></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <legend>Which level?</legend><input class="form-control" name="degree" type="text" id="level_of_course" required="" inputmode="tel"><small class="form-text text-muted">Was it a diploma, certificate, degree or masters?</small></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <legend>Location of institution</legend><input class="form-control" name="location" type="text" id="location" required="" minlength="2"><small class="form-text text-muted">Did you do take this course online or in Nairobi?&nbsp;</small></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <legend>When did you start?</legend><input class="form-control" name="fromyear" type="date" id="from_year" required="" minlength="2"><small class="form-text text-muted">The month and year that you started the course. eg, 07-1996</small></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <legend>When did you complete?</legend><input class="form-control" name="toyear" type="date" id="to_year" required="" minlength="2"><small class="form-text text-muted">The month and year that you completed the course. eg, 07-2000</small></div>
+                    </div>
+                    <input type="hidden" name="class" value="Education" />
+                    <input type="hidden" name="extras" value="musician" />
+                    <input type="hidden" name="return" value="institution" />
+                    <div class="col-md-6">
+                        <div class="form-group reg-action"><button class="btn btn-info btn-lg" id="save-education" type="button">Save Education Background</button></div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <div class="form-group reg-action"><button class="btn btn-success btn-lg" type="button" data-toggle="modal" data-target="#preview">Preview your resume</button></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="next-prev">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-md-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-skills-from-education">Previous</a></div>
+                <div class="col-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-jobs-from-education">Next</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron text-center">
+        <h4>What you have already added:</h4>
+        <p>Here is the list of what you haver already added as your education background</p>
+        <p>
+            <div id="education-list">
+                {% for education in fields.education %}
+                    <button class="btn btn-secondary" type="button">{{education.institution}}</button>
+                {% endfor %}
+            </div>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Music Services Kenya{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('theme/assets/css/Bold-BS4-CSS-Image-Slider.css ') }}">
+{% endblock %}
+{% block body %}
+    {% include "reusable/nav.html.twig" %}
+    <h3 class="text-center reg-heading" id="select-theme-heading">Select a theme</h3>
+    <hr>
+    <div class="accordian">
+        <ul>
+            {% for theme in themes %}
+            <li>
+                <a class="image_title" href="{{ path('app_register') }}?theme={{theme.title}}">{{theme.title}}</a>
+                <a href="{{ path('app_register') }}?theme={{theme.title}}"><img class="link-image" src="{{ asset('img/screenshots/' ~ theme.screenshot )}}"></a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% include "reusable/footer.html.twig" %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('theme/assets/js/theme.js ') }}"></script>
+{% endblock %}

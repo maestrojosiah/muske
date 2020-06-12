@@ -30,6 +30,7 @@ blog link on resume page (pro)
 password protect blog post (save password associated to IP address)
 option to shade cover-photo or not
 select a template first before starting to create
+from registration page with the theme from the url
 https://resume.io/app/auth/sign-up/templates
 
 phplive
@@ -40,4 +41,125 @@ opened
 interested
 sent resumes
 
+if(null !== $request->request->get('class') || $myClass != null){
 
+            // class from form
+            $classFromForm = $myClass == "" ? $request->request->get('class') : $myClass ;
+            if(null != $request->request->get('return') || $toReturn != "nothingToReturn") {
+                $toReturn = ucfirst($request->request->get('return'));
+                $getter = "get".$toReturn;
+            }
+            
+            // declarations
+            $entityManager = $this->getDoctrine()->getManager();
+
+            //check if classname contains a hyphen and id, use existing entity, else, new
+            if(strpos($classFromForm, '-')){
+                $class_name = explode('-', $classFromForm)[0]; // get the class name
+                $id = explode('-', $classFromForm)[1]; // get the second part of the string - id
+                $class = "App\Entity\\".$class_name; // make a string of the entity
+                $entity = $entityManager->getRepository($class)->find($id); // get the entity by id
+            } else { // if new entity
+                $class = "App\Entity\\".$classFromForm; // make a string of the entity
+                $entity = new $class(); // instantiate
+            }            
+
+            // for checking entity attributes
+            $docReader = new AnnotationReader();
+            $reflect = new \ReflectionClass($entity);
+                   
+            // for testing. delete when done
+            $data = [];
+            $my_data_array = empty($array_data) ? $request->request->all() : $array_data;
+
+            // go through all the request data attributes
+            foreach ($my_data_array as $key => $item ) {
+                // var_dump($key);
+
+                // see if there is a property by the name $key
+                if (!$reflect->hasProperty($key)) {
+                    // var_dump('the entity does not have such a property called '.$key);
+                } else {
+                    
+                    // if the property name exists, assign it to propInfos variable
+                    $propInfos = $docReader->getPropertyAnnotations($reflect->getProperty($key));
+
+                    // capitalize the first letter of the $key so as to concatenate it to "set".
+                    $key = $this->dashesToCamelCase($key);
+                    $key = ucfirst($this->sanitizeInput($key));
+
+                    // sanitize the item to be saved
+                    $item = $this->sanitizeInput($item);
+
+                    // create a string method eg. setFirstname.
+                    $setter = "set".$key;
+                    
+                    // check if the property to be saved is a date
+                    if ( $propInfos[0]->type === 'date' ) {
+
+                        // if it is a date then do the necessary
+                        $date = new \DateTime("$item");
+
+                        // set it using the setter created above setFirstname("John")
+                        $entity->$setter($date);
+
+                    } else {
+
+                        // if it is not a date, just set it : setFirstname("John")
+                        $entity->$setter($item);
+
+                    } 
+                }
+
+                // for testing purposes. remove when done
+                $data[$key] = $item;
+                
+            }
+
+            // in case there were extras..
+            $extras = isset($data['extras']) ? $data['extras'] : null;
+            if($extras != null) {
+                if(strpos($extras, '-')){ // if more than one extra
+                    // explode them using '-'
+                    $all_extras = explode('-',$extras);
+                } else {
+                    $all_extras = [$extras];
+                }
+                
+
+                // iterate through the extras array 
+                foreach ($all_extras as $extra ) {
+
+                    if(strpos($extra, '#')){
+                        $arrSplit = explode('#', $extra);
+                        $extra = $arrSplit[0];
+                        $id = $arrSplit[1]; 
+                    } else { 
+                        $id = "";
+                    }            
+        
+                    // the provide_ function that are manually created for special cases
+                    $function = "provide_$extra";
+                    $key = ucfirst($this->sanitizeInput($extra));
+                    $item = $this->{$function}($id);
+
+                    // set the values
+                    $setter = "set".$key;
+                    $data[$key] = $item;
+                    $entity->$setter($item);
+
+                }
+            }
+
+            // persist and flush
+            $entityManager->persist($entity);
+            $entityManager->flush();
+           
+            // value to return if needed
+            $returnVal = $toReturn == 'nothingToReturn' ? 'nothingToReturn' : $entity->$getter();
+            // var_dump($returnVal);
+
+            // return testing data
+            return new JsonResponse($returnVal);
+
+        } 

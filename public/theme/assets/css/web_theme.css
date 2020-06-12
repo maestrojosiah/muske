@@ -1,0 +1,170 @@
+#full-page-container {
+  height: 100vh;
+  position: relative;
+}
+
+#full-page {
+  width: 100%;
+  height: 80%;
+  padding: 0;
+  margin-top: -7.5%;
+}
+
+@media (max-width:575px) {
+  #full-page {
+    width: 100%;
+    height: 80%;
+    padding: 0;
+    margin-top: 0;
+  }
+}
+
+@media (max-width:360px) {
+  #full-page {
+    width: 100%;
+    height: 80%;
+    padding: 0;
+    margin-top: 40px;
+  }
+}
+
+.half-height {
+  height: 50%;
+}
+
+@media (max-width: 575px) {
+  .half-height {
+    height: 25%;
+  }
+}
+
+.full-height {
+  height: 100%;
+}
+
+.piece {
+  background-color: rgba(171, 175, 179, 0.7);
+  border: 1px solid white;
+  font-size: 20px;
+  font-weight: normal;
+  height: 100%;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.piece:hover {
+  background-color: rgb(63,140,228,0.9);
+}
+
+#cover {
+  height: 30%;
+  background-color: rgba(58,142,188,0.7);
+}
+
+.bordered {
+  border: 5px solid #fff;
+  border-bottom: none;
+}
+
+#prof-pic {
+  max-height: 120px;
+  border-radius: 50%;
+  height: 50%;
+}
+
+.row.img-row {
+  height: 80%;
+}
+
+@media (min-width: 992px) {
+  .row.img-row {
+    height: 60%;
+  }
+}
+
+#heading-col {
+  background-color: rgba(57,60,61,0.7);
+}
+
+.piece .fa {
+  font-size: 30px;
+  color: white;
+}
+
+.circle-border {
+  display: inline-block;
+  font: 85px sans-serif;
+  border: 1px solid #fff;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  line-height: 15px;
+  text-align: center;
+}
+
+@media (max-width: 575px) {
+  #heading-col {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+
+#resume-page {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 130%;
+  background-color: #fff;
+  display: none;
+}
+
+#close-icon {
+  font-size: 20px;
+  z-index: 10000;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  display: none;
+  color: black!important;
+  cursor: pointer;
+}
+
+#full-page-container {
+  overflow: hidden;
+}
+
+@media (max-width: 575px) {
+  #full-page-container {
+    overflow-y: visible;
+  }
+}
+
+#resume {
+  width: 21cm;
+  margin: 100px auto auto auto;
+}
+
+@media (max-width: 767px) {
+  #resume {
+    width: inherit;
+    margin: 50px auto auto auto;
+  }
+}
+
+@media (max-width: 575px) {
+  .row.item {
+    border-bottom: 1px solid #e4dbdb;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .row.header.top-row {
+    text-align: center;
+  }
+}
+

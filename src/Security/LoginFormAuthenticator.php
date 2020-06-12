@@ -40,7 +40,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function supports(Request $request)
     {
         // changed from return 'app_login'
-        return 'homepage' === $request->attributes->get('_route')
+        return 'app_login' === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
 
@@ -102,13 +102,13 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
         // For example : 
         //next step should come here
-        return new RedirectResponse($this->urlGenerator->generate('musician_new'));
+        return new RedirectResponse($this->urlGenerator->generate('musician_profile'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl()
     {
         // changed route from app_login page to homepage so that I could login from homepage
-        return $this->urlGenerator->generate('homepage');
+        return $this->urlGenerator->generate('app_login');
     }
 }

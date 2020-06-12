@@ -1,0 +1,80 @@
+<div class="card-header">
+    <h5 class="mb-0">Referees</h5>
+</div>
+<div class="card-body" id="referee-div">
+    
+    <div class="row">
+        <div class="for-user col-md-12 text-left"><p>Click to edit.</p></div>
+        {% set counter = 0 %}
+        {% for referee in musician.referees %}
+            {% set counter = counter + 1 %}
+            {% if counter <= 3 %}
+            <div class="col-md-4 text-left">
+                <form class="referee-form" id="referee-form-{{referee.id}}">
+                    <h4><input class="for-user" name="name" type="text" value="{{ referee.name }}" /><span class="for-public">{{ referee.name }}</span></h4>
+                    <h6><input class="for-user" name="title" type="text" value="{{ referee.title }}" /><span class="for-public">{{ referee.title }}</span></h6>
+                    <h6><input class="for-user" name="address" type="text" value="{{ referee.address }}" /><span class="for-public">{{ referee.address }}</span></h6>
+                    <h6><input class="for-user" name="contact" type="text" value="{{ referee.contact }}" /><span class="for-public">{{ referee.contact }}</span></h6>
+                    <input type="hidden" name="class" value="referee-{{referee.id}}" />
+                    <input type="hidden" name="extras" value="musician" /`>
+                    <button class="for-user btn btn-primary btn-sm" type="button" id="save-referee-{{referee.id}}">Update</button>
+                    </form>
+            </div>
+            {% endif %}
+        {% else %}
+        <div class="for-public col-md-12 text-left"><p>Referees available on request.</p></div>
+        
+        <div class="for-user col-md-4 text-left">
+            <form class="referee-form" id="referee-form-1">            
+                <h4><input class="for-user" name="name" type="text" value="Mr/Mrs Smith" /></h4>
+                <h6><input class="for-user" name="title" type="text" value="Job title" /></h6>
+                <h6><input class="for-user" name="address" type="text" value="Company / Address" /></h6>
+                <h6><input class="for-user" name="contact" type="text" value="0712345678" /></h6>
+                <input type="hidden" name="class" value="referee" />
+                <input type="hidden" name="extras" value="musician" /`>
+                <button class="for-user btn btn-primary btn-sm" type="button" id="save-referee-1">Save</button>
+            </form>
+        </div>
+        <div class="for-user col-md-4 text-left">
+            <form class="referee-form" id="referee-form-2">            
+                <h4><input class="for-user" name="name" type="text" value="Mr/Mrs Smith" /></h4>
+                <h6><input class="for-user" name="title" type="text" value="Job title" /></h6>
+                <h6><input class="for-user" name="address" type="text" value="Company / Address" /></h6>
+                <h6><input class="for-user" name="contact" type="text" value="0712345678" /></h6>
+                <input type="hidden" name="class" value="referee" />
+                <input type="hidden" name="extras" value="musician" /`>
+                <button class="for-user btn btn-primary btn-sm" type="button" id="save-referee-2">Save</button>
+            </form>
+        </div>
+        <div class="for-user col-md-4 text-left">
+            <form class="referee-form" id="referee-form-3">            
+                <h4><input class="for-user" name="name" type="text" value="Mr/Mrs Smith" /></h4>
+                <h6><input class="for-user" name="title" type="text" value="Job title" /></h6>
+                <h6><input class="for-user" name="address" type="text" value="Company / Address" /></h6>
+                <h6><input class="for-user" name="contact" type="text" value="0712345678" /></h6>
+                <input type="hidden" name="class" value="referee" />
+                <input type="hidden" name="extras" value="musician" /`>
+                <button class="for-user btn btn-primary btn-sm" type="button" id="save-referee-3">Save</button>
+            </form>
+        </div>
+        {% endfor %}
+
+        {% if musician.referees|length > 0 and musician.referees|length < 3 %}
+        {% set difference = 3 - musician.referees|length %}
+        {% for i in 1..difference %}
+            <div class="for-user col-md-4 text-left">
+                <form class="referee-form" id="referee-form-{{i}}">            
+                    <h4><input class="for-user" name="name" type="text" value="Mr/Mrs Smith" /></h4>
+                    <h6><input class="for-user" name="title" type="text" value="Job title" /></h6>
+                    <h6><input class="for-user" name="address" type="text" value="Company / Address" /></h6>
+                    <h6><input class="for-user" name="contact" type="text" value="0712345678" /></h6>
+                    <input type="hidden" name="class" value="referee" />
+                    <input type="hidden" name="extras" value="musician" /`>
+                    <button class="for-user btn btn-primary btn-sm" type="button" id="save-referee-{{i}}">Save</button>
+                </form>
+            </div>
+        {% endfor %}
+        {% endif %}
+    </div>    
+    
+</div>

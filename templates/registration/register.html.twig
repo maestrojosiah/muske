@@ -1,161 +1,101 @@
-{% extends 'base_wizard.html.twig' %}
+<!DOCTYPE html>
+<html>
 
-{% block title %}Register{% endblock %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>muske</title>
+    <link rel="stylesheet" href="{{ asset('theme/assets/bootstrap/css/bootstrap.min.css ') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="{{ asset('theme/assets/css/best-carousel-slide.css ') }}">
+	{% include "favicon.html.twig" %}
+</head>
 
-{% block body %}
+<body>
 
-	<div class="image-container set-full-height" style="background-image: url('{{ asset('img/wizard-city.jpg')}}')">
+	<div class="container" id="registration">
+		<div class="card shadow-lg o-hidden border-0 my-5">
+		<div class="card-body p-0">
+			<div class="row">
+			<div class="col-md-8 offset-md-2">
+				<div class="p-5">
+				<div class="text-center">
+					<h4 class="text-dark mb-4">Create an Account!</h4>
+				</div>
+				{{ form_start(registrationForm, {'attr': {'class': 'user'}}) }}
+					<div id='notify' class="alert alert-info" style="display: none;">
+						{{ form_errors(registrationForm.username) }}
+						{{ form_errors(registrationForm.plainPassword) }}
+					</div>
 
-	    <!--   Big container   -->
-	    <div class="container">
-	        <div class="row">
-		        <div class="col-sm-8 col-sm-offset-2">
-		            <!--      Wizard container        -->
-		            <div class="wizard-container">
-		                <div class="card wizard-card" data-color="purple" id="wizard">
-			                {# <form action="" method=""> #}
-                             {{ form_start(registrationForm) }}
-			                <!--        You can switch " data-color="rose" "  with one of the next bright colors: "blue", "green", "orange", "purple"        -->
-
-		                    	<div class="wizard-header">
-		                        	<h3 class="wizard-title">
-		                        		Basic Information
-		                        	</h3>
-									<h5>Create an account with MuSKe. Its free!.</h5>
-		                    	</div>
-								<div class="wizard-navigation">
-									<ul>
-			                            <li><a href="#about" data-toggle="tab">About</a></li>
-			                            <li><a href="#description" data-toggle="tab">More Information</a></li>
-			                        </ul>
-								</div>
-
-		                        <div class="tab-content">
-                                    <div class="tab-pane" id="about">
-		                              <div class="row">
-		                                	<h4 id="notify" class="info-text"> Your preferred username and password you can remember</h4>
-		                                	<div class="col-sm-10 col-sm-offset-1">
-												<div class="input-group">
-                                                    {{ form_errors(registrationForm.username) }}
-                                                    {{ form_errors(registrationForm.plainPassword) }}
-													<span class="input-group-addon">
-														<i class="material-icons">Username</i>
-													</span>
-													<div class="form-group label-floating">
-                                                      {{ form_label(registrationForm.username, 'Username (single name. Your page will be https://muske/co.ke/username)', {'label_attr': {'class': 'control-label'}})}}
-                                                      {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control'}}) }}                                                      
-			                                        </div>
-												</div>
-
-												<div class="input-group">
-													<span class="input-group-addon">
-														<i class="material-icons">Password</i>
-													</span>
-													<div class="form-group label-floating">
-                                                      {{ form_label(registrationForm.plainPassword.first, 'Password', {'label_attr': {'class': 'control-label'}})}}
-                                                      {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
-													</div>
-												</div>
-		                                	</div>
-		                                	<div class="col-sm-10 col-sm-offset-1">
-												<div class="input-group">
-													<span class="input-group-addon">
-														<i class="material-icons">Repeat password</i>
-													</span>
-													<div class="form-group label-floating">
-                                                        {{ form_label(registrationForm.plainPassword.second, 'Repeat Password', {'label_attr': {'class': 'control-label'}})}}
-                                                        {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
-			                                        </div>
-												</div>
-                                                <div class="col-sm-10">{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'f'}}) }} Agree with terms and conditions</div>
-		                                	</div>
-		                            	</div>
-		                            </div>                                
-		                            <div class="tab-pane" id="description">
-		                                <div class="row">
-		                                    <h4 class="info-text"> Drop us a small description. </h4>
-		                                    <div class="col-sm-6 col-sm-offset-1">
-		                                        <div class="form-group label-floating">
-		                                            <label class="control-label">Place description</label>
-		                                            <textarea class="form-control" placeholder="" rows="9"></textarea>
-		                                        </div>
-		                                    </div>
-		                                    <div class="col-sm-4">
-		                                    	<div class="form-group label-floating">
-		                                            <label class="control-label">Example</label>
-		                                            <p class="description">"The place is really nice. We use it every sunday when we go fishing. It is so awesome."</p>
-		                                        </div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </div>
-		                        <div class="wizard-footer">
-	                            	<div class="pull-right">
-                                        <button id="register_button" class="btn btn-next btn-fill btn-primary btn-wd">Register</button>
-	                                    {# <input type='button' class='btn btn-next btn-fill btn-primary btn-wd' name='next' value='Next' />
-	                                    <input type='button' class='btn btn-finish btn-fill btn-primary btn-wd' name='finish' value='Finish' /> #}
-	                                </div>
-	                                <div class="pull-left">
-	                                    {# <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' /> #}
-	                                </div>
-		                            <div class="clearfix"></div>
-		                        </div>
-			                {# </form> #}
-                             {{ form_end(registrationForm) }}
-		                </div>
-		            </div> <!-- wizard container -->
-		        </div>
-	        </div> <!-- row -->
-	    </div> <!--  big container -->
-
-	    <div class="footer">
-	        <div class="container text-center">
-	             Made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creative Tim</a>. Free download <a href="http://www.creative-tim.com/product/bootstrap-wizard">here.</a>
-	        </div>
-	    </div>
+					<div class="form-group">
+						{{ form_widget(registrationForm.username, {'attr': {'class': 'form-control',  'required':"required", 'minlength':"5", 'maxlength':"20", 'pattern':"[^' ']+", 'autofocus':"autofocus", "value":" ", 'placeholder': "Username"}}) }}                                                      
+						<small class="form-text text-muted">Username should be a single word with no spaces. example: johnsmith</small>
+					</div>
+					<div class="form-group row">
+					<div class="col-sm-6 mb-3 mb-sm-0">
+						{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control form-control-user',  'placeholder':"Password", 'required':"required"}}) }}
+					</div>
+					<div class="col-sm-6">
+						{{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control form-control-user', 'placeholder':'Repeat password', 'required':'required'}}) }}
+					</div>
+					<div class="col-sm-12">{{ form_widget(registrationForm.agreeTerms, {'attr': {'required': 'required'}}) }} Agree with terms and conditions</div>
+					</div>
+					<button id="register_button" class="btn btn-primary btn-block text-white btn-user" type="submit">Register Account</button>
+					<hr>
+				{{ form_end(registrationForm) }}
+				<div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
+				<div class="text-center"><a class="small" href="login.html">Already have an account? Login!</a></div>
+				</div>
+			</div>
+			</div>
+		</div>
+		</div>
 	</div>
+	<script src="{{ asset('theme/assets/js/jquery.min.js ') }}"></script>
+	<script src="{{ asset('theme/assets/bootstrap/js/bootstrap.min.js ') }}"></script>
+	<script>
 
+		$(document).ready(function(){
+			
+			$('#registration_form_username').keyup(function(){
 
-
-{% endblock %}
-
-{% block javascripts %}
-
-    <script>
-
-    $(document).ready(function(){
-		
-        $('#registration_form_username').keyup(function(){
- 
-		var username = $(this).val();
-			$.ajax({
-				url:"{{ path('musician_validate_username')}}",
-				type: "POST",
-				dataType: "json",
-				data: {
-					"username": username,
-				},
-				async: true,
-				success: function (data)
-				{
-					console.log(data);
-					$("#notify").html(data[1]);
-					if(data[0] == 'error'){
-						$("#register_button").prop('disabled', true);
+			var username = $(this).val();
+				$.ajax({
+					url:"{{ path('musician_validate_username')}}",
+					type: "POST",
+					dataType: "json",
+					data: {
+						"username": username,
+					},
+					async: true,
+					success: function (data)
+					{
+						console.log(data);
+						$("#notify").show();
+						$("#notify").html(data[1]);
+						if(data[0] == 'error'){
+							$("#register_button").prop('disabled', true);
+						}
+						if(data[0] == 'success'){
+							$("#register_button").prop('disabled', false);
+						}
+					},
+					error: function () {
+						$("#warning").html("<b>something's wrong</b>");
 					}
-					if(data[0] == 'success'){
-						$("#register_button").prop('disabled', false);
-					}
-				},
-				error: function () {
-					$("#warning").html("<b>something's wrong</b>");
-				}
+				});
+
 			});
+		});
 
-        });
-    });
-
-    </script>
+	</script>
 
 
-{% endblock %}
+</body>	
+
+

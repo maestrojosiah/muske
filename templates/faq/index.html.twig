@@ -1,192 +1,52 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        {{ sonata_seo_title() }}
-        {{ sonata_seo_metadatas() }}
-        {{ sonata_seo_head_attributes() }}
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% include "favicon.html.twig" %}
+{% extends 'base.html.twig' %}
 
-        <link href="https://cdn.3up.dk/bootstrap@4.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="https://cdn.3up.dk/mdi@2.2.43/css/materialdesignicons.min.css" rel="stylesheet" />
+{% block title %}Music Services Kenya{% endblock %}
 
-        <style>
+{% block body %}
 
-            // Just for kicks and layout
-            body {
-            margin-top: 0px;
-            background-color: #eee;
-            }
-
-
-            // FAQ
-            .faq-nav {
-                flex-direction: column;
-                margin: 0 0 32px;
-                border-radius: 2px;    
-                border: 1px solid #ddd;
-                box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
-                
-                .nav-link {
-                    position: relative;
-                    display: block;
-                    margin: 0;
-                    padding: 13px 16px;
-                    background-color: #fff;
-                    border: 0;
-                    border-bottom: 1px solid #ddd;
-                    border-radius: 0;
-                    color: #616161;
-                    transition: background-color .2s ease;
-                    
-                    &:hover {
-                        background-color: #f6f6f6;
-                    }
-                    
-                    &.active {
-                        background-color: #f6f6f6;
-                        font-weight: 700;
-                        color: rgba(0,0,0,.87);        
-                    }
-                    
-                    &:last-of-type {
-                        border-bottom-left-radius: 2px;
-                        border-bottom-right-radius: 2px;
-                        border-bottom: 0;
-                    }
-                    
-                    i.mdi {
-                        margin-right: 5px;
-                        font-size: 18px;
-                        position: relative;
-                    }
-                }
-            }
-
-            // TAB CONTENT
-            .tab-content {
-                box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
-                
-                .card {
-                    border-radius: 0;
-                }
-                
-                .card-header {
-                    padding: 15px 16px;
-                    border-radius: 0;
-                    background-color: #f6f6f6;
-                    
-                    h5 {
-                        margin: 0;
-                        
-                        button {
-                            display: block;
-                            width: 100%;
-                            padding: 0;
-                            border: 0;
-                            font-weight: 700;
-                            color: rgba(0,0,0,.87);
-                            text-align: left;
-                            white-space: normal;
-                            
-                            &:hover,
-                            &:focus,
-                            &:active,
-                            &:hover:active {
-                                text-decoration: none;
-                            }
-                        }
-                    }
-                }
-                
-                .card-body {
-                    p {
-                        color: #616161;
-                        
-                        &:last-of-type {
-                            margin: 0;
-                        }
-                    }
-                }
-            }
-
-
-            // BORDER FIX
-            .accordion {
-                > .card {
-                    &:not(:first-child) {
-                        border-top: 0;
-                    }   
-                }
-            }
-
-            .collapse.show {
-                .card-body {
-                    border-bottom: 1px solid rgba(0,0,0,.125);
-                }
-            }
-
-        </style>
-    </head>
-
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="nav nav-pills faq-nav text-center" id="faq-tabs" role="tablist" aria-orientation="vertical">
-                        {% for category in categories %}
-                        <a href="#tab{{loop.index}}" class="nav-link {{ loop.index == 1 ? 'active' : ''}}" data-toggle="pill" role="tab" aria-controls="tab1" aria-selected="true">
-                            <i class="mdi mdi-star"></i> {{category.title|capitalize}}
-                        </a>
-                        {% endfor %}
-                        {% if app.user and app.user.username == 'maestrojosiah' %}
-                        <a href="{{path('f_a_q_new')}}" class="nav-link">
-                            <i class="mdi mdi-plus"></i> Create new
-                        </a>
-                        {% endif %}
-                        <a href="{{path('homepage')}}" class="nav-link">
-                            <i class="mdi mdi-home"></i> Homepage
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-8" style="margin:auto">
-                    <div class="tab-content" id="faq-tab-content">
+    {% include "reusable/nav.html.twig" %}
+    <div class="container">
+        <h4 style="text-align: center;">Frequently Asked Questions</h4>
+        <div class="jumbotron" id="white-jumbo">
+            <div>
+                <ul class="nav nav-tabs">
+                    {% for category in categories %}
+                    <li class="nav-item"><a class="nav-link {{ loop.index == 1 ? 'active' : ''}}" role="tab" data-toggle="tab" href="#tab{{loop.index}}">{{category.title|capitalize}}</a></li>
+                    {% endfor %}
+                    {% if app.user and app.user.username == 'maestrojosiah' %}
+                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="{{path('f_a_q_new')}}">Create new</a></li>
+                    {% endif %}                    
+                </ul>
+        
+                <div class="tab-content">
                     {% set category_count = 0 %}
                     {% for category in categories %}
-                        {% set category_count = category_count + 1 %}
-                        <div class="tab-pane {{ loop.index == 1 ? 'show active' : ''}}" id="tab{{category_count}}" role="tabpanel" aria-labelledby="tab{{category_count}}">
-                            <div class="accordion" id="accordion-tab-{{category_count}}">
+                    {% set category_count = category_count + 1 %}
+                        <div class="tab-pane {{ loop.index == 1 ? 'show active' : ''}}" role="tabpanel" id="tab{{category_count}}">
+                            <div role="tablist" id="accordion-{{category_count}}">
                                 {% set faq_count = 0 %}
                                 {% for faq in category.faqs %}
-                                {% set faq_count = faq_count + 1 %}
+                                {% set faq_count = faq_count + 1 %}    
                                 <div class="card">
-                                    <div class="card-header" id="accordion-tab-{{category_count}}-heading-{{faq_count}}">
-                                        <h5>
-                                            <a class="btn-link" style="cursor:pointer;"  type="button" data-toggle="collapse" data-target="#accordion-tab-{{category_count}}-content-{{faq_count}}" aria-expanded="false" aria-controls="accordion-tab-{{category_count}}-content-{{faq_count}}">{{faq.question|raw}}</a>
-                                        </h5>
+                                    <div class="card-header" role="tab">
+                                        <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-{{category_count}} .item-{{faq_count}}" href="#accordion-{{category_count}} .item-{{faq_count}}">{{faq.question}}</a></h5>
                                     </div>
-                                    <div class="collapse {{ loop.index == 1 ? 'show' : ''}}" id="accordion-tab-{{category_count}}-content-{{faq_count}}" aria-labelledby="accordion-tab-{{category_count}}-heading-{{faq_count}}" data-parent="#accordion-tab-{{category_count}}">
+                                    <div class="collapse {{ loop.index == 1 ? 'show' : ''}} item-{{faq_count}}" role="tabpanel" data-parent="#accordion-{{category_count}}">
                                         <div class="card-body">
-                                            <div>{% autoescape false %}{{faq.answer|raw}}{% endautoescape %}</div>
+                                            <div class="card-text">{% autoescape false %}{{faq.answer|raw}}{% endautoescape %}</div>
+                                            {% if app.user and app.user.username == 'maestrojosiah' %}
+                                            <a style="margin-left:20px;" href="{{path('f_a_q_edit', {'id': faq.id })}}">Edit</a>
+                                            {% endif %}
                                         </div>
-                                        {% if app.user and app.user.username == 'maestrojosiah' %}
-                                        <a style="margin-left:20px;" href="{{path('f_a_q_edit', {'id': faq.id })}}">Edit</a>
-                                        {% endif %}
                                     </div>
-                                    
                                 </div>
                                 {% endfor %}
                             </div>
                         </div>
                     {% endfor %}
-                    </div>
                 </div>
             </div>
         </div>
-
-        <script src="https://cdn.3up.dk/jquery@3.3.1/dist/jquery.slim.min.js"></script>
-        <script src="https://cdn.3up.dk/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
-
-    </body>
-</html>
+    </div>
+    {% include "reusable/footer.html.twig" %}
+{% endblock %}

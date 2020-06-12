@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        {{ sonata_seo_title() }}
+        {{ sonata_seo_metadatas() }}
+        {{ sonata_seo_head_attributes() }}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ asset('theme/assets/bootstrap/css/bootstrap.min.css ') }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&amp;display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+        <link rel="stylesheet" href="{{ asset('theme/assets/fonts/fontawesome-all.min.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/fonts/font-awesome.min.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/fonts/simple-line-icons.min.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/fonts/fontawesome5-overrides.min.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/advert.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/best-carousel-slide.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/Features-Clean.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/Header-Blue.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/Navigation-Clean.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/Pretty-Footer.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/styles.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/Testimonials.css ') }}">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/theme_two.css ') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        <link rel="stylesheet" href="{{ asset('theme/assets/css/youtube-embed.css ') }}">
+        <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5ecb6caf46c8f10012f1e8d8&product=sticky-share-buttons&cms=sop' async='async'></script>
+        {% include "favicon.html.twig" %}
+        {% block stylesheets %}{% endblock %}
+        
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        <script src="{{ asset('theme/assets/js/jquery.min.js ') }}"></script>
+        <script src="{{ asset('theme/assets/bootstrap/js/bootstrap.min.js ') }}"></script>
+        <script src="{{ asset('theme/assets/js/bs-init.js ') }}"></script>
+        <script src="{{ asset('theme/assets/js/advert.js ') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js ') }}"></script>
+        <script src="{{ asset('theme/assets/js/resume.js ') }}"></script>
+        <script src="{{ asset('theme/assets/js/theme.js ') }}"></script>
+        <script>
+            function saveDetails(div){
+                var arr = [];
+                arr['class'] = div;
+                var form = $("#"+div+"-form");
+                var form_data = $( form ).serializeArray();
+                
+                $.ajax({
+                    url:'{{ (path("save_entity")) }}',
+                    type: "POST",
+                    dataType: "json",
+                    data: form_data,
+                    async: true,
+                    success: function (data)
+                    {
+                        console.log(data);
+                        console.log("saved information");
+                        $("#saved").val("true");
+                    },
+                    error: function (err) {
+                        console.log("there is a problem: "+err.responseText);
+                    }
+                });
+
+            }	
+        </script>
+
+        {% block javascripts %}{% endblock %}
+                
+    </body>
+</html>

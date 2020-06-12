@@ -1,0 +1,54 @@
+<div id="info">
+    <h1 class="text-center reg-heading">Basic Information</h1>
+    <h3 class="text-center reg-heading-two">Start by adding your basic info</h3>
+    <hr>
+    <div class="steps-progressbar cursor-pointer">
+        <ul>
+            <li class="active" id="goto-info">Info</li>
+            <li id="goto-skills">Skills</li>
+            <li id="goto-education">Education</li>
+            <li id="goto-jobs">Jobs</li>
+            <li id="goto-roles">Roles</li>
+        </ul>
+    </div>
+    <div class="register-photo">
+        <div class="form-container">
+            <form id="info-form" class="underlined-inputs">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <legend>Full name</legend><input name="fullname" class="form-control" type="text" id="fullname" autofocus="" required="" {{app.user.fullname|length > 0 ? 'value=' ~ app.user.fullname }} minlength="5"><small class="form-text text-muted">Your full name as it should appear on your resume</small></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <legend>Email Address</legend><input name="email" class="form-control" type="email" id="email" required="" {{app.user.realemail|length > 0 ? 'value=' ~ app.user.realemail }} ><small class="form-text text-muted">Email address that we or clients can use to reach you for a job or any other important information</small></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <legend>Phone Number</legend><input name="phone" class="form-control" type="text" id="phone" required="" {{app.user.realphone|length > 0 ? 'value=' ~ app.user.realphone }} inputmode="tel"><small class="form-text text-muted">A phone number that is activated for WhatsApp</small></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <legend>Age</legend><input name="age" class="form-control" type="text" id="age" inputmode="numeric" required="" {{app.user.age|length > 0 ? 'value=' ~ app.user.age }} minlength="2"><small class="form-text text-muted">Some individuals and institutions are mindful of this.</small></div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <legend>About you (Profile)</legend>
+                            <textarea name="about" style="height: 100px!important;font-size:14px!important" class="form-control form-control-lg" placeholder="An energetic, experienced and creative music teacher with a proven ability to get the very best....">{{app.user.about|length > 0 ? app.user.about }}</textarea>
+                            <small class="form-text text-muted">A professional summary that describes who you are and what you do</small>
+                        </div>
+                    </div>
+                    <input type="hidden" name="class" value="Musician-{{app.user.id}}" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="next-prev">
+        <div class="container">
+            <div class="row">
+                <div class="col-6"><a class="btn btn-info btn-block btn-lg" role="button" href="{{ path('homepage')}}">Back</a></div>
+                <div class="col-6 col-sm-6 col-md-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-skills-from-info">Next</a></div>
+            </div>
+        </div>
+    </div>
+</div>

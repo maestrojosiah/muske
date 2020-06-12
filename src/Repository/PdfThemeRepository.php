@@ -36,6 +36,22 @@ class PdfThemeRepository extends ServiceEntityRepository
     }
     */
 
+
+    /**
+     * @return PdfTheme[] Returns an array of PdfTheme objects
+     */
+   
+    public function findFive()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+
     /*
     public function findOneBySomeField($value): ?PdfTheme
     {

@@ -1,30 +1,63 @@
 
-<form class="d-flex" method="post">
+<!DOCTYPE html>
+<html>
 
-    <li class="nav-item">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}    
-    </li>          
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>muske</title>
+    <link rel="stylesheet" href="{{ asset('theme/assets/bootstrap/css/bootstrap.min.css ') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="{{ asset('theme/assets/css/best-carousel-slide.css ') }}">
+    {% include "favicon.html.twig" %}
+</head>
 
-    <li class="nav-item">
-        <input class="form-control mr-2" type="text" name="username" value="{{ last_username }}" id="inputUsername" placeholder="Username" aria-label="inputUsername" required >
-    </li>          
-    &nbsp;
-    <li class="nav-item">
-        <input class="form-control mr-2"  type="password" name="password" id="inputPassword" placeholder="Password" required>
-    </li>          
+<body>
+    <div class="container" id="login">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-12 col-xl-10">
+                <div class="card shadow-lg o-hidden border-0 my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-6 offset-sm-0 offset-md-0 offset-lg-3">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h4 class="text-dark mb-4">Welcome Back!</h4>
+                                    </div>
+                                    <form class="user" method="post">
+                                        {% if error %}
+                                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                        {% endif %}  
+                                        <div class="form-group">
+                                            <input class="form-control mr-2" type="text" name="username" value="{{ last_username }}" id="inputUsername" placeholder="Username" aria-label="inputUsername" required >
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control mr-2"  type="password" name="password" id="inputPassword" placeholder="Password" required>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" id="remember_me" name="_remember_me" checked> Keep me logged in</label>
+                                        </div>
+                                        <input type="hidden" name="_csrf_token"
+                                            value="{{ csrf_token('authenticate') }}"
+                                        >
+                                        <button class="btn btn-primary btn-block text-white btn-user" type="submit">Login</button>
+                                    </form>
+                                    <div class="text-center"><a class="small" href="{{ path('musician_reset_password')}}">Forgot Password?</a></div>
+                                    <div class="text-center"><a class="small" href="{{ path('app_register')}}">Create an Account!</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script src="{{ asset('theme/assets/js/jquery.min.js ') }}"></script>
+        <script src="{{ asset('theme/assets/bootstrap/js/bootstrap.min.js ') }}"></script>
+</body>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-    &nbsp;
-    <li class="nav-item">
-        <button  class="btn btn-outline-success" type="submit">
-            Login
-        </button>
-    </li>          
-
-    
-</form>
-{# {% endblock %} #}
+</html>

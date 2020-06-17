@@ -14,7 +14,7 @@
             {% for theme in themes %}
             <li>
                 <a class="image_title" href="{{ path('app_register') }}?theme={{theme.title}}">{{theme.title}}</a>
-                <a href="{{ path('app_register') }}?theme={{theme.title}}"><img class="link-image" src="{{ asset('img/screenshots/' ~ theme.screenshot )}}"></a>
+                <a href="{{ path('app_register') }}?theme={{theme.template}}"><img class="link-image" src="{{ asset('img/screenshots/' ~ theme.screenshot )}}"></a>
             </li>
             {% endfor %}
         </ul>

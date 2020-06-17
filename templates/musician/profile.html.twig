@@ -25,19 +25,20 @@
                   </div>
                 </div>
               </div>
-              <div class="card prof-panel">
+              <div class="card prof-panel" id="div-quicklinks">
                 <div class="card-header">
                   <h5 class="mb-0">Quick Links</h5>
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item"><span><a href="{{path('musician_show', {'username': musician.username})}}">Your resume website</a></span></li>
                   <li class="list-group-item"><span><a href="{{path('blog', {'username': musician.username})}}">Your blog</a></span></li>
+                  <li class="list-group-item"><span><a href="{{path('musician_new')}}">Add Resume Info</a></span></li>
                   <li class="list-group-item"><span><a href="{{path('musician_admin_index')}}">Your Admin Page</a></span></li>
                   <li class="list-group-item"><span><a href="{{path('gallery_index', {'username': musician.username})}}">Your Gallery</a></span></li>
                   <li class="list-group-item"><span><a href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}">Download resume</a></span></li>
                 </ul>
               </div>
-              <div class="card prof-panel">
+              <div class="card prof-panel" id="div-account">
                 <div class="card-header text-white" style="background-color: rgb(78,115,223);">
                   <h5 class="mb-0">Your account</h5>
                 </div>
@@ -54,7 +55,7 @@
                   </form>
                 </div>
               </div>
-              <div class="card prof-panel">
+              <div class="card prof-panel" id="div-themes">
                 <div class="card-header">
                   <h5 class="mb-0">Theme Settings</h5>
                 </div>
@@ -95,7 +96,7 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              <img class="img-fluid" id="template-image" src="{{ asset('img/screenshots/simpleOne.jpg')}}" />
+                              <img class="img-fluid" id="template-image" src="{{ asset('img/screenshots/' ~ musician.pdfTheme|replace({'.html.twig': '.jpg'}) )}}" />
                             </div>
                           </div>
                         </div>
@@ -112,7 +113,7 @@
             <div class="col-sm-12 col-md-8">
               <div class="row">
                 <div class="col">
-                  <div class="card shadow mb-3">
+                  <div class="card shadow mb-3" id="div-usersettings">
                     <div class="card-header py-3">
                       <p class="text-primary m-0 font-weight-bold">User Settings</p>
                     </div>
@@ -139,7 +140,7 @@
                       </form>
                     </div>
                   </div>
-                  <div class="card shadow">
+                  <div class="card shadow" id="div-orderandsort">
                     <div class="card-header py-3">
                       <p class="text-primary m-0 font-weight-bold">Order and Sort settings</p>
                     </div>
@@ -195,7 +196,7 @@
                       </form>
                     </div>
                   </div>
-                  <div class="card shadow mb-3 margin-top">
+                  <div class="card shadow mb-3 margin-top" id="div-sociallinks">
                     <div class="card-header py-3">
                       <p class="text-primary m-0 font-weight-bold">Social networks URL settings</p>
                     </div>
@@ -243,71 +244,73 @@
                       </form>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card shadow mb-5 prof-panel">
-                <div class="card-header py-3">
-                  <p class="text-primary m-0 font-weight-bold">Extra Settings</p>
-                </div>
-                <div class="card-body">
-                  <form id="extra-form">
-                    <div class="form-group">
-                      <label>Online lessons</label>
-                      <select name="online" class="form-control">
-                        <option value="" {{ musician.settings and musician.settings.online == '' ? 'selected' : '' }}{{ musician.settings and musician.settings.online == null ? 'selected' : '' }}>Select Answer</option>
-                        <option value="false" {{ musician.settings and musician.settings.online == 'false' ? 'selected' : '' }}>No</option>
-                        <option value="true" {{ musician.settings and musician.settings.online == 'true' ? 'selected' : '' }}>Yes</option>
-                      </select>
-                      <small class="form-text text-muted">Do you conduct online lessons?</small>
-                    </div>
-                    <div
-                      class="form-group">
-                      <label>TSC Number</label>
-                      <select name="tsc" class="form-control">
-                        <option value="" {{ musician.settings and musician.settings.tsc == '' ? 'selected' : '' }}{{ musician.settings and musician.settings.tsc == null ? 'selected' : '' }}>Select Answer</option>
-                        <option value="false" {{ musician.settings and musician.settings.tsc == 'false' ? 'selected' : '' }}>No</option>
-                        <option value="true"{{ musician.settings and musician.settings.tsc == 'true' ? 'selected' : '' }}>Yes</option>
-                      </select>
-                      <small class="form-text text-muted">Do you have a TSC Number?</small>
-                    </div>
-                    <div class="form-group">
-                      <label>Job location</label>
-                      <input type="text" name="placeofwork" value="{{musician.settings and musician.settings.placeofwork ? musician.settings.placeofwork : ""}}" class="form-control" id="wheretowork" placeholder="Eg: Nairobi, Kiambu, Thika" title="Separate using comma">
-                      <small class="form-text text-muted">Which are your preferred job places? eg Kiambu, Nairobi</small>
-                    </div>
-                    <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
-                    <input type="hidden" name="extras" value="musician" />
-                    <div class="form-group"><button id="save-extra" class="btn btn-primary btn-sm" type="button">Save&nbsp;</button></div>
-              </form>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-8">
-              <div class="card shadow mb-5 prof-panel">
-                <div class="card-header py-3">
-                  <p class="text-primary m-0 font-weight-bold">Address Details</p>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <form id="signature-form">
-                        <div class="form-group">
-                          <label for="signature"><strong>You can set the address visibility.</strong><br></label>
-                          <textarea class="form-control" rows="4" name="signature">{{musician.settings.signature|length > 0 ? musician.settings.signature }}</textarea>
+                  <div class="row" id="div-extrasettings">
+                    <div class="col-md-6">
+                      <div class="card shadow mb-5 prof-panel">
+                        <div class="card-header py-3">
+                          <p class="text-primary m-0 font-weight-bold">Extra Settings</p>
                         </div>
-                        <div class="form-group">
-                          <div class="custom-control custom-switch">
-                            <input type="hidden" name="appendsignature" value="false" />
-                            <input class="custom-control-input" name="appendsignature" value="true" type="checkbox" id="formCheck-1" checked />
-                            <label class="custom-control-label" for="formCheck-1"><strong>Show this in my resume</strong></label>
+                        <div class="card-body">
+                          <form id="extra-form">
+                            <div class="form-group">
+                              <label>Online lessons</label>
+                              <select name="online" class="form-control">
+                                <option value="" {{ musician.settings and musician.settings.online == '' ? 'selected' : '' }}{{ musician.settings and musician.settings.online == null ? 'selected' : '' }}>Select Answer</option>
+                                <option value="false" {{ musician.settings and musician.settings.online == 'false' ? 'selected' : '' }}>No</option>
+                                <option value="true" {{ musician.settings and musician.settings.online == 'true' ? 'selected' : '' }}>Yes</option>
+                              </select>
+                              <small class="form-text text-muted">Do you conduct online lessons?</small>
+                            </div>
+                            <div
+                              class="form-group">
+                              <label>TSC Number</label>
+                              <select name="tsc" class="form-control">
+                                <option value="" {{ musician.settings and musician.settings.tsc == '' ? 'selected' : '' }}{{ musician.settings and musician.settings.tsc == null ? 'selected' : '' }}>Select Answer</option>
+                                <option value="false" {{ musician.settings and musician.settings.tsc == 'false' ? 'selected' : '' }}>No</option>
+                                <option value="true"{{ musician.settings and musician.settings.tsc == 'true' ? 'selected' : '' }}>Yes</option>
+                              </select>
+                              <small class="form-text text-muted">Do you have a TSC Number?</small>
+                            </div>
+                            <div class="form-group">
+                              <label>Job location</label>
+                              <input type="text" name="placeofwork" value="{{musician.settings and musician.settings.placeofwork ? musician.settings.placeofwork : ""}}" class="form-control" id="wheretowork" placeholder="Eg: Nairobi, Kiambu, Thika" title="Separate using comma">
+                              <small class="form-text text-muted">Which are your preferred job places? eg Kiambu, Nairobi</small>
+                            </div>
                             <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
-                            <input type="hidden" name="extras" value="musician" />        
+                            <input type="hidden" name="extras" value="musician" />
+                            <div class="form-group"><button id="save-extra" class="btn btn-primary btn-sm" type="button">Save&nbsp;</button></div>
+                      </form>
+                        </div>
+                      </div>        
+                    </div>
+                    <div class="col-md-6">
+                      <div class="card shadow mb-5 prof-panel">
+                        <div class="card-header py-3">
+                          <p class="text-primary m-0 font-weight-bold">Address Details</p>
+                        </div>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <form id="signature-form">
+                                <div class="form-group">
+                                  <label for="signature"><strong>You can set the address visibility.</strong><br></label>
+                                  <textarea class="form-control" rows="4" name="signature">{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature }}</textarea>
+                                </div>
+                                <div class="form-group">
+                                  <div class="custom-control custom-switch">
+                                    <input type="hidden" name="appendsignature" value="false" />
+                                    <input class="custom-control-input" name="appendsignature" value="true" type="checkbox" id="formCheck-1" checked />
+                                    <label class="custom-control-label" for="formCheck-1"><strong>Show this in my resume</strong></label>
+                                    <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
+                                    <input type="hidden" name="extras" value="musician" />        
+                                  </div>
+                                </div>
+                                <div class="form-group"><button class="btn btn-primary btn-sm" id="save-signature" type="button">Save Settings</button></div>
+                              </form>
+                            </div>
                           </div>
                         </div>
-                        <div class="form-group"><button class="btn btn-primary btn-sm" id="save-signature" type="button">Save Settings</button></div>
-                      </form>
+                      </div>        
                     </div>
                   </div>
                 </div>
@@ -424,6 +427,28 @@ $( "#pdf_theme").change(function() {
   var splitted = template.split('.'); 
   var name = splitted[0];
   $("#template-image").attr('src', '/img/screenshots/'+name+'.jpg');
+});
+
+</script>
+<script>
+
+$(document).ready(function(){
+  
+  $('.searchinput').keyup(function(){
+
+    var searchtext = $(this).val().toLowerCase();
+    if($(this).val().length > 2){
+      $(".card").hide();
+      $( "div:contains('"+searchtext+"')" ).closest(".card").show();
+      $( "div:contains('"+searchtext.toUpperCase()+"')" ).closest(".card").show();;
+      $( "div:contains('"+searchtext.toLowerCase()+"')" ).closest(".card").show();;
+      $( "div:contains('"+searchtext.substr(0,1).toUpperCase()+searchtext.substr(1)+"')" ).closest(".card").show();;
+    } else {
+      $(".card").show("slow");
+    }
+    
+    
+  });
 });
 
 </script>

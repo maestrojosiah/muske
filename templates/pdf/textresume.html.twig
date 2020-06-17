@@ -100,6 +100,17 @@ a {
 	text-decoration: none;
 	color:black;
 }
+.referee {
+float: left;
+	width: 33.3333333%;
+
+}
+
+.referee p {
+	padding:0px;
+	margin:0px;
+}
+
 </style>
 {% endblock %}
 {% block body %}
@@ -107,10 +118,13 @@ a {
 <h1>{{musician.fullname}}</h1>
 
 <p id="bio_left">
-{{musician.phone}}<br><a href="mailto:{{musician.email}}">{{musician.email}}</a>
+{{musician.phone}}<br><a href="mailto:{{musician.email}}">{{musician.email}}</a><br />https://muske.co.ke/{{musician.username}}
 </p>
 <p id="bio_right">
-	https://muske.co.ke/{{musician.username}}
+	{% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+	{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}
+	{% endif %}
+
 </p>
 
 <h2>ABOUT</h2>
@@ -134,11 +148,6 @@ a {
 </div>
 {% endfor %}
 
-<h2>SKILLS</h2>
-<ul>
-{% include "reusable/_simpleskills_.html.twig" %}
-</ul>
-
 <h2>EDUCATION</h2>
 {% for edu in educ %}
 <div class="job">
@@ -151,6 +160,11 @@ a {
 	</div>
 </div>
 {% endfor %}
+
+<h2>SKILLS</h2>
+<ul>
+{% include "reusable/_simpleskills_.html.twig" %}
+</ul>
 
 {% if musician.projects is not empty %}
 <h2>PROJECTS</h2>
@@ -169,7 +183,14 @@ a {
 </div>
 
 <h2>REFERENCES</h2>
-<p id="references">References available upon request.</p>
 
+{% for referee in musician.referees %}
+<div class="referee">
+	<h4>{{referee.name}}</h4>
+	<p style="margin-bottom:0px; margin-top:0px;">{{referee.title}}</p>
+	<p style="margin-bottom:0px; margin-top:0px;">{{referee.address}}</p>
+	<p style="margin-bottom:0px; margin-top:0px;">{{referee.contact}}</p>
+</div>
+{% endfor %}
 
 {% endblock %}

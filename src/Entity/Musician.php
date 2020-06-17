@@ -537,17 +537,32 @@ class Musician implements UserInterface
     public function thumbnailurl(): ?string
     {
         $url = "http://127.0.0.1:8000/uploads/photos/thumbs/".$this->photo.".png";
+        // $exists = $this->URL_exists($url);
+        // $placeholder = "http://127.0.0.1:8000/img/headshot.jpg";
+        // $path = $exists ? $url : $placeholder;
         $this->thumbnailurl = $url;
 
         return $this->thumbnailurl;
     }
 
+    function URL_exists($url){
+        $headers=get_headers($url);
+        return stripos($headers[0],"200 OK") ? true : false;
+    }
+     
     public function logourl(): ?string
     {
         $url = "http://127.0.0.1:8000/img/logo_only_white_sq.png";
         $this->logourl = $url;
 
         return $this->logourl;
+    }
+
+    public function setThumbnailurl(?string $thumbnailurl): self
+    {
+        $this->thumbnailurl = $thumbnailurl;
+
+        return $this;
     }
 
     public function setPhoto(?string $photo): self

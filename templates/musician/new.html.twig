@@ -17,8 +17,8 @@
 	{% include "registration_process/jobs.html.twig" %}
 	{% include "registration_process/roles.html.twig" %}
 	{% include "reusable/footer.html.twig" %}
-	{% include "registration_process/resume-modal.html.twig" %}
-	<input type="hidden" value="" id="saved" />
+	{% include "registration_process/resumemodal.html.twig" %}
+	<input type="hidden" value="{{ app.user.email|length > 1 and app.user.phone|length > 1 and app.user.fullname|length > 1 ? 'true' : '' }}" id="saved" />
 		
 	{% endblock %}
 
@@ -57,16 +57,16 @@
 			var div = splitted[1];
 			var form = $("#"+div+"-form");
 			var list = $("#"+div+"-list");
-			saveDetails(div);
+			saveDetails(div, form);
 
 			$.notify({
 				icon: 'glyphicon glyphicon-time',
 				message: 'Please wait...',
-				url: '#',
-				target: '_blank'
 			},{
+				element: form,
 				type: "info",
 				allow_dismiss: true,
+				delay: 1000,
 				newest_on_top: false,
 				placement: {
 					from: 'bottom',
@@ -75,7 +75,8 @@
 			});
 			$(form)[0].reset();
 			
-
+			$("#condition").show("slow");
+			$('#current').prop('selectedIndex', 0);
 		});
 
 	</script>
@@ -97,6 +98,8 @@
 			$("#"+target).slideDown("slow");
 			console.log("#"+target);
 			$("html, body").animate({ scrollTop: 0 }, "slow");
+			$("#condition").show("slow");
+			$('#current').prop('selectedIndex', 0);
 		} else {
 			alert ("Please save the basic information first");
 		}
@@ -107,26 +110,18 @@
 
 
 	<script>
-	$( function() {
-		var skills = [
-			{% for skill in skills_auto_fill %}
-				"{{skill}}",
-			{% endfor %}
-		];
-		var job_roles = [
-			{% for role in job_roles_auto_fill %}
-				"{{role}}",
-			{% endfor %}
-		];
-		$( "#skillname" ).autocomplete({
-			source: skills,
-			autoFocus: true,
-		});
-		$( "#role" ).autocomplete({
-			source: job_roles,
-			autoFocus: true,
-		});
-	} );
+	$( "#current" ).change(function() {
+		var fact = $(this).val();
+		if(fact == 'current'){
+			var thisYear = new Date().getFullYear();
+			$("#condition").hide("slow");
+			$("#to_year_job").val(thisYear+'-12-31');
+		} else {
+			$("#condition").show("slow");
+		}
+		
+	});
+
 	</script>
 
 
@@ -155,5 +150,12 @@
 		saveDetails('info');
 	})
 
+	$(".reload-and-preview").click(function() {
+
+		console.log('reloading iframe');
+		var iframe = document.getElementById('resume-preview');
+		iframe.src = iframe.src;
+
+	})
 </script>
 {% endblock %}

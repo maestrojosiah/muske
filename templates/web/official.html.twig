@@ -1,12 +1,16 @@
 <div class="container" id="theme-two">
-    <div class="row" id="header">
+    {% if thumbnailurl is not defined %}
+        {% set thumbnailurl = musician.thumbnailurl %}
+    {% endif %}
+<div class="row" id="header">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-1" id="for-prof-image"><img id="profile-image" src="assets/img/black%20portrait.jpg"></div>
+                <div class="col-1" id="for-prof-image"><img id="profile-image" src="{{thumbnailurl}}"></div>
                 <div class="col-11">
                     <div id="name-and-title">
-                        <h2>Joash Crotchet</h2>
+                        <h2>{{musician.fullname}}</h2>
                         <h3>Musician</h3>
+                        <a class="spaced-links" href="#">&nbsp;<i class="fa fa-phone"></i>&nbsp;{{musician.phone}}</a><a class="spaced-links" href="#">&nbsp;<i class="fa fa-envelope"></i>&nbsp;{{musician.email}}</a><a class="spaced-links" href="#">&nbsp;<i class="fa fa-globe"></i>&nbsp;www.muske.co.ke/{{musician.username}}</a>
                     </div>
                 </div>
             </div>
@@ -17,116 +21,87 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title"><i class="fa fa-user-circle-o"></i>&nbsp;Profile</h4>
-                    <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.&nbsp;Nullam id dolor id nibh ultricies vehicula ut id elit.
-                        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.&nbsp;Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas
-                        eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                    <p class="card-text">{{musician.about}}</p>
                 </div>
             </div>
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title"><i class="fa fa-briefcase"></i>&nbsp;Employment History</h4>
+                    {% for job in jobs %}
                     <div>
-                        <h5 class="text-muted mb-2">Some company name</h5>
-                        <h6 class="text-muted mb-2">October 2016 - November 2020</h6>
-                        <ul>
-                            <li>Cras justo odio, dapibus ac facilisis in, egestas&nbsp;Cras justo odio, dapibus ac facilisis in, egestas</li>
-                            <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                            <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                            <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                            <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                        </ul>
+                        <h5 class="text-muted mb-2">{{job.jobtitle}}, {{job.institution}}, {{job.location}}</h5>
+                        <h6 class="text-muted mb-2">{{job.startingfrom|date("M Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</h6>
+                        {% include "web/templates/list.html.twig" %}
                     </div>
-                    <div>
-                        <h5 class="text-muted mb-2">Some company name</h5>
-                        <h6 class="text-muted mb-2">October 2016 - November 2020</h6>
-                        <ul>
-                            <li>Cras justo odio, dapibus ac facilisis in, egestas&nbsp;Cras justo odio, dapibus ac facilisis in, egestas</li>
-                            <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                            <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                        </ul>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title"><i class="fa fa-graduation-cap"></i>&nbsp;Education</h4>
-                    <div>
-                        <h5 class="text-muted mb-2">Bachelor in music and dance, Kenyatta University</h5>
-                        <h6 class="text-muted mb-2">Bachelor in music and dance, Kenyatta University</h6>
-                        <ul>
-                            <li>Graduated&nbsp;Cras justo odio</li>
-                        </ul>
+                    {% for edu in educ %}
+                    <div style="position: relative; padding-right:20px; padding-top:10px; padding-bottom:10px;">
+                        <h5 class="text-muted mb-2">{{edu.coursename}}</h5>
+                        <h6 class="text-muted mb-2">{{edu.institution}} | {{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</h6>
+                        {% include "web/templates/doc.html.twig" %}
                     </div>
-                    <div>
-                        <h5 class="text-muted mb-2">Diploma in bla bla, Some University</h5>
-                        <h6 class="text-muted mb-2">Bachelor in music and dance, Kenyatta University</h6>
-                        <ul></ul>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
+            {% if musician.projects %}
             <div class="card">
                 <div class="card-body">
+                    <h4 class="card-title"><i class="fa fa-music"></i>&nbsp;Projects</h4>
+                    {% for project in musician.projects %}
+                    <h5>{{project.projecttitle}}</h5>
+                    <p>{{project.projectdescription}}.<br>
+                    </p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="card content d-none d-md-block" style="margin-bottom: 50px;">
+                <div class="card-body">
                     <h4 class="card-title"><i class="fa fa-bullhorn"></i>&nbsp;Referees</h4>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">John Smith</h5>
-                                    <h6 class="text-muted card-subtitle mb-2">Company name</h6>
-                                    <p>Contacts</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">John Smith</h5>
-                                    <h6 class="text-muted card-subtitle mb-2">Company name</h6>
-                                    <p>Contacts</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">John Smith</h5>
-                                    <h6 class="text-muted card-subtitle mb-2">Company name</h6>
-                                    <p>Contacts</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% include "reusable/referees.html.twig" %}                     
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="text-muted card-subtitle mb-2">Details</h5>
-                    <p class="card-text">Firstname Lastname<br>P.O. Box 23432 - 00100,<br>Nairobi,<br>Kenya</p>
+            <div id="right" style="border-left: 1px solid #777;">
+                {% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted card-subtitle mb-2">Details</h5>
+                        <p class="card-text">{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="text-muted card-subtitle mb-2">Skills</h5>
-                    <ul class="list-group">
-                        <li class="list-group-item skill-list"><span>Skill 1</span></li>
-                        <li class="list-group-item skill-list"><span>Skill 2</span></li>
-                        <li class="list-group-item skill-list"><span>Skill 3</span></li>
-                        <li class="list-group-item skill-list"><span>Skill 4</span></li>
-                        <li class="list-group-item skill-list"><span>Skill 5</span></li>
-                    </ul>
+                {% endif %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted card-subtitle mb-2">Skills</h5>
+                        <ul class="list-group">
+                            {% for skill in musician.skills %}
+                                <li class="list-group-item skill-list"><span>{{skill.skillname}}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="text-muted card-subtitle mb-2">Languages</h6>
-                    <ul class="list-group">
-                        <li class="list-group-item skill-list"><span>Language 1</span></li>
-                    </ul>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted card-subtitle mb-2">Specialties</h5>
+                        <ul class="list-group">
+                            {% for job_role in musician.jobstobeoffered %}
+                            <li class="list-group-item skill-list"><span>{{job_role.jobtitle}}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col"></div>
+        <div class="card content d-md-none" style="margin-bottom: 50px;">
+            {% include "reusable/referees.html.twig" %}                    
+        </div>
     </div>
 </div>

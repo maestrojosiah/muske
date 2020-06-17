@@ -37,6 +37,12 @@ class IndexController extends AbstractController
      */
     public function themes(PdfThemeRepository $pdfThemeRepository): Response
     {
+        
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $musician = $this->getUser();
+            return $this->redirectToRoute('musician_profile');
+        }
+
         $themes = $pdfThemeRepository -> findFive();
         return $this->render('index/choose_theme.html.twig', [
             'themes' => $themes,

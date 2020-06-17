@@ -18,10 +18,10 @@ class MessageFromResume
         $this->templating = $templating;		
 	}
 
-	public function sendEmailMessage($emailToReceive, $username, $sender, $senderemail, $message, $subject)
+	public function sendEmailMessage($emailToReceive, $username, $sender, $senderemail, $message, $senderphone, $calltime)
 	{
 
-		$message = (new \Swift_Message($subject))
+		$message = (new \Swift_Message("Message from your online resume"))
 		  ->setFrom('info@muske.co.ke')
 		  ->setTo($emailToReceive)
 		  ->setBody(
@@ -30,6 +30,8 @@ class MessageFromResume
 				'message' => $message,
 				'sendername' => $sender,
 				'senderemail' => $senderemail,
+				'senderphone' => $senderphone,
+				'calltime' => $calltime,
 				
 			]),'text/html'
 		);

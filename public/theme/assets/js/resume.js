@@ -7,6 +7,7 @@ $(document).on("click", '[id^="for-"]', function(){
 
     $("#"+target+"-page").show("slow");
     $("#close-icon").show();
+    $("#download-icon").show();
 
 });
 
@@ -17,5 +18,6 @@ $( "#close-icon" ).click(function() {
     $("#blog-page").hide("slow");
     $("#contact-page").hide("slow");
     $("#close-icon").hide();
+    $("#download-icon").hide();
 });
 

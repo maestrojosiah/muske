@@ -1,5 +1,9 @@
 			<ul>
-            {% for edu in educ %}
-				<li>{{edu.degree}} for {{edu.coursename}}, {{edu.institution}}, {{edu.location}},  {{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</li>
-            {% endfor %}
+			{% for edu in educ %}
+			<div  style="position: relative;">
+				<li><strong>{{edu.degree}} for {{edu.coursename}}</strong><br /> {{edu.institution}}, {{edu.location}},  <br /> <em>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</em></li>
+				{% include "web/templates/doc.html.twig" %}	
+			</div>
+			{% endfor %}
 			</ul>
+			

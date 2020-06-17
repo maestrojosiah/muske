@@ -1,5 +1,5 @@
         {% for job in jobs %}
-          <div>
+          <div id="jobs">
 			<span class="date">{{job.startingfrom|date("F Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y") }}</span>
 			<h3>{{job.jobtitle}}</h3>
 			<address>{{job.institution}}{{" / " ~ job.location}}</address>
@@ -7,9 +7,7 @@
                     {# No roles added #}
             {% else %}
                 <ul>
-                    {% for role in job.roles %}
-                    <li>{{role.role}}</li>
-                    {% endfor %}
+                    {% include "web/templates/list.html.twig" %}
                 </ul>
             {% endif %}
           </div>

@@ -71,9 +71,6 @@ class AdminController extends AbstractController
             case 'photos':
                 $entity = $musician->getUploadedPhotos();
                 break;
-            default:
-                $entity = $musician->getJobs();
-                break;
         }
 
         $sidebar_menu = [ 'Job Experience'=>['jobs', 'roles'], 'Education'=>['education', 'specialties'], 'skills', 'projects', 'myJobs', 'photos' ];

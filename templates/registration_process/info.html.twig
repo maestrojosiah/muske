@@ -17,19 +17,19 @@
                 <div class="form-row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <legend>Full name</legend><input name="fullname" class="form-control" type="text" id="fullname" autofocus="" required="" {{app.user.fullname|length > 0 ? 'value=' ~ app.user.fullname }} minlength="5"><small class="form-text text-muted">Your full name as it should appear on your resume</small></div>
+                            <legend>Full name</legend><input name="fullname" class="form-control" type="text" id="fullname" autofocus="" required="" value="{{app.user.fullname|length > 0 ? app.user.fullname }}" minlength="5"><small class="form-text text-muted">Your full name as it should appear on your resume</small></div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <legend>Email Address</legend><input name="email" class="form-control" type="email" id="email" required="" {{app.user.realemail|length > 0 ? 'value=' ~ app.user.realemail }} ><small class="form-text text-muted">Email address that we or clients can use to reach you for a job or any other important information</small></div>
+                            <legend>Email Address</legend><input name="email" class="form-control" type="email" id="email" required="" value="{{app.user.realemail|length > 0 ? app.user.realemail }}" ><small class="form-text text-muted">Email address that we or clients can use to reach you for a job or any other important information</small></div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <legend>Phone Number</legend><input name="phone" class="form-control" type="text" id="phone" required="" {{app.user.realphone|length > 0 ? 'value=' ~ app.user.realphone }} inputmode="tel"><small class="form-text text-muted">A phone number that is activated for WhatsApp</small></div>
+                            <legend>Phone Number</legend><input name="phone" class="form-control" type="text" id="phone" required="" value="{{app.user.realphone|length > 0 ? app.user.realphone }}" inputmode="tel"><small class="form-text text-muted">A phone number that is activated for WhatsApp</small></div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <legend>Age</legend><input name="age" class="form-control" type="text" id="age" inputmode="numeric" required="" {{app.user.age|length > 0 ? 'value=' ~ app.user.age }} minlength="2"><small class="form-text text-muted">Some individuals and institutions are mindful of this.</small></div>
+                            <legend>Age</legend><input name="age" class="form-control" type="text" id="age" inputmode="numeric" required="" value="{{app.user.age|length > 0 ? app.user.age }}" minlength="2"><small class="form-text text-muted">Some individuals and institutions are mindful of this.</small></div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">

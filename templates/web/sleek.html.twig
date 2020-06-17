@@ -1,11 +1,20 @@
+<style>
+    .referee-form h4 {
+        margin-left: 0px!important;
+    }
+</style>
 <div class="container resume" id="resume">
+    {% if thumbnailurl is not defined %}
+        {% set thumbnailurl = musician.thumbnailurl %}
+    {% endif %}
+
     <div class="row">
         <div class="col-sm-12 col-md-9">
             <div class="row header top-row">
                 <div class="col-md-2 d-none d-md-block"><img class="img-fluid profile-pic" src="{{thumbnailurl}}"></div>
                 <div class="col">
                     <h3 style="font-family: Alice, serif;">{{musician.fullname}}</h3>
-                    <h5>Musician</h5><a class="spaced-links" href="#">&nbsp;<i class="fa fa-phone"></i>&nbsp;0704545454</a><a class="spaced-links" href="#">&nbsp;<i class="fa fa-envelope"></i>&nbsp;someone@email.com</a><a class="spaced-links" href="#">&nbsp;<i class="fa fa-globe"></i>&nbsp;www.sth.com</a></div>
+                    <h5>Musician</h5><a class="spaced-links" href="#">&nbsp;<i class="fa fa-phone"></i>&nbsp;{{musician.phone}}</a><a class="spaced-links" href="#">&nbsp;<i class="fa fa-envelope"></i>&nbsp;{{musician.email}}</a><a class="spaced-links" href="#">&nbsp;<i class="fa fa-globe"></i>&nbsp;www.muske.co.ke/{{musician.username}}</a></div>
             </div>
             <div class="card about">
                 <div class="card-header">
@@ -28,22 +37,7 @@
                         </div>
                         <div class="col-md-8 list-details">
                             <h4>{{job.jobtitle}} at {{job.institution}}</h4>
-                            <ul id="role-list-{{job.id}}">
-                                {% for role in job.roles %}
-                                <li>{{role.role}}.<br></li>
-                                {% endfor %}
-                            </ul>
-                            <form class="for-user" id="role-form-{{job.id}}" style="padding-left: 30px;">
-                                <div class="input-group input-group-sm mb-3">
-                                    <input type="text" class="form-control" name="role" placeholder="Add a role" aria-label="Add a role" aria-describedby="basic-addon2">
-                                    <input type="hidden" name="class" value="Role" />
-                                    <input type="hidden" name="extras" value="job#{{job.id}}" />
-                                    <input type="hidden" name="return" value="role" />
-                                    <div class="input-group-append">
-                                      <button id="save-role-{{job.id}}" class="btn btn-outline-secondary" type="button">Save</button>
-                                    </div>
-                                </div>
-                            </form>
+                            {% include "web/templates/list.html.twig" %}
                         </div>
                     </div>
                     {% endfor %}
@@ -63,14 +57,7 @@
                         <div class="col-md-8 list-details" style="position: relative; padding-right:20px;">
                             <h4>{{edu.institution}}</h4>
                             <p>{{edu.degree}} in {{edu.coursename}}</p>
-                            {% if app.user and app.user != null and app.user == musician and app.user.settings and (app.user.isproandactive == 'true' or app.user.ismuskeandactive == 'true') %}
-                            <form class="for-user" id="document-form-{{edu.id}}" style="position: absolute; top:5px; right:5px;font-size:18px;">
-                                {% set has_doc = edu.document == null ? 'no' : edu.document.id %}
-                                <label title="{{has_doc == 'no' ? 'upload a supporting document' : 'change document'}}" class="{{has_doc == 'no' ? 'text-danger' : 'text-success'}} " id="color-code-{{edu.id}}" for="upload-{{has_doc}}-{{edu.id}}" style="cursor:pointer; "><i class="fa fa-link"></i></label>
-                                <input type="file" name="upload-{{has_doc}}-{{edu.id}}" id="upload-{{has_doc}}-{{edu.id}}" style="display: none;" />
-                            </form>
-                            <a class="for-user" style="position: absolute; top: 30px; right:5px; font-size:18px;" id="download_doc_{{edu.id}}" href="{{ path('download_pdf', {'file': edu.document.doc} ) }}" download><i class="fa fa-download"></i></a>
-                            {% endif %}
+                            {% include "web/templates/doc.html.twig" %}
                         </div>
                     </div>
                     {% endfor %}
@@ -91,7 +78,12 @@
             </div>
             {% endif %}
             <div class="card content d-none d-md-block" style="margin-bottom: 50px;">
+                <div class="card-header">
+                    <h5 class="mb-0">Referees</h5>
+                </div>
+                <div class="card-body" id="referee-div">                
                 {% include "reusable/referees.html.twig" %}
+                </div>
             </div>
         </div>
         <div class="col-sm-12 col-md-3">

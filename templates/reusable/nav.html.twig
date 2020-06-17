@@ -20,9 +20,16 @@
             <li class="nav-item dropdown">
               <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><img class="rounded-circle avatar" src='{{ asset('img/headshot.jpg' ) }}'>&nbsp;</a>
               <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" role="presentation" href="{{ path('app_login')}}">Login </a>
-                <a class="dropdown-item" role="presentation" href="{{ path('app_register')}}">Second Item</a>
-                <a class="dropdown-item" role="presentation" href="{{ path('musician_reset_password')}}">Third Item</a>
+                {% if app.user and app.user != null %} 
+                  <a class="dropdown-item" role="presentation" href="{{ path('app_logout')}}">Log Out </a>
+                  <a class="dropdown-item" role="presentation" href="{{ path('musician_profile')}}">Your Profile</a>
+                {% else %} 
+                  <a class="dropdown-item" role="presentation" href="{{ path('app_login')}}">Login </a>
+                  <a class="dropdown-item" role="presentation" href="{{ path('homepage')}}">Home page</a>
+                  <a class="dropdown-item" role="presentation" href="{{ path('choose_theme')}}">Create Account</a>
+                  <a class="dropdown-item" role="presentation" href="{{ path('musician_reset_password')}}">Reset password</a>
+                {% endif %}
+                
               </div>
             </li>
           </ul>

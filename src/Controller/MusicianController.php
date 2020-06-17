@@ -62,30 +62,14 @@ class MusicianController extends AbstractController
         //this is for displaying the page and redirecting if all details are intact
         //get the musician in session
         $musician = $this->getUser();
-        $settings = $musician->getSettings();
-        if($settings){
-            return $this->redirectToRoute('musician_profile');
-        } 
         
         // define email phone age and full name
-        $musician_email = $musician->getRealEmail();
-        $musician_phone = $musician->getRealPhone();
-        $musician_age = $musician->getAge();
-        $musician_fullname = $musician->getFullname();
         $skills = $musician->getSkills()[0];
         $education = $musician->getEducation()[0];
         $jobs = $musician->getJobs()[0];
         $roles = $musician->getJobstobeoffered()[0];
-        $salary = $musician->getCurrentsalary();
-        $salary_exp = $musician->getExpectedSalary();
 
-        $skills_auto_fill = array_unique($this->getDoctrine()->getManager()->getRepository('App:Skill')->findall());
-        $job_roles_auto_fill = array_unique($this->getDoctrine()->getManager()->getRepository('App:JobToBeOffered')->findall());
-
-        $fields = ["email" => $musician_email,
-                    "phone" => $musician_phone,
-                    "age" => $musician_age,
-                    "full_name" => $musician_fullname,
+        $fields = [
                     "skills" => $musician->getSkills(),
                     "education" => $musician->getEducation(),
                     "jobs" => $musician->getJobs(),
@@ -95,9 +79,6 @@ class MusicianController extends AbstractController
         return $this->render('musician/new.html.twig', [
             'musician' => $musician,
             'fields' => $fields,
-            'skills_auto_fill' => $skills_auto_fill,
-            'job_roles_auto_fill' => $job_roles_auto_fill,
-            'settings' => $settings,
         ]);
     }
 
@@ -127,7 +108,6 @@ class MusicianController extends AbstractController
         
         $jobs = $organizeThings->organizedJobsAccordingToSettings($musician);
         $educ = $organizeThings->organizedEducationAccordingToSettings($musician);
-        $blogPosts = $postRepository->getThreePosts($musician);
         
         $seoPage
             ->setTitle($musician->getFullname()." | Resume")
@@ -141,18 +121,20 @@ class MusicianController extends AbstractController
             ->addMeta('property', 'og:description', $jobsString)
         ;
 
-        $photourl = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto().".png";
+        $photourl = str_replace('/home/maestrojosiah/projects/muske/public', '', $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto().".png");
+        $placeholder = str_replace('/home/maestrojosiah/projects/muske/public', '', $this->getParameter('img_directory')."/headshot.jpg");
         $status = is_file($photourl);
         $pdf_template = $musician->getPdfTheme() ? $musician->getPdfTheme() : 'simpleOne.html.twig' ;
         $theme = $pdfThemeRepository->findOneByTemplate($pdf_template);
         $themename = str_replace(" ", "_", $theme->getTitle());
 
+        $thumbnailurl = strlen($musician->getPhoto()) > 1 ?  $photourl : $placeholder;
+        
         $array_data = [
             'musician' => $musician,
             'jobs' => $jobs,
             'educ' => $educ,
             'fourPhotos' => $fourPhotos,
-            'blogPosts' => $blogPosts,
         ];
 
         if($download == 'pdf'){
@@ -161,13 +143,11 @@ class MusicianController extends AbstractController
             } else {
                 return $this->redirectToRoute('error', ['error_msg' => "Broken links prevents the pdf from downloading. Upload your profile photo"]);
             }
-        } elseif ($download == 'img') {
-            if($status){
-                return $this->toImage("pdf/$pdf_template", $array_data, $musician->getUsername().'_'.$themename."_Resume");
-            } else {
-                return $this->redirectToRoute('error', ['error_msg' => "Broken links prevents the pdf from downloading. Upload your profile photo"]);
-            }
+        } elseif ($download == 'show') {
+            $array_data += ['thumbnailurl' => $thumbnailurl];
+            return $this->render("pdf/$pdf_template", $array_data);
         } else {
+            $array_data += ['thumbnailurl' => $thumbnailurl];
             return $this->render('musician/show.html.twig', $array_data);
         }
         
@@ -186,7 +166,13 @@ class MusicianController extends AbstractController
         ): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        
         $musician = $this->getUser();
+
+        if($musician->getFullname() == null){
+            return $this->redirectToRoute('musician_new');
+        }
+
         $data = [];
         if($musician->getSettings()){
             if($musician->isMuskeAndActive() == 'true'){
@@ -241,7 +227,8 @@ class MusicianController extends AbstractController
                 
             }
     
-        }
+        } 
+        
 
         $doc_array = $documentRepository->findByGivenField("id", "ASC", $musician);
             

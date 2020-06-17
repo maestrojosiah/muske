@@ -1,0 +1,16 @@
+<ul id="role-list-{{job.id}}">
+    {% for role in job.roles %}
+    <li>{{role.role}}.<br></li>
+    {% endfor %}
+</ul>
+<form class="for-user" id="role-form-{{job.id}}" style="padding-left: 30px;">
+    <div class="input-group input-group-sm mb-3">
+        <input type="text" class="form-control" name="role" placeholder="Add a role" aria-label="Add a role" aria-describedby="basic-addon2">
+        <input type="hidden" name="class" value="Role" />
+        <input type="hidden" name="extras" value="job#{{job.id}}" />
+        <input type="hidden" name="return" value="role" />
+        <div class="input-group-append">
+          <button id="save-role-{{job.id}}" class="btn btn-outline-secondary" type="button">Save</button>
+        </div>
+    </div>
+</form>

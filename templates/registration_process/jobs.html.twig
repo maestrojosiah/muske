@@ -29,14 +29,14 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <legend>Current job?</legend><select name="currentornot" class="form-control" id="current"><optgroup label="- Select one -"><option value="12" selected="">Yes</option><option value="13">No</option></optgroup></select><small class="form-text text-muted">Are you currently doing this job?</small></div>
+                            <legend>Current job?</legend><select name="currentornot" class="form-control" id="current"><optgroup label="- Select one -"><option value="not_current" selected="">No</option><option value="current">Yes</option></optgroup></select><small class="form-text text-muted">Are you currently doing this job?</small></div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <legend>When did you start?</legend><input name="startingfrom" class="form-control" type="date" id="from_year_job" required="" minlength="2"><small class="form-text text-muted">The month and year that you started the job. eg, 07-1996</small></div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group" id="condition">
                             <legend>When did you complete?</legend><input name="endedin" class="form-control" type="date" id="to_year_job" required="" minlength="2"><small class="form-text text-muted">The month and year that you completed the job. eg, 07-2000</small></div>
                     </div>
                     <input type="hidden" name="class" value="Job" />
@@ -46,7 +46,7 @@
                         <div class="form-group reg-action"><button class="btn btn-info btn-lg" id="save-jobs" type="button">Save Job Experience</button></div>
                     </div>
                     <div class="col-sm-6 col-md-6 text-right">
-                        <div class="form-group reg-action"><button class="btn btn-success btn-lg" type="button" data-toggle="modal" data-target="#preview">Preview your resume</button></div>
+                        <div class="reload-and-preview form-group reg-action"><button class="btn btn-success btn-lg" type="button" data-toggle="modal" data-target="#preview">Preview Resume</button></div>
                     </div>
                 </div>
             </form>
@@ -62,7 +62,7 @@
     </div>
     <div class="jumbotron text-center">
         <h4>What you have already added:</h4>
-        <p>Here is the list of what you haver already added as your job background</p>
+        <p>Here is the list of what you have already added as your job background</p>
         <p>
             <div id="jobs-list">
                 {% for job in fields.jobs %}

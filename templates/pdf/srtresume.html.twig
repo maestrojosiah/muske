@@ -11,7 +11,7 @@
 .msg a:hover { background: #266400; }
 
 /* //-- yui-grids style overrides -- */
-body { font-family: Georgia; color: #444; }
+body { font-family: Georgia; color: #444; line-height: 1.5!important; font-size: 1.1rem;}
 #inner { padding: 10px 80px; margin: 80px auto; background: #f5f5f5; border: solid #666; border-width: 8px 0 2px 0; }
 .yui-gf { margin-bottom: 2em; padding-bottom: 2em; border-bottom: 1px solid #ccc; }
 
@@ -26,7 +26,7 @@ body { font-family: Georgia; color: #444; }
 
 /* //-- core typography and style -- */
 #hd h1 { font-size: 48px; text-transform: uppercase; letter-spacing: 3px; }
-h2 { font-size: 152% }
+h2 { font-size: 132% }
 h3, h4 { font-size: 102%; }
 h1, h2, h3, h4 { color: #333; }
 p { font-size: 100%; line-height: 18px; padding-right: 3em; }
@@ -37,22 +37,30 @@ li { line-height: 24px; }
 p.enlarge { font-size: 144%; padding-right: 6.5em; line-height: 24px; }
 p.enlarge span { color: #000 }
 .contact-info { margin-top: 7px; }
-.first h2 { font-style: italic; }
 .last { border-bottom: 0 }
+
+.referee {
+float: left;
+	width: 33.3333333%;
+
+}
+
+.referee p {
+	padding:0px;
+	margin:0px;
+}
 
 
 /* //-- section styles -- */
 
 a#pdf { display: block; float: left; background: #666; color: white; padding: 6px 50px 6px 12px; margin-bottom: 6px; text-decoration: none;  }
 a#pdf:hover { background: #222; }
-	<style type="text/css" media="all">
 
 /* .job { position: relative; margin-bottom: 1em; padding-bottom: 1em; border-bottom: 1px solid #ccc; }
 .job h4 { position: absolute; top: 0.35em; right: 0 } */
 .job p { margin: 0.75em 0 3em 0; }
 
 .last { border: none; }
-.skills-list {  }
 .skills-list ul { margin: 0; }
 .skills-list li { margin: 3px 0; padding: 3px 0; }
 .skills-list li span { font-size: 152%; display: block; margin-bottom: -2px; padding: 0 }
@@ -75,15 +83,13 @@ a#pdf:hover { background: #222; }
 		<div id="hd">
 			<div class="yui-gc">
 				<div class="yui-u first">
-					<h1>{{musician.fullname}}</h1>
-					<h2>Musician</h2>
+					<h1 style="font-size: 2rem; padding-bottom:0px; margin-bottom:0px;">{{musician.fullname}}</h1>
+					<h2 style="padding-top: 0px; margin-top:10px">Musician</h2>
 				</div>
 
 				<div class="yui-u">
 					<div class="contact-info">
-						<p><a href="mailto:{{musician.email}}">{{musician.email}}</a></p>
-						<p>{{musician.phone}}</p>
-						<p>https://muske.co.ke/{{musician.username}}</p>
+						<p><a href="mailto:{{musician.email}}">{{musician.email}} . </a>{{musician.phone}} . www.muske.co.ke/{{musician.username}}</p>
 					</div><!--// .contact-info -->
 				</div>
 			</div><!--// .yui-gc -->
@@ -119,6 +125,24 @@ a#pdf:hover { background: #222; }
 					</div><!--// .yui-gf -->
 
 					<div class="yui-gf">
+	
+						<div class="yui-u first">
+							<h2>Education</h2>
+						</div><!--// .yui-u -->
+
+						<div class="yui-u">
+						{% for edu in educ %}
+							<div class="job">
+								<h5 style="margin-bottom:0px;">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</h5>
+								<h4 style="margin-bottom: 0px; margin-top:0px;">{{edu.institution}}</h4>
+								<p style="margin-top:0px;">{{edu.degree}} {{edu.coursename}}</p>
+							</div>
+							<hr />
+						{% endfor %}
+						</div><!--// .yui-u -->
+					</div><!--// .yui-gf -->
+
+					<div class="yui-gf">
 						<div class="yui-u first">
 							<h2>Skills</h2>
 						</div>
@@ -128,24 +152,6 @@ a#pdf:hover { background: #222; }
 							</ul>
 						</div>
 					</div><!--// .yui-gf-->
-
-					<div class="yui-gf">
-	
-						<div class="yui-u first">
-							<h2>Education</h2>
-						</div><!--// .yui-u -->
-
-						<div class="yui-u">
-						{% for edu in educ %}
-							<div class="job">
-								<h5>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</h5>
-								<h4>{{edu.institution}}</h4>
-								<p>{{edu.degree}} {{edu.coursename}}</p>
-							</div>
-							<hr />
-						{% endfor %}
-						</div><!--// .yui-u -->
-					</div><!--// .yui-gf -->
 
 					 {% if musician.projects is not empty %}
 					<div class="yui-gf last">
@@ -175,7 +181,25 @@ a#pdf:hover { background: #222; }
 			</div><!--// yui-main -->
 		</div><!--// bd -->
 
+		<div id="ft" style="text-align: left!important;">
+			{% if musician.projects is not empty %}
+			<div class="yui-gf last">
+				<div class="yui-u first">
+					<h2>Referees</h2>
+				</div>
+				{% for referee in musician.referees %}
+				<div class="referee" style="text-align: left!important;">
+					<h4>{{referee.name}}</h4>
+					<p style="margin-bottom:0px; margin-top:0px; text-align: left!important;">{{referee.title}}</p>
+					<p style="margin-bottom:0px; margin-top:0px; text-align: left!important;">{{referee.address}}</p>
+					<p style="margin-bottom:0px; margin-top:0px; text-align: left!important;">{{referee.contact}}</p>
+				</div>
+				{% endfor %}
+				
+			</div><!--// .yui-gf -->
+		</div>
 		<div id="ft">
+			{% endif %}
 			<p>{{musician.fullname}} &mdash; <a href="mailto:{{musician.email}}">{{musician.email}}</a> &mdash; {{musician.phone}}</p>
 		</div><!--// footer -->
 

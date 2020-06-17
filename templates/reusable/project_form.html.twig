@@ -1,9 +1,0 @@
-                            <div class="row">
-                            <div id="project_form_{{project.id}}" {{ project.projectimage != null and project.projectimage != "" ? 'style="display:none"' : ''}} class="col-md-12">
-                            <form name="Document" method="post" action enctype="multipart/form-data">
-                                
-                                    <input type="file" id="documento_{{project.id}}" name="project[projectimage]" required="required">
-                                    <button type="button" {#onclick="saveDoc()"#} class="btn btn-success btn-sm" id="proj_{{project.id}}">Upload</button>
-                            </form>     
-                            </div>
-                            </div>

@@ -903,15 +903,16 @@ class AjaxController extends AbstractController
 
             $senderemail = $this->sanitizeInput($request->request->get('senderemail'));
             $sendername = $this->sanitizeInput($request->request->get('sendername'));
-            $subject = $this->sanitizeInput($request->request->get('subject'));
+            $senderphone = $this->sanitizeInput($request->request->get('senderphone'));
             $message = $this->sanitizeInput($request->request->get('message'));
+            $calltime = $this->sanitizeInput($request->request->get('calltime'));
             $musician_id = $this->sanitizeInput($request->request->get('musician_id'));
             $data = [];
 
             $musician = $this->getDoctrine()->getManager()->getRepository('App:Musician')->find($musician_id);
 
             if($musician){
-                if($messageFromResume->sendEmailMessage($musician->getRealEmail(), $musician->getUsername(), $sendername, $senderemail, $message, $subject)){
+                if($messageFromResume->sendEmailMessage($musician->getEmail(), $musician->getUsername(), $sendername, $senderemail, $message, $senderphone, $calltime)){
                     // $this->addFlash('success', 'Notification mail was sent successfully');
                     $data['found'] = "Message has been sent";
                 }

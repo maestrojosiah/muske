@@ -71,6 +71,9 @@
   bottom: 0;
   width: 640px;
   height: 60px;
+  color: white;
+  padding-top: 10px;
+  padding-left: 10px;
 }
 
 .link-image {

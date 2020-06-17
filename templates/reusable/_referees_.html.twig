@@ -1,0 +1,9 @@
+{% for referee in musician.referees %}
+<div class="referee">
+	<h4>{{referee.name}}</h4>
+	<p style="margin-bottom:0px; margin-top:0px;">{{referee.title}}</p>
+	<p style="margin-bottom:0px; margin-top:0px;">{{referee.address}}</p>
+	<p style="margin-bottom:0px; margin-top:0px;">{{referee.contact}}</p>
+</div>
+{% endfor %}
+<div style="clear: both;"></div>

@@ -161,14 +161,28 @@
 	.keySkills ul li {
 		margin-bottom: 3px;
 	}
+	.referee {
+		float: left;
+		width: 33.3333333%;
+
+	}
+
+	.referee p {
+		padding:0px;
+		margin:0px;
+	}
+
 </style>
 {% endblock %}
 {% block body %}
 <div id="top">
 	<div id="cv" class="instaFade">
+		{% if thumbnailurl is not defined %}
+			{% set thumbnailurl = musician.thumbnailurl %}
+		{% endif %}
 		<div class="mainDetails">
 			<div id="headshot" class="quickFade">
-				<img src="{{musician.thumbnailurl}}" alt="{{musician.fullname}}" />
+				<img src="{{thumbnailurl}}" alt="{{musician.fullname}}" />
 			</div>
 			
 			<div id="name">
@@ -178,6 +192,9 @@
 			
 			<div id="contactDetails" class="quickFade delayFour">
 				<ul>
+					{% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+						<li>{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</li>
+					{% endif %}
 					<li>e: <a href="mailto:{{musician.email}}">{{musician.email}}</a></li>
 					<li>w: <a href="https://muske.co.ke/{{musician.username}}">https://muske.co.ke/{{musician.username}}</a></li>
 					<li>m: {{musician.phone}}</li>
@@ -258,8 +275,8 @@
 				{% for edu in educ %}
 					<article>
 						<h2>{{edu.institution}} | {{edu.location}}</h2>
-						<p class="subDetails">{{edu.degree}}</p>
-						<p>{{edu.coursename}} | {{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</p>
+						<p class="subDetails">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</p>
+						<p>{{edu.degree}} | {{edu.coursename}}</p>
 					</article>
 				{% endfor %}
 				</div>
@@ -280,6 +297,27 @@
 					</article>
 					{% endfor %}
 					
+				</div>
+				<div class="clear"></div>
+			</section>
+			{% endif %}
+
+			{% if musician.referees is not empty %}
+			<section>
+				<div class="sectionTitle">
+					<h1>Referees</h1>
+				</div>
+				<div class="sectionContent">
+					{% for referee in musician.referees %}
+					<div class="referee">
+						<article>
+							<h2>{{referee.name}}</h2>
+							<p class="">{{referee.title}}</p>
+							<p class="">{{referee.address}}</p>
+							<p class="">{{referee.contact}}</p>
+						</article>
+					</div>
+					{% endfor %}
 				</div>
 				<div class="clear"></div>
 			</section>

@@ -43,9 +43,10 @@
 {% block body %}
 
     <div id="full-page-container">
-        <div id="cover" class="bordered" style="background-image: url({{ asset('uploads/photos/thumbs/'~ musician.settings.coverphoto ~ '.png')}});background-position: top;background-size: cover;background-repeat: no-repeat; overflow: auto;">
+        
+        <div id="cover" class="bordered" style="overflow:hidden;background-image: url({{ musician.hassettings and musician.settings.coverphoto|length > 3 ? asset('uploads/photos/thumbs/'~ musician.settings.coverphoto ~ '.png') : asset('img/drumset-half.jpg')}});background-position: top;background-size: cover;background-repeat: no-repeat;">
             <div class="row img-row">
-                {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+                
                 <div class="col-sm-4 text-center align-self-center" id="for-pic"><img id="prof-pic" src="{{thumbnailurl}}" style="border: 2px solid white;"></div>
                 <div class="col-sm-8 col-md-6 text-light align-self-center d-none d-md-block" id="heading-col">
                     <div>
@@ -57,13 +58,13 @@
                 </div>
                 <div class="col-sm-8 col-md-6 text-light text-center align-self-center d-md-none" id="heading-col">
                     <div>
-                        <h2 class="text-white d-inline">Musician.fullname</h2>
+                        <h2 class="text-white d-inline">{{musician.fullname}}</h2>
                         | <h5 class="text-white d-inline">Musician</h5>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container bordered" id="full-page" style="background-image: url({{ asset('uploads/photos/'~ musician.settings.bgphoto)}});background-position: center;background-size: cover;background-repeat: no-repeat;">
+        <div class="container bordered" id="full-page" style="background-image: url({{ musician.hassettings and musician.settings.coverphoto|length > 3 ? asset('uploads/photos/'~ musician.settings.bgphoto) : asset('img/class.jpg') }});background-position: center;background-size: cover;background-repeat: no-repeat;">
             <div class="row half-height">
                 <div class="col-sm-6 col-md-6 align-self-center piece text-center" data-bs-hover-animate="bounce" id="for-resume" style="background-image: url('assets/img/asfalt-light.png');">
                     <div class="row full-height">
@@ -73,20 +74,24 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-6 piece align-self-center text-center" data-bs-hover-animate="bounce" style="background-image: url('assets/img/45-degree-fabric-light.png');">
-                    <div class="row full-height">
-                        <div class="col align-self-center"><span class="circle-border"><i class="fa fa-photo"></i></span>
-                            <p class="text-white icon-text">PORTFOLIO</p>
+                    <a href="{{ path('gallery_index', {'username': musician.username})}}">
+                        <div class="row full-height">
+                            <div class="col align-self-center"><span class="circle-border"><i class="fa fa-photo"></i></span>
+                                <p class="text-white icon-text">PORTFOLIO</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-sm-6 col-md-6 piece align-self-center text-center" data-bs-hover-animate="bounce">
-                    <div class="row full-height">
-                        <div class="col align-self-center"><span class="circle-border"><i class="fa fa-themeisle"></i></span>
-                            <p class="text-white icon-text">BLOG</p>
+                    <a href="{{ path('blog', {'username': musician.username})}}">
+                        <div class="row full-height">
+                            <div class="col align-self-center"><span class="circle-border"><i class="fa fa-themeisle"></i></span>
+                                <p class="text-white icon-text">BLOG</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <div class="col-sm-6 col-md-6 piece align-self-center text-center" data-bs-hover-animate="bounce">
+                <div class="col-sm-6 col-md-6 piece align-self-center text-center" id="for-contact" data-bs-hover-animate="bounce">
                     <div class="row full-height">
                         <div class="col align-self-center"><span class="circle-border"><i class="fa fa-location-arrow"></i></span>
                             <p class="text-white icon-text">CONTACT</p>
@@ -97,9 +102,13 @@
         </div>
     </div>
     <div class="swing animated" id="resume-page">
-        {% include "web/official.html.twig" %}
-        <div id="close-icon"><i class="fa fa-close"></i></div>
+        {% include "web/" ~ musician.pdfTheme %}
     </div>
+    <div class="contact" id="contact-page">
+        {% include "web/templates/contact.html.twig" %}
+    </div>
+    <div title="close resume" id="close-icon"><i class="fa fa-close"></i></div>
+    <a href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}" title="Download Resume" style="position:fixed; top:100px; right:20px; cursor:pointer; color:green; display:none; font-size:30px; z-index:100;" id="download-icon"><i class="fa fa-download"></i></a>
 {% endblock %}
 
 {% block javascripts %}
@@ -110,7 +119,7 @@
         var div = splitted[1];
         var id = splitted[2];
         var form = $("#"+div+"-form-"+id);
-        saveDetails(div, form, 'li', "", "-"+id);
+        saveDetails(div, 'body', 'li', "", "-"+id);
 
         $.notify({
             icon: 'glyphicon glyphicon-time',
@@ -128,9 +137,10 @@
                 align: 'center'
             }
         });
-        form.trigger("reset");
-;
-        
+
+        if($(form).attr('class') != 'referee-form'){
+            form.trigger("reset");
+        }
 
     });
 
@@ -144,8 +154,8 @@
 
 </script>
 <script>
-// Add the following code if you want the name of the file appear on select
 
+    
 $(document).on("change", '[id^="upload-"]', function(){
     var myId = jQuery(this).attr("id");
     var splitted = myId.split('-'); 
@@ -169,5 +179,78 @@ $(document).on("change", '[id^="upload-"]', function(){
     $('#color-code-'+id).removeClass('text-danger').addClass('text-success');
 
 });
+</script>
+
+<script>
+
+$( "#send-my-email" ).click(function() {
+
+    if(!$("#sendername").val() || !$("#senderemail").val() || !$("#senderphone").val() || !$("#message").val() ){
+        $(".error-message-msg").show().text("Name, email, phone and message are all required for rating");
+        throw new Error("Please enter all details");
+    }
+
+    var sendername = $("#sendername").val();
+    var senderemail = $("#senderemail").val();
+    var message = $("#message").val();
+    var senderphone = $("#senderphone").val();
+    var calltime = $("#calltime").val();
+    var musician_id = "{{musician.id}}";
+    $.notify({icon: 'glyphicon glyphicon-time', message: 'Sending email. Please wait!' },{ element: $("#contact-form"),type: "info",allow_dismiss: true,newest_on_top: false,delay: 5000,placement: {from: 'bottom',align: 'center'}});
+    
+    $.ajax({
+        url:"{{ (path('musician_receive_message')) }}",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "sendername": sendername,
+            "senderemail": senderemail,
+            "message": message,
+            "senderphone": senderphone,
+            "calltime": calltime,
+            "musician_id": musician_id,
+        },
+        async: true,
+        success: function (data)
+        {
+            console.log(data);
+            console.log("message sent");
+            $.notify({icon: 'glyphicon glyphicon-ok', message: 'Email sent!' },{ element: $("#contact-form"),type: "success",allow_dismiss: true,newest_on_top: false,delay: 5000,placement: {from: 'bottom',align: 'center'}});
+        },
+        error: function () {
+            $("#error-message").show().html("<b>something's wrong</b>");
+        }
+    });
+    
+
+});
+
+</script>
+<script>
+    $(document).on('click', '#call-me-now', function(){ 
+     
+        var client_phone_number =  ($("#callbacknumber").val());
+        var musician_id = "{{musician.id}}";
+        $.notify({icon: 'glyphicon glyphicon-time', message: 'Thank you! I\'ll call you as soon as possible.' },{ element: $("#call-me"),type: "info",allow_dismiss: true,newest_on_top: false,delay: 5000,placement: {from: 'bottom',align: 'center'}});
+        $.ajax({
+            url:'{{ (path("call_me_back")) }}',
+            type: "POST",
+            dataType: "json",
+            data: {
+              "client_phone_number": client_phone_number,
+              "musician_id": musician_id,
+            },
+            async: true,
+            success: function (data)
+            {
+              console.log(data);
+              $(".removeableId").html("<span style='font-size:14px'>I will call you back as soon as possible.</span>");
+              $.notify({icon: 'glyphicon glyphicon-ok', message: 'Request sent!' },{ element: $("#call-me"),type: "success",allow_dismiss: true,newest_on_top: false,delay: 5000,placement: {from: 'bottom',align: 'center'}});
+            },
+            error: function () {
+              $("#error-message").show().html("<b>something's wrong</b>");
+            }
+          });
+      });
 </script>
 {% endblock %}

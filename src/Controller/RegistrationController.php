@@ -32,9 +32,13 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $pdfTheme = $request->query->get('theme');
+            $user->setPdfTheme($pdfTheme);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+            // var_dump($user);
 
             // do anything else you need here, like send an email
 

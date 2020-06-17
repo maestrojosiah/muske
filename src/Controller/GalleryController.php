@@ -20,7 +20,7 @@ class GalleryController extends AbstractController
      */
     public function index(GalleryRepository $galleryRepository, $username, $page = 1): Response
     {
-        $limit = 6;
+        $limit = 12;
         $offset = $page * $limit - $limit;
         $data = [];
 

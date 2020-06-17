@@ -127,25 +127,36 @@
   height: 20px;
   position: absolute;
   top: 50px;
-  right: 50px;
+  right: 22.5px;
   display: none;
   color: black!important;
   cursor: pointer;
+}
+
+#contact-page {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  background-color: #fff;
+  display: none;
 }
 
 #full-page-container {
   overflow: hidden;
 }
 
-@media (max-width: 575px) {
+/* @media (max-width: 575px) {
   #full-page-container {
     overflow-y: visible;
   }
-}
+} */
 
 #resume {
   width: 21cm;
-  margin: 100px auto auto auto;
+  margin: 50px auto auto auto;
 }
 
 @media (max-width: 767px) {

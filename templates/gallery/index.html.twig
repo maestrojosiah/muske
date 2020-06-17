@@ -1,169 +1,137 @@
-{% extends 'base_gallery.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Gallery | {{musician.username}}{% endblock %}
-
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('theme/assets/css/Lightbox-Gallery.css ') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
+{% endblock %}
 {% block body %}
+{% include "reusable/nav.html.twig" %}
 
-<header>
-  <div class="collapse bg-dark" id="navbarHeader">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-md-7 py-4">
-          <h4 class="text-white">About {{musician.fullname}}</h4>
-          <p class="text-muted">{{musician.about}}</p>
-        </div>
-        <div class="col-sm-4 offset-md-1 py-4">
-          <h4 class="text-white">Contact</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" class="text-white">Follow on Twitter</a></li>
-            <li><a href="#" class="text-white">Like on Facebook</a></li>
-            <li><a href="#" class="text-white">Email me</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="container">
-      <a href="#" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        <strong>Album | {{musician.fullname}}</strong>
-      </a>
-      {% if app.user and app.user != null and app.user == musician %}
-      <a href="{{path('gallery_new')}}" class="btn btn-primary my-2">Add a photo</a>
-      {% endif %}
-      <a href="{{path('musician_show', {'username': musician.username })}}" class="btn btn-secondary my-2">Resume page</a>
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-  </div>
-</header>
-
-<main>
-
-  <div class="album py-5 bg-light">
-    <div class="container">
-      <div class="">
-
-        <div id="lightgallery" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 list-unstyled infinite-container infinite-loading">
-
-          {% for photo in photos %}
-          {% set photopath = asset('uploads/gallery/' ~ photo.photo) %}
-          {% set thumbnailpath = asset('uploads/gallery/thumbs/' ~ photo.photo ~ '.png') %}
-          <div class="col infinite-item" data-src="{{photo.type == "video" ? photo.photo : photopath}}" data-sub-html="<h4>{{photo.musician.fullname}}</h4><p>{{photo.description}}</p>{% if photo.type == 'photo'  and musician.hassettings and musician.isproandactive and (app.user and app.user == musician) %}<a id='makeBg_{{photo.id}}' type='button' class='common'>{{musician.hassettings and musician.settings.bgphoto == photo.photo == 'photo' ? 'Current Background' : 'Make This ' ~ photo.type ~ ' Your resume coverphoto'}}</a>{% endif %}">
-            <div class="card shadow-sm">
-              <a href="{% if photo.type == "video" %}{{photo.photo}}{% endif %}">
-                  {% if photo.type == "video" %}
-                    <img width="100%" height="225" class="card-img-top img-responsive" text="Thumbnail" src="{{ asset('img/play_thumbnail.png')}}" />
-                  {% else %}
-                    <img width="100%" height="225" class="card-img-top img-responsive" text="Thumbnail" src="{{thumbnailpath}}" />
+    <div class="photo-gallery">
+        <div class="container">
+            <div class="intro text-center">
+                <h2 style="display: inline-block; margin-bottom:0px!important; padding-bottom:0px!important;" class="text-center">Portfolio</h2>
+                <div style="display: inline-block; padding-bottom:0.5rem; margin-left:50px;" class="text-center">
+                  {% if app.user and app.user != null and app.user == musician %}
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    <i class="fa fa-upload" style="font-size: 1.5rem;"></i>
+                  </button>
                   {% endif %}
-              </a>
-              <div class="card-body">
-                <p class="card-text">{{photo.description}}</p>
-                <input id="imagetoBg_{{photo.id}}" type="hidden" value="{{photo.photo}}" />
-                <input id="imagetoBg_{{photo.id}}" type="hidden" value="{{photo.photo}}" />
-              </div>
+                </div>
+        
             </div>
-          </div>
-          {% endfor %}
+            <div class="row photos infinite-container infinite-loading">
+              {% for photo in photos %}
+              {% set photopath = asset('uploads/gallery/' ~ photo.photo) %}
+              {% set thumbnailpath = asset('uploads/gallery/thumbs/' ~ photo.photo ~ '.png') %}
+                <div class="col-sm-6 col-md-4 col-lg-3 item infinite-item">
+                  <a data-lightbox="photos" href="{{photopath}}" data-title="{{photo.description}}">
+                    <img class="img-fluid" src="{{thumbnailpath}}">
+                  </a>
+                </div>
+              {% else %}
+              <div class="col-12 text-center">
+                <p>No photos in this gallery</p>
+              </div>
+              {% endfor %}
+            </div>
+            {% if data.nextPage and data.nextPage != "blank" %}       
+              <a class="infinite-more-link" href="{{ path('gallery_index', {'username':musician.username, 'page':data.nextPage} ) }}" style="visibility: hidden;"></a>
+            {% endif %}
+      
         </div>
-        {% if data.nextPage and data.nextPage != "blank" %}       
-          <a class="infinite-more-link" href="{{ path('gallery_index', {'username':musician.username, 'page':data.nextPage} ) }}" style="visibility: hidden;"></a>
-        {% endif %}
+    </div>
 
-
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Upload photos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                  <img id="previewPhoto" class="img-fluid" src="{{ asset('img/default-placeholder.png')}}" />
+                </div>
+                <div class="col-md-6" id="upload-photo">
+                    <form id="gallery-form">
+                        <div class="form-group">
+                          <label>Photo</label>
+                          <input name="newPhoto" id="newPhoto" type="file" />
+                        </div>
+                        <div class="form-group">
+                          <label>Description</label>
+                          <textarea id="photoDescription" class="form-control"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="upload_gallery_image" class="btn btn-primary">Upload</button>
+            <p>You may have to refresh the page to load the full size image</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  
-
-</main>
-
-<footer class="text-muted py-5">
-  <div class="container">
-    <p class="float-right mb-1">
-      <a href="#">Back to top</a>
-    </p>
-    {# <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="{{< docsref "/getting-started/introduction" >}}">getting started guide</a>.</p> #}
-  </div>
-</footer>
+    {% include "reusable/footer.html.twig" %}
 
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('js/infinite.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
+    
+    <script>
+
+		function saveDescription(div){
+			var form = $("#"+div+"-form");
+			saveDetails(div, form);
+    };
+
+    </script>
+
+    <script>
+
+    $('#upload_gallery_image').click(function(){
+      var randId = Math.floor((Math.random() * 1000) + 1);
+      var inputFile = document.getElementById('newPhoto');
+      var directory = 'gallery_directory';
+      var src_id = "#div-"+randId;
+      var div = "#upload-photo";
+      var myClass = "Gallery";
+      var field = 'photo';
+      var shape = 'gallery';
+      var description = $("#photoDescription").val();
+
+      $(".infinite-container").append('<div class="col-sm-6 col-md-4 col-lg-3 item infinite-item"><a id="bigImg'+randId+'" data-lightbox="photos" href="" data-title=""><img id="div-'+randId+'" class="img-fluid" src=""></a></div>');
+      uploadPhoto(inputFile, directory, src_id, div, myClass, field, shape, 'musician', 'src|.png', description );
+      
+      $("#gallery-form").trigger("reset");
+      $("#previewPhoto").attr('src', '/img/default-placeholder.png')
+    });
+
+    </script>
 
     <script>
       var infinite = new Waypoint.Infinite({
         element: $('.infinite-container')[0],
         onAfterPageLoad: function ($items) {
           $('.infinite-loading').hide();
-          check();          
         },
 
       })
+
+      $( "#newPhoto").change(function() {
+        readURL(this);
+      });
+
     </script>
-    <script type="text/javascript">
-
-    function check(){
-          if("#lightgallery"){
-            $("#lightgallery").data("lightGallery").destroy(true);
-            console.log("killed");
-          };
-          createLightGallery();
-
-    }
-
-    function createLightGallery(){
-        $('#lightgallery').lightGallery({
-          loadYoutubeThumbnail: true,
-          youtubeThumbSize: 'default',
-          loadVimeoThumbnail: true,
-          vimeoThumbSize: 'thumbnail_medium',          
-        });      
-        console.log("i was called");
-    }
-
-    $(document).ready(function(){
-        createLightGallery();
-    });
-    
-    </script>
-
-	<script>
-
-    $(document).on("click", '[id^="makeBg_"]', function(){
-        var project = jQuery(this).attr("id");
-        var splitted = project.split('_'); 
-        var id = splitted[1] 
-
-		    var imagetoBg = $("#imagetoBg_"+id).val();              
-
-			$.ajax({
-				url:'{{ (path('save_web_background')) }}',
-				type: "POST",
-				dataType: "json",
-				data: {
-					"imagetoBg": imagetoBg,
-				},
-				async: true,
-				success: function (data)
-				{
-					console.log(data.msg);
-					console.log("saved settings");
-          $("#makeBg_"+id).html(data.msg).addClass('text-'+data.msgtype);
-				},
-				error: function () {
-					$("#warning").html("<b>something's wrong</b>");
-				}
-			});
-
-	});
-
-	</script>
-
 
 {% endblock %}

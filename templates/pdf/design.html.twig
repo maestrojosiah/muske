@@ -22,20 +22,39 @@
         dt { font-style: italic; font-weight: bold; font-size: 18px; text-align: right; padding: 0 26px 0 0; width: 150px; float: left; height: 100px; border-right: 1px solid #999;  }
         dd { width: 600px; float: right; }
         dd.clear { float: none; margin: 0; height: 15px; }
+        .referee {
+		float: left;
+		    width: 33.3333333%;
+
+        }
+
+        .referee p {
+            padding:0px;
+            margin:0px;
+        }
+
      </style>
      
 {% endblock %}
 {% block body %}
-
+     
     <div id="page-wrap">
-    
-        <img src="{{musician.thumbnailurl}}" alt="{{musician.fullname}}" id="pic" />
+        {% if thumbnailurl is not defined %}
+            {% set thumbnailurl = musician.thumbnailurl %}
+        {% endif %}
+        
+        <img src="{{thumbnailurl}}" alt="{{musician.fullname}}" id="pic" />
     
         <div id="contact-info" class="vcard">
         
             <!-- Microformats! -->
         
             <h1 class="fn" style="padding-top:5px;">{{musician.fullname}}</h1>
+            {% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+            <p>
+                {{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}
+            </p>
+            {% endif %}
         
             <p>
                 Cell: <span class="tel">{{musician.phone}}</span><br />
@@ -101,8 +120,17 @@
             <dd class="clear"></dd>
 
             <dt>References</dt>
-            <dd>Available on request</dd>
-            
+            <dd>
+                {% for referee in musician.referees %}
+                <div class="referee">
+                    <h4>{{referee.name}}</h4>
+                    <p style="margin-bottom:0px; margin-top:0px;">{{referee.title}}</p>
+                    <p style="margin-bottom:0px; margin-top:0px;">{{referee.address}}</p>
+                    <p style="margin-bottom:0px; margin-top:0px;">{{referee.contact}}</p>
+                </div>
+                {% endfor %}
+            </dd>
+                
             <dd class="clear"></dd>
         </dl>
         

@@ -199,6 +199,7 @@ class UpdateController extends AbstractController
         $myClass = $request->request->get('myClass');
         $field = $request->request->get('field');
         $shape = $request->request->get('shape');
+        $description = $request->request->get('description');
         $extras = $request->request->get('extras') == "" ? null : $request->request->get('extras');
         $getString = "get" . ucfirst($field);
 
@@ -245,13 +246,15 @@ class UpdateController extends AbstractController
                 $myClass, 
                 $array_data = [
                     $field => $filename,
+                    'description' => $description,
                     'return' => $field,
                     'extras' => $extras
                 ], 
                 $request,
                 $field
              );
-            // var_dump($myClass);
+
+            // var_dump($description);
              
             return new JsonResponse($link);
             
@@ -306,40 +309,43 @@ class UpdateController extends AbstractController
     {
 
         $thumb_beforeword = "thumbs";
-        $arr_image_details = getimagesize("$updir" .  '/'. "$img"); // pass id to thumb name
+
+        $arr_image_details = getimagesize("$updir" .  '/'. "$img"); 
+
         $original_width = $arr_image_details[0];
+
         $original_height = $arr_image_details[1];
+
         if ($original_width > $original_height) {
+
             $new_width = $thumbnail_width;
             $new_height = intval($original_height * $new_width / $original_width);
+
         } else {
+
             $new_height = $thumbnail_height;
             $new_width = intval($original_width * $new_height / $original_height);
+
         }
+
         $dest_x = intval(($thumbnail_width - $new_width) / 2);
         $dest_y = intval(($thumbnail_height - $new_height) / 2);
-        if ($arr_image_details[2] == IMAGETYPE_GIF) {
-            $imgt = "ImageGIF";
-            $imgcreatefrom = "ImageCreateFromGIF";
-        }
-        if ($arr_image_details[2] == IMAGETYPE_JPEG) {
-            $imgt = "ImageJPEG";
-            $imgcreatefrom = "ImageCreateFromJPEG";
-        }
-        if ($arr_image_details[2] == IMAGETYPE_PNG) {
-            $imgt = "ImagePNG";
-            $imgcreatefrom = "ImageCreateFromPNG";
-        }
+
+        list($imgcreatefrom, $imgt) = $this->imageCreateFrom($arr_image_details[2]);
+
         if ($imgt) {
             $old_image = $imgcreatefrom("$updir" .  '/'. "$img");
             if($shape == 'square'){
                 $new_image = $this->toSquare($old_image);
             } else if ($shape == 'rectangle') {
                 $new_image = $this->toRectangle($old_image);
+            } else if ($shape == 'gallery') {
+                // forGallery($imgcreatefrom);
+                $new_image = $this->resizeImage("$updir" .  '/'. "$img", 255, 170);
             } else {
-            $new_image = imagecreatetruecolor($thumbnail_width, $thumbnail_height);
-            $this->setTransparency($new_image, $old_image); 
-            imagecopyresized($new_image, $old_image, $dest_x, $dest_y, 0, 0, $new_width, $new_height, $original_width, $original_height);
+                $new_image = imagecreatetruecolor($thumbnail_width, $thumbnail_height);
+                $this->setTransparency($new_image, $old_image); 
+                imagecopyresized($new_image, $old_image, $dest_x, $dest_y, 0, 0, $new_width, $new_height, $original_width, $original_height);
             }
             imagepng($new_image, "$updir" .  '/'. "$thumb_beforeword/" . "$img". ".png");
         }
@@ -348,7 +354,24 @@ class UpdateController extends AbstractController
 
     }
 
-  
+    public function imageCreateFrom($detail){
+
+        if ($detail == IMAGETYPE_GIF) {
+            $imgt = "ImageGIF";
+            $imgcreatefrom = "ImageCreateFromGIF";
+        }
+        if ($detail == IMAGETYPE_JPEG) {
+            $imgt = "ImageJPEG";
+            $imgcreatefrom = "ImageCreateFromJPEG";
+        }
+        if ($detail == IMAGETYPE_PNG) {
+            $imgt = "ImagePNG";
+            $imgcreatefrom = "ImageCreateFromPNG";
+        }
+
+        return [$imgcreatefrom, $imgt];
+
+    }
     function setTransparency($new_image, $image_source)
     {
        
@@ -379,8 +402,8 @@ class UpdateController extends AbstractController
 
     }
 
+    // for cover photo
     function toRectangle($im){
-        // $im = imagecreatefrompng($image);
         $width = imagesx($im);
         $height = imagesy($im);
         if($height >= $width){
@@ -395,13 +418,50 @@ class UpdateController extends AbstractController
             $new_height = 500;
         }
         $im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => $width, 'height' => $new_height]);
-        // if ($im2 !== FALSE) {
-        //     imagepng($im2, 'example-cropped.png');
-        //     imagedestroy($im2);
-        // }
-        // imagedestroy($im);
         return $im2;
 
+    }
+
+    // for gallery
+    function forGallery($im){
+        $width = 255;
+        $height = 170;
+        
+        $im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => $width, 'height' => $height]);
+        return $im2;
+
+    }
+
+    /**
+    * Resize an image and keep the proportions
+    */
+    function resizeImage($filename, $max_width, $max_height)
+    {
+        list($orig_width, $orig_height) = getimagesize($filename);
+
+        $width = $orig_width;
+        $height = $orig_height;
+
+        # taller
+        if ($height > $max_height) {
+            $width = ($max_height / $height) * $width;
+            $height = $max_height;
+        }
+
+        # wider
+        if ($width > $max_width) {
+            $height = ($max_width / $width) * $height;
+            $width = $max_width;
+        }
+
+        $image_p = imagecreatetruecolor($width, $height);
+
+        list($createFrom, $imgt) = $this->imageCreateFrom(getimagesize($filename)[2]);
+        $image = $createFrom($filename);
+
+        imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $orig_width, $orig_height);
+
+        return $image_p;
     }
 
 }

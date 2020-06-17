@@ -5,120 +5,239 @@
 
 <link href='http://fonts.googleapis.com/css?family=Rokkitt:400,700|Lato:400,300' rel='stylesheet' type='text/css'>
 <style type="text/css">
-.container{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto;}
-
-#theme-two{
-    max-width: 21cm;
-    height: 100vh;
-    margin: auto;
-    padding-top: 10px;
-    display: block;
-    overflow: auto;
-    border: 1px solid #eee;
-}
-
-body{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 1.2rem;
-    color: #777;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    color: #333;
-
-}
-
-h4 {
-    margin: 7px;
-}
-
-h5 {
+    body {
+        margin: 0;
+        font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #777;
+        text-align: left;
+        background-color: #fff;
+    }
+    .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl, .col-xl-auto {
+        position: relative;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    #theme-two {
     font-size: 1.1rem;
-    margin: 5px;
-    color: #6a6464;
-}
+    /* border: 1px solid #e0d3d3; */
+    padding: 20px;
+    margin:auto;
+    }
 
-h6 {
-    font-size: 1rem;
-    color: #777;
-    margin: 5px;
-    font-weight: normal;
-}
+    #theme-two {
+        max-width: 21cm;
+        margin-top: 50px;
+    }
+    #header {
+    padding-bottom: 10px;
+    position: relative;
+    }
+    .row {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+    .col-md-12 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    #for-prof-image {
+        padding-left: 10px;
+    }
 
-.col-md-12 {
-    width: 100%;
-}
+    .col-1 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 8.3333333333%;
+        flex: 0 0 8.3333333333%;
+        max-width: 8.3333333333%;
+    }
+    #profile-image {
+        max-width: 60px;
+        max-height: 60px;
+        border-radius: 50%;
+    }
+    img {
+        vertical-align: middle;
+        border-style: none;
+    }
+    *, *::before, *::after {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .col-11 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 91.6666666667%;
+        flex: 0 0 91.6666666667%;
+        max-width: 91.6666666667%;
+    }
+    #name-and-title {
+        margin: 0;
+        padding-left: 20px;;
+    }
+    h2, h3, h5, h6 {
+        margin-bottom: 0px;
+        margin-top:0px;
+    }
 
-.col-md-8 {
-    width: 66.3%;
-    float: left;
-}
+    h5 {
+        margin-top: 20px;
+    }
 
-.col-md-4 {
-    width: 33.3%;
-    float: left;
-}
+    #right h5 {
+        margin-bottom: 20px;
+        margin-top: 0px;
+    }
 
-.col-2 {
-    width:15%;
-    float: left;
-}
+    h2 {
+        font-size: 2rem;
+    }
 
-.col-10 {
-    width: 83%;
-    float: left;
-}
+    .col-md-8 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 66.6666666667%;
+        flex: 0 0 66.6666666667%;
+        max-width: 66.6666666667%;
+    }
+    .col-md-4 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 33.3333333333%;
+        flex: 0 0 33.3333333333%;
+        max-width: 33.3333333333%;
+    }
+    .col-md-9 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 70%;
+        flex: 0 0 70%;
+        max-width: 70%;
+    }
+    .col-md-3 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 30%;
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+    #theme-two .card {
+        border: none;
+    }
+    .card {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border-radius: 0.25rem;
+    }  
+    .card-body {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1.25rem;
+    }  
+    #theme-two h4 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        line-height: 1;
+        letter-spacing: 0.5px;
+        margin-left: -20px;
+    }
+    .card-text:last-child {
+        margin-bottom: 0;
+    }
+    .card-text {
+        font-size: 1.1rem;
+    }
+    p {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+    #theme-two h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+    #theme-two h6 {
+        font-size: 1rem;
+    }
+    ol, ul, dl {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+    .list-group {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        padding-left: 0;
+        margin-bottom: 0;
+        border-radius: 0.25rem;
+    }
+    .list-group-item.skill-list {
+        border-bottom: 2px solid #76a6ef;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+    }
+    .list-group-item:first-child {
+        border-top-left-radius: inherit;
+        border-top-right-radius: inherit;
+    }
+    .list-group-item {
+        position: relative;
+        display: block;
+        padding: 0.5rem 1rem;
+        background-color: #fff;
+        border: 1px solid rgba(0,0,0,0.125);
+    }    
+    .special-h4 {
+        width: 80%;
+        display: inline;
+        margin-left: 1px!important;
+    }
 
-.col-10 h2, .col-10 h3 {
-    margin: 0px;
-    padding: 0px;
-
-}
-
-.clear {
-    clear: both;
-}
-
-.row {
-    width: 100%;
-}
-
-.card {
-    padding: 10px 20px;
-}
-
-img{page-break-inside:avoid;}
-
-#profile-image{
-    max-width: 70px;
-}
-
-.list-group {
-    list-style: none;
-    padding-left: 0;
-}​
-
-.skill-list {
-    border-bottom: 2px solid #446E9B;
-    display: block;
-    padding: 0.75rem 1.25rem;
-}
-
-
+    .icon {
+        padding: 0px; 
+        width: 20px; 
+        height: 20px;
+        margin-left: -33px;
+    }
+    
 </style>
 
 {% endblock %}
 
 {% block body %}
+{% if thumbnailurl is not defined %}
+{% set thumbnailurl = musician.thumbnailurl %}
+{% endif %}
+
 <div id="container-outer">
     <div class="container" id="theme-two">
         <div class="row" id="header">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-2" id="for-prof-image"><img id="profile-image" src="{{musician.thumbnailurl}}"></div>
+                    <div class="col-2" id="for-prof-image"><img id="profile-image" src="{{thumbnailurl}}"></div>
                     <div class="col-10">
                         <div id="name-and-title">
-                            <h2>Joash Crotchet</h2>
+                            <h2>{{musician.fullname}}</h2>
                             <h3>Musician</h3>
                         </div>
                     </div>
@@ -127,125 +246,111 @@ img{page-break-inside:avoid;}
         </div>
         <div class="clear"></div>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="card">
                     <div class="card-body">
-                        <img src="https://muske.co.ke/icons/user.png" style="float:left;margin:0px;margin-left:-20px;margin-top:-2px;padding:0px;width:20px; height:20px;" />
-                        <h4 class="card-title" style="width:80%">&nbsp;Profile</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.&nbsp;Nullam id dolor id nibh ultricies vehicula ut id elit.
-                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.&nbsp;Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas
-                            eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                        <img class="icon" src="http://127.0.0.1:8000/icons/user-tie.png" />
+                        <h4 class="card-title special-h4">&nbsp;Profile</h4>
+                        <p class="card-text" style="padding-top: 5px;">{{musician.about}}</p>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <img src="https://muske.co.ke/icons/briefcase.png" style="float:left;margin:0px;margin-left:-20px;margin-top:-3px;padding:0px;width:20px; height:20px;" />
-                        <h4 class="card-title" style="width:80%">&nbsp;Employment History</h4>
+                        <img class="icon" src="http://127.0.0.1:8000/icons/briefcase.png" />
+                        <h4 class="card-title special-h4" style="width:80%">&nbsp;Employment History</h4>
+                        {% for job in jobs %}
                         <div>
-                            <h5 class="text-muted mb-2">Some company name</h5>
-                            <h6 class="text-muted mb-2">October 2016 - November 2020</h6>
+                            <h5 class="text-muted mb-2">{{job.institution}}</h5>
+                            <h6 class="text-muted mb-2">{{job.startingfrom|date("M Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</h6>
                             <ul>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas&nbsp;Cras justo odio, dapibus ac facilisis in, egestas</li>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
+                                {% for role in job.roles %}
+                                <li>{{role.role}}</li>
+                                {% endfor %}                            
                             </ul>
                         </div>
-                        <div>
-                            <h5 class="text-muted mb-2">Some company name</h5>
-                            <h6 class="text-muted mb-2">October 2016 - November 2020</h6>
-                            <ul>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas&nbsp;Cras justo odio, dapibus ac facilisis in, egestas</li>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                                <li>Cras justo odio, dapibus ac facilisis in, egestas</li>
-                            </ul>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <img src="https://muske.co.ke/icons/graduation-cap.png" style="float:left;margin:0px;margin-left:-20px;padding:0px;width:20px; height:20px;" />
-                        <h4 class="card-title" style="width:80%">&nbsp;Education</h4>
+                        <img class="icon" src="http://127.0.0.1:8000/icons/graduation-cap.png" />
+                        <h4 class="card-title special-h4" style="width:80%">&nbsp;Education</h4>
+                        {% for edu in educ %}
                         <div>
-                            <h5 class="text-muted mb-2">Bachelor in music and dance, Kenyatta University</h5>
-                            <h6 class="text-muted mb-2">Bachelor in music and dance, Kenyatta University</h6>
-                            <ul>
-                                <li>Graduated&nbsp;Cras justo odio</li>
-                            </ul>
+                            <h5 class="text-muted mb-2">{{edu.institution}}</h5>
+                            <p style="margin-bottom:0px; margin-top:0px;" class="text-muted mb-2">{{edu.coursename}} </p>
+                            <h6 class="text-muted mb-2">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}, {{edu.location}}</h6>
                         </div>
-                        <div>
-                            <h5 class="text-muted mb-2">Diploma in bla bla, Some University</h5>
-                            <h6 class="text-muted mb-2">Bachelor in music and dance, Kenyatta University</h6>
-                            <ul></ul>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+                {% if musician.projects is not empty %}
                 <div class="card">
                     <div class="card-body">
-                        <img src="https://muske.co.ke/icons/bullhorn.png" style="float:left;margin:0px;margin-left:-20px;padding:0px;width:20px; height:20px;" />
-                        <h4 class="card-title" style="width:80%;">&nbsp;Referees</h4>
+                        <img class="icon" src="http://127.0.0.1:8000/icons/music.png" />
+                        <h4 class="card-title special-h4" style="width:80%">&nbsp;Projects</h4>
+                        {% for project in musician.projects %}
+                        <div>
+                            <h5>{{project.projecttitle}}</h5>
+                            <p>{{project.projectdescription}}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+                {% endif %}
+
+                {% if musician.referees is not empty %}
+                <div class="card">
+                    <div class="card-body">
+                        <img class="icon" src="http://127.0.0.1:8000/icons/bullhorn.png" />
+                        <h4 class="card-title special-h4" style="width:80%;">&nbsp;Referees</h4>
                         <div class="row">
+                            {% for referee in musician.referees %}
                             <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <p><strong>First Last</strong></p>
-                                        <p><i>Institution</i></p>
-                                        <p>Phone</p>
-                                    </div>
-                                </div>
+                                <p style="margin-bottom:0px; margin-top:0px;">{{referee.name}}</p>
+                                <p style="margin-bottom:0px; margin-top:0px;">{{referee.title}}</p>
+                                <p style="margin-bottom:0px; margin-top:0px;">{{referee.address}}</p>
+                                <p style="margin-bottom:0px; margin-top:0px;">{{referee.contact}}</p>
                             </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <p><strong>First Last</strong></p>
-                                        <p><i>Institution</i></p>
-                                        <p>Phone</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <p><strong>First Last</strong></p>
-                                        <p><i>Institution</i></p>
-                                        <p>Phone</p>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
+                {% endif %}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <div id="right" style="border-left: 1px solid #777;">
+                {% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
                 <div class="card">
                     <div class="card-body">
                         <h5 class="text-muted card-subtitle mb-2">Details</h5>
-                        <p class="card-text">Firstname Lastname<br>P.O. Box 23432 - 00100,<br>Nairobi,<br>Kenya</p>
+                        <p class="card-text">{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</p>
                     </div>
                 </div>
+                {% endif %}
                 <div class="card">
                     <div class="card-body">
                         <h5 class="text-muted card-subtitle mb-2">Skills</h5>
                         <ul class="list-group">
-                            <li class="list-group-item skill-list"><span>Skill 1</span></li>
-                            <li class="list-group-item skill-list"><span>Skill 2</span></li>
-                            <li class="list-group-item skill-list"><span>Skill 3</span></li>
-                            <li class="list-group-item skill-list"><span>Skill 4</span></li>
-                            <li class="list-group-item skill-list"><span>Skill 5</span></li>
+                            {% for skill in musician.skills %}
+                            <li class="list-group-item skill-list"><span>{{skill.skillname}}</span></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="text-muted card-subtitle mb-2">Languages</h6>
+                        <h6 class="text-muted card-subtitle mb-2">Specialties</h6>
                         <ul class="list-group">
-                            <li class="list-group-item skill-list"><span>Language 1</span></li>
+                            {% for job_role in musician.jobstobeoffered %}
+                            <li class="list-group-item skill-list"><span>{{job_role.jobtitle}}</span></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col"></div>
+        </div>
         </div>
     </div>
 </div>

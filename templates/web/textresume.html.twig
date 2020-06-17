@@ -1,0 +1,190 @@
+{% extends 'pdfBase.html.twig' %}
+
+{% block title %}Resume{% endblock %}
+{% block stylesheets %}
+<style>
+p, td, span, li, a { 
+	font-family: verdana, arial, helvetica, sans-serif; 
+}
+h1 {
+	font: 14pt verdana, arial, helvetica, sans-serif;
+	font-weight: bold;
+	margin: 0 0 5px 0;
+}
+h2 {
+	border-bottom: 1px solid #666;
+	clear: both;
+	font: 11pt verdana, arial, helvetica, sans-serif;
+	font-weight: bold;
+	margin: 15px 0 10px 0;
+	padding: 0 0 3px 0;
+	width: 100%;
+}
+h3 {
+	font: 11pt verdana, arial, helvetica, sans-serif;
+	font-weight: bold;
+	margin: 0 0 2px 0;
+	padding: 0;
+}
+li {
+	font-size: 10pt;
+	margin: 0 0 3px 5%;
+	padding: 0;
+}
+p {
+	font-size: 10pt;
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+body ul {
+	margin: 0 0 0 20%;
+	padding: 0;
+}
+body div ul {
+	margin: 3px 0 0 0;
+	padding: 0;
+}
+#bio_left {
+	font-size: 11pt;
+	float: left;
+	width: 50%;
+}
+#bio_right {
+	font-size: 11pt;
+	float: left;
+	text-align: right;
+	width: 50%;
+}
+.company {
+	clear: both;
+	margin: 0 0 5px 0;
+	padding: 0;
+}
+.data {
+	padding-left: 20%;
+}
+.date {
+	clear: left;
+	float: left;
+	padding-top: 2px;
+	width: 20%;
+}
+.job {
+	clear: both;
+	width: 100%;
+}
+.job_data {
+	float: left;
+	width: 80%;
+}
+.location {
+	clear: right;
+	float: right;
+	text-align: right;
+	width: 20%;
+}
+.position {
+	font-style: italic;
+	margin: 0 0 5px 0;
+}
+#references {
+	margin-top: 20px;
+}
+#meta {
+	display: none;
+}
+a {
+	text-decoration: none;
+	color:black;
+}
+.referee {
+float: left;
+	width: 33.3333333%;
+
+}
+
+.referee p {
+	padding:0px;
+	margin:0px;
+}
+
+</style>
+{% endblock %}
+{% block body %}
+<div class="container" id="resume">
+	<h1>{{musician.fullname}}</h1>
+
+	<p id="bio_left">
+	{{musician.phone}}<br><a href="mailto:{{musician.email}}">{{musician.email}}</a><br />https://muske.co.ke/{{musician.username}}
+	</p>
+	<p id="bio_right">
+		{% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+		{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}
+		{% endif %}
+	
+	</p>
+	
+	<h2>ABOUT</h2>
+	<p class="data">{{musician.about}}.</p>
+	
+	<h2>EXPERIENCE</h2>
+	{% for job in jobs %}
+	<div class="job">
+		<p class="date">{{job.startingfrom|date("M Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y")}}</p>
+		<div class="job_data">
+			<h3>{{job.institution}}</h3>
+			<p class="location">{{job.location}}</p>
+			<p class="position">{{job.jobtitle}}/Title</p>
+			<ul>
+				{% include "web/templates/list.html.twig" %}
+			</ul>
+			&nbsp;
+		</div>
+	</div>
+	{% endfor %}
+	
+	<h2>EDUCATION</h2>
+	{% for edu in educ %}
+	<div class="job" style="position: relative; padding-right: 50px;">
+		<p class="date">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</p>
+		<div class="job_data" style="padding-left: 10px;">
+			<h3>{{edu.coursename}}</h3>
+			<p class="location">{{edu.location}}</p>
+			<p class="position">{{edu.degree}}</p>
+			&nbsp;
+		</div>
+		{% include "web/templates/doc.html.twig" %}
+	</div>
+	{% endfor %}
+	
+	<h2>SKILLS</h2>
+		<ul class="data">
+			{% include "reusable/_simpleskills_.html.twig" %}
+		</ul>
+	
+	{% if musician.projects is not empty %}
+	<h2>PROJECTS</h2>
+	{% for project in musician.projects %}
+	<div>
+		<h3 class="data">{{project.projecttitle }}</h3>
+		<p class="data">{{project.projectdescription}}.</p>
+	</div>
+	{% endfor %}
+	
+	{% endif %}
+	
+	<h2>SPECIALTY</h2>
+	<div style="padding-left:20%">
+		<p class="data">{% include "reusable/_simplespecialty_.html.twig" %}</p>
+	</div>
+	
+	<h2>REFERENCES</h2>
+	
+	<div>
+		{% include "reusable/referees.html.twig" %}
+	</div>
+	
+</div>
+
+
+{% endblock %}

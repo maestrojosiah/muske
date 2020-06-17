@@ -1,0 +1,87 @@
+<div class="container" id="form-container">
+
+    <div class="form-row">
+        <div class="col-md-6">
+            <form id="contact-form">
+                <fieldset>
+                    <legend><i class="fa fa-envelope"></i> Contact </legend>
+                </fieldset>
+                <div class="form-group has-feedback">
+                    <label for="sendername">Name</label>
+                    <input class="form-control" type="text" id="sendername" tabindex="-1" name="from_name" required="" placeholder="Full Name">
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="senderemail">Email</label>
+                    <input class="form-control" type="email" id="senderemail" name="from_email" required="" placeholder="Email Address">
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-6">
+                        <div class="form-group has-feedback">
+                            <label for="senderphone">Phone</label>
+                            <input class="form-control" type="text" id="senderphone" name="from_phone" placeholder="Primary Phone">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="calltime">Best Time to Call</label>
+                            <select class="form-control" id="calltime" name="Call Time">
+                                <optgroup label="Choose one">
+                                    <option value="morning" selected="">Morning hours</option>
+                                    <option value="afternoon">Afternoon hours</option>
+                                    <option value="evening">Evening hours</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" id="message" name="Comments" placeholder="Enter comments here" rows="5"></textarea>
+                </div>
+                <div class="form-group"><button class="btn btn-primary btn-block" id="send-my-email" type="button">Send <i class="fa fa-chevron-circle-right"></i></button></div>
+                <hr>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <fieldset></fieldset>
+            <div class="form-row">
+            
+                <div class="col-sm-5 offset-sm-1">
+                    <fieldset>
+                        <legend><i class="fa fa-envelope"></i> Contacts</legend>
+                    </fieldset>
+                    <div><span><strong>{{musician.fullname}}</strong></span></div>
+                    <div><span>{{musician.email}}</span></div>
+                    <div><span>{{musician.phone}}</span></div>
+                    <div><span><small>www.muske.co.ke/{{musician.username}}</small></span></div>
+                    <hr>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <fieldset>
+                        <legend><i class="fa fa-location-arrow"></i> Address</legend>
+                    </fieldset>
+                    {{musician.hassettings and musician.settings.signature is not empty ? musician.settings.signature|nl2br : 'No address added'}}
+                </div>
+                <div class="col-md-11 offset-sm-1">
+                    <legend><i class="fa fa-phone"></i> Call back</legend>
+                    <form id="call-me">
+                        <div class="form-group">
+                            <label>Yes, I can call you</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Phone</span>
+                                </div>
+                                <input type="text" id="callbacknumber" class="form-control" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" id="call-me-now" type="button">Call me!</button>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted">Send me your phone number and I&#39;ll call you as soon as possible</small>
+                        </div>
+                    </form>
+                </div>            
+            </div>
+        </div>
+    </div>
+
+</div>

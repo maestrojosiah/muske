@@ -1,0 +1,3 @@
+{% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}
+{% endif %}

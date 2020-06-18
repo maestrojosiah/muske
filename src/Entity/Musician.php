@@ -176,6 +176,11 @@ class Musician implements UserInterface
      */
     private $referees;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="musician")
+     */
+    private $notifications;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -190,6 +195,7 @@ class Musician implements UserInterface
         $this->posts = new ArrayCollection();
         $this->tracks = new ArrayCollection();
         $this->referees = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function __toString() {
@@ -921,6 +927,37 @@ class Musician implements UserInterface
             // set the owning side to null (unless already changed)
             if ($referee->getMusician() === $this) {
                 $referee->setMusician(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setMusician($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->contains($notification)) {
+            $this->notifications->removeElement($notification);
+            // set the owning side to null (unless already changed)
+            if ($notification->getMusician() === $this) {
+                $notification->setMusician(null);
             }
         }
 

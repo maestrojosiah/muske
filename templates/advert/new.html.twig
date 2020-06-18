@@ -8,11 +8,11 @@
         <div class="header-blue" style="height: 100%;">
             <nav class="navbar navbar-light navbar-expand-md navigation-clean-search">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="index.html">Music Services Kenya</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                    <a class="navbar-brand" href="{{path('homepage')}}">Music Services Kenya</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                     <div
                         class="collapse navbar-collapse" id="navcol-1">
                         <ul class="nav navbar-nav"></ul>
-                        <a class="btn btn-dark ml-auto action-button" role="button" href="search.html">Search page</a>
+                        <a class="btn btn-dark ml-auto action-button" role="button" href="{{path('search')}}">Search page</a>
                     </div>
                 </div>
             </nav>
@@ -46,46 +46,46 @@
                                 advert, We are always here for you. Call us on 0705285959.
                             </p>
                             <hr>
-                            <form id="ad-form">
+                            <form id="advert-form">
                                 <div class="form-row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Person / Institution</label>
-                                            <input id="institution" class="form-control" type="text" autofocus="" placeholder="Institution or Individual name">
+                                            <input id="institution" name="institution" class="form-control" type="text" autofocus="" placeholder="Institution or Individual name">
                                             <small class="form-text text-muted">Write your name or the name of the institution</small>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Location</label>
-                                            <input id="location" class="form-control" type="text" autofocus="" placeholder="eg. Nairobi">
+                                            <input id="location" name="location" class="form-control" type="text" autofocus="" placeholder="eg. Nairobi">
                                             <small class="form-text text-muted">Where are you based?</small>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Job Position</label>
-                                            <input id="job_position" class="form-control" type="text" autofocus="" placeholder="eg. Music Director">
+                                            <input id="job_position" name="task" class="form-control" type="text" autofocus="" placeholder="eg. Music Director">
                                             <small class="form-text text-muted">Which job position are you advertizing?</small>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Last date of advert</label>
-                                            <input id="deadline" class="form-control" type="date">
+                                            <input id="deadline" name="deadline" class="form-control" type="date">
                                             <small class="form-text text-muted">Your ad will expire on the date you enter here.</small>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-12" id="myForm">
                                         <div class="form-group"><label>Job Description</label></div>
-                                        <textarea id="job_description" class="form-control form-control-lg" autocomplete="on" spellcheck="true" placeholder="Describe the person you need"></textarea>
+                                        <textarea id="job_description" name="jobdescription" class="form-control form-control-lg" autocomplete="on" spellcheck="true" placeholder="Describe the person you need"></textarea>
                                         <small class="form-text text-muted">Help text for a form field.</small>
                                     </div>
                                     <div
                                         class="col-md-6">
                                         <div class="form-group">
-                                            <label>Education Level</label>
-                                            <select id="education_level" class="form-control">
+                                            <label>Minimum Education Level</label>
+                                            <select id="education_level" name="courselevel" class="form-control">
                                                 <optgroup label="- Specify -">
                                                     <option value="any" selected="">Any Level but Competent</option>
                                                     <option value="certificate">Certificate</option>
@@ -101,34 +101,37 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Course of study</label>
-                                            <input id="course" class="form-control" type="text" placeholder="eg. Music">
+                                            <input id="course" name="education" class="form-control" type="text" placeholder="eg. Music">
                                             <small class="form-text text-muted">Which course would you want the musician to have studied?</small>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label>Skills required</label>
-                                            <input id="skills" class="form-control" type="text" placeholder="eg. congregation accompaniment">
+                                            <input id="skills" name="skill" class="form-control" type="text" placeholder="eg. congregation accompaniment">
                                             <small class="form-text text-muted">Separate with comma: Type the skills that you need the music instructor to have. eg. Playing piano, Teaching a choir etc</small>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input id="email" class="form-control" type="email" placeholder="email@example.com">
+                                            <input id="email" name="email" class="form-control" type="email" placeholder="email@example.com">
                                             <small class="form-text text-muted">You will receive the ad tracking code through this email</small>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Phone Number</label>
-                                            <input id="phone_number" class="form-control" type="text" placeholder="0700123456">
+                                            <input id="phone_number" name="phone" class="form-control" type="text" placeholder="0700123456">
                                             <small class="form-text text-muted">We will contact you when we get someone you may need</small>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="extras" value="submitted-code" />
+                                    <input type="hidden" name="class" value="Advert" />
+                                    <input type="hidden" name="notification" value="advert" />
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <button class="btn btn-primary btn-block" id="save_advert" type="button">Post Advertizement</button>
+                                            <button class="btn btn-primary btn-block" id="save-advert" type="button">Post Advertizement</button>
                                         </div>
                                     </div>
                                 </div>
@@ -190,133 +193,25 @@
                             <form id="ad-form">
                                 <div class="form-row">
                                     <div class="col-md-6">
-                                        <div class="form-group"><label>Your phone number</label><input class="form-control" type="text" autofocus=""><small class="form-text text-muted">Enter your phone number</small></div>
+                                        <div class="form-group">
+                                            <label>Your phone number</label>
+                                            <input id="phone" class="form-control" type="text" autofocus="">
+                                            <small class="form-text text-muted">Enter your phone number</small>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group"><label>Your ad tracking ID</label><input class="form-control" type="text"><small class="form-text text-muted">The ID that was sent to your email after you created your advert</small></div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="alert alert-danger" role="alert"><span><strong>Either the phone number or the tracking code is incorrect. Try again!</strong></span></div>
+                                        <div class="form-group">
+                                            <label>Your ad tracking code</label>
+                                            <input id="code" class="form-control" type="text">
+                                            <small class="form-text text-muted">The code that was sent to your email after you created your advert</small>
+                                        </div>
                                     </div>
                                     <div class="col-12">
-                                        <div class="form-group"><button class="btn btn-primary btn-block" type="button">View ad progress</button></div>
+                                        <div class="form-group"><button class="btn btn-primary btn-block" id="load-advert" type="button">View ad progress</button></div>
                                     </div>
                                 </div>
                             </form>
-                            <div>
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Seen adverts</a></li>
-                                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Opened adverts</a></li>
-                                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Interested</a></li>
-                                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Sent resumes</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" role="tabpanel" id="tab-1">
-                                        <p>The adverts that have been seen</p>
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-hover table-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Date</th>
-                                                        <th>Location</th>
-                                                        <th>Musician</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>7th June 2020 3:30pm</td>
-                                                        <td>Nairobi, Kiambu</td>
-                                                        <td><a href="#">Resume</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>9th June 2020 3:47pm</td>
-                                                        <td>Nairobi</td>
-                                                        <td><a href="#">Resume</a></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" role="tabpanel" id="tab-2">
-                                        <p>These have opened and read your ad</p>
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-hover table-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Date</th>
-                                                        <th>Location</th>
-                                                        <th>Musician</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>7th June 2020 3:30pm</td>
-                                                        <td>Nairobi, Kiambu</td>
-                                                        <td><a href="#">Resume</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>9th June 2020 3:47pm</td>
-                                                        <td>Nairobi</td>
-                                                        <td><a href="#">Resume</a></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" role="tabpanel" id="tab-3">
-                                        <p>These ones took your contact so that they could contact you directly</p>
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-hover table-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Date</th>
-                                                        <th>Location</th>
-                                                        <th>Musician</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>7th June 2020 3:30pm</td>
-                                                        <td>Nairobi, Kiambu</td>
-                                                        <td><a href="#">Resume</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>9th June 2020 3:47pm</td>
-                                                        <td>Nairobi</td>
-                                                        <td><a href="#">Resume</a></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" role="tabpanel" id="tab-4">
-                                        <p>Content for tab 3.</p>
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-hover table-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Date</th>
-                                                        <th>Location</th>
-                                                        <th>Musician</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>7th June 2020 3:30pm</td>
-                                                        <td>Nairobi, Kiambu</td>
-                                                        <td><a href="#">Resume</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>9th June 2020 3:47pm</td>
-                                                        <td>Nairobi</td>
-                                                        <td><a href="#">Resume</a></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="embed-responsive embed-responsive-16by9" style=""><iframe id="tracker" class="embed-responsive-item" src=""></iframe></div>
                         </div>
                         <hr>
                         <div class="row" id="suggestions">
@@ -362,50 +257,63 @@
             </div>
         </div>
     </div>
-    <div id="close-icon"><i class="fa fa-close"></i></div>
+    <div id="close-icon" style="position: fixed;"><i class="fa fa-close"></i></div>
 
 {% endblock %}
 
 {% block javascripts %}
 
     <script>
-        $( "#save_advert" ).click(function() {
+        $( "#save-advert" ).click(function() {
         
-                var institution = $("#institution").val();
-                var location = $("#location").val();
-                var job_position = $("#job_position").val();
-                var deadline = $("#deadline").val();
-                var job_description = $("#job_description").val();
-                var education_level = $("#education_level").val();
-                var course = $("#course").val();
-                var skills = $("#skills").val();
-                var email = $("#email").val();
-                var phone_number = $("#phone_number").val();
+			var myId = "#save-advert";
+			var splitted = myId.split('-'); 
+			var div = splitted[1];
+			var form = $("#"+div+"-form");
+            saveDetails(div, "#myForm");	
+            		
+			$.notify({
+				icon: 'glyphicon glyphicon-ok',
+				message: 'Your advert has been created and sent to all musicians. Check your email for a tracking code',
+			},{
+                element: "#myForm",
+				type: "info",
+				allow_dismiss: true,
+				newest_on_top: false,
+                delay: 10000,
+				placement: {
+					from: 'bottom',
+					align: 'center'
+				}
+			});
+
+        });
         
-                console.log("started");
+        
+    </script>
+    <script>
+        $( "#load-advert" ).click(function() {
+        
+                var phone = $("#phone").val();
+                var code = $("#code").val();
+        
+                console.log("loading...");
         
                 $.ajax({
-                    url:"{{ (path('save_entity')) }}",
+                    url:"{{ (path('advert_track')) }}",
                     type: "POST",
                     dataType: "json",
                     data: {
-                        "institution": institution,
-                        "location": location,
-                        "task": job_position,
-                        "deadline": deadline,
-                        "jobdescription": job_description,
-                        "courselevel": education_level,
-                        "education": course,
-                        "skill": skills,
-                        "email": email,
-                        "phone": phone_number,
-                        "class": "Advert",
-                        "extras": "code-submitted"
+                        "phone": phone,
+                        "code": code,
                     },
                     async: true,
                     success: function (data)
                     {
                         console.log(data);
+                        var iframe = document.getElementById('tracker');
+		                iframe.src = data;
+
                     },
                     error: function (err) {
                         console.log(err.responseText);

@@ -195,6 +195,44 @@
         };
 
         </script>
+
+        <script>
+        $(document).on("click", '[id^="click-ad-notification_"]', function(){
+
+            console.log('clicked');
+
+			var myId = jQuery(this).attr("id");
+			var splitted = myId.split('_'); 
+			var id = splitted[1];
+
+            $.ajax({
+                url:'{{ (path("mark_notification_read")) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    'id' : id
+                },
+                async: true,
+                success: function (data)
+                {
+                    console.log(data);
+                    location.href = data;
+                },
+                error: function (err) {
+                    console.log("there is a problem: "+err.responseText);
+                }
+            });
+
+
+        });
+        </script>
+
+        <script>
+            $("#see-ad-notification").on("show.bs.dropdown", function(event){
+                console.log('seen');
+            });      
+        </script>
+
         <script>
             function readURL(input) {
                 if (input.files && input.files[0]) {

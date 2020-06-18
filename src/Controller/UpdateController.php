@@ -22,18 +22,23 @@ use App\Entity\Document;
 use App\Entity\Rating;
 use App\Entity\Advert;
 use App\Entity\Musician;
+use App\Entity\Notification;
 use App\Entity\Track;
 use App\Updates\ResetPwdManager;
 use App\Updates\MessageFromResume;
 use App\Updates\MembershipManager;
 use App\Updates\ActivationManager;
 use App\Updates\CallMeBack;
+use App\Updates\AdTrackingCode;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Repository\MusicianRepository;
 use App\Repository\DocumentRepository;
 use App\Repository\SettingsRepository;
+use App\Repository\NotificationRepository;
 use App\Repository\JobRepository;
 use App\Repository\EducationRepository;
+use App\Repository\AdvertRepository;
+use App\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use App\Repository\ProRepository;
@@ -46,14 +51,22 @@ class UpdateController extends AbstractController
     private $musicianRepo;
     private $settingsRepo;
     private $educationRepo;
+    private $notificationRepo;
+    private $advertRepo;
+    private $postRepo;
+    private $adTrackingCode;
     
-    public function __construct(EducationRepository $educationRepository, SettingsRepository $settingsRepository, MusicianRepository $musicianRepository, JobRepository $jobRepository, DocumentRepository $documentRepository)
+    public function __construct(PostRepository $postRepository, AdvertRepository $advertRepository, AdTrackingCode $adTrackingCode, NotificationRepository $notificationRepository, EducationRepository $educationRepository, SettingsRepository $settingsRepository, MusicianRepository $musicianRepository, JobRepository $jobRepository, DocumentRepository $documentRepository)
     {
         $this->jobRepo = $jobRepository;
         $this->documentRepo = $documentRepository;
         $this->musicianRepo = $musicianRepository;
         $this->settingsRepo = $settingsRepository;
         $this->educationRepo = $educationRepository;
+        $this->notificationRepo = $notificationRepository;
+        $this->advertRepo = $advertRepository;
+        $this->postRepo = $postRepository;
+        $this->adTrackingCode = $adTrackingCode;
 
     }
 
@@ -159,7 +172,7 @@ class UpdateController extends AbstractController
                         $id = $arrSplit[1]; 
                     } else { 
                         $id = "";
-                    }            
+                    }
         
                     // the provide_ function that are manually created for special cases
                     $function = "provide_$extra";
@@ -177,7 +190,17 @@ class UpdateController extends AbstractController
             // persist and flush
             $entityManager->persist($entity);
             $entityManager->flush();
-           
+        //    var_dump($entity->getId());
+            if(null !== $request->request->get('notification')){
+                $type = $request->request->get('notification');
+                if($type == 'advert'){
+                    if($this->adTrackingCode->sendEmailMessage($entity->getEmail(), $entity->getInstitution(), $entity->getCode())){
+                        // $this->addFlash('success', 'Notification mail was sent successfully');
+                    }
+                }
+                $id = $entity->getId();
+                $this->provide_notification($id, $type);
+            }
             // value to return if needed
             $returnVal = $toReturn == 'nothingToReturn' ? 'nothingToReturn' : $entity->$getter();
             // var_dump($returnVal);
@@ -269,12 +292,56 @@ class UpdateController extends AbstractController
     }
 
     public function provide_code($id){
-        return "xd39Ckdf";
+        $random = random_int(1, 10000);
+        return $random;
     }
 
     public function provide_submitted($id){
         $started = new \DateTime("now");
         return $started;
+    }
+
+    public function provide_updated($id){
+        $started = new \DateTime("now");
+        return $started;
+    }
+
+    public function provide_notification($id, $type){
+        $entityManager = $this->getDoctrine()->getManager();
+        $musicians = $this->musicianRepo->findAll();
+        if($type == "advert") {
+            $array = ['entity' => 'Advert', 'field' => 'task'];
+        } else if ($type == "postlike"){
+            $array = ['entity' => 'Post', 'field' => 'title'];
+        }
+        
+        foreach ($musicians as $key => $musician) {
+            // $duplicate = $this->notificationRepo->findOneBy(
+            //     ['musician' => $musician, 'type' => $type],
+            //     ['id' => 'ASC']
+            // );
+            // if($duplicate){
+            //     $notification = $duplicate;
+            // } else {
+            //     $notification = new Notification();
+            // }
+            $notification = new Notification();
+            if($type == 'advert') {
+                $notification->setAdvert($this->advertRepo->find($id));
+            } else {
+                $notification->setPost($this->postRepo->find($id));
+            }
+            $notification->setMusician($musician);
+            $notification->setSender("Advert Manager");
+            $notification->setUnread(1);
+            $notification->setType("advert");
+            $notification->setParameters($array);
+            $notification->setReference($id);
+            $notification->setCreated($this->provide_submitted($id));
+            $entityManager->persist($notification);
+            $entityManager->flush();
+    
+        }
     }
 
     public function provide_musician($id){
@@ -290,6 +357,13 @@ class UpdateController extends AbstractController
     public function provide_education($id){
         $edu = $this->educationRepo->find($id);
         return $edu;
+    }
+
+    public function provide_advert($id){
+        $advert = $this->advertRepo->find($id);
+        var_dump($advert);
+        die();
+        // return $advert;
     }
 
     function dashesToCamelCase($string, $capitalizeFirstCharacter = false) 

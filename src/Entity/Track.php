@@ -32,6 +32,11 @@ class Track
      */
     private $updated;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Advert::class, inversedBy="tracks")
+     */
+    private $advert;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Track
     public function setUpdated(\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    public function getAdvert(): ?Advert
+    {
+        return $this->advert;
+    }
+
+    public function setAdvert(?Advert $advert): self
+    {
+        $this->advert = $advert;
 
         return $this;
     }

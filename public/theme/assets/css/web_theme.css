@@ -125,7 +125,7 @@
   z-index: 10000;
   width: 20px;
   height: 20px;
-  position: absolute;
+  position: fixed;
   top: 50px;
   right: 22.5px;
   display: none;

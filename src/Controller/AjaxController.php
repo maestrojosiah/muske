@@ -18,6 +18,7 @@ use App\Entity\Role;
 use App\Entity\Specialty;
 use App\Entity\Settings;
 use App\Entity\Gallery;
+use App\Entity\Track;
 use App\Entity\Document;
 use App\Entity\Rating;
 use App\Updates\ResetPwdManager;
@@ -30,6 +31,7 @@ use App\Repository\MusicianRepository;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use App\Repository\ProRepository;
+use App\Repository\AdvertRepository;
 
 class AjaxController extends AbstractController
 {
@@ -1114,6 +1116,87 @@ class AjaxController extends AbstractController
         }
         
 
+    }
+
+    /**
+     * @Route("/track/advert", name="advert_track")
+     */
+    public function track(Request $request, AdvertRepository $advertRepository): Response
+    {
+        $phone = $request->request->get('phone');
+        $code = $request->request->get('code');
+
+        $url = $this->generateUrl('advert_tracking', [
+            'phone' => $phone,
+            'code' => $code,
+        ]);
+
+        return new JsonResponse($url);
+
+    }
+            
+    /**
+     * @Route("/mark/notification/read", name="mark_notification_read")
+     */
+    public function markNotificationRead(Request $request){
+        $id = $request->request->get('id');
+        $entityManager = $this->getDoctrine()->getManager();
+        $notification = $entityManager->getRepository('App:Notification')->find($id);
+        $track = new Track();
+        $track->setMusician($this->getUser());
+        $track->setAdvert($notification->getAdvert());
+        $track->setType('opened');
+        $track->setUpdated(new \DateTime("now"));
+        $entityManager->persist($track);
+        $entityManager->flush();
+        $entityManager->remove($notification);
+        $entityManager->flush();
+        $url = $this->generateUrl('advert_index', [
+            'id' => $track->getAdvert()->getId()
+        ]);
+        return new JsonResponse($url);
+    }
+
+    /**
+     * @Route("/ad/track/page", name="ad_tracking")
+     */
+    public function adTrackingFromAdPage(Request $request, AdvertRepository $advertRepository){
+        $entityManager = $this->getDoctrine()->getManager();
+        $ad_id = $request->request->get('ad_id');
+        $activity = $request->request->get('activity');
+        $advert = $advertRepository->find($ad_id);
+
+        $notification = $entityManager->getRepository('App:Notification')->findOneBy(
+            ['musician' => $this->getUser(), 'advert' => $advert],
+            ['id' => 'DESC']
+        );
+
+        if(null !== $notification){
+            $entityManager->remove($notification);
+            $entityManager->flush();    
+        }
+
+        $duplicateTrack = $entityManager->getRepository('App:Track')->findOneBy(
+            ['musician' => $this->getUser(), 'advert' => $advert, 'type' => $activity],
+            ['id' => 'ASC']
+        );
+        if($duplicateTrack){
+            $track = $duplicateTrack;
+        } else {
+            $track = new Track();
+        }
+
+        
+        $track->setMusician($this->getUser());
+        $track->setAdvert($advert);
+        $track->setType($activity);
+        $track->setUpdated(new \DateTime("now"));
+        $entityManager->persist($track);
+        $entityManager->flush();
+        $url = $this->generateUrl('advert_index', [
+            'id' => $advert->getId()
+        ]);
+        return new JsonResponse($url);
     }
 
     /**

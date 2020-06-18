@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div>
+    {% if advert is null %}
+    <div class="col">
+        <div class="alert alert-danger" role="alert"><span><strong>Either the phone number or the tracking code is incorrect. Try again!</strong></span></div>
+    </div>
+    {% else %}
+    <div>
+        <h5>{{advert.task}} - {{advert.institution}}</h5>
+        <p>Ad runs to {{advert.deadline|date("jS F Y")}}</p>
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Opened by</a></li>
+            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Read by</a></li>
+            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Interested</a></li>
+            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-4">Sent resumes</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" role="tabpanel" id="tab-1">
+                <p>Those reached by your advert</p>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Musician</th>
+                                <th>Visit Resume</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for track in advert.tracks %}
+                            {% if track.type == 'opened' %}
+                                <tr>
+                                    <th>{{track.updated|date("jS F Y")}}</th>
+                                    <td>{{track.musician.fullname}}</td>
+                                    <td><a target="_parent" href="{{ path('musician_show', {'username': track.musician.username})}}">Resume</a></td>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" role="tabpanel" id="tab-2">
+                <p>These ones have opened and read your ad</p>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Musician</th>
+                                <th>Visit Resume</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for track in advert.tracks %}
+                            {% if track.type == 'seen' %}
+                                <tr>
+                                    <th>{{track.updated|date("jS F Y")}}</th>
+                                    <td>{{track.musician.fullname}}</td>
+                                    <td><a target="_parent" href="{{ path('musician_show', {'username': track.musician.username})}}">Resume</a></td>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" role="tabpanel" id="tab-3">
+                <p>These ones requested for your contact so that they could contact you directly</p>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Musician</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>7th June 2020 3:30pm</td>
+                                <td>Nairobi, Kiambu</td>
+                                <td><a href="#">Resume</a></td>
+                            </tr>
+                            <tr>
+                                <td>9th June 2020 3:47pm</td>
+                                <td>Nairobi</td>
+                                <td><a href="#">Resume</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" role="tabpanel" id="tab-4">
+                <p>These ones have already sent their resume to your email.</p>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Musician</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>7th June 2020 3:30pm</td>
+                                <td>Nairobi, Kiambu</td>
+                                <td><a href="#">Resume</a></td>
+                            </tr>
+                            <tr>
+                                <td>9th June 2020 3:47pm</td>
+                                <td>Nairobi</td>
+                                <td><a href="#">Resume</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

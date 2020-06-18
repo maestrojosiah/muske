@@ -16,12 +16,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdvertController extends AbstractController
 {
     /**
-     * @Route("/", name="advert_index", methods={"GET"})
+     * @Route("/view/{id}", name="advert_index", methods={"GET"})
      */
-    public function index(AdvertRepository $advertRepository): Response
+    public function index(AdvertRepository $advertRepository, $id = null): Response
     {
+        $adverts = $advertRepository->findAll();
+        if(null !== $id){
+            $advert = $advertRepository->find($id);
+        } else {
+            $advert = null;
+        }
+        
+
         return $this->render('advert/index.html.twig', [
-            'adverts' => $advertRepository->findAll(),
+            'adverts' => $adverts,
+            'advert' => $advert,
         ]);
     }
 
@@ -45,6 +54,21 @@ class AdvertController extends AbstractController
         return $this->render('advert/new.html.twig', [
             'advert' => $advert,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/track/{phone}/{code}", name="advert_tracking", methods={"GET"})
+     */
+    public function track(Request $request, AdvertRepository $advertRepository, $phone, $code): Response
+    {
+        $advert = $advertRepository->findOneBy(
+            ['phone' => $phone, 'code' => $code],
+            ['id' => 'ASC']
+        );
+
+        return $this->render('advert/tracking.html.twig', [
+            'advert' => $advert,
         ]);
     }
 

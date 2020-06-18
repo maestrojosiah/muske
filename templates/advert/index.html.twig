@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Muske | New Advert{% endblock %}
+{% block stylesheets %}
+<style>
+  .list-group a {
+    text-decoration: none;
+  }
+  .card {
+    border:none;
+  }
+  .card-title {
+    font-weight: normal;
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+</style>
+{% endblock %}
+{% block body %}
+{% include "reusable/user_nav.html.twig" %}
+    <div>
+      <div class="container">
+        <div class="row" style="height: 100vh;">
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">Adverts</h5>
+              </div>
+              <div class="card-body">
+                <ul class="list-group">
+                  {% for ad in adverts %}
+                  <a id="click-ad_{{ad.id}}" href="#">
+                    <li class="list-group-item {{advert is not null and ad.id == advert.id ? 'active'}}">
+                        <span>{{ad.task}}</span><br />
+                        <small>{{ad.submitted|date("jS M Y")}} - {{ad.deadline|date("jS M Y")}}</small> <br />
+                        <small><strong>{{ad.location}}</strong></small>
+                    </li>
+                  </a>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            {% if advert is not null %}
+            <div role="tablist" id="accordion-1">
+              <div class="card" id="job-position">
+                <div role="tab" class="card-header">
+                  <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-1">Job Position</a></h5>
+                </div>
+                <div role="tabpanel" data-parent="#accordion-1" class="collapse show item-1">
+                  <div class="card-body">
+                    <p class="card-text">{{advert.task}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card" id="advertiser">
+                <div role="tab" class="card-header">
+                  <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-2" href="#accordion-1 .item-2">Advertiser</a></h5>
+                </div>
+                <div role="tabpanel" data-parent="#accordion-1" class="collapse item-2">
+                  <div class="card-body">
+                    <p class="card-text">{{advert.institution}} - {{advert.location}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card" id="job-description">
+                <div role="tab" class="card-header">
+                  <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-3" href="#accordion-1 .item-3">Job description</a></h5>
+                </div>
+                <div role="tabpanel" data-parent="#accordion-1" class="collapse item-3">
+                  <div class="card-body">
+                    <p class="card-text">{{advert.jobdescription|nl2br}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card" id="deadline">
+                <div role="tab" class="card-header">
+                  <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-4" href="#accordion-1 .item-4">Deadline</a></h5>
+                </div>
+                <div role="tabpanel" data-parent="#accordion-1" class="collapse item-4">
+                  <div class="card-body">
+                    <p class="card-text">{{advert.deadline|date("jS F Y")}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card" id="skills">
+                <div role="tab" class="card-header">
+                  <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-5" href="#accordion-1 .item-5">Skills required</a></h5>
+                </div>
+                <div role="tabpanel" data-parent="#accordion-1" class="collapse item-5">
+                  <div class="card-body">
+                    <p class="card-text">{{advert.skill}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card" id="education">
+                <div role="tab" class="card-header">
+                  <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-6" href="#accordion-1 .item-6">Education</a></h5>
+                </div>
+                <div role="tabpanel" data-parent="#accordion-1" class="collapse item-6">
+                  <div class="card-body">
+                    <p class="card-text">{{advert.courselevel == 'any' ? 'Any level but competent' : advert.courselevel}} in {{advert.education}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card" id="take-action">
+                <div role="tab" class="card-header">
+                  <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-7" href="#accordion-1 .item-7">Take action</a></h5>
+                </div>
+                <div role="tabpanel" data-parent="#accordion-1" class="collapse item-7">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6"><button id="send-resume" class="btn btn-primary btn-block" type="button">Send your Resume now</button></div>
+                      <div class="col-md-6"><button id="request-contact" class="btn btn-primary btn-block" type="button">Get Advertiser&#39;s contact</button></div>
+                    </div>
+                    <hr />
+                  </div>
+                </div>
+                <hr />
+              </div>
+            </div>
+            {% else %}
+            <p>Select from the adverts to see details</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+{% include "reusable/footer.html.twig" %}
+{% endblock %}
+
+{% block javascripts %}
+
+        <script>
+        $(document).on("click", '[id^="click-ad_"]', function(){
+
+            var myId = jQuery(this).attr("id");
+            var splitted = myId.split('_'); 
+            var id = splitted[1];
+
+            $.ajax({
+                url:'{{ (path("ad_tracking")) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    'ad_id' : id,
+                    'activity' : 'opened',
+                },
+                async: true,
+                success: function (data)
+                {
+                    console.log(data);
+                    location.href = data;
+                },
+                error: function (err) {
+                    console.log("there is a problem: "+err.responseText);
+                }
+            });
+
+
+        });
+        </script>
+
+        {% if advert is not null %}
+        <script>
+          $( document ).ready(function() {
+
+            var id = "{{advert.id}}";
+
+            $.ajax({
+                url:'{{ (path("ad_tracking")) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    'ad_id' : id,
+                    'activity' : 'seen',
+                },
+                async: true,
+                success: function (data)
+                {
+                    console.log(data);
+                },
+                error: function (err) {
+                    console.log("there is a problem: "+err.responseText);
+                }
+            });
+
+          });
+        </script>
+        {% endif %}
+{% endblock %}

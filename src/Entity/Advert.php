@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -75,6 +77,22 @@ class Advert
      * @ORM\Column(type="string", length=255)
      */
     private $location;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Track::class, mappedBy="advert")
+     */
+    private $tracks;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="advert")
+     */
+    private $notifications;
+
+    public function __construct()
+    {
+        $this->tracks = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -222,6 +240,68 @@ class Advert
     public function setLocation(string $location): self
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Track[]
+     */
+    public function getTracks(): Collection
+    {
+        return $this->tracks;
+    }
+
+    public function addTrack(Track $track): self
+    {
+        if (!$this->tracks->contains($track)) {
+            $this->tracks[] = $track;
+            $track->setAdvert($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrack(Track $track): self
+    {
+        if ($this->tracks->contains($track)) {
+            $this->tracks->removeElement($track);
+            // set the owning side to null (unless already changed)
+            if ($track->getAdvert() === $this) {
+                $track->setAdvert(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setAdvert($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->contains($notification)) {
+            $this->notifications->removeElement($notification);
+            // set the owning side to null (unless already changed)
+            if ($notification->getAdvert() === $this) {
+                $notification->setAdvert(null);
+            }
+        }
 
         return $this;
     }

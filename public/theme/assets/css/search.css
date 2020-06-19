@@ -12,7 +12,7 @@ p {
 
 #search .card {
   background-color: inherit;
-  border: 1px solid #fff;
+  border: 1px solid rgb(238, 238, 238);
   padding-top: 10px;
   overflow: hidden;
   position: relative;
@@ -63,6 +63,24 @@ p {
   font-weight: 700;
   box-shadow: 0 2px 3px hsla(0,0%,53%,.25);
   background: #4dbe3b;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  position: absolute;
+  right: -42px;
+  top: 20px;
+  padding-top: 7px;
+  text-transform: uppercase;
+}
+
+.ribbon-info {
+  width: 160px;
+  height: 32px;
+  font-size: 12px;
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 3px hsla(0,0%,53%,.25);
+  background: #a9c2f1;
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
   position: absolute;

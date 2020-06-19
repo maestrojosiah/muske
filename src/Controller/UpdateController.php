@@ -292,7 +292,7 @@ class UpdateController extends AbstractController
     }
 
     public function provide_code($id){
-        $random = random_int(1, 10000);
+        $random = random_int(1000, 10000);
         return $random;
     }
 

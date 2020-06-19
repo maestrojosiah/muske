@@ -636,80 +636,6 @@ class AjaxController extends AbstractController
     }
 
     /**
-     * @Route("/save/setting", name="save_settings")
-     */
-    public function saveSetting(Request $request)
-    {
-        if($request->request->get('order_job')){
-
-            $order_job = $this->sanitizeInput($request->request->get('order_job'));
-            $order_job_by = $this->sanitizeInput($request->request->get('order_job_by'));
-            $order_education = $this->sanitizeInput($request->request->get('order_education'));
-            $order_education_by = $this->sanitizeInput($request->request->get('order_education_by'));
-            $facebook = $this->sanitizeInput($request->request->get('facebook'));
-            $twitter = $this->sanitizeInput($request->request->get('twitter'));
-            $linkedin = $this->sanitizeInput($request->request->get('linkedin'));
-            $youtube = $this->sanitizeInput($request->request->get('youtube'));
-            $instagram = $this->sanitizeInput($request->request->get('instagram'));
-            $online = $this->sanitizeInput($request->request->get('online'));
-            $tsc = $this->sanitizeInput($request->request->get('tsc'));
-            $wheretowork = $this->sanitizeInput($request->request->get('wheretowork'));
-            $accounttype = $this->sanitizeInput($request->request->get('accounttype'));
-            $tawk_to = $this->sanitizeInput($request->request->get('tawk_to'));
-
-            $musician = $this->getUser();
-    
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $settings = $entityManager
-			->getRepository('App:Settings')
-			->findOneBy(
-				array('musician' => $musician)
-            );
-            
-            if($settings){
-                $setting = $settings;
-            } else {
-                $setting = new Settings();
-            }
-            
-            if($accounttype == 'pro'){
-                $setting->setPro("true");
-                $setting->setMuske("false");
-            }
-            if($accounttype == 'muske'){
-                $setting->setMuske("true");
-                $setting->setPro("false");
-            }
-            if($accounttype == 'basic'){
-                $setting->setMuske("false");
-                $setting->setPro("false");
-            }
-
-            $setting->setJobOrder($order_job);
-            $setting->setJobOrderBy($order_job_by);
-            $setting->setEduOrder($order_education);
-            $setting->setEduOrderBy($order_education_by);
-            $setting->setFacebook($facebook);
-            $setting->setTwitter($twitter);
-            $setting->setLinkedin($linkedin);
-            $setting->setYoutube($youtube);
-            $setting->setInstagram($instagram);
-            $setting->setOnline($online);
-            $setting->setTawkTo($tawk_to);
-            $setting->setTsc($tsc);
-            $setting->setPlaceofwork($wheretowork);
-            $setting->setMusician($musician);
-            $entityManager->persist($setting);
-            $entityManager->flush();
-           
-            return new JsonResponse($order_education);
-        }
-        
-
-    }
-
-    /**
      * @Route("/upload/link", name="upload_link")
      */
     public function uploadLink(Request $request)
@@ -1065,26 +991,17 @@ class AjaxController extends AbstractController
         if($request->request->get('membership')){
 
             $membership = $this->sanitizeInput($request->request->get('membership'));
-
-            $musician = $this->getUser();
-    
             $entityManager = $this->getDoctrine()->getManager();
 
-            $settings = $entityManager
-			->getRepository('App:Settings')
-			->findOneBy(
-				array('musician' => $musician)
-            );
-            
-            if($settings){
-                $setting = $settings;
-            } else {
-                $setting = new Settings();
-            }
+            // update musician
+            $musician = $this->getUser();
+            $musician->setAccount($membership);
+            $entityManager->persist($musician);
+            $entityManager->flush();
+    
             
             if($membership == 'pro'){
-                $setting->setPro("true");
-                $setting->setMuske("false");
+
                 $started = new \DateTime("now");
                 $started ->setTime(0, 0, 0);
 
@@ -1093,30 +1010,20 @@ class AjaxController extends AbstractController
 
                 $prevPro = $proRepository->findOneBy(
                     array('musician' => $musician)
-                );                
+                );
+                
                 if($prevPro) {
                     $pro = $prevPro;
                 } else {
                     $pro = new Pro();
                 }
+
                 $pro->setMusician($musician);
                 $pro->setStarted($started);
                 $pro->setEnding($ending);
                 $entityManager->persist($pro);
                 $entityManager->flush();
             }
-            if($membership == 'muske'){
-                $setting->setMuske("true");
-                $setting->setPro("false");
-            }
-            if($membership == 'basic'){
-                $setting->setMuske("false");
-                $setting->setPro("false");
-            }
-
-            $setting->setMusician($musician);
-            $entityManager->persist($setting);
-            $entityManager->flush();
 
             $email = $musician->getRealEmail();
             $data = [];
@@ -1125,7 +1032,7 @@ class AjaxController extends AbstractController
                 $this->addFlash('success', 'Notification mail was sent successfully');
                 $data['sent'] = "<p style='color:green'>A confirmation message has been sent to your email. (Check spam folder if you can't find it)</p>";
             } else {
-                $data['sent'] = "<p style='color:red'>Your subscription was unsuccessful. We will call you soon</p>";
+                $data['sent'] = "<p style='color:red'>Your subscription was successful. We will call you soon</p>";
             }
             
             return new JsonResponse($data['sent']);

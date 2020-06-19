@@ -181,6 +181,11 @@ class Musician implements UserInterface
      */
     private $notifications;
 
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $account;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -731,7 +736,7 @@ class Musician implements UserInterface
     }
 
     public function isProAndActive(){
-        if($this->getSettings() && $this->getSettings()->getPro() == 'true'){
+        if($this->account == 'pro'){
             $ending = $this->getPro()->getEnding();
             $now = new \DateTime("now");
             $fact = false;
@@ -747,12 +752,10 @@ class Musician implements UserInterface
     }
 
     public function isMuskeAndActive(){
-        if($this->getSettings()){
-            $muske = $this->getSettings()->getMuske();
-            $fact = false;
-            if($muske == "true"){
-                $fact = true;
-            }
+        $membership = $this->account;
+        $fact = false;
+        if($membership == "muske"){
+            $fact = true;
         } else {
             $fact = false;
         }
@@ -960,6 +963,18 @@ class Musician implements UserInterface
                 $notification->setMusician(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAccount(): ?string
+    {
+        return $this->account;
+    }
+
+    public function setAccount(?string $account): self
+    {
+        $this->account = $account;
 
         return $this;
     }

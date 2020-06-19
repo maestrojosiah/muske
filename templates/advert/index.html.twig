@@ -112,7 +112,7 @@
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-6"><button id="send-resume" class="btn btn-primary btn-block" type="button">Send your Resume now</button></div>
-                      <div class="col-md-6"><button id="request-contact" class="btn btn-primary btn-block" type="button">Get Advertiser&#39;s contact</button></div>
+                      <div class="col-md-6"><button class="btn btn-primary btn-block" id="request-contact" type="button" data-toggle="modal" data-target="#ad-contact">Get Advertiser&#39;s contact</button></div>
                     </div>
                     <hr />
                   </div>
@@ -123,6 +123,25 @@
             {% else %}
             <p>Select from the adverts to see details</p>
             {% endif %}
+          </div>
+        </div>
+      </div>
+      <div role="dialog" tabindex="-1" class="modal fade" id="ad-contact">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Advertiser&#39;s Contact</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            {% if app.user.isproandactive %}
+              <div class="modal-body">
+                <p>Email: {{advert.email}}</p>
+                <p>Phone: {{advert.phone}}</p>
+              </div>
+            {% else %}
+              <div role="alert" class="alert alert-info"><span><strong>This information is only available to Pro Members.</strong></span></div>
+            {% endif %}
+            <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -207,6 +226,31 @@
                 {
                     console.log(data);
                     $.notify({message: 'Your resume has been sent!'},{element: "#take-action",type: 'success',placement:{from: 'bottom',align: 'center'}});
+                },
+                error: function (err) {
+                    console.log("there is a problem: "+err.responseText);
+                }
+            });
+
+          });
+        </script>
+        <script>
+          $( "#request-contact" ).click(function() {
+
+            var id = "{{advert.id}}";
+
+            $.ajax({
+                url:'{{ (path("ad_tracking")) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    'ad_id' : id,
+                    'activity' : 'interested',
+                },
+                async: true,
+                success: function (data)
+                {
+                    console.log(data);
                 },
                 error: function (err) {
                     console.log("there is a problem: "+err.responseText);

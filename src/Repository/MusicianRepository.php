@@ -40,6 +40,24 @@ class MusicianRepository extends ServiceEntityRepository implements PasswordUpgr
     {
         $this->_em->flush();
     }    
+
+    /**
+     * @return Musician[] Returns an array of Musician objects
+     */
+    
+    public function getMusicians($account)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.account = :val')
+            ->setParameter('val', $account)
+            ->orderBy('RAND()')
+            ->setMaxResults(100)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+
     // /**
     //  * @return Musician[] Returns an array of Musician objects
     //  */

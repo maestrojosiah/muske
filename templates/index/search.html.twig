@@ -8,115 +8,141 @@
 {% block body %}
     {% include "reusable/nav.html.twig" %}
     <div class="container">
-        <div class="jumbotron" id="search">
+        <div class="jumbotron text-center" style="background-color: #fff!important;" id="search">
             <h4>Search now!</h4>
-            <p>Use the categories below to narrow down to the music service that you need.</p>
+            <p>Click on any skill to narrow down.</p>
             <p class="for-btn">
-                <div class="btn-group btn-group-sm" role="group"><button class="btn btn-primary btn-info filter-button" type="button" data-filter="all">All</button><button class="btn btn-primary btn-info filter-button" type="button" data-filter="choir">Choir</button><button class="btn btn-primary btn-info filter-button"
-                        type="button" data-filter="piano">Piano</button><button class="btn btn-primary btn-info filter-button" type="button" data-filter="guitar">Guitar</button><button class="btn btn-primary btn-info filter-button" type="button" data-filter="saxophone">Saxophone</button>
-                    <button
-                        class="btn btn-primary btn-info filter-button" type="button" data-filter="trumpet">Trumpet</button><button class="btn btn-primary btn-info filter-button" type="button" data-filter="trombone">Trombone</button></div>
+                <ul class="nav nav-pills">
+                    {% for skill in skills %}
+                    <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{skill.skillname|lower|replace({' ':'-','.':''})}}" href="#">{{skill.skillname|capitalize}}</a></li>
+                    {% endfor %}
+                  </ul>
             </p>
-            <p id="you-are-here">All</p>
+            <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                   <input class="bg-light form-control border-0 small searchinput" type="text" placeholder="Search for ...">
+                   <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                </div>
+             </form>      
+            <p id="you-are-here"></p>
             <div class="row">
-                <div class="col-md-4 filter piano guitar saxophone">
-                    <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="assets/img/adv-yourself.jpg"><a class="btn btn-primary middle" role="button" href="web_theme.html">JOHN SMITH&nbsp;</a>
-                        <div class="card-body">
-                            <h5 class="card-title">Profile</h5>
-                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-resume">Resume</button><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-contact">Contact</button></div>
-                        </div>
-                        <div class="ribbon"><span>Verified</span></div>
-                    </div>
-                </div>
-                <div class="col-md-4 filter trumpet choir choral">
-                    <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="assets/img/adv-job.jpg"><a class="btn btn-primary middle" role="button" href="web_theme.html">JOHN SMITH&nbsp;</a>
-                        <div class="card-body">
-                            <h5 class="card-title">Profile</h5>
-                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-resume">Resume</button><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-contact">Contact</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 filter choir piano guitar">
-                    <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="assets/img/default-avatar.png"><a class="btn btn-primary middle" role="button" href="web_theme.html">JOHN SMITH&nbsp;</a>
-                        <div class="card-body">
-                            <h5 class="card-title">Profile</h5>
-                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-resume">Resume</button><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-contact">Contact</button></div>
+                {% for musician in pro_musicians %}
+                {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|lower|replace({' ':'-','.':''})}} {% endfor %}">
+                        <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
+                            <a class="btn btn-primary middle" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
+                            <div class="card-body">
+                                <h5 class="card-title">Skills</h5>
+                                <p class="card-text">{% for skill in musician.skills %}
+                                    {{skill.skillname}} {% if loop.last %}{% else %} . {% endif %}
+                                {% endfor %}</p>
+                                <h5 class="card-title">Specialties</h5>
+                                <p class="card-text">{% for jobtodo in musician.jobstobeoffered %}
+                                    {{jobtodo.jobtitle}} {% if loop.last %}{% else %} . {% endif %}
+                                {% endfor %}</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Resume</a>
+                                    <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Contact</a>
+                                </div>
+                            </div>
+                            {% if musician.isproandactive %}
+                                <div class="ribbon"><span>Verified</span></div>
+                            {% endif %}
+                            
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 filter seminar">
-                    <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="assets/img/adv-yourself.jpg"><a class="btn btn-primary middle" role="button" href="web_theme.html">JOHN SMITH&nbsp;</a>
-                        <div class="card-body">
-                            <h5 class="card-title">Profile</h5>
-                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-resume">Resume</button><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-contact">Contact</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 filter">
-                    <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="assets/img/adv-yourself.jpg"><a class="btn btn-primary middle" role="button" href="web_theme.html">JOHN SMITH&nbsp;</a>
-                        <div class="card-body">
-                            <h5 class="card-title">Profile</h5>
-                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-resume">Resume</button><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-contact">Contact</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 filter">
-                    <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="assets/img/adv-yourself.jpg"><a class="btn btn-primary middle" role="button" href="web_theme.html">JOHN SMITH&nbsp;</a>
-                        <div class="card-body">
-                            <h5 class="card-title">Profile</h5>
-                            <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="btn-group" role="group"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-resume">Resume</button><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#preview-contact">Contact</button></div>
+                {% endfor %}
+                {% for musician in muske_musicians %}
+                {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|lower|replace({' ':'-','.':''})}} {% endfor %}">
+                        <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
+                            <a class="btn btn-primary middle" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
+                            <div class="card-body">
+                                <h5 class="card-title">Skills</h5>
+                                <p class="card-text">{% for skill in musician.skills %}
+                                    {{skill.skillname}} {% if loop.last %}{% else %} . {% endif %}
+                                {% endfor %}</p>
+                                <h5 class="card-title">Specialties</h5>
+                                <p class="card-text">{% for jobtodo in musician.jobstobeoffered %}
+                                    {{jobtodo.jobtitle}} {% if loop.last %}{% else %} . {% endif %}
+                                {% endfor %}</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Resume</a>
+                                    <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Contact</a>
+                                </div>
+                            </div>
+                            {% if musician.ismuskeandactive %}
+                                <div class="ribbon-info"><span>Member</span></div>
+                            {% endif %}
+                            
                         </div>
                     </div>
-                </div>
+                {% endfor %}
+                {% for musician in basic_musicians %}
+                {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|lower|replace({' ':'-','.':''})}} {% endfor %}">
+                        <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
+                            <a class="btn btn-primary middle" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
+                            <div class="card-body">
+                                <h5 class="card-title">Skills</h5>
+                                <p class="card-text">{% for skill in musician.skills %}
+                                    {{skill.skillname}} {% if loop.last %}{% else %} . {% endif %}
+                                {% endfor %}</p>
+                                <h5 class="card-title">Specialties</h5>
+                                <p class="card-text">{% for jobtodo in musician.jobstobeoffered %}
+                                    {{jobtodo.jobtitle}} {% if loop.last %}{% else %} . {% endif %}
+                                {% endfor %}</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Resume</a>
+                                    <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Contact</a>
+                                </div>
+                            </div>
+                            {% if musician.isproandactive %}
+                                <div class="ribbon"><span>Verified</span></div>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                {% endfor %}
+
             </div>
         </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="preview-resume">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Resume</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="theme_one.html"></iframe></div>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="preview-contact">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Contact</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="contact.html"></iframe></div>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
-            </div>
-        </div>
-    </div><span id="tags"><input type="text" id="tags-input"></span>
+    <span id="tags"><input type="text" id="tags-input"></span>
     {% include "reusable/footer.html.twig" %}
 
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('theme/assets/js/search.js ') }}"></script>
+    <script>
+
+        $(document).ready(function(){
+
+        $('.searchinput').keyup(function(){
+
+            var searchtext = $(this).val().toLowerCase();
+            if($(this).val().length > 2){
+            $(".filter").hide();
+            $( "div:contains('"+searchtext+"')" ).closest(".filter").show();
+            $( "div:contains('"+searchtext.toUpperCase()+"')" ).closest(".filter").show();;
+            $( "div:contains('"+searchtext.toLowerCase()+"')" ).closest(".filter").show();;
+            $( "div:contains('"+searchtext.substr(0,1).toUpperCase()+searchtext.substr(1)+"')" ).closest(".filter").show();;
+            } else {
+            $(".filter").show("slow");
+            }
+            
+            
+        });
+        });
+
+    </script>
+
+
 {% endblock %}

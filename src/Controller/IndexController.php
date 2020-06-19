@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\MusicianRepository;
+use App\Repository\SkillRepository;
 use App\Repository\PdfThemeRepository;
 
 class IndexController extends AbstractController
@@ -24,11 +25,19 @@ class IndexController extends AbstractController
     /**
      * @Route("/search", name="search")
      */
-    public function search(MusicianRepository $mucisianRepository): Response
+    public function search(MusicianRepository $musicianRepository, SkillRepository $skillRepository): Response
     {
-        $musicians = $mucisianRepository->findAll();
+        $skills = $skillRepository->findSkillsList();
+        $musicians = $musicianRepository->findAll();
+        $proMusicians = $musicianRepository->getMusicians('pro');
+        $muskeMusicians = $musicianRepository->getMusicians('muske');
+        $basicMusicians = $musicianRepository->getMusicians('basic');
         return $this->render('index/search.html.twig', [
+            'skills' => $skills,
             'musicians' => $musicians,
+            'pro_musicians' => $proMusicians,
+            'muske_musicians' => $muskeMusicians,
+            'basic_musicians' => $basicMusicians
         ]);
     }
 

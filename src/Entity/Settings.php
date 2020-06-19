@@ -76,16 +76,6 @@ class Settings
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $muske;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $pro;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $tsc;
 
     /**
@@ -247,30 +237,6 @@ class Settings
     public function setOnline(?string $online): self
     {
         $this->online = $online;
-
-        return $this;
-    }
-
-    public function getMuske(): ?string
-    {
-        return $this->muske;
-    }
-
-    public function setMuske(?string $muske): self
-    {
-        $this->muske = $muske;
-
-        return $this;
-    }
-
-    public function getPro(): ?string
-    {
-        return $this->pro;
-    }
-
-    public function setPro(?string $pro): self
-    {
-        $this->pro = $pro;
 
         return $this;
     }

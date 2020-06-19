@@ -175,32 +175,8 @@ class MusicianController extends AbstractController
         }
 
         $data = [];
-        if($musician->getSettings()){
-            if($musician->isMuskeAndActive() == 'true'){
-                $membership = "muske";
-            } elseif($musician->isProAndActive() == 'true'){
-                $membership = "pro";
-            } else {
-                $membership = "basic";
-            }
 
-            $details_array = [$musician->getSettings()->getOnline(), $musician->getSettings()->getTsc(), $musician->getSettings()->getPlaceofwork()];
-            
-            // to know if all the above have content                            
-            $filter = array_filter($details_array, function($k) {
-                return (isset($k) || !empty($k));
-            }, ARRAY_FILTER_USE_BOTH );
-
-            if (count($filter) < 3) {
-                $data['complete'] = false;
-            } else {
-                $data['complete'] = true;
-            }
-        
-        } else {
-            $membership = "basic";
-            $data['complete'] = false;
-        }
+        $membership = $musician->getAccount();
 
         $roles_array = [];
         $skills_array = [];
@@ -237,7 +213,6 @@ class MusicianController extends AbstractController
         
         return $this->render('musician/profile.html.twig', [
             'musician' => $musician,
-            'data' => $data,
             'membership' => $membership,
             'roles' => $roles_array,
             'skills' => $skills_array,

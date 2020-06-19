@@ -78,16 +78,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>7th June 2020 3:30pm</td>
-                                <td>Nairobi, Kiambu</td>
-                                <td><a href="#">Resume</a></td>
-                            </tr>
-                            <tr>
-                                <td>9th June 2020 3:47pm</td>
-                                <td>Nairobi</td>
-                                <td><a href="#">Resume</a></td>
-                            </tr>
+                            {% for track in advert.tracks %}
+                            {% if track.type == 'interested' %}
+                                <tr>
+                                    <th>{{track.updated|date("jS F Y")}}</th>
+                                    <td>{{track.musician.fullname}}</td>
+                                    <td><a target="_parent" href="{{ path('musician_show', {'username': track.musician.username})}}">Resume</a></td>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -104,16 +103,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>7th June 2020 3:30pm</td>
-                                <td>Nairobi, Kiambu</td>
-                                <td><a href="#">Resume</a></td>
-                            </tr>
-                            <tr>
-                                <td>9th June 2020 3:47pm</td>
-                                <td>Nairobi</td>
-                                <td><a href="#">Resume</a></td>
-                            </tr>
+                            {% for track in advert.tracks %}
+                            {% if track.type == 'sent' %}
+                                <tr>
+                                    <th>{{track.updated|date("jS F Y")}}</th>
+                                    <td>{{track.musician.fullname}}</td>
+                                    <td><a target="_parent" href="{{ path('musician_show', {'username': track.musician.username})}}">Resume</a></td>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     $(".filter-button").click(function(){
 
-        $(this).toggleClass('btn-info');
+        $(this).toggleClass('active');
         
         var value = $(this).attr('data-filter');
         var inputVal = $("#tags-input").val();

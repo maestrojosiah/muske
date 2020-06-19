@@ -188,5 +188,32 @@
 
           });
         </script>
+        <script>
+          $( "#send-resume" ).click(function() {
+
+            var id = "{{advert.id}}";
+            $.notify({message: 'Please wait as we attach your resume and send the email...'},{element: "#take-action",type: 'info',placement:{from: 'bottom',align: 'center'}});
+
+            $.ajax({
+                url:'{{ (path("ad_tracking")) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    'ad_id' : id,
+                    'activity' : 'sent',
+                },
+                async: true,
+                success: function (data)
+                {
+                    console.log(data);
+                    $.notify({message: 'Your resume has been sent!'},{element: "#take-action",type: 'success',placement:{from: 'bottom',align: 'center'}});
+                },
+                error: function (err) {
+                    console.log("there is a problem: "+err.responseText);
+                }
+            });
+
+          });
+        </script>
         {% endif %}
 {% endblock %}

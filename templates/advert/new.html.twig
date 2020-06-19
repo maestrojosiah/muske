@@ -1,39 +1,84 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Muske | New Advert{% endblock %}
+{% block stylesheets %}
+<style>
+    .highlight-clean {
+  color: #313437;
+  background-color: #fff;
+  padding: 50px 0;
+}
 
+.highlight-clean p {
+  color: #7d8285;
+}
+
+.highlight-clean h2 {
+  font-weight: bold;
+  margin-bottom: 25px;
+  line-height: 1.5;
+  padding-top: 0;
+  margin-top: 0;
+  color: inherit;
+}
+
+.highlight-clean .intro {
+  font-size: 16px;
+  max-width: 500px;
+  margin: 0 auto 25px;
+}
+
+.highlight-clean .buttons {
+  text-align: center;
+}
+
+.highlight-clean .buttons .btn {
+  padding: 16px 32px;
+  margin: 6px;
+  border: none;
+  background: none;
+  box-shadow: none;
+  text-shadow: none;
+  opacity: 0.9;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  line-height: 1;
+  outline: none;
+  background-color: #ddd;
+}
+
+.highlight-clean .buttons .btn:hover {
+  opacity: 1;
+}
+
+.highlight-clean .buttons .btn:active {
+  transform: translateY(1px);
+}
+
+.highlight-clean .buttons .btn-primary {
+  background-color: #055ada;
+  color: #fff;
+}
+
+
+</style>
+{% endblock %}
 {% block body %}
-
-    <div style="height: 100vh;">
-        <div class="header-blue" style="height: 100%;">
-            <nav class="navbar navbar-light navbar-expand-md navigation-clean-search">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="{{path('homepage')}}">Music Services Kenya</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                    <div
-                        class="collapse navbar-collapse" id="navcol-1">
-                        <ul class="nav navbar-nav"></ul>
-                        <a class="btn btn-dark ml-auto action-button" role="button" href="{{path('search')}}">Search page</a>
-                    </div>
-                </div>
-            </nav>
-            <div class="container hero">
-                <div class="row">
-                    <div class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                        <h1>Advertize!</h1>
-                        <p>You can create a new advert or track an existing one.<br>To track your existing advert, you'll enter your phone number and a secret code that was sent to your email when you created the advert.</p>
-                        <a class="btn btn-primary btn-lg action-button"
-                            role="button" id="for-newAd" href="#">New Advert</a><button class="btn btn-primary btn-lg action-button" id="for-trackAd" type="button">Track Advert</button>
-                    </div>
-                    <div class="col-md-5 col-lg-5 offset-lg-1 offset-xl-0 d-none d-lg-block phone-holder">
-                        <div class="iphone-mockup">
-                            <img class="device" src="{{ asset('theme/assets/img/iphone.svg ') }}">
-                            <div class="screen"></div>
-                        </div>
-                    </div>
-                </div>
+    {% include "reusable/nav.html.twig" %}
+    <div class="highlight-clean">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">Advertize!</h2>
+                <p class="text-center">You can create a new advert or track an existing one.<br />To track your existing advert, you&#39;ll enter your phone number and a secret code that was sent to your email when you created the advert.<br /></p>
+            </div>
+            <div class="buttons">
+                <a class="btn btn-primary"id="for-newAd" role="button" href="#">New Advert</a>
+                <button class="btn btn-light" id="for-trackAd" type="button">track advert</button>
             </div>
         </div>
-    </div>
+    </div>    
     <div class="bounce animated" id="newAd-page">
         <div class="container advert" id="advert">
             <div class="row">
@@ -258,7 +303,7 @@
         </div>
     </div>
     <div id="close-icon" style="position: fixed;"><i class="fa fa-close"></i></div>
-
+    
 {% endblock %}
 
 {% block javascripts %}

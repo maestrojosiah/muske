@@ -219,7 +219,12 @@
         height: 20px;
         margin-left: -33px;
     }
-    
+    .spaced-links {
+        margin-right: 10px;
+        font-size: 12px;
+        text-decoration: none;
+        color: black;
+    }
 </style>
 
 {% endblock %}
@@ -239,6 +244,9 @@
                         <div id="name-and-title">
                             <h2>{{musician.fullname}}</h2>
                             <h3>Musician</h3>
+                            <a class="spaced-links" href="tel:{{musician.phone}}">&nbsp;<img src="http://127.0.0.1:8000/icons/phone.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.phone}}</a>
+                            <a class="spaced-links" href="mailto:{{musician.email}}">&nbsp;<img src="http://127.0.0.1:8000/icons/mail.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.email}}</a>
+                            <a class="spaced-links" href="https://www.muske.co.ke/{{musician.username}}">&nbsp;<img src="http://127.0.0.1:8000/icons/sphere.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;www.muske.co.ke{{musician.username}}</a>
                         </div>
                     </div>
                 </div>

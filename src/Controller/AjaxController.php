@@ -26,15 +26,32 @@ use App\Updates\MessageFromResume;
 use App\Updates\MembershipManager;
 use App\Updates\ActivationManager;
 use App\Updates\CallMeBack;
+use App\Updates\SubmittedResume;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Repository\MusicianRepository;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use App\Repository\ProRepository;
 use App\Repository\AdvertRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\Environment;
+use App\Service\OrganizeThings; 
 
 class AjaxController extends AbstractController
 {
+	private $pdf;
+	private $twig;
+	private $organizeThings;
+	
+	public function __construct(Pdf $pdf, Environment $twig, OrganizeThings $organizeThings)
+	{
+        $this->pdf = $pdf;		
+        $this->twig = $twig;		
+        $this->organizeThings = $organizeThings;		
+	}
+
     /**
      * @Route("/ajax", name="ajax")
      */
@@ -1160,11 +1177,14 @@ class AjaxController extends AbstractController
     /**
      * @Route("/ad/track/page", name="ad_tracking")
      */
-    public function adTrackingFromAdPage(Request $request, AdvertRepository $advertRepository){
+    public function adTrackingFromAdPage(Request $request, AdvertRepository $advertRepository, SubmittedResume $submittedResume, Pdf $pdf){
         $entityManager = $this->getDoctrine()->getManager();
         $ad_id = $request->request->get('ad_id');
         $activity = $request->request->get('activity');
         $advert = $advertRepository->find($ad_id);
+        $musician = $this->getUser();
+        $data = [];
+
 
         $notification = $entityManager->getRepository('App:Notification')->findOneBy(
             ['musician' => $this->getUser(), 'advert' => $advert],
@@ -1186,6 +1206,32 @@ class AjaxController extends AbstractController
             $track = new Track();
         }
 
+        if($activity == 'sent'){
+
+            $jobs = $this->organizeThings->organizedJobsAccordingToSettings($musician);
+            $educ = $this->organizeThings->organizedEducationAccordingToSettings($musician);
+            
+    
+            $photourl = str_replace('/home/maestrojosiah/projects/muske/public', '', $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto().".png");
+            $placeholder = str_replace('/home/maestrojosiah/projects/muske/public', '', $this->getParameter('img_directory')."/headshot.jpg");
+            $pdf_template = $musician->getPdfTheme() ? $musician->getPdfTheme() : 'simpleOne.html.twig' ;
+
+            $thumbnailurl = strlen($musician->getPhoto()) > 1 ?  $photourl : $placeholder;
+                
+            $html = $this->twig->render("pdf/$pdf_template", [
+                'musician' => $this->getUser(),
+                'jobs' => $jobs,
+                'educ' => $educ,
+            ]);
+            $mypdf = $this->pdf->getOutputFromHtml($html);
+                        
+            $attachment = new \Swift_Attachment($mypdf, $musician->getFullname()."_resume.pdf", 'application/pdf');
+    
+            if($submittedResume->sendEmailMessage($advert->getEmail(), $advert->getInstitution(), $this->getUser()->getUsername(), $attachment)){
+                $data['found'] = "Message has been sent";
+            }
+
+        }
         
         $track->setMusician($this->getUser());
         $track->setAdvert($advert);
@@ -1194,6 +1240,7 @@ class AjaxController extends AbstractController
         $entityManager->persist($track);
         $entityManager->flush();
         $url = $this->generateUrl('advert_index', [
+
             'id' => $advert->getId()
         ]);
         return new JsonResponse($url);

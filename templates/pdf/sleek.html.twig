@@ -254,9 +254,9 @@
                         <div class="col">
                             <h3 style="font-family: Alice, serif;">{{musician.fullname}}</h3>
                             <h5>Musician</h5>
-                            <a class="spaced-links" href="#">&nbsp;<img src="http://127.0.0.1:8000/icons/phone.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.phone}}</a>
-                            <a class="spaced-links" href="#">&nbsp;<img src="http://127.0.0.1:8000/icons/mail.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.email}}</a>
-                            <a class="spaced-links" href="#">&nbsp;<img src="http://127.0.0.1:8000/icons/sphere.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;www.muske.co.ke{{musician.username}}</a>
+                            <a class="spaced-links" href="tel:{{musician.phone}}">&nbsp;<img src="http://127.0.0.1:8000/icons/phone.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.phone}}</a>
+                            <a class="spaced-links" href="mailto:{{musician.email}}">&nbsp;<img src="http://127.0.0.1:8000/icons/mail.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.email}}</a>
+                            <a class="spaced-links" href="https://www.muske.co.ke/{{musician.username}}">&nbsp;<img src="http://127.0.0.1:8000/icons/sphere.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;www.muske.co.ke{{musician.username}}</a>
                         </div>
                     </div>
                     <div class="card about">

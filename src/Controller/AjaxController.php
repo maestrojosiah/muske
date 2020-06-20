@@ -1147,10 +1147,33 @@ class AjaxController extends AbstractController
         $entityManager->persist($track);
         $entityManager->flush();
         $url = $this->generateUrl('advert_index', [
-
             'id' => $advert->getId()
         ]);
         return new JsonResponse($url);
+    }
+
+    /**
+     * @Route("/suggest/matching/musicians", name="suggest_musicians")
+     */
+    public function suggestAction(Request $request)
+    {
+        $search_text = $request->request->get('search_text');
+    
+        // $matchingSkills = $skillRepository->searchFromSkills($search_text);
+        // $matchingRoles = $roleRepository->searchFromRoles($search_text);
+
+        $search_text = [];
+
+        foreach ($books as $key => $book) {
+            $search_text[] = [
+                $book->getTitle(), 
+                $book->getAuthor(), 
+                $book->getCategory(), 
+                substr($book->getDescription(), 0, 100)."...",
+                $this->generateUrl("book_show", ['id' => $book->getId()])
+             ];
+        }
+        return new JsonResponse($search_text);
     }
 
     /**

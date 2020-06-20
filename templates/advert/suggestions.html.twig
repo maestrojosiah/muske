@@ -1,0 +1,90 @@
+<div class="row" id="suggestions">
+    <div class="col-12">
+        <h3 class="text-center">You may want to see these profiles</h3>
+    </div>
+    {% for musician in proMusicians %}
+    {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+        <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|lower|replace({' ':'-','.':''})}} {% endfor %}">
+            <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
+                <a class="btn btn-primary" style="font-size: 11px;" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
+                <div class="card-body">
+                    <h6 style="font-size: 13px;" class="card-title">Skills</h6>
+                    <p class="card-text">{% for skill in musician.skills %}
+                        <small>{{skill.skillname}} {% if loop.last %}{% else %} . {% endif %}</small>
+                    {% endfor %}</p>
+                    <h6 style="font-size: 13px;" class="card-title">Specialties</h6>
+                    <p class="card-text">{% for jobtodo in musician.jobstobeoffered %}
+                        <small>{{jobtodo.jobtitle}} {% if loop.last %}{% else %} . {% endif %}</small>
+                    {% endfor %}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Resume</a>
+                        <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Contact</a>
+                    </div>
+                </div>
+                {% if musician.isproandactive %}
+                    <div class="ribbon"><span>Verified</span></div>
+                {% endif %}
+                
+            </div>
+        </div>
+    {% endfor %}
+    {% for musician in muskeMusicians %}
+    {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+        <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|lower|replace({' ':'-','.':''})}} {% endfor %}">
+            <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
+                <a class="btn btn-primary" style="font-size: 11px;" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
+                <div class="card-body">
+                    <h6 style="font-size: 13px;" class="card-title">Skills</h6>
+                    <p class="card-text">{% for skill in musician.skills %}
+                        <small>{{skill.skillname}} {% if loop.last %}{% else %} . {% endif %}</small>
+                    {% endfor %}</p>
+                    <h6 style="font-size: 13px;" class="card-title">Specialties</h6>
+                    <p class="card-text">{% for jobtodo in musician.jobstobeoffered %}
+                        <small>{{jobtodo.jobtitle}} {% if loop.last %}{% else %} . {% endif %}</small>
+                    {% endfor %}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Resume</a>
+                        <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Contact</a>
+                    </div>
+                </div>
+                {% if musician.ismuskeandactive %}
+                    <div class="ribbon-info"><span>Member</span></div>
+                {% endif %}
+                
+            </div>
+        </div>
+    {% endfor %}
+    {% for musician in basicMusicians %}
+    {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+        <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|lower|replace({' ':'-','.':''})}} {% endfor %}">
+            <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
+                <a class="btn btn-primary" style="font-size: 11px;" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
+                <div class="card-body">
+                    <h6 style="font-size: 13px;" class="card-title">Skills</h6>
+                    <p class="card-text">{% for skill in musician.skills %}
+                        <small>{{skill.skillname}} {% if loop.last %}{% else %} . {% endif %}</small>
+                    {% endfor %}</p>
+                    <h6 style="font-size: 13px;" class="card-title">Specialties</h6>
+                    <p class="card-text">{% for jobtodo in musician.jobstobeoffered %}
+                        <small>{{jobtodo.jobtitle}} {% if loop.last %}{% else %} . {% endif %}</small>
+                    {% endfor %}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Resume</a>
+                        <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Contact</a>
+                    </div>
+                </div>
+                {% if musician.isproandactive %}
+                    <div class="ribbon"><span>Verified</span></div>
+                {% endif %}
+                
+            </div>
+        </div>
+    {% endfor %}
+
+</div>

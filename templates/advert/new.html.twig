@@ -79,6 +79,7 @@
             </div>
         </div>
     </div>    
+
     <div class="bounce animated" id="newAd-page">
         <div class="container advert" id="advert">
             <div class="row">
@@ -184,41 +185,9 @@
                         </div>
                         <div class="row" id="suggestions-ad">
                             <div class="col-12">
-                                <h3 class="text-center">Suggestions</h3>
+                                <h3 style="font-size: 14px; font-weight:bold;" class="text-center">Suggestions</h3>
                             </div>
-                            <div class="col-md-4 filter piano guitar saxophone">
-                                <div class="card text-center">
-                                    <img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ asset('theme/assets/img/adv-yourself.jpg ') }}">
-                                    <div class="card-body">
-                                        <h6 class="card-title suggestion-title">John Smith</h6>
-                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit.&nbsp;</p>
-                                    </div>
-                                    <div class="card-footer"><button class="btn btn-primary btn-block" type="button">Resume</button></div>
-                                    <div class="ribbon"><span>Verified</span></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 filter piano guitar saxophone">
-                                <div class="card text-center">
-                                    <img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ asset('theme/assets/img/adv-yourself.jpg ') }}">
-                                    <div class="card-body">
-                                        <h6 class="card-title suggestion-title">John Smith</h6>
-                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit.&nbsp;</p>
-                                    </div>
-                                    <div class="card-footer"><button class="btn btn-primary btn-block" type="button">Resume</button></div>
-                                    <div class="ribbon"><span>Verified</span></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 filter piano guitar saxophone">
-                                <div class="card text-center">
-                                    <img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ asset('theme/assets/img/adv-yourself.jpg ') }}">
-                                    <div class="card-body">
-                                        <h6 class="card-title suggestion-title">John Smith</h6>
-                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit.&nbsp;</p>
-                                    </div>
-                                    <div class="card-footer"><button class="btn btn-primary btn-block" type="button">Resume</button></div>
-                                    <div class="ribbon"><span>Verified</span></div>
-                                </div>
-                            </div>
+                            {% include "advert/suggestions.html.twig" %}
                         </div>
                     </div>
                 </div>
@@ -259,44 +228,7 @@
                             <div class="embed-responsive embed-responsive-16by9" style=""><iframe id="tracker" class="embed-responsive-item" src=""></iframe></div>
                         </div>
                         <hr>
-                        <div class="row" id="suggestions">
-                            <div class="col-12">
-                                <h3 class="text-center">Suggestions</h3>
-                            </div>
-                            <div class="col-md-4 filter piano guitar saxophone">
-                                <div class="card text-center">
-                                    <img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ asset('theme/assets/img/adv-yourself.jpg ') }}">
-                                    <div class="card-body">
-                                        <h6 class="card-title suggestion-title">John Smith</h6>
-                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit.&nbsp;</p>
-                                    </div>
-                                    <div class="card-footer"><button class="btn btn-primary btn-block" type="button">Resume</button></div>
-                                    <div class="ribbon"><span>Verified</span></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 filter piano guitar saxophone">
-                                <div class="card text-center">
-                                    <img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ asset('theme/assets/img/adv-yourself.jpg ') }}">
-                                    <div class="card-body">
-                                        <h6 class="card-title suggestion-title">John Smith</h6>
-                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit.&nbsp;</p>
-                                    </div>
-                                    <div class="card-footer"><button class="btn btn-primary btn-block" type="button">Resume</button></div>
-                                    <div class="ribbon"><span>Verified</span></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 filter piano guitar saxophone">
-                                <div class="card text-center">
-                                    <img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ asset('theme/assets/img/adv-yourself.jpg ') }}">
-                                    <div class="card-body">
-                                        <h6 class="card-title suggestion-title">John Smith</h6>
-                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit.&nbsp;</p>
-                                    </div>
-                                    <div class="card-footer"><button class="btn btn-primary btn-block" type="button">Resume</button></div>
-                                    <div class="ribbon"><span>Verified</span></div>
-                                </div>
-                            </div>
-                        </div>
+                        {% include "advert/suggestions.html.twig" %}
                     </div>
                 </div>
             </div>

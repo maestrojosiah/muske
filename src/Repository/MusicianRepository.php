@@ -45,13 +45,13 @@ class MusicianRepository extends ServiceEntityRepository implements PasswordUpgr
      * @return Musician[] Returns an array of Musician objects
      */
     
-    public function getMusicians($account)
+    public function getMusicians($account, $limit = 100)
     {
         return $this->createQueryBuilder('m')
             ->andWhere('m.account = :val')
             ->setParameter('val', $account)
             ->orderBy('RAND()')
-            ->setMaxResults(100)
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
         ;

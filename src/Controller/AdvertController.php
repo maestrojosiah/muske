@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\MusicianRepository;
 
 /**
  * @Route("/advert")
@@ -38,23 +39,40 @@ class AdvertController extends AbstractController
     /**
      * @Route("/new", name="advert_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(MusicianRepository $musicianRepository, Request $request): Response
     {
-        $advert = new Advert();
-        $form = $this->createForm(AdvertType::class, $advert);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($advert);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('advert_index');
+        $continue = false;
+        $counter = 3;
+        $proMusicians = $musicianRepository->getMusicians('pro',$counter);
+        if(null !== $proMusicians){
+            $countProMusicians = count($proMusicians);
+            if($countProMusicians < $counter){
+                $counter = $counter - $countProMusicians;
+                $continue = true;
+            }    
         }
-
+        if($continue == true){
+            $muskeMusicians = $musicianRepository->getMusicians('muske',$counter);
+            if(null !== $muskeMusicians){
+                $countMuskeMusicians = count($muskeMusicians);
+                if($countMuskeMusicians < $counter){
+                    $counter = $counter - $countMuskeMusicians;
+                    $continue = true;
+                }
+            }
+        } else {
+            $muskeMusicians = null;
+        }
+        if($continue == true){
+            $basicMusicians = $musicianRepository->getMusicians('basic',$counter);
+        } else {
+            $basicMusicians = null;
+        }
+        
         return $this->render('advert/new.html.twig', [
-            'advert' => $advert,
-            'form' => $form->createView(),
+            'proMusicians' => $proMusicians,
+            'muskeMusicians' => $muskeMusicians,
+            'basicMusicians' => $basicMusicians,
         ]);
     }
 

@@ -25,6 +25,37 @@
             border:none;
         }
     </style>
+	<style>
+	
+	.social-icons {
+		color: #313437;
+		background-color: #fff;
+		text-align: center;
+		padding: 20px 0;
+	  }
+	  
+	  @media (max-width:767px) {
+		.social-icons {
+		  padding: 10px 0;
+		}
+	  }
+	  
+	  .social-icons i {
+		font-size: 22px;
+		display: inline-block;
+		color: #757980;
+		margin: 0 10px;
+		width: 30px;
+		height: 30px;
+		border: 1px solid #c8ced7;
+		text-align: center;
+		border-radius: 50%;
+		line-height: 30px;
+	  }
+	  
+
+	</style>
+
     {% if app.user == null %}
     <style>
         .for-user {
@@ -253,4 +284,15 @@ $( "#send-my-email" ).click(function() {
           });
       });
 </script>
+{% if musician.settings and musician.isproandactive and musician.settings.tawkTo != null %}
+<script type="text/javascript">
+    {{musician.settings.tawkTo|raw}}
+</script>
+
+{% else %}
+
+{% include "reusable/phplive.html.twig" %}       
+
+{% endif %}
+
 {% endblock %}

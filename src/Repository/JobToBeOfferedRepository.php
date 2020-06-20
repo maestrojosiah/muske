@@ -19,6 +19,18 @@ class JobToBeOfferedRepository extends ServiceEntityRepository
         parent::__construct($registry, JobToBeOffered::class);
     }
 
+    public function searchFromRoles($searchText)
+    {
+        return $this->createQueryBuilder('j')
+           ->where('j.jobtitle')
+           ->setParameter('input', '%' .$searchText.'%')
+           ->setMaxResults(10)
+           ->orderBy('j.jobtitle', 'ASC')
+           ->getQuery()
+           ->getResult();
+    }
+
+
     // /**
     //  * @return JobToBeOffered[] Returns an array of JobToBeOffered objects
     //  */

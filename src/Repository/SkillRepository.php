@@ -35,7 +35,18 @@ class SkillRepository extends ServiceEntityRepository
         ;
     }
 
-    
+    public function searchFromSkills($searchText)
+    {
+        return $this->createQueryBuilder('s')
+           ->where('s.skillname LIKE :input')               
+           ->setParameter('input', '%' .$searchText.'%')
+           ->setMaxResults(3)
+           ->orderBy('s.skillname', 'ASC')
+           ->getQuery()
+           ->getResult();
+    }
+
+
     // /**
     //  * @return Skill[] Returns an array of Skill objects
     //  */

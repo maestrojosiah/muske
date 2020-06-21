@@ -219,6 +219,7 @@ class UpdateController extends AbstractController
     {
         $file = $request->files->get('file');
         $path_to_save = $request->request->get('path');
+        $simplepath = $request->request->get('simplepath');
         $myClass = $request->request->get('myClass');
         $field = $request->request->get('field');
         $shape = $request->request->get('shape');
@@ -255,15 +256,15 @@ class UpdateController extends AbstractController
             }
 
             // $half_path = str_replace("/home/maestrojosiah/projects/muske/public", "", $this->getParameter($path_to_save));
-            $half_path = str_replace("/home/muskecok/public_html/public/", "", $this->getParameter($path_to_save));
+            $half_path = $simplepath;
             
             if($field != 'doc'){
                 $updir = $this->getParameter($path_to_save);
                 $img = $filename;
                 $this->makeThumbnails($updir, $img, 300, 300, $shape); 
-                $link = "https://muske.co.ke/".$half_path."/thumbs/".$filename;   
+                $link = $half_path."/thumbs/".$filename;   
             } else {
-                $link = "https://muske.co.ke/".$half_path."/".$filename;
+                $link = $half_path."/".$filename;
             }
             
             $this->save( 

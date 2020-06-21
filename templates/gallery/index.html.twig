@@ -103,6 +103,7 @@
       var randId = Math.floor((Math.random() * 1000) + 1);
       var inputFile = document.getElementById('newPhoto');
       var directory = 'gallery_directory';
+      var path = '/uploads/gallery';
       var src_id = "#div-"+randId;
       var div = "#upload-photo";
       var myClass = "Gallery";
@@ -111,7 +112,7 @@
       var description = $("#photoDescription").val();
 
       $(".infinite-container").append('<div class="col-sm-6 col-md-4 col-lg-3 item infinite-item"><a id="bigImg'+randId+'" data-lightbox="photos" href="" data-title=""><img id="div-'+randId+'" class="img-fluid" src=""></a></div>');
-      uploadPhoto(inputFile, directory, src_id, div, myClass, field, shape, 'musician', 'src|.png', description );
+      uploadPhoto(inputFile, directory, path, src_id, div, myClass, field, shape, 'musician', 'src|.png', description );
       
       $("#gallery-form").trigger("reset");
       $("#previewPhoto").attr('src', '/img/default-placeholder.png')

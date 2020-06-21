@@ -338,12 +338,13 @@ $( "#upload-prof" ).click(function() {
 
   var inputFile = document.getElementById('myProfPic');
   var directory = 'brochures_directory';
+  var path = '/uploads/photos';
   var src_id = "#prof_pic";
   var div = "#prof-form";
   var myClass = "musician-{{musician.id}}";
   var field = 'photo';
   
-  uploadPhoto(inputFile, directory, src_id, div, myClass, field, "", "" );
+  uploadPhoto(inputFile, directory, path, src_id, div, myClass, field, "", "" );
   
 });
 
@@ -355,13 +356,14 @@ $( "#upload-coverphoto" ).click(function() {
 
   var inputFile = document.getElementById('myCoverphoto');
   var directory = 'brochures_directory';
+  var path = '/uploads/photos';
   var src_id = "#div";
   var div = "#cover-form";
   var myClass = "Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}";
   var field = 'coverphoto';
   var shape = 'rectangle';
   
-  uploadPhoto(inputFile, directory, src_id, div, myClass, field, shape, "" );
+  uploadPhoto(inputFile, directory, path, src_id, div, myClass, field, shape, "" );
   
 });
 
@@ -373,13 +375,14 @@ $( "#upload-bgphoto" ).click(function() {
 
   var inputFile = document.getElementById('myBgphoto');
   var directory = 'brochures_directory';
+  var path = '/uploads/photos';
   var src_id = "#div";
   var div = "#bg-form";
   var myClass = "Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}";
   var field = 'bgphoto';
   var shape = '';
   
-  uploadPhoto(inputFile, directory, src_id, div, myClass, field, shape, "" );
+  uploadPhoto(inputFile, directory, path, src_id, div, myClass, field, shape, "" );
   
 });
 

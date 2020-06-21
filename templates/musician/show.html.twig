@@ -195,6 +195,7 @@ $(document).on("change", '[id^="upload-"]', function(){
 
     var inputFile = document.getElementById('upload-'+doc+'-'+id);
     var directory = 'document_directory';
+    var path = '/uploads/documents';
     var src_id = "#download_doc_"+id;
     var div = "#educ-"+id;
     if(doc == 'no') {
@@ -206,7 +207,7 @@ $(document).on("change", '[id^="upload-"]', function(){
     var field = 'doc';
     var extras = 'musician-education#'+id;
   
-    uploadPhoto(inputFile, directory, src_id, div, myClass, field, '', extras, 'href|' );
+    uploadPhoto(inputFile, directory, path, src_id, div, myClass, field, '', extras, 'href|' );
     $('#color-code-'+id).removeClass('text-danger').addClass('text-success');
 
 });

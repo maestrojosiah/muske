@@ -156,12 +156,13 @@
             }
         </script>
         <script >
-        function uploadPhoto(inputFile, directory, src_id, div, myClass, field, shape, extras, src_type='src|.png', description='' ) {
+        function uploadPhoto(inputFile, directory, path, src_id, div, myClass, field, shape, extras, src_type='src|.png', description='' ) {
 
             var file = inputFile.files[0];
             var data = new FormData();
             data.append('file', file, file.name);
             data.append('path', directory);
+            data.append('simplepath', path);
             data.append('myClass', myClass);
             data.append('field', field);
             data.append('shape', shape);

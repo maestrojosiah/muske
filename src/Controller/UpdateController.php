@@ -261,9 +261,9 @@ class UpdateController extends AbstractController
                 $updir = $this->getParameter($path_to_save);
                 $img = $filename;
                 $this->makeThumbnails($updir, $img, 300, 300, $shape); 
-                $link = $half_path."/thumbs/".$filename;   
+                $link = "https://muske.co.ke/".$half_path."/thumbs/".$filename;   
             } else {
-                $link = $half_path."/".$filename;
+                $link = "https://muske.co.ke/".$half_path."/".$filename;
             }
             
             $this->save( 

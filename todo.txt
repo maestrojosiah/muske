@@ -18,19 +18,11 @@ email address for pro members-
 unsubscribe link : https://muske.co.ke/musician/unsubscribe/{{username}} used in email conf twig
 notification - you have unsubscribed from emails. Subscribe again
 check if subscribed before sending any email
-special characters in pdf downloads
 links to outside websites
-after choosing advertize, have options - new advert, track advert
-disable button when sending mails
 rating in resume
 mpesa integration
-difficult to find about me from
 add free email account to benefits
-blog link on resume page (pro)
 password protect blog post (save password associated to IP address)
-option to shade cover-photo or not
-select a template first before starting to create
-from registration page with the theme from the url
 https://resume.io/app/auth/sign-up/templates
 
 phplive

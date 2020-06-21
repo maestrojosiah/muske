@@ -122,8 +122,8 @@ class MusicianController extends AbstractController
         ;
 
         $abs_photourl = $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto().".png";
-        $photourl = str_replace('/home/maestrojosiah/projects/muske/public', '', $this->getParameter('brochures_directory')."/thumbs/".$musician->getPhoto().".png");
-        $placeholder = str_replace('/home/maestrojosiah/projects/muske/public', '', $this->getParameter('img_directory')."/headshot.jpg");
+        $photourl = "/uploads/photos/thumbs/".$musician->getPhoto().".png";
+        $placeholder = "/img/headshot.jpg";
         $status = is_file($abs_photourl);
         $pdf_template = $musician->getPdfTheme() ? $musician->getPdfTheme() : 'simpleOne.html.twig' ;
         $theme = $pdfThemeRepository->findOneByTemplate($pdf_template);

@@ -538,7 +538,7 @@ class Musician implements UserInterface
 
     public function photourl(): ?string
     {
-        $url = "http://https://muske.co.ke/uploads/photos/$this->photo";
+        $url = "https://muske.co.ke/uploads/photos/$this->photo";
         $this->photourl = $url;
 
         return $this->photourl;
@@ -547,9 +547,9 @@ class Musician implements UserInterface
 
     public function thumbnailurl(): ?string
     {
-        $url = "http://https://muske.co.ke/uploads/photos/thumbs/".$this->photo.".png";
+        $url = "https://muske.co.ke/uploads/photos/thumbs/".$this->photo.".png";
         // $exists = $this->URL_exists($url);
-        // $placeholder = "http://https://muske.co.ke/img/headshot.jpg";
+        // $placeholder = "https://muske.co.ke/img/headshot.jpg";
         // $path = $exists ? $url : $placeholder;
         $this->thumbnailurl = $url;
 
@@ -563,7 +563,7 @@ class Musician implements UserInterface
      
     public function logourl(): ?string
     {
-        $url = "http://https://muske.co.ke/img/logo_only_white_sq.png";
+        $url = "https://muske.co.ke/img/logo_only_white_sq.png";
         $this->logourl = $url;
 
         return $this->logourl;

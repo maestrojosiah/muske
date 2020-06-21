@@ -7,8 +7,9 @@
       <div id="content">
         {% include "reusable/user_nav.html.twig" %}
         <div class="container" id="pad">
-          <h3 class="text-dark mb-4" id="prof-heading">Profile<a class="btn btn-primary pull-right text-white" role="button" href="{{path('musician_show', {'username': musician.username})}}">Your Personal Resume Website</a></h3>
-          <div class="row mb-3">
+          <h3 class="text-dark mb-2" id="prof-heading">Profile</h3>
+          <a class="btn btn-primary text-white mb-1" role="button" href="{{path('musician_show', {'username': musician.username})}}">Your Personal Resume Website</a>
+          <div class="row mb-3" style="width: inherit;">
             <div class="col-sm-12 col-md-4">
               <div class="card mb-3" id="prof">
                 <div class="card-body text-center shadow">

@@ -10,15 +10,15 @@
     <div class="container">
         <div class="jumbotron text-center" style="background-color: #fff!important;" id="search">
             <h4>Search now!</h4>
-            <p>Click on any skill to narrow down.</p>
-            <p class="for-btn">
+            <div class="for-btn d-none d-md-inline-block">
+                <p>Click on any skill to narrow down.</p>
                 <ul class="nav nav-pills">
                     {% for skill in skills %}
                     <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{skill.skillname|lower|replace({' ':'-','.':''})}}" href="#">{{skill.skillname|capitalize}}</a></li>
                     {% endfor %}
                   </ul>
-            </p>
-            <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            </div>
+            <form class="form-inline d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 <div class="input-group">
                    <input class="bg-light form-control border-0 small searchinput" type="text" placeholder="Search for ...">
                    <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>

@@ -57,13 +57,13 @@
 			var div = splitted[1];
 			var form = $("#"+div+"-form");
 			var list = $("#"+div+"-list");
-			saveDetails(div, form);
+			saveDetails(div, ".notify");
 
 			$.notify({
 				icon: 'glyphicon glyphicon-time',
 				message: 'Please wait...',
 			},{
-				element: form,
+				element: ".notify",
 				type: "info",
 				allow_dismiss: true,
 				delay: 1000,

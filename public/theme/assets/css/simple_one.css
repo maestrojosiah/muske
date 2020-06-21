@@ -1,0 +1,60 @@
+#simple_one {
+  max-width: 21cm;
+  margin-top: 50px;
+  border: 1px solid #f1eaea;
+  padding: 10px;
+  margin-bottom: 100px;
+}
+
+#header a {
+  font-size: 0.8rem;
+  margin-left: 10px;
+}
+
+#header h3 {
+  margin-left: 15px;
+}
+
+.card-header {
+  padding: 0px;
+  text-transform: uppercase;
+}
+
+.card-header h5 {
+  padding-left: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.card {
+  border: none;
+}
+
+.sec-heading {
+  margin-bottom: 0px!important;
+}
+
+.sec-list {
+  padding-top: 15px;
+}
+
+.row.sec {
+  margin-top: 10px;
+}
+
+.sec-paragraph {
+  margin-bottom: 0px;
+}
+
+.col-md-12.edu-sec {
+  padding-bottom: 20px;
+}
+
+.ref {
+  margin: 0px;
+}
+
+.ref-h6 {
+  margin-bottom: 0px;
+}
+

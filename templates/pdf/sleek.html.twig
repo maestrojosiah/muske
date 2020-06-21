@@ -276,7 +276,7 @@
                             <div class="row item">
                                 <div class="col-md-4 date-and-place">
                                     <h6>{{job.startingfrom|date("M Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</h6>
-                                    <p>{{job.location}}</p>
+                                    <p>{{job.jobtitle}} at {{job.location}}</p>
                                 </div>
                                 <div class="col-md-8 list-details">
                                     <h4>{{job.institution}}</h4>

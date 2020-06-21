@@ -145,7 +145,7 @@
 }
 
 #full-page-container {
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 /* @media (max-width: 575px) {

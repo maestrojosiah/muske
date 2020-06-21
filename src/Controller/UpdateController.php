@@ -254,7 +254,8 @@ class UpdateController extends AbstractController
                 // ... handle exception if something happens during file upload
             }
 
-            $half_path = str_replace("/home/maestrojosiah/projects/muske/public", "", $this->getParameter($path_to_save));
+            // $half_path = str_replace("/home/maestrojosiah/projects/muske/public", "", $this->getParameter($path_to_save));
+            $half_path = str_replace("/home/muskecok/public_html/public/", "", $this->getParameter($path_to_save));
             
             if($field != 'doc'){
                 $updir = $this->getParameter($path_to_save);

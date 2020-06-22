@@ -2,214 +2,132 @@
 
 {% block title %}Resume{% endblock %}
 {% block stylesheets %}
-
-<style type="text/css" media="all">
-
-.msg { padding: 10px; background: #222; position: relative; }
-.msg h1 { color: #fff;  }
-.msg a { margin-left: 20px; background: #408814; color: white; padding: 4px 8px; text-decoration: none; }
-.msg a:hover { background: #266400; }
-
-/* //-- yui-grids style overrides -- */
-body { font-family: Georgia; color: #444; line-height: 1.5!important; font-size: 1.1rem;}
-#inner { padding: 10px 30px; margin: 80px auto; background: #f5f5f5; border: solid #666; border-width: 8px 0 2px 0; }
-.yui-gf { margin-bottom: 2em; padding-bottom: 2em; border-bottom: 1px solid #ccc; }
-
-/* //-- header, body, footer -- */
-#hd { margin: 2.5em 0 3em 0; padding-bottom: 1.5em; border-bottom: 1px solid #ccc }
-#hd h2 { text-transform: uppercase; letter-spacing: 2px; }
-#bd, #ft { margin-bottom: 2em; }
-
-/* //-- footer -- */
-#ft { padding: 1em 0 5em 0; font-size: 92%; border-top: 1px solid #ccc; text-align: center; }
-#ft p { margin-bottom: 0; text-align: center;   }
-
-/* //-- core typography and style -- */
-#hd h1 { font-size: 48px; text-transform: uppercase; letter-spacing: 3px; }
-h2 { font-size: 132% }
-h3, h4 { font-size: 102%; }
-h1, h2, h3, h4 { color: #333; }
-p { font-size: 100%; line-height: 18px; padding-right: 3em; }
-a { color: #990003; text-decoration: none; color: black; }
-a:hover { text-decoration: none; }
-strong { font-weight: bold; }
-li { line-height: 24px; }
-p.enlarge { font-size: 144%; padding-right: 6.5em; line-height: 24px; }
-p.enlarge span { color: #000 }
-.contact-info { margin-top: 7px; }
-.last { border-bottom: 0 }
-.yui-u input {background: #f5f5f5;}
-.referee {
-float: left;
-	width: 33.3333333%;
-
-}
-
-.referee p {
-	padding:0px;
-	margin:0px;
-}
-
-
-/* //-- section styles -- */
-
-a#pdf { display: block; float: left; background: #666; color: white; padding: 6px 50px 6px 12px; margin-bottom: 6px; text-decoration: none;  }
-a#pdf:hover { background: #222; }
-
-/* .job { position: relative; margin-bottom: 1em; padding-bottom: 1em; border-bottom: 1px solid #ccc; }
-.job h4 { position: absolute; top: 0.35em; right: 0 } */
-.job p { margin: 0.75em 0 3em 0; }
-
-.last { border: none; }
-.skills-list ul { margin: 0; }
-.skills-list li { margin: 3px 0; padding: 3px 0; }
-.skills-list li span { font-size: 152%; display: block; margin-bottom: -2px; padding: 0 }
-.talent { width: 32%; float: left }
-.talent h2 { margin-bottom: 6px; }
-
-#srt-ttab { margin-bottom: 100px; text-align: center;  }
-#srt-ttab img.last { margin-top: 20px }
-
-/* --// override to force 1/8th width grids -- */
-.yui-gf .yui-u{width:90.2%;}
-.yui-gf div.first{width:12.3%;}
-
+<style>
+	a {
+		color: inherit;
+	}
 </style>
+<link rel="stylesheet" href="{{ asset('theme/assets/css/srt.css ') }}">
 {% endblock %}
 {% block body %}
-<div class="container" id="resume">
-	
-	<div id="doc2" class="yui-t7">
-		<div id="inner">
-		
-			<div id="hd">
-				<div class="yui-gc">
-					<div class="yui-u first">
-						<h1 style="font-size: 2rem; padding-bottom:0px; margin-bottom:0px;">{{musician.fullname}}</h1>
-						<h2 style="padding-top: 0px; margin-top:10px">Musician</h2>
-					</div>
-	
-					<div class="yui-u">
-						<div class="contact-info">
-							<p><a href="mailto:{{musician.email}}">{{musician.email}} . </a>{{musician.phone}} . www.muske.co.ke/{{musician.username}}</p>
-						</div><!--// .contact-info -->
-					</div>
-				</div><!--// .yui-gc -->
-			</div><!--// hd -->
-	
-			<div id="bd">
-				<div id="yui-main">
-					<div class="yui-b">
-	
-						<div class="yui-gf">
-							<div class="yui-u first">
-								<h2>Profile</h2>
-							</div>
-							<div class="yui-u">
-								<p class="">
-									{{musician.about}}
-								</p>
-							</div>
-						</div><!--// .yui-gf -->
-	
-						<div class="yui-gf">
-							<div class="yui-u first">
-								<h2>Experience</h2>
-							</div>
-							<div class="yui-u">
-							{% for job in jobs %}
-								<div class="">
-									<h5>{{job.jobtitle}} | {{job.startingfrom|date("F Y")}} -  {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y") }}</h5>
-									<p>
-										{% include "web/templates/list.html.twig" %}
-									</p>
-								</div>
-							{% endfor %}
-							</div>
-						</div><!--// .yui-gf -->
-	
-						<div class="yui-gf">
-		
-							<div class="yui-u first">
-								<h2>Education</h2>
-							</div><!--// .yui-u -->
-	
-							<div class="yui-u">
-							{% for edu in educ %}
-								<div class="job" style="position: relative;">
-									<h5 style="margin-bottom:0px;">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</h5>
-									<h4 style="margin-bottom: 0px; margin-top:0px;">{{edu.institution}}</h4>
-									<p style="margin-top:0px;">{{edu.degree}} {{edu.coursename}}</p>
-									{% include "web/templates/doc.html.twig" %}
-								</div>
-								<hr />
-							{% endfor %}
-							</div><!--// .yui-u -->
-						</div><!--// .yui-gf -->
-	
-						<div class="yui-gf">
-							<div class="yui-u first">
-								<h2>Skills</h2>
-							</div>
-							<div class="yui-u">
-								<ul class="">
-									{% include "reusable/_simpleskills_.html.twig" %}
-								</ul>
-							</div>
-						</div><!--// .yui-gf-->
-	
-						 {% if musician.projects is not empty %}
-						<div class="yui-gf last">
-							<div class="yui-u first">
-								<h2>Projects</h2>
-							</div>
-							{% for project in musician.projects %}
-							<div class="yui-u">
-								<h4>{{project.projecttitle}}</h4>
-								<P>{{project.projectdescription}}</p>
-							</div>
-							{% endfor %}
-						</div><!--// .yui-gf -->
-						{% endif %}
-	
-						<div class="yui-gf">
-							<div class="yui-u">
-								<h2>Specialty</h2>
-							</div>
-							<div class="yui-u">
-								{% include "reusable/_simplespecialty_.html.twig" %}
-							</div>
-						</div><!--// .yui-gf-->
-	
-	
-					</div><!--// .yui-b -->
-				</div><!--// yui-main -->
-			</div><!--// bd -->
-	
-			<div id="ft" style="text-align: left!important;">
-				{% if musician.projects is not empty %}
-				<div class="yui-gf last">
-					<div class="yui-u first">
-						<h2>Referees</h2>
-					</div>
-					<div class="yui-u">
-						{% include "reusable/referees.html.twig" %}
-					</div>
-					
-					
-				</div><!--// .yui-gf -->
-			</div>
-			<div id="ft">
-				{% endif %}
-				<p>{{musician.fullname}} &mdash; <a href="mailto:{{musician.email}}">{{musician.email}}</a> &mdash; {{musician.phone}}</p>
-			</div><!--// footer -->
-	
-		</div><!-- // inner -->
-	
-	
-	</div><!--// doc -->
-	
-</div>
 
+<div class="container" id="srt">
+	<div class="row">
+		<div class="col-md-9" id="header">
+			<div class="mt-3">
+				<h3>{{musician.fullname}}</h3>
+				<a href="#"><img src="https://muske.co.ke/icons/phone.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.phone}}</a>
+				<a href="#"><img src="https://muske.co.ke/icons/mail.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.email}}</a>
+				<a href="#"><img src="https://muske.co.ke/icons/sphere.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;www.muske.co.ke{{musician.username}}</a>
+			</div>
+		</div>
+		<div class="col-md-3">
+			{% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+			<p class="text-right"><small>{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</small></p>
+			{% endif %}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 mb-3">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Profile</h5>
+				</div>
+				<div class="card-body">
+					<p class="card-text">{{musician.about}}</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 mb-3">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Job History</h5>
+				</div>
+				<div class="card-body">
+					{% for job in jobs %}
+					<div class="row sec">
+						<div class="col-md-9">
+							<h5 class="sec-heading">{{job.jobtitle}}<br></h5><small><em>{{job.institution}}</em><br></small></div>
+						<div class="col-md-3 text-right"><small>{{job.startingfrom|date("M Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</small></div>
+						<div class="col-md-9">
+                            {% include "web/templates/list.html.twig" %}
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Education background</h5>
+				</div>
+				<div class="card-body">
+					<div class="row sec">
+						{% for edu in educ %}
+						<div class="col-md-12 edu-sec" style="position: relative;">
+							<h5 class="sec-heading">{{edu.coursename}}<br></h5>
+							<p class="sec-paragraph">{{edu.institution}}, {{edu.location}},<br></p><small><em>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</em><br></small>
+							{% include "web/templates/doc.html.twig" %}
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Skills</h5>
+				</div>
+				<div class="row sec">
+					<div class="col-md-12 edu-sec">
+						<ul>
+							{% for skill in musician.skills %}
+							<li>{{skill.skillname}} |&nbsp;<strong>{{skill.levelofskill}}</strong>&nbsp;| {{skill.experienceofskill}}<br></li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Specialties</h5>
+				</div>
+				<div class="row sec">
+					<div class="col-md-12 edu-sec">
+						<ul>
+							{% for job_role in musician.jobstobeoffered %}
+								<li>{{job_role.jobtitle}}<br></li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			{% if musician.projects is not empty %}
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Projects</h5>
+				</div>
+				<div class="card-body pt-1">
+					<div class="row sec">
+						<div class="col-md-12 edu-sec">
+							{% for project in musician.projects %}
+							<h5 class="sec-heading">{{project.projecttitle}}<br></h5>
+							<p class="mt-3">{{project.projectdescription}}.<br>
+							</p>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Referees</h5>
+				</div>
+				<div class="card-body pt-1">
+					{% include "reusable/referees.html.twig" %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endblock %}

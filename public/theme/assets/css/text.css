@@ -1,0 +1,57 @@
+
+#simple_four {
+  max-width: 21cm;
+  margin-top: 50px;
+  border: 1px solid #f1eaea;
+  padding: 10px;
+  margin-bottom: 100px;
+  font-family: Andale Mono;
+}
+
+.ref {
+  margin: 0px;
+}
+
+.ref-h6 {
+  margin-bottom: 0px;
+}
+
+.title {
+  text-transform: uppercase;
+  font-size: 1.1rem;
+}
+
+.title-div {
+  border-bottom: 1px solid #000;
+}
+
+.col-md-8.offset-md-4.right {
+  padding-top: 10px;
+}
+
+h6, .h6 {
+  padding-top: 5px;
+  text-transform: uppercase;
+  font-size: .8rem;
+  margin-bottom: 0px;
+}
+
+ol, ul, dl {
+  margin-top: 10px;
+}
+
+#mid a {
+  font-size: .8em;
+}
+
+.sec-paragraph {
+  margin: 0px;
+  padding: 0px;
+}
+
+.user-name {
+  text-transform: uppercase;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+

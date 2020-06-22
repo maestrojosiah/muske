@@ -56,11 +56,12 @@
                     <div><span><small>www.muske.co.ke/{{musician.username}}</small></span></div>
                     <hr>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-md-11 offset-sm-1">
                     <fieldset>
                         <legend><i class="fa fa-location-arrow"></i> Address</legend>
                     </fieldset>
                     {{musician.hassettings and musician.settings.signature is not empty ? musician.settings.signature|nl2br : 'No address added'}}
+                    <hr>
                 </div>
                 {% if musician.isproandactive %}
                 <div class="col-md-11 offset-sm-1">
@@ -80,11 +81,13 @@
                             <small class="form-text text-muted">Send me your phone number and I&#39;ll call you as soon as possible</small>
                         </div>
                     </form>
+                    <hr>
                 </div> 
                 {% endif %}           
-                <div class="col-md-11 offset-sm-1">
+                <div class="col-md-11 offset-sm-1" style="mb-4">
                     <legend><i class="fa fa-star"></i> Social</legend>
                     <div class="social-icons"><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-instagram"></i></a><a href="#"><i class="fa fa-linkedin"></i></a></div>
+                    <hr>
                 </div>            
             </div>
         </div>

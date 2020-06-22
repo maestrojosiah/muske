@@ -3,194 +3,260 @@
 {% block title %}Resume{% endblock %}
 {% block stylesheets %}
 <style>
-body {
-	margin: 50px;
-}
-p, td, span, li, a { 
-	font-family: verdana, arial, helvetica, sans-serif; 
-}
-h1 {
-	font: 14pt verdana, arial, helvetica, sans-serif;
-	font-weight: bold;
-	margin: 0 0 5px 0;
-}
-h2 {
-	border-bottom: 1px solid #666;
-	clear: both;
-	font: 11pt verdana, arial, helvetica, sans-serif;
-	font-weight: bold;
-	margin: 15px 0 10px 0;
-	padding: 0 0 3px 0;
-	width: 100%;
-}
-h3 {
-	font: 11pt verdana, arial, helvetica, sans-serif;
-	font-weight: bold;
-	margin: 0 0 2px 0;
-	padding: 0;
-}
-li {
-	font-size: 10pt;
-	margin: 0 0 3px 5%;
-	padding: 0;
-}
-p {
-	font-size: 10pt;
-	margin: 0 0 10px 0;
-	padding: 0;
-}
-body ul {
-	margin: 0 0 0 20%;
-	padding: 0;
-}
-body div ul {
-	margin: 3px 0 0 0;
-	padding: 0;
-}
-#bio_left {
-	font-size: 11pt;
-	float: left;
-	width: 50%;
-}
-#bio_right {
-	font-size: 11pt;
-	float: left;
-	text-align: right;
-	width: 50%;
-}
-.company {
-	clear: both;
-	margin: 0 0 5px 0;
-	padding: 0;
-}
-.data {
-	padding-left: 20%;
-}
-.date {
-	clear: left;
-	float: left;
-	padding-top: 2px;
-	width: 20%;
-}
-.job {
-	clear: both;
-	width: 100%;
-}
-.job_data {
-	float: left;
-	width: 80%;
-}
-.location {
-	clear: right;
-	float: right;
-	text-align: right;
-	width: 20%;
-}
-.position {
-	font-style: italic;
-	margin: 0 0 5px 0;
-}
-#references {
-	margin-top: 20px;
-}
-#meta {
-	display: none;
-}
-a {
-	text-decoration: none;
-	color:black;
-}
-.referee {
-float: left;
-	width: 33.3333333%;
-
-}
-
-.referee p {
-	padding:0px;
-	margin:0px;
-}
-
+	#text {
+		max-width: 21cm;
+		margin-top: 50px;
+		border: 1px solid #f1eaea;
+		padding: 10px;
+		margin-bottom: 100px;
+		line-height: 1.5;
+		font-size: 1.1rem;
+		margin: auto;
+		font-family: Andale Mono;
+	}
+	.row {
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+		margin-right: -15px;
+		margin-left: -15px;
+	}
+	*, *::before, *::after {
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	.col-md-4 {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 33.3333333333%;
+		flex: 0 0 33.3333333333%;
+		max-width: 33.3333333333%;
+		float: left;
+	}
+	.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl, .col-xl-auto {
+		position: relative;
+		width: 100%;
+		padding-right: 15px;
+		padding-left: 15px;
+	}
+	.mt-3, .my-3 {
+		margin-top: 1rem !important;
+	}
+	.mb-3 {
+		margin-bottom: 1rem !important;
+	}
+	.user-name {
+		text-transform: uppercase;
+		font-size: 1.4em;
+		font-weight: bold;
+	}
+	#mid a {
+		font-size: .8em;
+		color: inherit;
+	}
+	a {
+		color: #3399F3;
+		text-decoration: none;
+		background-color: transparent;
+	}
+	small, .small {
+		font-size: 80%;
+		font-weight: 400;
+	}
+	.col-md-12 {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 100%;
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
+	.title-div {
+		border-bottom: 1px solid #000;
+	}
+	.title {
+		text-transform: uppercase;
+		font-size: 1.1rem;
+		margin: 0px;
+		padding: 0px;
+	}
+	.col-md-8.offset-md-4.right {
+		padding-top: 10px;
+	}
+	.offset-md-4 {
+		margin-left: 33.3333333333%;
+	}
+	.col-md-8 {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 66.6666666667%;
+		flex: 0 0 66.6666666667%;
+		max-width: 66.6666666667%;
+		float: left;
+	}
+	p {
+		margin-top: 0;
+		margin-bottom: 1rem;
+	}
+	h6, .h6 {
+		padding-top: 5px;
+		text-transform: uppercase;
+		font-size: .8rem;
+		margin-bottom: 0px;
+	}
+	ol, ul, dl {
+		margin-top: 10px;
+		margin-bottom: 1rem;
+	}
+	.sec-heading {
+		margin-top: 7px!important;
+		padding-top: 0px!important;
+	}
+	.col-md-8.offset-md-4.right {
+		padding-top: 10px!important;
+		padding-bottom: 30px!important;
+	}
+	.sec-paragraph {
+		margin: 0px;
+		padding: 0px;
+	}
+	.ref {
+		margin: 0px;
+	}
+	.clearfix {
+		clear: both;
+	}
 </style>
+    
 {% endblock %}
 {% block body %}
 
-<h1>{{musician.fullname}}</h1>
-
-<p id="bio_left">
-{{musician.phone}}<br><a href="mailto:{{musician.email}}">{{musician.email}}</a><br />https://muske.co.ke/{{musician.username}}
-</p>
-<p id="bio_right">
-	{% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
-	{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}
-	{% endif %}
-
-</p>
-
-<h2>ABOUT</h2>
-<p class="data">{{musician.about}}.</p>
-
-<h2>EXPERIENCE</h2>
-{% for job in jobs %}
-<div class="job">
-	<p class="date">{{job.startingfrom|date("M Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y")}}</p>
-	<div class="job_data">
-		<h3>{{job.institution}}</h3>
-		<p class="location">{{job.location}}</p>
-		<p class="position">{{job.jobtitle}}/Title</p>
-		<ul>
-		{% for role in job.roles %}
-			<li>{{role.role}}</li>
-		{% endfor %}
-		</ul>
-		&nbsp;
-	</div>
-</div>
-{% endfor %}
-
-<h2>EDUCATION</h2>
-{% for edu in educ %}
-<div class="job">
-	<p class="date">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</p>
-	<div class="job_data">
-		<h3>{{edu.coursename}}</h3>
-		<p class="location">{{edu.location}}</p>
-		<p class="position">{{edu.degree}}</p>
-		&nbsp;
-	</div>
-</div>
-{% endfor %}
-
-<h2>SKILLS</h2>
-<ul>
-{% include "reusable/_simpleskills_.html.twig" %}
-</ul>
-
-{% if musician.projects is not empty %}
-<h2>PROJECTS</h2>
-{% for project in musician.projects %}
-<div>
-	<h3 class="data">{{project.projecttitle }}</h3>
-	<p class="data">{{project.projectdescription}}.</p>
-</div>
-{% endfor %}
-
-{% endif %}
-
-<h2>SPECIALTY</h2>
-<div style="padding-left:20%">
-	<p class="data">{% include "reusable/_simplespecialty_.html.twig" %}</p>
-</div>
-
-<h2>REFERENCES</h2>
-
-{% for referee in musician.referees %}
-<div class="referee">
-	<h4>{{referee.name}}</h4>
-	<p style="margin-bottom:0px; margin-top:0px;">{{referee.title}}</p>
-	<p style="margin-bottom:0px; margin-top:0px;">{{referee.address}}</p>
-	<p style="margin-bottom:0px; margin-top:0px;">{{referee.contact}}</p>
-</div>
-{% endfor %}
-
+<div class="container" id="text">
+        <div class="row">
+            <div class="col-md-4" id="header">
+                <div class="mt-3">
+                    <h3 style="margin-top: 0px; padding-top: 0px;" class="user-name">{{musician.fullname}}</h3>
+                </div>
+            </div>
+            <div class="col-md-4" id="mid">
+                <div class="mt-3">
+					<a href="#">&nbsp;p:{{musician.phone}}</a><br />
+					<a href="#">&nbsp;e:{{musician.email}}</a><br />
+					<a href="#">&nbsp;w:www.muske.co.ke{{musician.username}}</a><br />
+				</div>
+            </div>
+            <div class="col-md-4">
+				{% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+				<p class="mt-3"><small>{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</small></p>
+				{% endif %}
+			</div>
+		</div>
+		<div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-div">
+                    <h4 class="title">Profile</h4>
+                </div>
+            </div>
+            <div class="col-md-8 offset-md-4">
+                <p>{{musician.about}}<br></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-div">
+                    <h4 class="title">Work Experience</h4>
+                </div>
+			</div>
+			{% for job in jobs %}
+			<div>
+				<div class="col-md-4"><small>{{job.startingfrom|date("M Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</small></div>
+				<div class="col-md-8">
+					<h6 class="sec-heading">{{job.jobtitle}}</h6><small>{{job.institution}}</small>
+					<ul>
+						{% for role in job.roles %}
+						<li>{{role.role}}<br></li>
+						{% endfor %}					
+					</ul>
+				</div>	
+			</div>
+			{% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-div">
+                    <h4 class="title">Education Background</h4>
+                </div>
+			</div>
+			{% for edu in educ %}
+            <div class="col-md-8 offset-md-4 mb-3">
+                <h6 class="sec-heading">{{edu.coursename}}</h6>
+				<p class="sec-paragraph">{{edu.institution}} | {{edu.location}}</p>
+				<small>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</small>
+			</div>
+			{% endfor %}
+		</div>
+		{% if musician.projects is not empty %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-div">
+                    <h4 class="title">Projects</h4>
+                </div>
+			</div>
+			{% for project in musician.projects %}
+            <div class="col-md-8 offset-md-4">
+                <h6 class="sec-heading">{{project.projecttitle}}</h6>
+                <p class="mt-3">{{project.projectdescription}}<br></p>
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-div">
+                    <h4 class="title">Skills</h4>
+                </div>
+            </div>
+            <div class="col-md-8 offset-md-4">
+                <ul>
+					{% for skill in musician.skills %}
+						<li>{{skill.skillname}} |&nbsp;<strong>{{skill.levelofskill}}</strong>&nbsp;| {{skill.experienceofskill}}<br></li>
+					{% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-div">
+                    <h4 class="title">Specialties</h4>
+                </div>
+            </div>
+            <div class="col-md-8 offset-md-4">
+                <ul>
+					{% for job_role in musician.jobstobeoffered %}
+					<li>{{job_role.jobtitle}}<br></li>
+					{% endfor %}
+				</ul>
+            </div>
+		</div>
+		{% if musician.referees is not empty %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-div">
+                    <h4 class="title">Referees</h4>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row sec">
+					{% for referee in musician.referees %}
+                    <div class="col-md-4 edu-sec mb-3">
+                        <h6 class="ref-h6 sec-heading">{{referee.name}}</h6>
+                        <p class="ref">{{referee.title}}</p>
+                        <p class="ref">{{referee.address}}</p>
+                        <p class="ref">{{referee.contact}}</p>
+					</div>
+					{% endfor %}
+                </div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		{% endif %}
+    </div>
 {% endblock %}

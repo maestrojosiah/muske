@@ -2,153 +2,342 @@
 
 {% block title %}Resume{% endblock %}
 {% block stylesheets %}
-	<style type="text/css" media="all">
-		html{
-			background-color:#FFF;
-			padding:0 1em;
-			}
-		body {
-			background-color:#FFF;
-			font-family:Georgia, "Times New Roman", Times, serif;
-			padding:1em;
-			border:solid #AAA 1px;
-			margin:1em auto;
-			max-width: 50em;
-			}
-		#address{
-			height:5em;
-			width:48em;
-			text-align:center;
-			}
-		#address div{
-			width:14em;
-			float:left;
-			padding:0 .5em 0 1.5em;
-			}
-		#address h3{
-			border-bottom: none;
-			margin-top: 0;
-			}	
-		.date {
-			float:right;
-			font-size:.8em;
-			margin-top:.4em;
-			text-align:right;
-			}
-		abbr, acronym{
-			border-bottom:1px dotted #333;
-			cursor:help;
-			}	
-		address{
-			font-style:italic;
-			color:#333;
-			font-size:.9em;
-			}
-			
-		
-		h1{
-			font-size:1.75em;
-			text-align:center;
-			padding:.5em 0;
-			}
-		h2 {
-			clear:both;
-			font-size: 1.4em;
-			font-weight:bold;
-			margin-top:4.5em;
-			font-variant: small-caps;
-			padding-left:.25em;
-			background-color:#EEE;
-			border-bottom: 1px solid #999;
-			letter-spacing: .06em;
-			}
-		h3 {margin: 1em 0 0 0;}
-		.referee {
-			float: left;
-			width: 33.3333333%;
+<style>
+	body {
+		margin: 0;
+		font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+		font-size: 1.1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #777;
+		text-align: left;
+		background-color: #fff;
+	}
+	#simple_one {
+		max-width: 21cm;
+		margin-top: 50px;
+		border: 1px solid #f1eaea;
+		padding: 10px;
+		margin: auto;
+	}
+	.row {
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+		margin-right: -15px;
+		margin-left: -15px;
+	}
+	*, *::before, *::after {
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+	}
 
-		}
+	.col-md-9 {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 75%;
+		flex: 0 0 75%;
+		max-width: 75%;
+		float: left;
+	}
+	.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl, .col-xl-auto {
+		position: relative;
+		width: 100%;
+		padding-right: 15px;
+		padding-left: 15px;
+	}
+	.mt-3, .my-3 {
+		margin-top: 1rem !important;
+	}
+	#header h3 {
+		margin-left: 15px;
+	}
+	h3, .h3 {
+		font-size: 1.75rem;
+		color: #3399F3;
+	}
 
-		.referee p {
-			padding:0px;
-			margin:0px;
-		}
+	h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+		margin-bottom: 0.5rem;
+		font-weight: 500;
+		line-height: 1.2;
+		color: #2d2d2d;
+	}
+	h1, h2, h3, h4, h5, h6 {
+		margin-top: 0;
+	}
+	#header a {
+		font-size: 0.8rem;
+		margin-left: 10px;
+		color: #044782!important;
+	}
+	a {
+		color: #3399F3;
+		text-decoration: none;
+		background-color: transparent;
+	}
+	.col-md-3 {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 25%;
+		flex: 0 0 25%;
+		max-width: 25%;
+		float: left;
+	}
+	.text-right {
+		text-align: right !important;
+	}
+	p {
+		margin-top: 0;
+		margin-bottom: 1rem;
+	}
+	.mb-3, .my-3 {
+		margin-bottom: 1rem !important;
+	}
+	.col-md-12 {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 100%;
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
+	.card {
+		border: none;
+	}
 
+	.card {
+		position: relative;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		min-width: 0;
+		word-wrap: break-word;
+		background-color: #fff;
+		background-clip: border-box;
+		border: 1px solid #fff;
+		border-radius: 0.25rem;
+	}
+	.card-header:first-child {
+		border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+	}
 
-	</style>
-	<style type="text/css" media="print">
-		body {
-			background-color:#FFF;
-			border-width:0 0 0 0;
-			margin:0;
-			width:100%
-			}
-	</style>    
+	.card-header {
+		padding: 0.75rem 1.25rem;
+		margin-bottom: 0;
+		background-color: rgba(0,0,0,0.03);
+		border-bottom: 1px solid rgba(0,0,0,0.125);
+	}
+
+	.card-header {
+		padding: 2px;
+		text-transform: uppercase;
+	}
+
+	.card-header h5 {
+		padding-left: 20px;
+		font-size: 1rem;
+		font-weight: bold;
+		color: #3399F3!important;
+	}
+	.card h1, .card h2, .card h3, .card h4, .card h5, .card h6, .list-group-item h1, .list-group-item h2, .list-group-item h3, .list-group-item h4, .list-group-item h5, .list-group-item h6 {
+		color: inherit;
+	}
+	.mb-0, .my-0 {
+		margin-bottom: 0 !important;
+	}
+
+	.card-body {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 auto;
+		flex: 1 1 auto;
+		min-height: 1px;
+		padding: 1.25rem;
+	}
+	.card-text:last-child {
+		margin-bottom: 0;
+	}
+	.row.sec {
+		margin-top: 10px;
+	}
+	small, .small {
+		font-size: 80%;
+		font-weight: 400;
+	}
+	.col-md-12.edu-sec {
+		padding-bottom: 20px;
+	}
+	.sec-heading {
+		margin-bottom: 0px!important;
+		color: #044782!important;
+	}
+	h5, .h5 {
+		font-size: 1.25rem;
+		color: #3399F3;
+	}
+	.sec-paragraph {
+		margin-bottom: 0px;
+	}
+	ol, ul, dl {
+		margin-top: 0;
+		margin-bottom: 1rem;
+	}
+	.col-md-4 {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 33.3333333333%;
+		flex: 0 0 33.3333333333%;
+		max-width: 33.3333333333%;
+		float: left;
+	}
+	.ref-h6 {
+		margin-bottom: 0px;
+	}
+	.ref {
+		margin: 0px;
+	}
+	h6, .h6 {
+		font-size: 1rem;
+		font-weight: bold;
+	}
+	.theme {
+		color: #044782!important;
+	}
+</style>
 {% endblock %}
 {% block body %}
 
-	<div id="address">
-		{% include "reusable/_threecolumnaddress_.html.twig" %}
-	</div>
-	
-	<div class="section">
-		<h2>About me</h2>
-		<div class="content">
-			{% include "reusable/_simpleabout_.html.twig" %}
+<div class="container" id="simple_one">
+	<div class="row">
+		<div class="col-md-9" id="header">
+			<div class="mt-3">
+				<h3>{{musician.fullname}}</h3>
+				<a href="#"><img src="https://muske.co.ke/icons/phone.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.phone}}</a>
+				<a href="#"><img src="https://muske.co.ke/icons/mail.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.email}}</a>
+				<a href="#"><img src="https://muske.co.ke/icons/sphere.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;www.muske.co.ke{{musician.username}}</a>
+			</div>
+		</div>
+		<div class="col-md-3">
+			{% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+			<p class="text-right"><small>{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</small></p>
+			{% endif %}
 		</div>
 	</div>
-	<div class="section">
-		<h2>Summary of Specialty</h2>
-		<div class="content">
-			{% include "reusable/_simplespecialty_.html.twig" %}
+	<div class="row">
+		<div class="col-md-12 mb-3">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Profile</h5>
+				</div>
+				<div class="card-body">
+					<p class="card-text">{{musician.about}}</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 mb-3">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Job History</h5>
+				</div>
+				<div class="card-body">
+					{% for job in jobs %}
+					<div class="row sec">
+						<div class="col-md-9">
+							<h5 class="sec-heading">{{job.jobtitle}}<br></h5><small><em>{{job.institution}}</em><br></small></div>
+						<div class="col-md-3 text-right theme"><small>{{job.startingfrom|date("M Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</small></div>
+						<div class="col-md-9">
+							<ul class="sec-list">
+								{% for role in job.roles %}
+								<li>{{role.role}}<br></li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Education background</h5>
+				</div>
+				<div class="card-body">
+					<div class="row sec">
+						{% for edu in educ %}
+						<div class="col-md-12 edu-sec">
+							<h5 class="sec-heading">{{edu.coursename}}<br></h5>
+							<p class="sec-paragraph">{{edu.institution}}, {{edu.location}},<br></p><small><em>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</em><br></small>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Skills</h5>
+				</div>
+				<div class="row sec">
+					<div class="col-md-12 edu-sec">
+						<ul>
+							{% for skill in musician.skills %}
+							<li>{{skill.skillname}} |&nbsp;<strong>{{skill.levelofskill}}</strong>&nbsp;| skill.skillexperience<br></li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Specialties</h5>
+				</div>
+				<div class="row sec">
+					<div class="col-md-12 edu-sec">
+						<ul>
+							{% for job_role in musician.jobstobeoffered %}
+								<li>{{job_role.jobtitle}}<br></li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			{% if musician.projects is not empty %}
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Projects</h5>
+				</div>
+				<div class="card-body pt-1">
+					<div class="row sec">
+						<div class="col-md-12 edu-sec">
+							{% for project in musician.projects %}
+							<h5 class="sec-heading">{{project.projecttitle}}<br></h5>
+							<p class="mt-3">{{project.projectdescription}}.<br>
+							</p>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+			{% if musician.referees is not empty %}
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Referees</h5>
+				</div>
+				<div class="card-body pt-1">
+					<div class="row sec">
+						{% for referee in musician.referees %}
+						<div class="col-md-4 edu-sec mb-3">
+							<h6 class="ref-h6">{{referee.name}}</h6>
+							<p class="ref">{{referee.title}}</p>
+							<p class="ref">{{referee.address}}</p>
+							<p class="ref">{{referee.contact}}</p>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			{% endif %}
 		</div>
 	</div>
-	
-	<div class="section">
-		<h2>Work Experience</h2>
-		<div class="content">
-			{% include "reusable/_simpleexperiencewof_.html.twig" %}
-		</div>
-	</div>
-	
-    {% if musician.projects is not empty %}
-	<div class="section">
-		<h2>Projects</h2>
-		<div class="content">
-			{% include "reusable/_simpleprojects_.html.twig" %}
-		</div>
-	</div>
-    {% endif %}
-
-	<div class="section">
-		<h2>Education</h2>
-		<div class="content">
-			{% include "reusable/_simpleeducationwof_.html.twig" %}
-		</div>
-	</div>
-
-	<div class="section">
-		<h2>Skills</h2>
-		<div class="content">
-			<ul>
-			{% include "reusable/_simpleskills_.html.twig" %}
-			</ul>
-		</div>
-	</div>
-	
-	<div class="section">
-		<h2>Details</h2>
-		<div class="content">
-			{% include "reusable/_details_.html.twig" %}
-		</div>
-	</div>
-
-	<div class="section">
-		<h2>Referees</h2>
-		<div class="content">
-			{% include "reusable/_referees_.html.twig" %}
-		</div>
-	</div>
-
+</div>
 
 {% endblock %}

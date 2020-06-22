@@ -70,7 +70,7 @@
 		margin-left: 10px;
 	}
 	a {
-		color: #3399F3;
+		color: inherit;
 		text-decoration: none;
 		background-color: transparent;
 	}
@@ -261,7 +261,8 @@
 						{% for edu in educ %}
 						<div class="col-md-12 edu-sec">
 							<h5 class="sec-heading">{{edu.coursename}}<br></h5>
-							<p class="sec-paragraph">{{edu.institution}}, {{edu.location}},<br></p><small><em>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</em><br></small>
+							<p class="sec-paragraph">{{edu.institution}}, {{edu.location}},<br></p>
+							<small><em>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</em><br></small>
 						</div>
 						{% endfor %}
 					</div>
@@ -275,7 +276,7 @@
 					<div class="col-md-12 edu-sec">
 						<ul>
 							{% for skill in musician.skills %}
-							<li>{{skill.skillname}} |&nbsp;<strong>{{skill.levelofskill}}</strong>&nbsp;| skill.skillexperience<br></li>
+							<li>{{skill.skillname}} |&nbsp;<strong>{{skill.levelofskill}}</strong>&nbsp;| {{experienceofskill}}<br></li>
 							{% endfor %}
 						</ul>
 					</div>

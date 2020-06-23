@@ -48,7 +48,7 @@
                     {% endfor %}
                 </div>
             </div>
-            {% if musician.projects %}
+            {% if musician.projects is not empty %}
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title"><i class="fa fa-music"></i>&nbsp;Projects</h4>

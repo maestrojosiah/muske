@@ -4,5 +4,7 @@
     <label title="{{has_doc == 'no' ? 'upload a supporting document' : 'change document'}}" class="{{has_doc == 'no' ? 'text-danger' : 'text-success'}} " id="color-code-{{edu.id}}" for="upload-{{has_doc}}-{{edu.id}}" style="cursor:pointer; "><i class="fa fa-link"></i></label>
     <input type="file" name="upload-{{has_doc}}-{{edu.id}}" id="upload-{{has_doc}}-{{edu.id}}" style="display: none;" />
 </form>
+{% if edu.document is not null %}
 <a class="for-user" style="position: absolute; top: 30px; right:5px; font-size:18px;" id="download_doc_{{edu.id}}" href="{{ path('download_pdf', {'file': edu.document.doc} ) }}" download><i class="fa fa-download"></i></a>
+{% endif %}
 {% endif %}

@@ -3,139 +3,159 @@
 {% block title %}Resume{% endblock %}
 {% block stylesheets %}
 
-     <style type="text/css">
-        * { margin: 0; padding: 0; }
-        body { font: 16px Helvetica, Sans-Serif; line-height: 24px; background: url(images/noise.jpg); }
-        .clear { clear: both; }
-        #page-wrap { width: 800px; margin: 40px auto 60px; }
-        #pic { float: right; margin: 0 0 0 0; width:30%; }
-        h1 { margin: 0 0 16px 0; padding: 0 0 16px 0; font-size: 42px; font-weight: bold; letter-spacing: -2px; border-bottom: 1px solid #999; }
-        h2 { font-size: 20px; margin: 0 0 6px 0; position: relative; }
-        span { font-style: italic; font-family: Georgia, Serif; font-size: 16px; color: #999; font-weight: normal; }
-        h2 span { position: absolute; bottom: 0; right: 0; font-style: italic; font-family: Georgia, Serif; font-size: 16px; color: #999; font-weight: normal; }
-        p { margin: 0 0 16px 0; }
-        a { color: #999; text-decoration: none; border-bottom: 1px dotted #999; }
-        a:hover { border-bottom-style: solid; color: black; }
-        ul { margin: 0 0 32px 17px; }
-        #objective { width: 500px; float: left; }
-        #objective p { font-family: Georgia, Serif; font-style: italic; color: #666; }
-        dt { font-style: italic; font-weight: bold; font-size: 18px; text-align: right; padding: 0 26px 0 0; width: 150px; float: left; height: 100px; border-right: 1px solid #999;  }
-        dd { width: 600px; float: right; }
-        dd.clear { float: none; margin: 0; height: 15px; }
-        .referee {
-		float: left;
-		    width: 33.3333333%;
-
-        }
-
-        .referee p {
-            padding:0px;
-            margin:0px;
-        }
-
-     </style>
-     
 {% endblock %}
 {% block body %}
-     
-    <div id="page-wrap">
-        {% if thumbnailurl is not defined %}
-            {% set thumbnailurl = musician.thumbnailurl %}
-        {% endif %}
-        
-        <img src="{{thumbnailurl}}" alt="{{musician.fullname}}" id="pic" />
-    
-        <div id="contact-info" class="vcard">
-        
-            <!-- Microformats! -->
-        
-            <h1 class="fn" style="padding-top:5px;">{{musician.fullname}}</h1>
-            {% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
-            <p>
-                {{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}
-            </p>
-            {% endif %}
-        
-            <p>
-                Cell: <span class="tel">{{musician.phone}}</span><br />
-                Email: <a class="email" href="mailto:{{musician.email}}">{{musician.email}}</a>
-            </p>
-        </div>
-                
-        <div id="objective">
-            <p>
-                {{musician.about}}
-            </p>
-        </div>
-        
-        <div class="clear"></div>
-        
-        <dl>
-            <dd class="clear"></dd>
-            
-            <dt>Education</dt>
-            {% for edu in educ %}
-            <dd>
-                <h2>{{edu.institution}} - {{edu.location}}</h2>
-                <p><strong>{{edu.degree}}:</strong> {{edu.coursename}}<br />
-                   {{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</p>
-            </dd>
-            {% endfor %}
-            
-            <dd class="clear"></dd>
-             {% if musician.projects is not empty %}
-            <dt>Projects</dt>
-            <dd>
-            {% for project in musician.projects %}
-                <h2>{{project.projecttitle}}</h2>
-                <p>{{project.projectdescription}}</p>
-            {% endfor %}
-            </dd>
-            {% endif %}
-            
-            <dd class="clear"></dd>
-            
-            <dt>Experience</dt>
-            <dd>
-            {% for job in jobs %}
-                <h2>{{job.jobtitle}} </h2> <span>{{job.institution}}{{" / " ~ job.location}} - {{job.startingfrom|date("F Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y") }}</span>
-                <ul>
-                {% for role in job.roles %}
-                    <li>{{role.role}}</li>
-                {% endfor %}
-                </ul>
-            {% endfor %}
-            </dd>
 
-            <dd class="clear"></dd>
-            
-            <dt>Skills</dt>
-            <dd>{% include "reusable/_simpleskills_.html.twig" %}</dd>
-            
-            <dd class="clear"></dd>
-            
-            <dt>Specialty</dt>
-            <dd>{% include "reusable/_simplespecialty_.html.twig" %}</dd>
-            
-            <dd class="clear"></dd>
-
-            <dt>References</dt>
-            <dd>
-                {% for referee in musician.referees %}
-                <div class="referee">
-                    <h4>{{referee.name}}</h4>
-                    <p style="margin-bottom:0px; margin-top:0px;">{{referee.title}}</p>
-                    <p style="margin-bottom:0px; margin-top:0px;">{{referee.address}}</p>
-                    <p style="margin-bottom:0px; margin-top:0px;">{{referee.contact}}</p>
-                </div>
-                {% endfor %}
-            </dd>
-                
-            <dd class="clear"></dd>
-        </dl>
-        
-        <div class="clear"></div>
-    
+<div class="container" id="design">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 id="name">Josiah Birai</h1>
+            <p>Josiah Birai<br>P.O. Box 54432 - 20100<br>Nairobi</p>
+            <p>0702343232<br>maestrojosiah@gmail.com<br>www.muske.co.ke/maestrojosiah</p>
+        </div>
+        <div class="col-md-4 "><img class="img-fluid d-none d-md-block" src="{{app.request.getSchemeAndHttpHost()}}/{{thumbnailurl}}" width="240" height="240"></div>
     </div>
+    <div class="row">
+        <div class="col-md-9">
+            <p>Experienced musician with a 12-year experience in the field of music, especially in choral training, teaching music theory, teaching musical instruments including piano, classical and contemporary guitar, trumpet and recorder. I am comfortable
+                with sight-reading and sight-singing complex music at glance and conversant with hundreds of hymns from the most common hymnals. I’m used to the art of arranging music, song composition and training mixed voices. I’m a grade 8 holder
+                of Associated Board of the Royal Schools of Music (ABRSM) Music Theory. I also have a Diploma in Music and Dance from Kenyatta University. 33 Year old.<br></p>
+        </div>
+        <div class="col-md-3">
+            <div class="b-left mt-5 d-none d-md-block">
+                <p class="mid">Profile</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="b-right mt-5">
+                <p class="mid">Job History</p>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="mt-5">
+                <h5>Music Instructor / Teacher<br></h5><small><em>Kenya Conservatoire of Music / Nairobi -&nbsp;</em>Sep 2017 - Aug 2019<br><em>&nbsp;</em><br></small>
+                <ul>
+                    <li>Teaching instruments - classes 4-8 (Piano, guitar and recorder).<br></li>
+                    <li>Teaching music theory to lower classes.<br></li>
+                    <li>Organizing music for students and overseeing their progress.<br></li>
+                    <li>Keeping records for the progress of each music student.<br></li>
+                </ul>
+                <p></p>
+            </div>
+            <div class="mt-5">
+                <h5>Music Instructor<br></h5><small><em>Kenya Conservatoire of Music / Nairobi -&nbsp;</em>Sep 2017 - Aug 2019<br><em>&nbsp;</em><br></small>
+                <ul>
+                    <li>Teaching instruments - classes 4-8 (Piano, guitar and recorder).<br></li>
+                    <li>Teaching music theory to lower classes.<br></li>
+                    <li>Organizing music for students and overseeing their progress.<br></li>
+                    <li>Keeping records for the progress of each music student.<br></li>
+                </ul>
+                <p></p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="b-right mt-5">
+                <p class="mid">Education Background</p>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="mt-5">
+                <h5><strong>Certificate:</strong>&nbsp;Fundamentals of Rehearsing Music Ensembles<br></h5><small>University of North Carolina at Chapel hill via Coursera - Online<br></small>
+                <p>Sep 2017 - Aug 2019</p>
+            </div>
+            <div class="mt-5">
+                <h5><strong>Diploma:</strong>&nbsp;Music and Dance<br></h5><small>Associated Board of the Royal Schools of Music - Nairobi<br></small>
+                <p>Sep 2017 - Aug 2019</p>
+            </div>
+            <div class="mt-5">
+                <h5><strong>Grade 8:</strong>&nbsp;Music Theory<br></h5><small>Associated Board of the Royal Schools of Music - Nairobi<br></small>
+                <p>Sep 2017 - Aug 2019</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="b-right mt-5">
+                <p class="mid">Projects</p>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="mt-5">
+                <h5>Loud Whispers Chorus<br></h5>
+                <p>Founded the group for the purpose of putting to practice the skills learned from the choral conducting course from September to December 2016 at the Kenya Conservatoire of Music. We taught the members music theory up to grade 3, conducted
+                    rehearsals and performances.<br></p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="b-right mt-5">
+                <p class="mid">Skills</p>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="mt-5">
+                <ul>
+                    <li>Piano |&nbsp;<strong>Intermediate</strong>&nbsp;| 8 years<br></li>
+                    <li>Music Theory |&nbsp;<strong>Advanced</strong>&nbsp;| 11 years<br></li>
+                    <li>Music Notation Software |&nbsp;<strong>Intermediate</strong>&nbsp;| 7 years<br></li>
+                    <li>Sequencing |&nbsp;<strong>Beginner</strong>&nbsp;| 2 years<br></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="b-right mt-5">
+                <p class="mid">Specialties</p>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="mt-5">
+                <ul>
+                    <li>Music Theory Instructor<br></li>
+                    <li>Choral Conductor<br></li>
+                    <li>Church Pianist<br></li>
+                    <li>Music Director<br></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-md-3">
+            <div class="b-right mt-5">
+                <p class="mid">Referees</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="mt-5">
+                <h6 class="ref-h6">Mr / Mrs Smith</h6>
+            </div>
+            <p class="ref">Chairman</p>
+            <p class="ref">Maxwell S.D.A Church</p>
+            <p class="ref">0735647444</p>
+        </div>
+        <div class="col-md-3">
+            <div class="mt-5">
+                <h6 class="ref-h6">Mr / Mrs Smith</h6>
+            </div>
+            <p class="ref">Chairman</p>
+            <p class="ref">Maxwell S.D.A Church</p>
+            <p class="ref">0735647444</p>
+        </div>
+        <div class="col-md-3">
+            <div class="mt-5">
+                <h6 class="ref-h6">Mr / Mrs Smith</h6>
+            </div>
+            <p class="ref">Chairman</p>
+            <p class="ref">Maxwell S.D.A Church</p>
+            <p class="ref">0735647444</p>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

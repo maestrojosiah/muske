@@ -136,6 +136,7 @@ class MusicianController extends AbstractController
             'jobs' => $jobs,
             'educ' => $educ,
             'fourPhotos' => $fourPhotos,
+            'thumbnailurl' => $thumbnailurl,
         ];
 
         if($download == 'pdf'){

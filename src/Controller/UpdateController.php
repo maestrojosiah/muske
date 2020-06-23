@@ -55,8 +55,9 @@ class UpdateController extends AbstractController
     private $advertRepo;
     private $postRepo;
     private $adTrackingCode;
+    private $activationManager;
     
-    public function __construct(PostRepository $postRepository, AdvertRepository $advertRepository, AdTrackingCode $adTrackingCode, NotificationRepository $notificationRepository, EducationRepository $educationRepository, SettingsRepository $settingsRepository, MusicianRepository $musicianRepository, JobRepository $jobRepository, DocumentRepository $documentRepository)
+    public function __construct(ActivationManager $activationManager, PostRepository $postRepository, AdvertRepository $advertRepository, AdTrackingCode $adTrackingCode, NotificationRepository $notificationRepository, EducationRepository $educationRepository, SettingsRepository $settingsRepository, MusicianRepository $musicianRepository, JobRepository $jobRepository, DocumentRepository $documentRepository)
     {
         $this->jobRepo = $jobRepository;
         $this->documentRepo = $documentRepository;
@@ -67,6 +68,7 @@ class UpdateController extends AbstractController
         $this->advertRepo = $advertRepository;
         $this->postRepo = $postRepository;
         $this->adTrackingCode = $adTrackingCode;
+        $this->activationManager = $activationManager;
 
     }
 
@@ -204,7 +206,7 @@ class UpdateController extends AbstractController
             if(null !== $request->request->get('email')){
                 $email = $request->request->get('email');
                 $username = $entity->getUsername();
-                if($activationManager->sendActivationEmail($email, $username)){
+                if($this->activationManager->sendActivationEmail($email, $username)){
                     $this->addFlash('success', "Account created successfully! Please check your email for an account activation link. (Check spam folder if you can't find it) ");
                 }
             }

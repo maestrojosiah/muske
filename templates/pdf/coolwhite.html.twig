@@ -2,326 +2,352 @@
 
 {% block title %}Resume{% endblock %}
 {% block stylesheets %}
-
-<link href='http://fonts.googleapis.com/css?family=Rokkitt:400,700|Lato:400,300' rel='stylesheet' type='text/css'>
-<style type="text/css">
-	html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video {
-	border:0;
-	font:inherit;
-	font-size:100%;
-	margin:0;
-	padding:0;
-	vertical-align:baseline;
+<style>
+	body {
+		margin: 0;
+		font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+		font-size: 1.1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #777;
+		text-align: left;
+		background-color: #fff;
+	}
+	#simple_one {
+		max-width: 21cm;
+		margin-top: 50px;
+		border: 1px solid #f1eaea;
+		padding: 10px;
+		margin: auto;
+	}
+	.row {
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+		margin-right: -15px;
+		margin-left: -15px;
+	}
+	*, *::before, *::after {
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
 	}
 
-	article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
-	display:block;
-	}
-
-	html, body {font-family: 'Lato', helvetica, arial, sans-serif; font-size: 16px; color: #222;}
-
-	.clear {clear: both;}
-
-	p {
-		font-size: 1em;
-		line-height: 1.4em;
-		margin-bottom: 20px;
-		color: #444;
-	}
-
-	#cv {
-		width: 90%;
-		max-width: 800px;
-		/* background: #f3f3f3; */
-		margin: 30px auto;
-	}
-
-	.mainDetails {
-		padding: 25px 35px;
-		border-bottom: 2px solid #cf8a05;
-		/* background: #ededed; */
-	}
-
-	#name h1 {
-		font-size: 2.5em;
-		font-weight: 700;
-		font-family: 'Rokkitt', Helvetica, Arial, sans-serif;
-		margin-bottom: -6px;
-	}
-
-	#name h2 {
-		font-size: 2em;
-		margin-left: 2px;
-		font-family: 'Rokkitt', Helvetica, Arial, sans-serif;
-	}
-
-	#mainArea {
-		padding: 0 40px;
-	}
-
-	#headshot {
-		width: 12.5%;
+	.col-md-9 {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 75%;
+		flex: 0 0 75%;
+		max-width: 75%;
 		float: left;
-		margin-right: 30px;
 	}
-
-	#headshot img {
+	.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl, .col-xl-auto {
+		position: relative;
 		width: 100%;
-		height: auto;
-		-webkit-border-radius: 50px;
-		border-radius: 50px;
+		padding-right: 15px;
+		padding-left: 15px;
+	}
+	.mt-3, .my-3 {
+		margin-top: 1rem !important;
+	}
+	#header h3 {
+		margin-left: 15px;
+	}
+	h3, .h3 {
+		font-size: 1.75rem;
 	}
 
-	#name {
-		float: left;
+	h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+		margin-bottom: 0.5rem;
+		font-weight: 500;
+		line-height: 1.2;
+		color: #2d2d2d;
 	}
-
-	#contactDetails {
-		float: right;
+	h1, h2, h3, h4, h5, h6 {
+		margin-top: 0;
 	}
-
-	#contactDetails ul {
-		list-style-type: none;
-		font-size: 0.9em;
-		margin-top: 2px;
+	#header a {
+		font-size: 0.8rem;
+		margin-left: 10px;
 	}
-
-	#contactDetails ul li {
-		margin-bottom: 3px;
-		color: #444;
-	}
-
-	#contactDetails ul li a, a[href^=tel] {
-		color: #444; 
+	a {
+		color: inherit;
 		text-decoration: none;
-		-webkit-transition: all .3s ease-in;
-		-moz-transition: all .3s ease-in;
-		-o-transition: all .3s ease-in;
-		-ms-transition: all .3s ease-in;
-		transition: all .3s ease-in;
+		background-color: transparent;
 	}
-
-	#contactDetails ul li a:hover { 
-		color: #cf8a05;
-	}
-
-
-	section {
-		border-top: 1px solid #dedede;
-		padding: 20px 0 0;
-	}
-
-	section:first-child {
-		border-top: 0;
-	}
-
-	section:last-child {
-		padding: 20px 0 10px;
-	}
-
-	.sectionTitle {
+	.col-md-3 {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 25%;
+		flex: 0 0 25%;
+		max-width: 25%;
 		float: left;
-		width: 25%;
+	}
+	.text-right {
+		text-align: right !important;
+	}
+	p {
+		margin-top: 0;
+		margin-bottom: 1rem;
+	}
+	.mb-3, .my-3 {
+		margin-bottom: 1rem !important;
+	}
+	.col-md-12 {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 100%;
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
+	.card {
+		border: none;
 	}
 
-	.sectionContent {
-		float: right;
-		width: 72.5%;
+	.card {
+		position: relative;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		min-width: 0;
+		word-wrap: break-word;
+		background-color: #fff;
+		background-clip: border-box;
+		border: 1px solid #fff;
+		border-radius: 0.25rem;
 	}
 
-	.sectionTitle h1 {
-		font-family: 'Rokkitt', Helvetica, Arial, sans-serif;
-		font-style: italic;
-		font-size: 1.5em;
-		color: #cf8a05;
+	.card-header {
+		padding: 0.75rem 1.25rem;
+		margin-bottom: 0;
+		background-color: rgba(0,0,0,0.03);
+		border-bottom: 1px solid rgba(0,0,0,0.125);
 	}
 
-	.sectionContent h2 {
-		font-family: 'Rokkitt', Helvetica, Arial, sans-serif;
-		font-size: 1.5em;
-		margin-bottom: -2px;
+	.card-header {
+		padding: 2px;
+		text-transform: uppercase;
 	}
 
-	.subDetails {
-		font-size: 0.8em;
-		font-style: italic;
-		margin-bottom: 3px;
+	.card-header h5 {
+		padding-left: 20px;
+		font-size: 1rem;
+		font-weight: bold;
+	}
+	.card h1, .card h2, .card h3, .card h4, .card h5, .card h6, .list-group-item h1, .list-group-item h2, .list-group-item h3, .list-group-item h4, .list-group-item h5, .list-group-item h6 {
+		color: inherit;
+	}
+	.mb-0, .my-0 {
+		margin-bottom: 0 !important;
 	}
 
-	.keySkills {
-		list-style-type: none;
-		-moz-column-count:3;
-		-webkit-column-count:3;
-		column-count:3;
-		margin-bottom: 20px;
-		font-size: 1em;
-		color: #444;
+	.card-body {
+		-webkit-box-flex: 1;
+		-ms-flex: 1 1 auto;
+		flex: 1 1 auto;
+		min-height: 1px;
+		padding: 1.25rem;
 	}
-
-	.keySkills ul li {
-		margin-bottom: 3px;
+	.card-text:last-child {
+		margin-bottom: 0;
 	}
-
-	.referee {
+	.row.sec {
+		margin-top: 10px;
+	}
+	small, .small {
+		font-size: 80%;
+		font-weight: 400;
+	}
+	.col-md-12.edu-sec {
+		padding-bottom: 20px;
+	}
+	.sec-heading {
+		margin-bottom: 0px!important;
+	}
+	h5, .h5 {
+		font-size: 1.25rem;
+	}
+	.sec-paragraph {
+		margin-bottom: 0px;
+	}
+	ol, ul, dl {
+		margin-top: 0;
+		margin-bottom: 1rem;
+	}
+	.col-md-4 {
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 33.3333333333%;
+		flex: 0 0 33.3333333333%;
+		max-width: 33.3333333333%;
 		float: left;
-		width: 33.3333333%;
-
 	}
-
-	.referee p {
-		padding:0px;
-		margin:0px;
+	.ref-h6 {
+		margin-bottom: 0px;
+	}
+	.ref {
+		margin: 0px;
+	}
+	h6, .h6 {
+		font-size: 1rem;
+		font-weight: bold;
+	}
+	.clearfix{
+		clear: both;
+	}
+	.beside-photo {
+		margin-left: 125px;
+	}
+	.card-body {
+		padding-left: 33.3333333%;
+	}
+	.list-r ul{
+		padding-left: 33.3333333%;
+	}
+	.pull-left {
+		float: left;
+	}
+	.rounded-circle {
+		border-radius: 50% !important;
 	}
 </style>
 {% endblock %}
 {% block body %}
-<div id="top">
-	<div id="cv" class="instaFade">
-		
 
-		<div class="mainDetails">
-			<div id="headshot" class="quickFade">
-				<img src="{{app.request.getSchemeAndHttpHost()}}/{{thumbnailurl}}" alt="{{musician.fullname}}" />
+<div class="container" id="simple_one">
+	<div class="row" style="border-bottom: 2px solid #5f5c5c;">
+		<div class="col-md-9 mb-3" id="header">
+			<div class="mt-3">
+				<img class="rounded-circle pull-left" width="70" height="70" src="{{app.request.getSchemeAndHttpHost()}}/{{thumbnailurl}}" />
+				<div class="beside-photo">
+					<h3>{{musician.fullname}}</h3>
+					<a href="#"><img src="{{app.request.getSchemeAndHttpHost()}}/icons/phone.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.phone}}</a>
+					<a href="#"><img src="{{app.request.getSchemeAndHttpHost()}}/icons/mail.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.email}}</a><br />
+					<a href="#"><img src="{{app.request.getSchemeAndHttpHost()}}/icons/sphere.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;www.muske.co.ke{{musician.username}}</a>
+				</div>
 			</div>
-			
-			<div id="name">
-				<h1 class="quickFade delayTwo">{{musician.fullname}}</h1>
-				<h2 class="quickFade delayThree">Musician</h2>
-			</div>
-			
-			<div id="contactDetails" class="quickFade delayFour">
-				<ul>
-					{% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
-						<li>{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</li>
-					{% endif %}
-					<li>e: <a href="mailto:{{musician.email}}">{{musician.email}}</a></li>
-					<li>w: <a href="https://muske.co.ke/{{musician.username}}">https://muske.co.ke/{{musician.username}}</a></li>
-					<li>m: {{musician.phone}}</li>
-				</ul>
-			</div>
-			<div class="clear"></div>
 		</div>
-		
-		<div id="mainArea" class="quickFade delayFive">
-			<section>
-				<article>
-					<div class="sectionTitle">
-						<h1>About Me</h1>
+		<div class="col-md-3">
+			{% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+			<p class="text-right mt-3"><small>{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</small></p>
+			{% endif %}
+		</div>
+	</div>
+	<div class="clearfix" style="border-bottom: 2px solid #5f5c5c;"></div>
+	<div class="row">
+		<div class="col-md-12 mb-3">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Profile</h5>
+				</div>
+				<div class="card-body">
+					<p class="card-text">{{musician.about}}</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 mb-3">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Job History</h5>
+				</div>
+				<div class="card-body">
+					{% for job in jobs %}
+					<div class="row sec">
+						<div class="col-md-9">
+							<h5 class="sec-heading">{{job.jobtitle}}<br></h5><small><em>{{job.institution}}</em><br></small></div>
+						<div class="col-md-3 text-right"><small>{{job.startingfrom|date("M Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</small></div>
+						<div class="col-md-9">
+							<ul class="sec-list">
+								{% for role in job.roles %}
+								<li>{{role.role}}<br></li>
+								{% endfor %}
+							</ul>
+						</div>
 					</div>
-					
-					<div class="sectionContent">
-						{% include "reusable/_simpleabout_.html.twig" %}
+					{% endfor %}
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Education background</h5>
+				</div>
+				<div class="card-body">
+					<div class="row sec">
+						{% for edu in educ %}
+						<div class="col-md-12 edu-sec">
+							<h5 class="sec-heading">{{edu.coursename}} | {{edu.degree}}<br></h5>
+							<p class="sec-paragraph">{{edu.institution}}, {{edu.location}},<br></p>
+							<small><em>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</em><br></small>
+						</div>
+						{% endfor %}
 					</div>
-				</article>
-				<div class="clear"></div>
-			</section>
-			
-			<section>
-				<div class="sectionTitle">
-					<h1>Specialties</h1>
 				</div>
-				
-				<div class="sectionContent">
-					{% include "reusable/_simplespecialty_.html.twig" %}
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Skills</h5>
 				</div>
-				<div class="clear"></div>
-			</section>
-
-			<section>
-				<div class="sectionTitle">
-					<h1>Work Experience</h1>
-				</div>
-				
-				<div class="sectionContent">
-				    {% for job in jobs %}
-					<article>
-						<h2>{{job.institution}}{{" / " ~ job.location}}</h2>
-						<p class="subDetails">{{job.startingfrom|date("F Y")}} - {{job.currentornot == 'current' ? 'Present' : job.endedin|date("F Y") }}</p>
+				<div class="row sec list-r">
+					<div class="col-md-12 edu-sec">
 						<ul>
-							{% for role in job.roles %}
-							<li>{{role.role}}</li>
+							{% for skill in musician.skills %}
+							<li>{{skill.skillname}} |&nbsp;<strong>{{skill.levelofskill}}</strong>&nbsp;| {{skill.experienceofskill}}<br></li>
 							{% endfor %}
 						</ul>
-						<p></p>
-					</article>
-					{% endfor %}
-					
-				</div>
-				<div class="clear"></div>
-			</section>
-			
-			
-			<section>
-				<div class="sectionTitle">
-					<h1>Key Skills</h1>
-				</div>
-				
-				<div class="sectionContent">
-					<ul class="keySkills">
-						{% include "reusable/_simpleskills_.html.twig" %}
-					</ul>
-				</div>
-				<div class="clear"></div>
-			</section>
-			
-			
-			<section>
-				<div class="sectionTitle">
-					<h1>Education</h1>
-				</div>
-				
-				<div class="sectionContent">
-				{% for edu in educ %}
-					<article>
-						<h2>{{edu.institution}} | {{edu.location}}</h2>
-						<p class="subDetails">{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</p>
-						<p>{{edu.degree}} | {{edu.coursename}}</p>
-					</article>
-				{% endfor %}
-				</div>
-				<div class="clear"></div>
-			</section>
-
-			{% if musician.projects is not empty %}
-			<section>
-				<div class="sectionTitle">
-					<h1>Projects</h1>
-				</div>
-				
-				<div class="sectionContent">
-				    {% for project in musician.projects %}
-					<article>
-						<h2>{{project.projecttitle}}</h2>
-						<p class="">{{project.projectdescription}}</p>
-					</article>
-					{% endfor %}
-					
-				</div>
-				<div class="clear"></div>
-			</section>
-			{% endif %}
-
-			{% if musician.referees is not empty %}
-			<section>
-				<div class="sectionTitle">
-					<h1>Referees</h1>
-				</div>
-				<div class="sectionContent">
-					{% for referee in musician.referees %}
-					<div class="referee">
-						<article>
-							<h2>{{referee.name}}</h2>
-							<p class="">{{referee.title}}</p>
-							<p class="">{{referee.address}}</p>
-							<p class="">{{referee.contact}}</p>
-						</article>
 					</div>
-					{% endfor %}
 				</div>
-				<div class="clear"></div>
-			</section>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Specialties</h5>
+				</div>
+				<div class="row sec list-r">
+					<div class="col-md-12 edu-sec">
+						<ul>
+							{% for job_role in musician.jobstobeoffered %}
+								<li>{{job_role.jobtitle}}<br></li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			{% if musician.projects is not empty %}
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Projects</h5>
+				</div>
+				<div class="card-body pt-1">
+					<div class="row sec">
+						<div class="col-md-12 edu-sec">
+							{% for project in musician.projects %}
+							<h5 class="sec-heading">{{project.projecttitle}}<br></h5>
+							<p class="mt-3">{{project.projectdescription}}.<br>
+							</p>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
 			{% endif %}
-
+			{% if musician.referees is not empty %}
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">Referees</h5>
+				</div>
+				<div class="card-body pt-1">
+					<div class="row sec">
+						{% for referee in musician.referees %}
+						<div class="col-md-4 edu-sec mb-3">
+							<h6 class="ref-h6">{{referee.name}}</h6>
+							<p class="ref">{{referee.title}}</p>
+							<p class="ref">{{referee.address}}</p>
+							<p class="ref">{{referee.contact}}</p>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			{% endif %}
 		</div>
 	</div>
 </div>

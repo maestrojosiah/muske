@@ -56,14 +56,15 @@
 			var splitted = myId.split('-'); 
 			var div = splitted[1];
 			var form = $("#"+div+"-form");
+			var notifyDiv = ".notify-"+div;
 			var list = $("#"+div+"-list");
-			saveDetails(div, ".notify");
+			saveDetails(div, notifyDiv);
 
 			$.notify({
 				icon: 'glyphicon glyphicon-time',
 				message: 'Please wait...',
 			},{
-				element: ".notify",
+				element: notifyDiv,
 				type: "info",
 				allow_dismiss: true,
 				delay: 1000,

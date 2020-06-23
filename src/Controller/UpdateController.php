@@ -201,6 +201,13 @@ class UpdateController extends AbstractController
                 $id = $entity->getId();
                 $this->provide_notification($id, $type);
             }
+            if(null !== $request->request->get('email')){
+                $email = $request->request->get('email');
+                $username = $entity->getUsername();
+                if($activationManager->sendActivationEmail($email, $username)){
+                    $this->addFlash('success', "Account created successfully! Please check your email for an account activation link. (Check spam folder if you can't find it) ");
+                }
+            }
             // value to return if needed
             $returnVal = $toReturn == 'nothingToReturn' ? 'nothingToReturn' : $entity->$getter();
             // var_dump($returnVal);

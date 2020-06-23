@@ -144,6 +144,7 @@ class MusicianController extends AbstractController
             'educ' => $educ,
             'fourPhotos' => $fourPhotos,
             'thumbnailurl' => $thumbnailurl,
+            'pdf_template' => $pdf_template,
         ];
 
         if($download == 'pdf'){

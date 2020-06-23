@@ -2,7 +2,143 @@
 
 {% block title %}Resume{% endblock %}
 {% block stylesheets %}
-
+<style>
+    *, *::before, *::after {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    #design {
+        width: 21cm;
+        margin: auto;
+        margin-top: 50px;
+        font-size: 1.1rem;
+        border: 1px solid rgb(196, 194, 194);
+        font-family: Comic Sans MS;
+        padding-bottom: 30px !important;
+    }
+    .container {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .row {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+    .col-md-8 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 66.6666666667%;
+        flex: 0 0 66.6666666667%;
+        max-width: 66.6666666667%;
+        float: left;
+    }
+    .col-md-4 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 33.3333333333%;
+        flex: 0 0 33.3333333333%;
+        max-width: 33.3333333333%;
+        float: left;
+    }
+    .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl, .col-xl-auto {
+        position: relative;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    .clearfix {
+        clear: both;
+    }
+    #name {
+        border-bottom: 1px solid #000;
+    }
+    h1, .h1 {
+        font-size: 2.5rem;
+    }
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        line-height: 1.2;
+        color: #2d2d2d;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+    }
+    p {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+    img {
+        vertical-align: middle;
+        border-style: none;
+    }
+    .col-md-9 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 75%;
+        flex: 0 0 75%;
+        max-width: 75%;
+        float: left;
+    }
+    .col-md-3 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+        float: left;
+    }
+    .b-left {
+        height: 100px;
+        border-left: 1px solid #000;
+    }
+    .b-right {
+        height: 100px;
+        border-right: 1px solid #000;
+    }
+    .mt-5, .my-5 {
+        margin-top: 3rem !important;
+    }
+    .mid {
+        padding-top: 35px;
+        padding-left: 20px;
+        font-size: 1.2rem;
+    }
+    .mid-r {
+        padding-top: 35px;
+        padding-right: 20px;
+        font-size: 1.2rem;
+        text-align: right;
+    }
+    small, .small {
+        font-size: 80%;
+        font-weight: 400;
+    }
+    h5, .h5 {
+        font-size: 1.25rem;
+    }
+    ol, ul, dl {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+    h6, .h6 {
+        font-size: 1rem;
+        margin: 0;
+        padding: 0;
+    }
+    .ref {
+        margin: 0;
+        padding: 0;
+    }
+</style>
 {% endblock %}
 {% block body %}
 
@@ -13,8 +149,9 @@
             <p>Josiah Birai<br>P.O. Box 54432 - 20100<br>Nairobi</p>
             <p>0702343232<br>maestrojosiah@gmail.com<br>www.muske.co.ke/maestrojosiah</p>
         </div>
-        <div class="col-md-4 "><img class="img-fluid d-none d-md-block" src="{{app.request.getSchemeAndHttpHost()}}/{{thumbnailurl}}" width="240" height="240"></div>
+        <div class="col-md-4 "><img class="img-fluid" src="{{app.request.getSchemeAndHttpHost()}}/{{thumbnailurl}}" width="240" height="240"></div>
     </div>
+    <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-9">
             <p>Experienced musician with a 12-year experience in the field of music, especially in choral training, teaching music theory, teaching musical instruments including piano, classical and contemporary guitar, trumpet and recorder. I am comfortable
@@ -22,15 +159,16 @@
                 of Associated Board of the Royal Schools of Music (ABRSM) Music Theory. I also have a Diploma in Music and Dance from Kenyatta University. 33 Year old.<br></p>
         </div>
         <div class="col-md-3">
-            <div class="b-left mt-5 d-none d-md-block">
+            <div class="b-left mt-5">
                 <p class="mid">Profile</p>
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-3">
             <div class="b-right mt-5">
-                <p class="mid">Job History</p>
+                <p class="mid-r">Job History</p>
             </div>
         </div>
         <div class="col-md-9">
@@ -39,9 +177,9 @@
                 <ul>
                     <li>Teaching instruments - classes 4-8 (Piano, guitar and recorder).<br></li>
                     <li>Teaching music theory to lower classes.<br></li>
-                    <li>Organizing music for students and overseeing their progress.<br></li>
-                    <li>Keeping records for the progress of each music student.<br></li>
-                </ul>
+                    <li>Organizing music for students and overseeing their progress.<    margin-top: 0;
+                        margin-bottom: 1rem;
+                    }
                 <p></p>
             </div>
             <div class="mt-5">
@@ -56,10 +194,11 @@
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-3">
             <div class="b-right mt-5">
-                <p class="mid">Education Background</p>
+                <p class="mid-r">Education Background</p>
             </div>
         </div>
         <div class="col-md-9">
@@ -77,10 +216,11 @@
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-3">
             <div class="b-right mt-5">
-                <p class="mid">Projects</p>
+                <p class="mid-r">Projects</p>
             </div>
         </div>
         <div class="col-md-9">
@@ -91,10 +231,11 @@
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-3">
             <div class="b-right mt-5">
-                <p class="mid">Skills</p>
+                <p class="mid-r">Skills</p>
             </div>
         </div>
         <div class="col-md-9">
@@ -108,10 +249,11 @@
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-3">
             <div class="b-right mt-5">
-                <p class="mid">Specialties</p>
+                <p class="mid-r">Specialties</p>
             </div>
         </div>
         <div class="col-md-9">
@@ -125,37 +267,39 @@
             </div>
         </div>
     </div>
-    <div class="row mb-5">
+    <div class="clearfix"></div>
+    <div class="row pb-5">
         <div class="col-md-3">
             <div class="b-right mt-5">
-                <p class="mid">Referees</p>
+                <p class="mid-r">Referees</p>
             </div>
         </div>
         <div class="col-md-3">
             <div class="mt-5">
                 <h6 class="ref-h6">Mr / Mrs Smith</h6>
+                <p class="ref">Chairman</p>
+                <p class="ref">Maxwell S.D.A Church</p>
+                <p class="ref">0735647444</p>
             </div>
-            <p class="ref">Chairman</p>
-            <p class="ref">Maxwell S.D.A Church</p>
-            <p class="ref">0735647444</p>
         </div>
         <div class="col-md-3">
             <div class="mt-5">
                 <h6 class="ref-h6">Mr / Mrs Smith</h6>
+                <p class="ref">Chairman</p>
+                <p class="ref">Maxwell S.D.A Church</p>
+                <p class="ref">0735647444</p>
             </div>
-            <p class="ref">Chairman</p>
-            <p class="ref">Maxwell S.D.A Church</p>
-            <p class="ref">0735647444</p>
         </div>
         <div class="col-md-3">
             <div class="mt-5">
                 <h6 class="ref-h6">Mr / Mrs Smith</h6>
+                <p class="ref">Chairman</p>
+                <p class="ref">Maxwell S.D.A Church</p>
+                <p class="ref">0735647444</p>
             </div>
-            <p class="ref">Chairman</p>
-            <p class="ref">Maxwell S.D.A Church</p>
-            <p class="ref">0735647444</p>
         </div>
     </div>
-</div>
+    <div class="clearfix"></div>
 
+</div>
 {% endblock %}

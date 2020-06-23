@@ -250,7 +250,7 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="img-holder row header top-row">
-                        <div class="col-md-2"><img class="img-fluid profile-pic" src="{{thumbnailurl}}"></div>
+                        <div class="col-md-2"><img class="img-fluid profile-pic" src="{{app.request.getSchemeAndHttpHost()}}/{{thumbnailurl}}"></div>
                         <div class="col">
                             <h3 style="font-family: Alice, serif;">{{musician.fullname}}</h3>
                             <h5>Musician</h5>

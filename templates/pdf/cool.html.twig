@@ -177,12 +177,9 @@
 {% block body %}
 <div id="top">
 	<div id="cv" class="instaFade">
-		{% if thumbnailurl is not defined %}
-			{% set thumbnailurl = musician.thumbnailurl %}
-		{% endif %}
 		<div class="mainDetails">
 			<div id="headshot" class="quickFade">
-				<img src="{{thumbnailurl}}" alt="{{musician.fullname}}" />
+				<img src="{{app.request.getSchemeAndHttpHost()}}/{{thumbnailurl}}" alt="{{musician.fullname}}" />
 			</div>
 			
 			<div id="name">

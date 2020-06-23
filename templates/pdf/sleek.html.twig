@@ -15,6 +15,10 @@
         text-align: left;
         background-color: #fff;        
     }
+    *, *::before, *::after {
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+	}
     .container.resume {
         font-size: 1.1rem;
         font-family: inherit;
@@ -162,6 +166,7 @@
         position: relative;
         padding-right: 15px;
         padding-left: 15px;
+        width: 100%;
     }    
     .resume h6 {
         font-size: .9rem;

@@ -64,7 +64,7 @@
             </div>
             {% for edu in educ %}
             <div class="col-md-8 offset-md-4 right" style="position: relative;">
-                <h6 class="sec-heading">{{edu.coursename}}</h6>
+                <h6 class="sec-heading">{{edu.coursename}} | {{edu.degree}}</h6>
                 <p class="sec-paragraph">{{edu.institution}} | {{edu.location}}</p>
                 <small>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</small>
                 {% include "web/templates/doc.html.twig" %}

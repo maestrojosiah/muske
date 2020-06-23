@@ -9,17 +9,17 @@
 <div class="container" id="design">
     <div class="row">
         <div class="col-md-8">
-            <h1 id="name">Josiah Birai</h1>
-            <p>Josiah Birai<br>P.O. Box 54432 - 20100<br>Nairobi</p>
-            <p>0702343232<br>maestrojosiah@gmail.com<br>www.muske.co.ke/maestrojosiah</p>
+            <h1 id="name">{{musician.fullname}}</h1>
+            {% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+            <p>{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</p>
+            {% endif %}
+            <p>{{musician.phone}}<br>{{musician.email}}<br>www.muske.co.ke/{{musician.username}}</p>
         </div>
-        <div class="col-md-4 "><img class="img-fluid d-none d-md-block" src="{{thumbnailurl}}" width="240" height="240"></div>
+        <div class="col-md-4 "><img class="img-fluid d-none d-md-block" src="{{app.request.getSchemeAndHttpHost()}}/{{thumbnailurl}}" width="240" height="240"></div>
     </div>
     <div class="row">
         <div class="col-md-9">
-            <p>Experienced musician with a 12-year experience in the field of music, especially in choral training, teaching music theory, teaching musical instruments including piano, classical and contemporary guitar, trumpet and recorder. I am comfortable
-                with sight-reading and sight-singing complex music at glance and conversant with hundreds of hymns from the most common hymnals. I’m used to the art of arranging music, song composition and training mixed voices. I’m a grade 8 holder
-                of Associated Board of the Royal Schools of Music (ABRSM) Music Theory. I also have a Diploma in Music and Dance from Kenyatta University. 33 Year old.<br></p>
+            <p>{{musician.about}}<br></p>
         </div>
         <div class="col-md-3">
             <div class="b-left mt-5 d-none d-md-block">
@@ -30,80 +30,64 @@
     <div class="row">
         <div class="col-md-3">
             <div class="b-right mt-5">
-                <p class="mid">Job History</p>
+                <p class="mid-r">Job History</p>
             </div>
         </div>
         <div class="col-md-9">
+            {% for job in jobs %}
             <div class="mt-5">
-                <h5>Music Instructor / Teacher<br></h5><small><em>Kenya Conservatoire of Music / Nairobi -&nbsp;</em>Sep 2017 - Aug 2019<br><em>&nbsp;</em><br></small>
-                <ul>
-                    <li>Teaching instruments - classes 4-8 (Piano, guitar and recorder).<br></li>
-                    <li>Teaching music theory to lower classes.<br></li>
-                    <li>Organizing music for students and overseeing their progress.<br></li>
-                    <li>Keeping records for the progress of each music student.<br></li>
-                </ul>
-                <p></p>
+                <h5>{{job.jobtitle}}<br></h5>
+                <small><em>{{job.institution}} / {{job.location}} -&nbsp;</em>{{job.startingfrom|date("M Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}<br></small>
+                {% include "web/templates/list.html.twig" %}
             </div>
-            <div class="mt-5">
-                <h5>Music Instructor<br></h5><small><em>Kenya Conservatoire of Music / Nairobi -&nbsp;</em>Sep 2017 - Aug 2019<br><em>&nbsp;</em><br></small>
-                <ul>
-                    <li>Teaching instruments - classes 4-8 (Piano, guitar and recorder).<br></li>
-                    <li>Teaching music theory to lower classes.<br></li>
-                    <li>Organizing music for students and overseeing their progress.<br></li>
-                    <li>Keeping records for the progress of each music student.<br></li>
-                </ul>
-                <p></p>
-            </div>
+            {% endfor %}
         </div>
     </div>
     <div class="row">
         <div class="col-md-3">
             <div class="b-right mt-5">
-                <p class="mid">Education Background</p>
+                <p class="mid-r">Education Background</p>
             </div>
         </div>
         <div class="col-md-9">
-            <div class="mt-5">
-                <h5><strong>Certificate:</strong>&nbsp;Fundamentals of Rehearsing Music Ensembles<br></h5><small>University of North Carolina at Chapel hill via Coursera - Online<br></small>
-                <p>Sep 2017 - Aug 2019</p>
+            {% for edu in educ %}
+            <div class="mt-5" style="position: relative;">
+                <h5><strong>{{edu.degree}}:</strong>&nbsp;{{edu.coursename}}<br></h5><small>{{edu.institution}} - {{edu.location}}<br></small>
+                <p>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</p>
+                {% include "web/templates/doc.html.twig" %}
             </div>
-            <div class="mt-5">
-                <h5><strong>Diploma:</strong>&nbsp;Music and Dance<br></h5><small>Associated Board of the Royal Schools of Music - Nairobi<br></small>
-                <p>Sep 2017 - Aug 2019</p>
-            </div>
-            <div class="mt-5">
-                <h5><strong>Grade 8:</strong>&nbsp;Music Theory<br></h5><small>Associated Board of the Royal Schools of Music - Nairobi<br></small>
-                <p>Sep 2017 - Aug 2019</p>
-            </div>
+            {% endfor %}
         </div>
     </div>
+    {% if musician.projects is not empty %}
     <div class="row">
         <div class="col-md-3">
             <div class="b-right mt-5">
-                <p class="mid">Projects</p>
+                <p class="mid-r">Projects</p>
             </div>
         </div>
         <div class="col-md-9">
+            {% for project in musician.projects %}
             <div class="mt-5">
-                <h5>Loud Whispers Chorus<br></h5>
-                <p>Founded the group for the purpose of putting to practice the skills learned from the choral conducting course from September to December 2016 at the Kenya Conservatoire of Music. We taught the members music theory up to grade 3, conducted
-                    rehearsals and performances.<br></p>
+                <h5>{{project.projecttitle}}<br></h5>
+                <p>{{project.projectdescription}}<br></p>
             </div>
+            {% endfor %}
         </div>
     </div>
+    {% endif %}
     <div class="row">
         <div class="col-md-3">
             <div class="b-right mt-5">
-                <p class="mid">Skills</p>
+                <p class="mid-r">Skills</p>
             </div>
         </div>
         <div class="col-md-9">
             <div class="mt-5">
                 <ul>
-                    <li>Piano |&nbsp;<strong>Intermediate</strong>&nbsp;| 8 years<br></li>
-                    <li>Music Theory |&nbsp;<strong>Advanced</strong>&nbsp;| 11 years<br></li>
-                    <li>Music Notation Software |&nbsp;<strong>Intermediate</strong>&nbsp;| 7 years<br></li>
-                    <li>Sequencing |&nbsp;<strong>Beginner</strong>&nbsp;| 2 years<br></li>
+                    {% for skill in musician.skills %}
+                    <li><span>{{skill.skillname}}</span></li>
+                    {% endfor %}                
                 </ul>
             </div>
         </div>
@@ -111,16 +95,15 @@
     <div class="row">
         <div class="col-md-3">
             <div class="b-right mt-5">
-                <p class="mid">Specialties</p>
+                <p class="mid-r">Specialties</p>
             </div>
         </div>
         <div class="col-md-9">
             <div class="mt-5">
                 <ul>
-                    <li>Music Theory Instructor<br></li>
-                    <li>Choral Conductor<br></li>
-                    <li>Church Pianist<br></li>
-                    <li>Music Director<br></li>
+                    {% for job_role in musician.jobstobeoffered %}
+                    <li><span>{{job_role.jobtitle}}</span></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -128,32 +111,11 @@
     <div class="row mb-5">
         <div class="col-md-3">
             <div class="b-right mt-5">
-                <p class="mid">Referees</p>
+                <p class="mid-r">Referees</p>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="mt-5">
-                <h6 class="ref-h6">Mr / Mrs Smith</h6>
-                <p class="ref">Chairman</p>
-                <p class="ref">Maxwell S.D.A Church</p>
-                <p class="ref">0735647444</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="mt-5">
-                <h6 class="ref-h6">Mr / Mrs Smith</h6>
-                <p class="ref">Chairman</p>
-                <p class="ref">Maxwell S.D.A Church</p>
-                <p class="ref">0735647444</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="mt-5">
-                <h6 class="ref-h6">Mr / Mrs Smith</h6>
-                <p class="ref">Chairman</p>
-                <p class="ref">Maxwell S.D.A Church</p>
-                <p class="ref">0735647444</p>
-            </div>
+        <div class="col-md-9">
+            {% include "reusable/referees.html.twig" %}   
         </div>
     </div>
 </div>

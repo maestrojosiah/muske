@@ -41,7 +41,7 @@
                     <h4 class="card-title"><i class="fa fa-graduation-cap"></i>&nbsp;Education</h4>
                     {% for edu in educ %}
                     <div style="position: relative; padding-right:20px; padding-top:10px; padding-bottom:10px;">
-                        <h5 class="text-muted mb-2">{{edu.coursename}}</h5>
+                        <h5 class="text-muted mb-2">{{edu.coursename}} | {{edu.degree}}</h5>
                         <h6 class="text-muted mb-2">{{edu.institution}} | {{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</h6>
                         {% include "web/templates/doc.html.twig" %}
                     </div>

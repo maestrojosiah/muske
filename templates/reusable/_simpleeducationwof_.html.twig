@@ -1,7 +1,7 @@
 			<ul>
 			{% for edu in educ %}
 			<div  style="position: relative;">
-				<li><strong>{{edu.degree}} for {{edu.coursename}}</strong><br /> {{edu.institution}}, {{edu.location}},  <br /> <em>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</em></li>
+				<li><strong>{{edu.degree}} in {{edu.coursename}}</strong><br /> {{edu.institution}}, {{edu.location}},  <br /> <em>{{edu.fromyear|date("M Y")}} - {{edu.toyear|date("M Y")}}</em></li>
 			</div>
 			{% endfor %}
 			</ul>

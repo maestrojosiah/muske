@@ -28,6 +28,13 @@ body {
   font-size: 1.2rem;
 }
 
+.mid-r {
+  padding-top: 35px;
+  padding-right: 20px;
+  font-size: 1.2rem;
+  text-align: right;
+}
+
 .ref {
   margin: 0;
   padding: 0;

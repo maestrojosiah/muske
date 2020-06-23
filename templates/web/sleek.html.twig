@@ -63,7 +63,7 @@
                     {% endfor %}
                 </div>
             </div>
-            {% if musician.projects %}
+            {% if musician.projects is not empty %}
             <div class="card content">
                 <div class="card-header">
                     <h5 class="mb-0">Projects</h5>

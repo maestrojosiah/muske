@@ -75,7 +75,10 @@ class IndexController extends AbstractController
     public function test(): Response
     {
 
-        return $this->render('index/test.html.twig');
+        return $this->render('email/account_type.html.twig', [
+            'username' => 'test',
+            'membership' => 'test'
+        ]);
     }
 
 }

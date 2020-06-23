@@ -39,7 +39,7 @@
                                             <input class="form-control mr-2"  type="password" name="password" id="inputPassword" placeholder="Password" required>
                                         </div>
                                         <div class="checkbox">
-                                            <label><input type="checkbox" id="remember_me" name="_remember_me" checked> Keep me logged in</label>
+                                            <label><input type="checkbox" name="_remember_me" checked> Keep me logged in</label>
                                         </div>
                                         <input type="hidden" name="_csrf_token"
                                             value="{{ csrf_token('authenticate') }}"

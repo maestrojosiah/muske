@@ -95,7 +95,7 @@ class UpdateController extends AbstractController
             if(strpos($classFromForm, '-')){
                 $class_name = explode('-', $classFromForm)[0]; // get the class name
                 $id = explode('-', $classFromForm)[1]; // get the second part of the string - id
-                $class = "App\Entity\\".$class_name; // make a string of the entity
+                $class = "App:".$class_name; // make a string of the entity
                 $entity = $entityManager->getRepository($class)->find($id); // get the entity by id
             } else { // if new entity
                 $class = "App\Entity\\".$classFromForm; // make a string of the entity

@@ -97,6 +97,13 @@ class MusicianController extends AbstractController
     {
 
         $musician = $musicianRepository->findOneByUsername($username);
+        if(!$musician){
+            $this->addFlash(
+                'warning',
+                'The user you\'re looking for is not available. Try searching'
+            );
+            return $this->redirectToRoute('search');
+        }
         $jobsString = $this->getJobsAsString($musician);
         $skillsString = $this->getSkillsAsString($musician);
 

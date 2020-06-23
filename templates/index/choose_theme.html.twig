@@ -3,26 +3,52 @@
 {% block title %}Music Services Kenya{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('theme/assets/css/Bold-BS4-CSS-Image-Slider.css ') }}">
+    <link rel="stylesheet" href="{{ asset('theme/assets/css/Simple-Slider.css ') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
 {% endblock %}
 {% block body %}
     {% include "reusable/nav.html.twig" %}
-    <h3 class="text-center reg-heading" id="select-theme-heading">Select a theme</h3>
-    <hr>
-    <div class="accordian">
-        <ul>
-            {% for theme in themes %}
-            <li>
-                <a class="image_title" href="{{ path('app_register') }}?theme={{theme.title}}">{{theme.title}}</a>
-                <a href="{{ path('app_register') }}?theme={{theme.template}}"><img class="link-image" src="{{ asset('img/screenshots/' ~ theme.screenshot )}}"></a>
-            </li>
-            {% endfor %}
-        </ul>
+
+    <div class="simple-slider" style="height: 100vh;">
+        <div class="swiper-container" style="height: 100%;">
+            <div class="swiper-wrapper">
+                {% for theme in themes %}
+                <div class="swiper-slide">
+                    <div class="img-holder">
+                        <a href="{{ path('app_register') }}?theme={{theme.template}}"><img class="slide-img" src="{{ asset('img/screenshots/' ~ theme.screenshot )}}" title="Select this as your theme template"></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
     </div>
+    <div class="modal fade" id="explain" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Choose Your Template Theme</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <p>Choose your preferred theme by swiping right or left. Click on image to select. Your resume will be generated using the theme that you select.</p>
+                </div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">OK</button></div>
+            </div>
+        </div>
+    </div>
+
     {% include "reusable/footer.html.twig" %}
 
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('theme/assets/js/theme.js ') }}"></script>
+    <script src="{{ asset('theme/assets/js/Simple-Slider.js ') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+    <script type="text/javascript">
+        $(window).on('load',function(){
+            $('#explain').modal('show');
+        });
+    </script>
+
 {% endblock %}

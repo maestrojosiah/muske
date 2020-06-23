@@ -9,6 +9,14 @@
     {% include "reusable/nav.html.twig" %}
     <div class="container">
         <div class="jumbotron text-center" style="background-color: #fff!important;" id="search">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}" role="alert">
+                        <span>{{ message }}</span>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
             <h4>Search now!</h4>
             <div class="for-btn d-none d-md-inline-block">
                 <p>Click on any skill to narrow down.</p>

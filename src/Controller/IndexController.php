@@ -52,7 +52,7 @@ class IndexController extends AbstractController
             return $this->redirectToRoute('musician_profile');
         }
 
-        $themes = $pdfThemeRepository -> findFive();
+        $themes = $pdfThemeRepository -> findAll();
         return $this->render('index/choose_theme.html.twig', [
             'themes' => $themes,
         ]);

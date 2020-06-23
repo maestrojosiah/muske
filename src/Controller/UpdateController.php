@@ -205,10 +205,15 @@ class UpdateController extends AbstractController
             }
             if(null !== $request->request->get('email')){
                 $email = $request->request->get('email');
-                $username = $entity->getUsername();
-                if($this->activationManager->sendActivationEmail($email, $username)){
-                    $this->addFlash('success', "Account created successfully! Please check your email for an account activation link. (Check spam folder if you can't find it) ");
+                $username = $this->base64url_encode($entity->getUsername());
+                if($entity->getConfirmed() == 'true'){
+                    //do nothing
+                } else {
+                    if($this->activationManager->sendActivationEmail($email, $username)){
+                        $this->addFlash('success', "Account created successfully! Please check your email for an account activation link. (Check spam folder if you can't find it) ");
+                    }    
                 }
+    
             }
             // value to return if needed
             $returnVal = $toReturn == 'nothingToReturn' ? 'nothingToReturn' : $entity->$getter();
@@ -547,6 +552,14 @@ class UpdateController extends AbstractController
         imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $orig_width, $orig_height);
 
         return $image_p;
+    }
+    
+	function base64url_encode($data) {
+        return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+    }
+      
+    function base64url_decode($data) {
+        return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
     }
 
 }

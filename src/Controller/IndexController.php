@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Repository\MusicianRepository;
 use App\Repository\SkillRepository;
 use App\Repository\PdfThemeRepository;
+use Sonata\SeoBundle\Seo\SeoPageInterface;
 
 class IndexController extends AbstractController
 {
@@ -25,13 +26,28 @@ class IndexController extends AbstractController
     /**
      * @Route("/search", name="search")
      */
-    public function search(MusicianRepository $musicianRepository, SkillRepository $skillRepository): Response
+    public function search(SeoPageInterface $seoPage, MusicianRepository $musicianRepository, SkillRepository $skillRepository): Response
     {
         $skills = $skillRepository->findSkillsList();
         $musicians = $musicianRepository->findAll();
         $proMusicians = $musicianRepository->getMusicians('pro');
         $muskeMusicians = $musicianRepository->getMusicians('muske');
         $basicMusicians = $musicianRepository->getMusicians('basic');
+        $skills_list = [];
+        foreach ($skills as $skill ) {
+            $skills_list[] = $skill['skillname'];
+        }
+        $skill_list = implode(" ", $skills_list);
+
+        $seoPage
+        ->setTitle("Search for music services")
+        ->addMeta('name', 'keywords', $skill_list)
+        ->addMeta('name', 'description', "Search for a music instructor in any music field from the country's largest musician database")
+        ->addMeta('property', 'og:title', "Search for music services")
+        ->addMeta('property', 'og:url',  $this->generateUrl('search'))
+        ->addMeta('property', 'og:description', "Search for a music instructor in any music field from the country's largest musician database")
+    ;
+
         return $this->render('index/search.html.twig', [
             'skills' => $skills,
             'musicians' => $musicians,

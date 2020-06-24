@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\MusicianRepository;
+use Sonata\SeoBundle\Seo\SeoPageInterface;
 
 /**
  * @Route("/advert")
@@ -21,6 +22,7 @@ class AdvertController extends AbstractController
      */
     public function index(AdvertRepository $advertRepository, $id = null): Response
     {
+        $musician = $this->getUser();
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $adverts = $advertRepository->findAll();
         if(null !== $id){
@@ -29,17 +31,22 @@ class AdvertController extends AbstractController
             $advert = null;
         }
         
+        $notifs = [];
+        $notifs[] = count($musician->getJobs()) < 1 ? ['musician_new' => 'Please add job history to your resume'] : [];
+        $notifs[] = count($musician->getEducation()) < 1 ? ['musician_new' => 'Please add education background to your resume'] : [];
+        $notifs[] = count($musician->getReferees()) < 1 ? ['musician_show' => 'You may need to add referees to your resume'] : [];
 
         return $this->render('advert/index.html.twig', [
             'adverts' => $adverts,
             'advert' => $advert,
+            'notifs' => $notifs,
         ]);
     }
 
     /**
      * @Route("/new", name="advert_new", methods={"GET","POST"})
      */
-    public function new(MusicianRepository $musicianRepository, Request $request): Response
+    public function new(SeoPageInterface $seoPage, MusicianRepository $musicianRepository, Request $request): Response
     {
         $continue = false;
         $counter = 3;
@@ -51,6 +58,16 @@ class AdvertController extends AbstractController
                 $continue = true;
             }    
         }
+
+        $seoPage
+        ->setTitle("Advertize music job position")
+        ->addMeta('name', 'keywords', "Advertise music job choir trainer pianist church pianist music teacher ")
+        ->addMeta('name', 'description', "Advertize a music job and have it reach all the musicians in the MuSKe platform. Track the performance of your advert in real time!")
+        ->addMeta('property', 'og:title', "Advertise music job position")
+        ->addMeta('property', 'og:url',  $this->generateUrl('advert_new'))
+        ->addMeta('property', 'og:description', "Advertize a music job and have it reach all the musicians in the MuSKe platform. Track the performance of your advert in real time!")
+        ;
+
         if($continue == true){
             $muskeMusicians = $musicianRepository->getMusicians('muske',$counter);
             if(null !== $muskeMusicians){

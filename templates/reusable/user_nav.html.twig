@@ -21,7 +21,7 @@
           </li>
           <li class="nav-item dropdown no-arrow mx-1" role="presentation">
              <div class="nav-item dropdown no-arrow">
-                <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="badge badge-danger badge-counter">{{notifs|length}}</span><i class="fas fa-bell fa-fw"></i></a>
+                <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="badge badge-danger badge-counter">{{notifs|length > 0 ? notifs|length : ''}}</span><i class="fas fa-bell fa-fw"></i></a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
                    role="menu" style="background-color: rgb(231,231,231);">
                    <h6 class="dropdown-header">notification center</h6>

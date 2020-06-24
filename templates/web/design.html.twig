@@ -15,7 +15,7 @@
             {% endif %}
             <p>{{musician.phone}}<br>{{musician.email}}<br>www.muske.co.ke/{{musician.username}}</p>
         </div>
-        <div class="col-md-4 "><img class="img-fluid d-none d-md-block" src="{{app.request.getSchemeAndHttpHost()}}/{{thumbnailurl}}" width="240" height="240"></div>
+        <div class="col-md-4 "><img class="img-fluid d-none d-md-block" src="{{app.request.getSchemeAndHttpHost()}}{{thumbnailurl}}" width="240" height="240"></div>
     </div>
     <div class="row">
         <div class="col-md-9">

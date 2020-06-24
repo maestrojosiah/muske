@@ -191,7 +191,7 @@
                             </div>
                           </div>
                           <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
-                          <input type="hidden" name="extras" value="musician" />
+                          {% if musician.settings|length < 1 %}<input type="hidden" name="extras" value="musician" />{% endif %}
                         </div>
                         <div class="form-group"><button id="save-order" class="btn btn-primary btn-sm" type="button">Save&nbsp;</button></div>
                       </form>
@@ -278,7 +278,7 @@
                               <small class="form-text text-muted">Which are your preferred job places? eg Kiambu, Nairobi</small>
                             </div>
                             <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
-                            <input type="hidden" name="extras" value="musician" />
+                            {% if musician.settings|length < 1 %}<input type="hidden" name="extras" value="musician" />{% endif %}
                             <div class="form-group"><button id="save-extra" class="btn btn-primary btn-sm" type="button">Save&nbsp;</button></div>
                       </form>
                         </div>
@@ -303,7 +303,7 @@
                                     <input class="custom-control-input" name="appendsignature" value="true" type="checkbox" id="formCheck-1" checked />
                                     <label class="custom-control-label" for="formCheck-1"><strong>Show this in my resume</strong></label>
                                     <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
-                                    <input type="hidden" name="extras" value="musician" />        
+                                    {% if musician.settings|length < 1 %}<input type="hidden" name="extras" value="musician" />{% endif %}        
                                   </div>
                                 </div>
                                 <div class="form-group"><button class="btn btn-primary btn-sm" id="save-signature" type="button">Save</button></div>

@@ -175,7 +175,7 @@ class MusicianController extends AbstractController
         PdfThemeRepository $pdfThemeRepository
         ): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         
         $musician = $this->getUser();
 
@@ -189,41 +189,48 @@ class MusicianController extends AbstractController
 
         $roles_array = [];
         $skills_array = [];
-        if($musician->getSettings()){
-            
-            // in case settings is not available
-            $jobOrder = $musician->getSettings()->getJobOrder() ? $musician->getSettings()->getJobOrder() : "id";
-            $jobSort = $musician->getSettings()->getJobOrderBy() ? $musician->getSettings()->getJobOrderBy() : "ASC";
-            $jobs_array = $jobRepository->findByGivenField($jobOrder, $jobSort, $musician);
-            foreach ($jobs_array as $key => $job) {
-                if(count($job->getRoles()) > 0){
-                    $roles_array[$key] = $job->getRoles();
-                }
-                
-            }
 
-            // in case settings is not available
-            $eduOrder = $musician->getSettings()->getEduOrder() ? $musician->getSettings()->getEduOrder() : "id";
-            $eduSort = $musician->getSettings()->getEduOrderBy() ? $musician->getSettings()->getEduOrderBy() : "ASC";
-            $edu_array = $educationRepository->findByGivenField($eduOrder, $eduSort, $musician);
-            foreach ($edu_array as $key => $edu) {
-                if(count($edu->getSpecialties()) > 0){
-                    $skills_array[$key] = $edu->getSpecialties();
-                }
-                
+        // in case settings is not available
+        $jobOrder = $musician->getSettings() && $musician->getSettings()->getJobOrder() ? $musician->getSettings()->getJobOrder() : "id";
+        $jobSort = $musician->getSettings() && $musician->getSettings()->getJobOrderBy() ? $musician->getSettings()->getJobOrderBy() : "ASC";
+        $jobs_array = $jobRepository->findByGivenField($jobOrder, $jobSort, $musician);
+        foreach ($jobs_array as $key => $job) {
+            if(count($job->getRoles()) > 0){
+                $roles_array[$key] = $job->getRoles();
             }
+            
+        }
+
+        // in case settings is not available
+        $eduOrder = $musician->getSettings() && $musician->getSettings()->getEduOrder() ? $musician->getSettings()->getEduOrder() : "id";
+        $eduSort = $musician->getSettings() && $musician->getSettings()->getEduOrderBy() ? $musician->getSettings()->getEduOrderBy() : "ASC";
+        $edu_array = $educationRepository->findByGivenField($eduOrder, $eduSort, $musician);
+        foreach ($edu_array as $key => $edu) {
+            if(count($edu->getSpecialties()) > 0){
+                $skills_array[$key] = $edu->getSpecialties();
+            }
+            
+        }
     
-        } 
+        
         
 
         $doc_array = $documentRepository->findByGivenField("id", "ASC", $musician);
             
         $gallery_array = $galleryRepository->findByGivenField("id", "ASC", $musician);
         
+        $notifs = [];
+        $notifs[] = count($musician->getJobs()) < 1 ? ['musician_new' => 'Please add job history to your resume'] : [];
+        $notifs[] = count($musician->getEducation()) < 1 ? ['musician_new' => 'Please add education background to your resume'] : [];
+        $notifs[] = count($doc_array) < 1 ? ['musician_show' => 'You may need to add documents to your resume'] : [];
+        $notifs[] = count($roles_array) < 1 ? ['musician_show' => 'You may need to add roles to your resume jobs'] : [];
+        $notifs[] = count($musician->getReferees()) < 1 ? ['musician_show' => 'You may need to add referees to your resume'] : [];
+
         return $this->render('musician/profile.html.twig', [
             'musician' => $musician,
             'membership' => $membership,
             'roles' => $roles_array,
+            'notifs' => array_filter($notifs),
             'skills' => $skills_array,
             'documents' => $doc_array,
             'gallery' => $gallery_array,
@@ -237,7 +244,7 @@ class MusicianController extends AbstractController
      */
     public function plan(): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $musician = $this->getUser();
 
         if($musician->isMuskeAndActive() == 'true'){
@@ -259,7 +266,7 @@ class MusicianController extends AbstractController
      */
     public function planDetails($plan): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $musician = $this->getUser();
 
         if($musician->isMuskeAndActive() == 'true'){

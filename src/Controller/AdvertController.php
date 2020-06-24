@@ -39,7 +39,7 @@ class AdvertController extends AbstractController
         return $this->render('advert/index.html.twig', [
             'adverts' => $adverts,
             'advert' => $advert,
-            'notifs' => $notifs,
+            'notifs' => array_filter($notifs),
         ]);
     }
 

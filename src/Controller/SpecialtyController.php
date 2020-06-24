@@ -30,7 +30,7 @@ class SpecialtyController extends AbstractController
      */
     public function new(Request $request, $education_id): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $edus = $this->getUser()->getEducation();
         $default_education = $this->getDoctrine()->getManager()->getRepository('App:Education')->find($education_id);
         $specialty = new Specialty();
@@ -69,7 +69,7 @@ class SpecialtyController extends AbstractController
      */
     public function edit(Request $request, Specialty $specialty): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         $form = $this->createForm(SpecialtyType::class, $specialty);
         $form->handleRequest($request);

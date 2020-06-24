@@ -21,7 +21,7 @@ class PdfThemeController extends AbstractController
     public function index(PdfThemeRepository $pdfThemeRepository): Response
     {
         
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $musician = $this->getUser();
         return $this->render('pdf_theme/index.html.twig', [
             'pdf_themes' => $pdfThemeRepository->findAll(),

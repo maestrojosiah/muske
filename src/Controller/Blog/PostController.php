@@ -33,7 +33,7 @@ class PostController extends AbstractController
      */
     public function new(Request $request, BlogManager $blogManager, SluggerInterface $slugger)
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $musician = $this->getUser();
         $array = ['musician' => $musician, 'with_video' => false];
         return $blogManager->createNewEntity($request, $array, "Post", 'blog', "blog/post/new.html.twig", $slugger );
@@ -44,7 +44,7 @@ class PostController extends AbstractController
      */
     public function newWithVideo(Request $request, BlogManager $blogManager, SluggerInterface $slugger)
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $musician = $this->getUser();
         $array = ['musician' => $musician, 'with_video' => true];
         return $blogManager->createNewEntity($request, $array, "Post", 'blog', "blog/post/new_with_vid.html.twig", $slugger );
@@ -86,7 +86,7 @@ class PostController extends AbstractController
      */
     public function edit(Request $request, BlogManager $blogManager, SluggerInterface $slugger, Post $post): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $musician = $this->getUser();
         $array = ['musician' => $musician, 'with_video' => false];
         return $blogManager->createNewEntity($request, $array, "Post", 'blog', "blog/post/edit.html.twig", $slugger, 'edit', $post );
@@ -97,7 +97,7 @@ class PostController extends AbstractController
      */
     public function editWithVideo(Request $request, BlogManager $blogManager, SluggerInterface $slugger, Post $post): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $musician = $this->getUser();
         $array = ['musician' => $musician, 'with_video' => true];
         return $blogManager->createNewEntity($request, $array, "Post", 'blog', "blog/post/edit_with_vid.html.twig", $slugger, 'edit', $post );

@@ -21,7 +21,7 @@ class AdvertController extends AbstractController
      */
     public function index(AdvertRepository $advertRepository, $id = null): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $adverts = $advertRepository->findAll();
         if(null !== $id){
             $advert = $advertRepository->find($id);

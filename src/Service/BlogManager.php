@@ -38,7 +38,7 @@ class BlogManager extends AbstractController
 
     public function createNewEntity($request, $array, $type, $redirect_to, $template, $slugger, $task = 'new', $entity = [] ): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $musician = $this->getUser();
 
         if($task == 'new') {

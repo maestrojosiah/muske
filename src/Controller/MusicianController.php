@@ -57,7 +57,7 @@ class MusicianController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         //this is for displaying the page and redirecting if all details are intact
         //get the musician in session
@@ -175,7 +175,7 @@ class MusicianController extends AbstractController
         PdfThemeRepository $pdfThemeRepository
         ): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         
         $musician = $this->getUser();
 
@@ -237,7 +237,7 @@ class MusicianController extends AbstractController
      */
     public function plan(): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $musician = $this->getUser();
 
         if($musician->isMuskeAndActive() == 'true'){
@@ -259,7 +259,7 @@ class MusicianController extends AbstractController
      */
     public function planDetails($plan): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $musician = $this->getUser();
 
         if($musician->isMuskeAndActive() == 'true'){

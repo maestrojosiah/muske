@@ -20,7 +20,7 @@ class WebThemeController extends AbstractController
      */
     public function index(WebThemeRepository $webThemeRepository): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         $musician = $this->getUser();
         return $this->render('web_theme/index.html.twig', [
             'web_themes' => $webThemeRepository->findAll(),

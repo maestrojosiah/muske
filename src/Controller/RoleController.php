@@ -30,7 +30,7 @@ class RoleController extends AbstractController
      */
     public function new(Request $request, $job_id): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         $jobs = $this->getUser()->getJobs();
         $default_job = $this->getDoctrine()->getManager()->getRepository('App:Job')->find($job_id);
@@ -69,7 +69,7 @@ class RoleController extends AbstractController
      */
     public function edit(Request $request, Role $role): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         $form = $this->createForm(RoleType::class, $role);
         $form->handleRequest($request);

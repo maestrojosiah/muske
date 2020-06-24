@@ -240,7 +240,7 @@
                           </div>
                         </div>
                         <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
-                        <input type="hidden" name="extras" value="musician" />
+                        {% if musician.settings|length < 1 %}<input type="hidden" name="extras" value="musician" />{% endif %}
                         <div class="form-group"><button id="save-social" class="btn btn-primary btn-sm" type="button">Save&nbsp;</button></div>
                       </form>
                     </div>

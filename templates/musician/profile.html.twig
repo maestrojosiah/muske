@@ -7,7 +7,7 @@
       <div id="content">
         {% include "reusable/user_nav.html.twig" %}
         <div id="pad">
-          <h3 class="text-dark mb-2" id="prof-heading">Profile</h3>
+          <h3 class="text-dark mb-2" id="prof-heading">Profile Settings</h3>
           <a class="btn btn-primary text-white mb-1" role="button" href="{{path('musician_show', {'username': musician.username})}}">Your Personal Resume Website</a>
           <div class="row mb-3" style="width: inherit;">
             <div class="col-sm-12 col-md-4">
@@ -65,6 +65,7 @@
                     <div class="form-group">
                       <label>Cover image</label>
                       <input id="myCoverphoto" name="coverphoto" type="file" />
+                      <small>For best appearance, upload image of 1600 x 700 dimensions or something closer to that</small>
                     </div>
                     <button class="btn btn-primary" id="upload-coverphoto" type="button">Upload</button>
                     <hr>
@@ -73,6 +74,7 @@
                     <div class="form-group">
                       <label>Background image</label>
                       <input id="myBgphoto" name="bgphoto" type="file">
+                      <small>For best appearance, upload image of 1600 x 900 dimensions or something closer to that</small>
                     </div>
                     <button class="btn btn-primary" id="upload-bgphoto" type="button">Upload</button>
                     <hr>

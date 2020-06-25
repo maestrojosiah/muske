@@ -148,11 +148,11 @@ class MusicianController extends AbstractController
         ];
 
         if($download == 'pdf'){
-            if($status){
+            // if($status){
                 return $this->toPdf("pdf/$pdf_template", $array_data, $musician->getUsername().'_'.$themename."_Resume");
-            } else {
-                return $this->redirectToRoute('error', ['error_msg' => "Broken links prevents the pdf from downloading. Upload your profile photo"]);
-            }
+            // } else {
+                // return $this->redirectToRoute('error', ['error_msg' => "Broken links prevents the pdf from downloading. Upload your profile photo"]);
+            // }
         } elseif ($download == 'show') {
             $array_data += ['thumbnailurl' => $thumbnailurl];
             return $this->render("pdf/$pdf_template", $array_data);

@@ -50,9 +50,9 @@
                     <fieldset>
                         <legend><i class="fa fa-file"></i> Details</legend>
                     </fieldset>
-                    {% if musician.settings.tsc and musician.settings.tsc == 'true' %}<div><span>TSC Certified</span></div>{% endif %}
-                    {% if musician.settings.online and musician.settings.online == 'true' %}<div><span>Online lessons available</span></div>{% endif %}
-                    {% if musician.settings.placeofwork|length > 1 %}<div><span>{{musician.settings.placeofwork}}</span></div>{% endif %}
+                    {% if musician.settings.tsc != null and musician.settings.tsc == 'true' %}<div><span>TSC Certified</span></div>{% endif %}
+                    {% if musician.settings.online != null and musician.settings.online == 'true' %}<div><span>Online lessons available</span></div>{% endif %}
+                    {% if musician.settings.placeofwork != null and musician.settings.placeofwork|length > 1 %}<div><span>{{musician.settings.placeofwork}}</span></div>{% endif %}
                     <hr>
                 </div>
                 <div class="col-sm-5 offset-sm-1">

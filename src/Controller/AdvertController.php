@@ -67,6 +67,7 @@ class AdvertController extends AbstractController
                 $counter = $counter - $countProMusicians;
             }    
         }
+        var_dump('after pro: '.$counter);
         $counter < 1 ? $continue = false : $continue = true;
         if($continue == true){
             $muskeMusicians = $musicianRepository->getMusicians('muske',$counter);
@@ -79,6 +80,7 @@ class AdvertController extends AbstractController
         } else {
             $muskeMusicians = null;
         }
+        var_dump('after pro: '.$counter);
         $counter < 1 ? $continue = false : $continue = true;
         if($continue == true){
             $basicMusicians = $musicianRepository->getMusicians('basic',$counter);

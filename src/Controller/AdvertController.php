@@ -48,16 +48,6 @@ class AdvertController extends AbstractController
      */
     public function new(SeoPageInterface $seoPage, MusicianRepository $musicianRepository, Request $request): Response
     {
-        $continue = false;
-        $counter = 3;
-        $proMusicians = $musicianRepository->getMusicians('pro',$counter);
-        if(null !== $proMusicians){
-            $countProMusicians = count($proMusicians);
-            if($countProMusicians < $counter){
-                $counter = $counter - $countProMusicians;
-                $continue = true;
-            }    
-        }
 
         $seoPage
         ->setTitle("Advertize music job position")
@@ -68,18 +58,30 @@ class AdvertController extends AbstractController
         ->addMeta('property', 'og:description', "Advertize a music job and have it reach all the musicians in the MuSKe platform. Track the performance of your advert in real time!")
         ;
 
+        $continue = false;
+        $counter = 3;
+        $proMusicians = $musicianRepository->getMusicians('pro',$counter);
+        if(null !== $proMusicians){
+            $countProMusicians = count($proMusicians);
+            if($countProMusicians < $counter){
+                $counter = $counter - $countProMusicians;
+                $counter < 1 ? $continue = false : $continue = true;
+            }    
+        }
+
         if($continue == true){
             $muskeMusicians = $musicianRepository->getMusicians('muske',$counter);
             if(null !== $muskeMusicians){
                 $countMuskeMusicians = count($muskeMusicians);
                 if($countMuskeMusicians < $counter){
                     $counter = $counter - $countMuskeMusicians;
-                    $continue = true;
+                    $counter < 1 ? $continue = false : $continue = true;
                 }
             }
         } else {
             $muskeMusicians = null;
         }
+
         if($continue == true){
             $basicMusicians = $musicianRepository->getMusicians('basic',$counter);
         } else {

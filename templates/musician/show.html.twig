@@ -10,6 +10,11 @@
             top: 20px;
             right: 20px;
         }
+        .tohome {
+            position:fixed;
+            top: 20px;
+            right: 60px;
+        }
         input.form-control {
             border: none;
             border-bottom: 1px solid #777!important;
@@ -83,7 +88,8 @@
                     <div>
                         <h1 class="text-white">{{musician.fullname}}</h1>
                         <h4 class="text-white">Musician</h4>
-                        <a class="for-user btn btn-info pull-right toprofile" role="button" href="{{path('musician_profile')}}">Your Profile Page</a>
+                        <a class="for-user btn btn-info pull-right toprofile" role="button" href="{{path('musician_profile')}}"><i class="fa fa-user"></i></a>
+                        <a class="btn btn-info pull-right tohome" role="button" href="{{path('homepage')}}"><i class="fa fa-home"></i></a>
                         {% if app.user and app.user != null and app.user == musician %} <a class="login-link" href="{{path("app_logout")}}">Logout</a> {% else %} <a class="login-link" href="{{path("app_login")}}">Login</a>{% endif %}
                     </div>
                 </div>
@@ -91,6 +97,7 @@
                     <div>
                         <h2 class="text-white d-inline">{{musician.fullname}}</h2>
                         <a class="for-user btn btn-info pull-right toprofile" role="button" href="{{path('musician_profile')}}"><i class="fa fa-user"></i></a>
+                        <a class="btn btn-info pull-right tohome" role="button" href="{{path('homepage')}}"><i class="fa fa-home"></i></a>
                     </div>
                 </div>
             </div>

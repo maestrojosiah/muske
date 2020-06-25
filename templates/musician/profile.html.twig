@@ -40,7 +40,10 @@
                 </ul>
               </div>
               <div class="card prof-panel" id="div-account">
-                <div class="card-header text-white" style="background-color: rgb(78,115,223);">
+                {% if musician.account == 'basic' %}{% set bg = 'warning' %}{% endif %}
+                {% if musician.account == 'muske' %}{% set bg = 'primary' %}{% endif %}
+                {% if musician.account == 'pro' %}{% set bg = 'success' %}{% endif %}
+                <div class="card-header text-white bg-{{bg}}">
                   <h5 class="mb-0">Your account</h5>
                 </div>
                 <div class="card-body special-card-body">

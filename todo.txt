@@ -11,6 +11,7 @@ FTP & explicit FTPS port:  21
 prod:
 notification by email when end of pro : cron job
 Mail Reminder of incomplete accounts once a month : cron job
+Delete expired ads with all its notifications : cron job
 composer requires that was done in dev
 cron job to delete var/log/prod.log
 email address for pro members-

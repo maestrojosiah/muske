@@ -203,7 +203,7 @@ class UpdateController extends AbstractController
                 $id = $entity->getId();
                 $this->provide_notification($id, $type);
             }
-            if(null !== $request->request->get('email')){
+            if(null !== $request->request->get('fullname')){
                 $email = $request->request->get('email');
                 $username = $this->base64url_encode($entity->getUsername());
                 if($entity->getConfirmed() == 'true'){

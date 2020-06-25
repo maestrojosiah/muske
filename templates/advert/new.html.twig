@@ -175,7 +175,7 @@
                                     <input type="hidden" name="extras" value="submitted-code" />
                                     <input type="hidden" name="class" value="Advert" />
                                     <input type="hidden" name="notification" value="advert" />
-                                    <div class="col-12">
+                                    <div class="col-12 notify">
                                         <div class="form-group">
                                             <button class="btn btn-primary btn-block" id="save-advert" type="button">Post Advertizement</button>
                                         </div>
@@ -247,13 +247,13 @@
 			var splitted = myId.split('-'); 
 			var div = splitted[1];
 			var form = $("#"+div+"-form");
-            saveDetails(div, "#myForm");	
+            saveDetails(div, ".notify");	
             		
 			$.notify({
 				icon: 'glyphicon glyphicon-ok',
 				message: 'Your advert has been created and sent to all musicians. Check your email for a tracking code',
 			},{
-                element: "#myForm",
+                element: ".notify",
 				type: "info",
 				allow_dismiss: true,
 				newest_on_top: false,

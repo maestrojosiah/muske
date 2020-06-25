@@ -4,7 +4,7 @@
       </div>
 
       <!--logo start-->
-      <a href="index.html" class="logo">Music <span class="lite">Services</span>Kenya</a>
+      <a href="{{path('homepage')}}" class="logo">Music <span class="lite">Services</span>Kenya</a>
       <!--logo end-->
 
       <div class="top-nav notification-row">
@@ -15,7 +15,7 @@
           <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="profile-ava">
-                                {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
+                                {% set thumbnailurl = musician.photo|length > 1 ? asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') : asset('img/headshot.jpg') %}
                                 <img alt="{{musician.fullname}}" width='25' height='25' src="{{thumbnailurl}}">
                             </span>
                             <span class="username">{{musician.username}}</span>

@@ -48,6 +48,15 @@
             
                 <div class="col-sm-5 offset-sm-1">
                     <fieldset>
+                        <legend><i class="fa fa-file"></i> Details</legend>
+                    </fieldset>
+                    {% if musician.settings.tsc == 'true' %}<div><span>TSC Certified</span></div>{% endif %}
+                    {% if musician.settings.online == 'true' %}<div><span>Online lessons available</span></div>{% endif %}
+                    {% if musician.settings.placeofwork|length > 1 %}<div><span>{{musician.settings.placeofwork}}</span></div>{% endif %}
+                    <hr>
+                </div>
+                <div class="col-sm-5 offset-sm-1">
+                    <fieldset>
                         <legend><i class="fa fa-envelope"></i> Contacts</legend>
                     </fieldset>
                     <div><span><strong>{{musician.fullname}}</strong></span></div>
@@ -86,7 +95,12 @@
                 {% endif %}           
                 <div class="col-md-11 offset-sm-1" style="mb-4">
                     <legend><i class="fa fa-star"></i> Social</legend>
-                    <div class="social-icons"><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-instagram"></i></a><a href="#"><i class="fa fa-linkedin"></i></a></div>
+                    <div class="social-icons">
+                        <a href="{{ musician.hassettings and musician.settings.twitter|length > 1 ? musician.settings.twitter | external_link : '#'}}"><i class="fa fa-twitter"></i></a>
+                        <a href="{{ musician.hassettings and musician.settings.facebook|length > 1 ? musician.settings.facebook | external_link : '#'}}"><i class="fa fa-facebook"></i></a>
+                        <a href="{{ musician.hassettings and musician.settings.instagram|length > 1 ? musician.settings.instagram | external_link : '#'}}"><i class="fa fa-instagram"></i></a>
+                        <a href="{{ musician.hassettings and musician.settings.linkedin|length > 1 ? musician.settings.linkedin | external_link : '#'}}"><i class="fa fa-linkedin"></i></a>
+                    </div>
                     <hr>
                 </div>            
             </div>

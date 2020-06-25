@@ -63,7 +63,7 @@ class AdvertController extends AbstractController
         $proMusicians = $musicianRepository->getMusicians('pro',$counter);
         if(null !== $proMusicians){
             $countProMusicians = count($proMusicians);
-            if($countProMusicians < $counter){
+            if($countProMusicians <= $counter){
                 $counter = $counter - $countProMusicians;
             }    
         }
@@ -73,7 +73,7 @@ class AdvertController extends AbstractController
             $muskeMusicians = $musicianRepository->getMusicians('muske',$counter);
             if(null !== $muskeMusicians){
                 $countMuskeMusicians = count($muskeMusicians);
-                if($countMuskeMusicians < $counter){
+                if($countMuskeMusicians <= $counter){
                     $counter = $counter - $countMuskeMusicians;
                 }
             }

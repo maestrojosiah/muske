@@ -65,23 +65,21 @@ class AdvertController extends AbstractController
             $countProMusicians = count($proMusicians);
             if($countProMusicians < $counter){
                 $counter = $counter - $countProMusicians;
-                $counter < 1 ? $continue = false : $continue = true;
             }    
         }
-
+        $counter < 1 ? $continue = false : $continue = true;
         if($continue == true){
             $muskeMusicians = $musicianRepository->getMusicians('muske',$counter);
             if(null !== $muskeMusicians){
                 $countMuskeMusicians = count($muskeMusicians);
                 if($countMuskeMusicians < $counter){
                     $counter = $counter - $countMuskeMusicians;
-                    $counter < 1 ? $continue = false : $continue = true;
                 }
             }
         } else {
             $muskeMusicians = null;
         }
-
+        $counter < 1 ? $continue = false : $continue = true;
         if($continue == true){
             $basicMusicians = $musicianRepository->getMusicians('basic',$counter);
         } else {

@@ -5,156 +5,198 @@
 
 {# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> #}
 <style>
-    html {
-    font-size: 14px;
-    }
-    @media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-    }
+  .pricing .card {
+  border: none;
+  border-radius: 1rem;
+  transition: all 0.2s;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
 
-    body {
-        padding-top: 0px;
-        padding-bottom:0px;
-    }
+.pricing hr {
+  margin: 1.5rem 0;
+}
 
-    .container {
-    max-width: 960px;
-    }
+.pricing .card-title {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+}
 
-    .pricing-header {
-    max-width: 700px;
-    }
+.pricing .card-price {
+  font-size: 3rem;
+  margin: 0;
+}
 
-    .card-deck .card {
-    min-width: 220px;
-    }
+.pricing .card-price .period {
+  font-size: 0.8rem;
+}
+
+.pricing ul li {
+  margin-bottom: 1rem;
+}
+
+.pricing .text-muted {
+  opacity: 0.7;
+}
+
+.pricing .btn {
+  font-size: 80%;
+  border-radius: 5rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+  padding: 1rem;
+  opacity: 0.7;
+  transition: all 0.2s;
+}
+
+/* Hover Effects on Card */
+
+@media (min-width: 992px) {
+  .pricing .card:hover {
+    margin-top: -.25rem;
+    margin-bottom: .25rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+  }
+  .pricing .card:hover .btn {
+    opacity: 1;
+  }
+  
+}
 </style>
 {% endblock %}
 {% block body %}
 
-{% include "temp/plan_header.html.twig" %}
+{% include "reusable/nav.html.twig" %}
 
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <h1 class="display-4">Choose a Plan</h1>
-  <p class="lead">
-    Music Services Kenya is designed to empower musicians in the country to make them get the most that the music market has to offer.
-    Most services that we offer are free of charge, and will remain free. 
-    The <b>Pro</b> version is for those who know what it entails to have the features it entails.
-  </p>
+<div class="container text-dark">
+  <main class="page pricing-table-page">
+    <section class="clean-block clean-pricing">
+        <div class="container pricing-container">
+          <div class="row text-center">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <h3 class="text-info">MuSKe Plans</h3>
+              <p>Music Services Kenya is designed to empower musicians in the country to make them get the most that the music market has to offer.
+                Most basic services that we offer are free of charge, and will remain free. 
+              </p>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+            <div class="row justify-content-center">
+                <div class="col-md-5 col-lg-4">
+                    <div class="clean-pricing-item line-top bg-white">
+                        <div class="heading text-center">
+                            <h3>BASIC</h3>
+                            <small>{{musician.account == 'basic' ? 'Your current account' : '.........'}}</small>
+                        </div>
+                        <hr>
+                        <p>Basic is completely free.</p>
+                        <div class="features">
+                          <ul class="fa-ul">
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Resume Page</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Download generated resume</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Clients can download resume</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Resume in 1 format</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Resume with full contacts</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Blog page</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Corporate email</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Upto 20 photos in gallery</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Direct contact with client</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Live chat with clients</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>'Call me' button on your page</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Links to your social media pages</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Profile notification on adverts</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Mail notification on adverts</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Rank high in searches</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Fully manage your page</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Educational materials on email</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Receive exam notifications</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Help in exam preparation</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Documents backup</li>
+                          </ul>
+                                      </div>
+                        <div class="price">
+                            <h4>Ksh 0.00</h4>
+                        </div><a class="btn btn-outline-secondary btn-block" href="{{ path('musician_plan_details', {'plan': 'basic'})}}">START NOW</a></div>
+                </div>
+                <div class="col-md-5 col-lg-4">
+                    <div class="clean-pricing-item line-top bg-white">
+                        <div class="heading text-center">
+                            <h3>MuSKe</h3>
+                            <small>{{musician.account == 'muske' and musician.ismuskeandactive ? 'Your current account' : '.........'}}</small>
+                        </div>
+                        <hr>
+                        <p>Pay 10% for given job</p>
+                        <div class="features">
+                          <ul class="fa-ul">
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Resume Page</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Download generated resume</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Clients can download resume</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Resume in 5 format</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Resume with full contacts</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Blog page</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Corporate email</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Upto 50 photos in gallery</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Direct contact with client</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Live chat with clients</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>'Call me' button on your page</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Links to your social media pages</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Profile notification on adverts</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Mail notification on adverts</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Rank high in searches</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Fully manage your page</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Educational materials on email</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Receive exam notifications</li>
+                            <li class="text-muted"><span class="fa-li"><i class="fas fa-times text-warning"></i></span>Help in exam preparation</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Documents backup</li>
+                          </ul>
+                        </div>
+                        <div class="price">
+                            <h4>Ksh 0.00</h4>
+                          </div><a class="btn btn-outline-primary btn-block" href="{{ path('musician_plan_details', {'plan': 'muske'})}}">START NOW</a></div>
+                      </div>
+                <div class="col-md-5 col-lg-4">
+                    <div class="clean-pricing-item line-top bg-white">
+                        <div class="ribbon"><span>Best Value</span></div>
+                        <div class="heading text-center">
+                            <h3>PRO</h3>
+                            <small>{{musician.account == 'pro' and musician.isproandactive ? 'Your current account' : '.........'}}</small>
+                        </div>
+                        <hr>
+                        <p>Only 1.99k per month. </p>
+                        <div class="features">
+                          <ul class="fa-ul">
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Resume Page +</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Download generated resume</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Clients can download resume</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Resume in 12 formats</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Resume with full contacts</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Blog page+</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Corporate email</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Unlimited photos in gallery</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Direct contact with client</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Live chat with clients</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>'Call me' button on your page</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Links to your social media pages</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Profile notification on adverts</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Mail notification on adverts</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Rank first in searches</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Fully manage your page</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Receive educational materials</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Receive exam notifications</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Help in exam preparation</li>
+                            <li><span class="fa-li"><i class="fas fa-check text-success"></i></span>Documents backup</li>
+                          </ul>
+                                      </div>
+                        <div class="price">
+                            <h4>Ksh 1,999/y</h4>
+                          </div><a class="btn btn-outline-success btn-block" href="{{ path('musician_plan_details', {'plan': 'pro'})}}">START NOW</a></div>
+                    </div>
+            </div>
+        </div>
+    </section>
+</main>
 </div>
-
-<div class="container">
-  <div class="card-deck mb-3 text-center">
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Basic (Free)</h4>
-      </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title">Kshs 0 <small class="text-muted">/ yr</small></h1>
-        <ul class="list-group list-group-flush  mt-3 mb-4">
-          <li class="list-group-item">Free resume page</li>
-          <li class="list-group-item">Download generated resume</li>
-          <li class="list-group-item">Clients can view resume online</li>
-          <li class="list-group-item">Resume in 2 formats</li>
-          <li class="list-group-item">Notified when client needs you</li>
-          <li class="list-group-item">Profile notification on adverts</li>
-          <li class="list-group-item">Fully manage your page</li>
-        </ul>
-        <a href="{{ path('musician_plan_details', {'plan': 'basic'})}}" id="activate_basic" class="btn btn-lg btn-block btn-outline-primary">Activate Basic Account</a>
-      </div>
-    </div>
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <h4 class="my-0 font-weight-normal">MuSKe (Free)</h4>
-      </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title">Kshs 0 <small class="text-muted">/ yr</small></h1>
-        <ul class="list-group list-group-flush  mt-3 mb-4">
-          <li class="list-group-item">Free resume page</li>
-          <li class="list-group-item">Download generated resume</li>
-          <li class="list-group-item">Clients can view resume online</li>
-          <li class="list-group-item">Resume in 3 formats</li>
-          <li class="list-group-item">Photo and video gallery</li>
-          <li class="list-group-item">Notified when client needs you</li>
-          <li class="list-group-item">Profile notification on adverts</li>
-          <li class="list-group-item">Fully manage your page</li>
-          <li class="list-group-item">Job offers from Muske</li>
-          <li class="list-group-item">Receive educational materials</li>
-          <li class="list-group-item">Events preparation tips</li>
-          <li class="list-group-item">Receive exam notifications</li>
-          <li class="list-group-item">Help in exam preparation</li>
-          <li class="list-group-item">Documents backup</li>
-        </ul>
-        <a href="{{ path('musician_plan_details', {'plan': 'muske'})}}" id="activate_muske" class="btn btn-lg btn-block btn-primary">Start Now</a>
-      </div>
-    </div>
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Pro</h4>
-      </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title">Kshs 1999 <small class="text-muted">/ yr</small></h1>
-        <ul class="list-group list-group-flush mt-3 mb-4">
-          <li class="list-group-item">Resume Page +</li>
-          <li class="list-group-item">Download generated resume</li>
-          <li class="list-group-item">Clients can download resume</li>
-          <li class="list-group-item">Resume in 7 formats</li>
-          <li class="list-group-item">Resume with full contacts</li>
-          <li class="list-group-item">Photo and video gallery</li>
-          <li class="list-group-item">Direct contact with client</li>
-          <li class="list-group-item">Live chat with clients</li>
-          <li class="list-group-item">'Call me' button on your page</li>
-          <li class="list-group-item">Links to your social media pages</li>
-          <li class="list-group-item">Links to your project sites</li>
-          <li class="list-group-item">Profile notification on adverts</li>
-          <li class="list-group-item">Mail notification on adverts</li>
-          <li class="list-group-item">Rank first in searches</li>
-          <li class="list-group-item">Fully manage your page</li>
-          <li class="list-group-item">Receive educational materials</li>
-          <li class="list-group-item">Receive exam notifications</li>
-          <li class="list-group-item">Help in exam preparation</li>
-          <li class="list-group-item">Documents backup</li>
-        </ul>
-        <a href="{{ path('musician_plan_details', {'plan': 'pro'})}}" id="activate_pro" class="btn btn-lg btn-block btn-success">Get Started</a>
-      </div>
-    </div>
-  </div>
-
-  <footer class="pt-4 my-md-5 pt-md-5 border-top">
-    <div class="row">
-      <div class="col-12 col-md">
-      {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
-        <img class="mb-2" src="{{thumbnailurl}}" alt="{{musician.fullname}}" width="24" height="24">
-        <small class="d-block mb-3 text-muted">&copy; 2020-{{ "now"|date('Y') }}</small>
-      </div>
-      <div class="col-6 col-md">
-        <h5>Features</h5>
-        <ul class="list-unstyled text-small">
-          <li><a class="link-secondary" href="#">Free website page</a></li>
-          <li><a class="link-secondary" href="#">Share page in your social media</a></li>
-          <li><a class="link-secondary" href="#">Look professional</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-md">
-        <h5>Resources</h5>
-        <ul class="list-unstyled text-small">
-          <li><a class="link-secondary" href="#">Download your generated resume</a></li>
-          <li><a class="link-secondary" href="#">Receive music education materials</a></li>
-          <li><a class="link-secondary" href="#">Back up your documents</a></li>
-        </ul>
-      </div>
-      <div class="col-6 col-md">
-        <h5>About</h5>
-        <ul class="list-unstyled text-small">
-          <li><a class="link-secondary" href="#">Team</a></li>
-          <li><a class="link-secondary" href="#">Locations</a></li>
-          <li><a class="link-secondary" href="#">Privacy</a></li>
-          <li><a class="link-secondary" href="#">Terms</a></li>
-        </ul>
-      </div>
-    </div>
-  </footer>
-</div>
+{% include "reusable/footer.html.twig" %}
 {% endblock %}                                                      

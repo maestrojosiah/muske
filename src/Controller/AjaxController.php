@@ -1030,7 +1030,7 @@ class AjaxController extends AbstractController
 
             if($membershipManager->sendMembershipConfirmation($email, $membership, $musician->getUsername())){
                 $this->addFlash('success', 'Notification mail was sent successfully');
-                $data['sent'] = "<p style='color:green'>A confirmation message has been sent to your email. (Check spam folder if you can't find it)</p>";
+                $data['sent'] = "Your subscription was successful! A confirmation message has been sent to your email. (Check spam folder if you can't find it). ";
             } else {
                 $data['sent'] = "<p style='color:red'>Your subscription was successful. We will call you soon</p>";
             }

@@ -23,6 +23,81 @@
     background-size: cover;
     background-repeat: no-repeat;    
   }
+.features-clean {
+  color: #313437;
+  background-color: #fff;
+  padding-bottom: 30px;
+}
+
+@media (max-width:767px) {
+  .features-clean {
+    padding-bottom: 10px;
+  }
+}
+
+.features-clean p {
+  color: #7d8285;
+}
+
+.features-clean h2 {
+  font-weight: bold;
+  margin-bottom: 40px;
+  padding-top: 40px;
+  color: inherit;
+}
+
+@media (max-width:767px) {
+  .features-clean h2 {
+    margin-bottom: 25px;
+    padding-top: 25px;
+    font-size: 24px;
+  }
+}
+
+.features-clean .intro {
+  font-size: 16px;
+  max-width: 500px;
+  margin: 0 auto 60px;
+}
+
+@media (max-width:767px) {
+  .features-clean .intro {
+    margin-bottom: 40px;
+  }
+}
+
+.features-clean .item {
+  min-height: 100px;
+  padding-left: 80px;
+  margin-bottom: 40px;
+}
+
+@media (max-width:767px) {
+  .features-clean .item {
+    min-height: 0;
+  }
+}
+
+.features-clean .item .name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: inherit;
+}
+
+.features-clean .item .description {
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+.features-clean .item .icon {
+  font-size: 40px;
+  color: #1485ee;
+  float: left;
+  margin-left: -65px;
+}
+
 </style>
 {% endblock %}
 {% block body %}
@@ -62,14 +137,39 @@
         </ol>
       </div>
     </section>
+    <div class="jumbotron text-center features-clean" >
+      <div class="container">
+        <div class="row features mt-5" style="background-color: rgb(255, 255, 255, 0.9);">
+          <div class="col-sm-6 col-lg-4 item"><i class="fa fa-file icon"></i>
+              <h3 class="name">Online Resume</h3>
+              <p class="description">Your own personal website with a simple to memorize url: muske.co.ke/yourusername. The page has your resume and contacts and more!</p>
+          </div>
+          <div class="col-sm-6 col-lg-4 item"><i class="fa fa-link icon"></i>
+              <h3 class="name">Downloadable Resume</h3>
+              <p class="description">The information you add are used to automatically generate a PDF resume/CV for your personal use. Life couldn't be any much easier!</p>
+          </div>
+          <div class="col-sm-6 col-lg-4 item"><i class="fa fa-gear icon"></i>
+              <h3 class="name">Customizable</h3>
+              <p class="description">Customize your theme from a pool of templates! Save the time you use to update your CV and changing the styles. It's now automated!</p>
+          </div>
+          <div class="col-sm-6 col-lg-4 item"><i class="fa fa-briefcase icon"></i>
+              <h3 class="name">Get jobs</h3>
+              <p class="description">With our powerful search feature, clients can search for your services and contact you for music jobs. Know when adverts are posted.</p>
+          </div>
+          <div class="col-sm-6 col-lg-4 item"><i class="fa fa-globe icon"></i>
+              <h3 class="name">Blog page</h3>
+              <p class="description">Do you have some work that you would like to share online if you had a blog page? Now its possible. You'll get a blog page for just that.</p>
+          </div>
+          <div class="col-sm-6 col-lg-4 item"><i class="fa fa-check icon"></i>
+              <h3 class="name">And much more!</h3>
+              <p class="description">How about a portfolio/gallery page? A contact page? Chatting online with potential clients? Applying for jobs with a click? Lets get started.</p>
+          </div>
+        </div>
+  
+      </div>
+    </div>
     <div class="row three-columns">
       <div class="col-12">
-        <div class="intro">
-          <h2 class="text-center">Welcome!</h2>
-          <p class="text-center">MuSKe is currently the only musician's platform in Kenya where musicians create their resume for online portfolios and downloading for their personal use. If you're looking for a musician, you're at the right place. If you are looking
-            for a place to advertize yourself or a job position, don't go further.
-          </p>
-        </div>
       </div>
       <div class="col">
         <div class="container">
@@ -110,18 +210,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="jumbotron with-bg text-center" >
-      <div class="container jumbo-container">
-        <div class="my-title">
-          <h1 class="text-center text-light">Why Join MuSKe?</h1>
-        </div>
-        <h2 style="font-size: 1.2rem!important; font-weight:bold;" class="text-white">Mentorship.&nbsp;Breakthrough for Musicians.<br></h2>
-        <p>We have the experience in the music market and we would like to see new musicians making it in life without going through the hustle that we went through ourselves. There is ready market and we have many talented musicians around. The only
-          bridge that can make them meet is Music Services Kenya. Now you don't need to look for someone who knows someone who may know who needs your services :), Just create your Resume and wait! We will do the rest for you.<br>
-        </p>
-        <p><a href="{{ path('f_a_q_index')}}" class="btn btn-primary btn-lg" role="button">Learn more</a></p>
       </div>
     </div>
     <div class="testimonials-clean">

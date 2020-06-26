@@ -244,7 +244,6 @@ class MusicianController extends AbstractController
      */
     public function plan(): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $musician = $this->getUser();
 
         if($musician->isMuskeAndActive() == 'true'){

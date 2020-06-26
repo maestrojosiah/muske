@@ -1,172 +1,60 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{musician.fullname}} | Plan {% endblock %}
-{% block stylesheets %}
-
-{# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> #}
-<style>
-    html {
-    font-size: 14px;
-    }
-    @media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-    }
-
-    body {
-        padding-top: 0px;
-        padding-bottom:0px;
-    }
-
-    .container {
-    max-width: 960px;
-    }
-
-    .pricing-header {
-    max-width: 700px;
-    }
-
-    .card-deck .card {
-    min-width: 220px;
-    }
-</style>
-{% endblock %}
 {% block body %}
 
-{% include "temp/plan_header.html.twig" %}
+{% include "reusable/nav.html.twig" %}
 <!-- Page Content -->
-  <div class="container">
+<main class="page pricing-table-page">
+  <section class="clean-block clean-pricing">
+      <div class="container text-center pricing-container">
+          <div class="block-heading">
+              <h3 class="text-info">Thank you!</h3>
+              <p>Thank you for choosing MuSKe. You're about to activate a {{plan}} account!</p>
+              <a href="{{ path('musician_plan')}}" class="btn btn-outline-primary">Review Plans</a>
+          </div>
+          <div class="row justify-content-center">
+              <div class="col-md-5 col-lg-4">
+                <div class="clean-pricing-item line-top bg-white">
+                      <div class="heading">
+                          <h3>{{plan|upper}} Account</h3>
+                      </div>
+                      <hr>
+                      {% if plan == 'pro' %}
+                      <p>Pay 1,999 Kenya shillings yearly for all the pro services.</p>
+                      <div class="price">
+                          <h4>Ksh 1,999/yr </h4>
+                      </div>
+                      {% elseif plan == 'muske' %}
+                      <p>Pay only when we get a job for you.</p>
+                      <div class="price">
+                          <h4>10%/Job </h4>
+                      </div>
+                     {% else %}
+                      <p>Free of charge.</p>
+                      <div class="price">
+                          <h4>Kshs 0.00/yr </h4>
+                      </div>
+                      {% endif %}
+                </div>
+              </div>
+              <div class="col-md-7 col-lg-8">
+                    <div class="clean-pricing-item line-top bg-white">
+                        <div class="heading">
+                            <h3>MuSKe</h3>
+                        </div>
+                        <hr>
+                        <p>Click 'Activate now' to start your {{plan}} membership. We're glad you found our services useful. {% if plan == 'pro' %}We will call you in a while to tell you how to make your payment. Please ensure the number you have in your account is reachable.{% endif %}</p>
+                        <div class="alert alert-success d-none" id="notify" role="alert"></div>                        
+                        <button type="button" id="activate_pro" class="btn btn-outline-primary btn-block btn-lg">ACTIVATE NOW</button>
+                    </div>
+              </div>
+            </div>
+        </div>
+  </section>
+</main>
 
-    <!-- Jumbotron Header -->
-    <header class="jumbotron my-4">
-      <h1>Welcome to {{plan}} Membership!</h1>
-      {% if plan == "basic" %}
-      <p class="lead">
-        Its free!
-      </p>
-      <p class="lead">
-        MuSKe is a platform that has been created by music experts to cater for needs of other musicians. MuSKe is all aware of the plethora of problems that novice as well as experienced musicians face.
-      </p>
-      <p class="lead">
-        Our basic account is designed to help musicians have their own resume page, generate resume for printing, advertize themselves and access advertisements in their profile pages. 
-      </p>
-      <p class="lead">
-        To get more benefits, you are encouraged to become a MuSKe member. Its also free:
-      </p>
-      <p class="lead">
-        Here are the benefits of being a basic member:
-      </p>
-      <ul class="lead">
-          <li>Free resume page</li>
-          <li>Download generated resume</li>
-          <li>Clients can view resume online</li>
-          <li>Notified when client needs you</li>
-          <li>Profile notification on adverts</li>
-          <li>Fully manage your page</li>
-      </ul>
-      <p class="lead">
-        By default, your membership is basic. If you want to change back to basic from pro or muske, just click below
-      </p>
-      <div id="notify"></div>
-      <button type="button" id="activate_basic" class="btn btn-primary btn-lg">Become a Basic member!</button>
-
-      {% endif %}
-
-      {% if plan == "muske" %}
-      <p class="lead">
-        Its free!
-      </p>
-      <p class="lead">
-        MuSKe is a platform that has been created by music experts to cater for needs of other musicians. MuSKe is all aware of the plethora of problems that novice as well as experienced musicians face.
-      </p>
-      <p class="lead">
-        We operate in a partner based relationship where we have customized our services to make sure musicians get what they deserve based on their qualifications, as we ensure that they constantly grow in their skills.
-      </p>
-      <p class="lead">
-        In that light, musicians who become MuSKe members will benefit from:
-      </p>
-      <ul class="lead">
-        <li>Increased visibility on our online musician search platform</li>
-        <li>Secure a job for you that fits your education level, abilities, skills and experience</li>
-        <li>Free resume page</li>
-        <li>Download generated resume</li>
-        <li>Clients can view resume online</li>
-        <li>Resume in 3 formats</li>
-        <li>Photo and video gallery</li>
-        <li>Notified when client needs you</li>
-        <li>Profile notification on adverts</li>
-        <li>Fully manage your page</li>
-        <li>Job offers from Muske</li>
-        <li>Receive educational materials</li>
-        <li>Events preparation tips</li>
-        <li>Receive exam notifications</li>
-        <li>Help in exam preparation</li>
-        <li>Documents backup</li>
-      </ul>
-      <p class="lead">
-        In all the jobs that we get for you, we will get a benefit of 10% and you will have 90% of the income. This is by far the best commission that you will ever receive!
-      </p>
-      <div id="notify"></div>
-      <button type="button" id="activate_muske" class="btn btn-primary btn-lg">Become a MuSKe member!</button>
-
-      {% endif %}
-      {% if plan == "pro" %}
-      <p class="lead">
-        MuSKe is a platform that has been created by music experts to cater for needs of other musicians. MuSKe is all aware of the plethora of problems that experienced musicians as well as novice musicians face.
-      </p>
-      <p class="lead">
-        A PRO account is like having your own website that you manage at your own will. With your own contacts and a simple website address like <span style="font-weight:bold;">muske.co.ke/username</span>, you can drive your social media traffic to your page and have them download your resume and have a look at your photo and video gallery.
-      </p>
-      <p class="lead">
-        You will be able to manage all your information at your admin page, chat live with your clients, have all social media links leading to your social pages and so on...
-      </p>
-      <p class="lead">
-        In that light, musicians who become Pro members will benefit from:
-      </p>
-      <ul class="lead">
-        <li>Increased visibility on our online musician search platform</li>
-        <li>Resume Page with various added features</li>
-        <li>Download your own generated resume in different formats</li>
-        <li>Clients can download your resume</li>
-        <li>Resume page in different formats</li>
-        <li>Resume with full contacts</li>
-        <li>Photo and video gallery</li>
-        <li>Direct contact with client</li>
-        <li>Live chat with clients</li>
-        <li>'Call me' button on your page</li>
-        <li>Links to your social media pages</li>
-        <li>Links to your project sites</li>
-        <li>Profile notification on adverts</li>
-        <li>Mail notification on adverts</li>
-        <li>Rank first in searches</li>
-        <li>Fully manage your page</li>
-        <li>Receive ABRSM educational materials</li>
-        <li>Receive ABRSM exam notifications</li>
-        <li>Help in ABRSM exam preparation</li>
-        <li>Documents backup</li>
-
-      </ul>
-      <p class="lead">
-        You will pay a total of Kshs 1999 per year for all these services. If you accept the offer, we will take you to an Mpesa checkout page
-      </p>
-      <div id="notify"></div>
-      <button type="button" id="activate_pro" class="btn btn-primary btn-lg">Become a Pro member!</button>
-
-      {% endif %}
-    </header>
-
-  </div>
-  <!-- /.container -->
-
-  <!-- Footer -->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; MuSKe {{"now"|date('Y')}}</p>
-    </div>
-    <!-- /.container -->
-  </footer>
-
+{% include "reusable/footer.html.twig" %}
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -194,8 +82,9 @@
 			success: function (data)
 			{
 				console.log(data);
-				$("#notify").html(data);
-				$(this).text("Become a " + membership + " Member");
+				$("#notify").removeClass('d-none');
+        $("#notify").text(data);
+				$(this).html("Done!");
 			},
 			error: function () {
 				$("#warning").html("<b>something's wrong</b>");

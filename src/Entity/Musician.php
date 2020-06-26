@@ -65,16 +65,6 @@ class Musician implements UserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $currentsalary;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $expectedsalary;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $fullname;
 
     /**
@@ -185,6 +175,11 @@ class Musician implements UserInterface
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $account;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $title;
 
     public function __construct()
     {
@@ -431,30 +426,6 @@ class Musician implements UserInterface
                 $location->setMusician(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCurrentsalary(): ?string
-    {
-        return $this->currentsalary;
-    }
-
-    public function setCurrentsalary(?string $currentsalary): self
-    {
-        $this->currentsalary = $currentsalary;
-
-        return $this;
-    }
-
-    public function getExpectedsalary(): ?string
-    {
-        return $this->expectedsalary;
-    }
-
-    public function setExpectedsalary(?string $expectedsalary): self
-    {
-        $this->expectedsalary = $expectedsalary;
 
         return $this;
     }
@@ -975,6 +946,18 @@ class Musician implements UserInterface
     public function setAccount(?string $account): self
     {
         $this->account = $account;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }

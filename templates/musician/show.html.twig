@@ -5,26 +5,51 @@
     <link rel="stylesheet" href="{{ asset('theme/assets/css/themes.css ') }}">
     <link rel="stylesheet" href="{{ asset('theme/assets/css/web_theme.css ') }}">
     <style>
-        .toprofile {
+        .tohome {
             position: fixed;
             top: 20px;
             right: 20px;
         }
-        .tohome {
+        .toprofile {
             position:fixed;
             top: 20px;
-            right: 60px;
+            right: 64px;
+        }
+        .login-link {
+            position:fixed; 
+            top:20px; 
+            right:104px; 
+        }
+        .tohome-p {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            line-height: 1;
+            padding: 0.375rem 0.375rem !important;
+        }
+        .toprofile-p {
+            position:fixed;
+            top: 20px;
+            right: 55px;
+            width: 30px;
+            height: 30px;
+            line-height: 1;
+            padding: 0.375rem 0.375rem !important;
+        }
+        .login-link-p {
+            position:fixed; 
+            top:20px; 
+            right:90px; 
+            width: 30px;
+            height: 30px;
+            line-height: 1;
+            padding: 0.375rem 0.375rem !important;
         }
         input.form-control {
             border: none;
             border-bottom: 1px solid #777!important;
-        }
-        .login-link {
-            position:absolute; 
-            top:5px; 
-            right:10px; 
-            font-size:12px;
-            color: white;
         }
         .referee-form input {
             border:none;
@@ -83,21 +108,31 @@
         <div id="cover" class="bordered" style="overflow:hidden;background-image: url({{ musician.hassettings and musician.settings.coverphoto|length > 3 ? asset('uploads/photos/thumbs/'~ musician.settings.coverphoto ~ '.png') : asset('img/drumset-half.jpg')}});background-position: top;background-size: cover;background-repeat: no-repeat;">
             <div class="row img-row">
                 
-                <div class="col-sm-4 text-center align-self-center" id="for-pic"><img id="prof-pic" src="{{thumbnailurl}}" style="border: 2px solid white;"></div>
+                <div class="col-sm-4 text-center align-self-center mt-1" id="for-pic"><img id="prof-pic" src="{{thumbnailurl}}" style="border: 2px solid white;"></div>
                 <div class="col-sm-8 col-md-6 text-light align-self-center d-none d-md-block" id="heading-col">
                     <div>
                         <h1 class="text-white">{{musician.fullname}}</h1>
-                        <h4 class="text-white">Musician</h4>
+                        <h4 class="text-white">{{ musician.title != null ? musician.title : 'Musician'}}</h4>
                         <a class="for-user btn btn-info pull-right toprofile" role="button" href="{{path('musician_profile')}}"><i class="fa fa-user"></i></a>
                         <a class="btn btn-info pull-right tohome" role="button" href="{{path('homepage')}}"><i class="fa fa-home"></i></a>
-                        {% if app.user and app.user != null and app.user == musician %} <a class="login-link" href="{{path("app_logout")}}">Logout</a> {% else %} <a class="login-link" href="{{path("app_login")}}">Login</a>{% endif %}
+                        {% if app.user and app.user != null and app.user == musician %}
+                        <a class="btn btn-info pull-right login-link" href="{{path("app_logout")}}"><i class="fa fa-sign-out"></i></a> 
+                        {% else %} 
+                        <a class="btn btn-info pull-right login-link" href="{{path("app_login")}}"><i class="fa fa-sign-in"></i></a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-sm-8 col-md-6 text-light text-center align-self-center d-md-none" id="heading-col">
                     <div>
-                        <h2 class="text-white d-inline">{{musician.fullname}}</h2>
-                        <a class="for-user btn btn-info pull-right toprofile" role="button" href="{{path('musician_profile')}}"><i class="fa fa-user"></i></a>
-                        <a class="btn btn-info pull-right tohome" role="button" href="{{path('homepage')}}"><i class="fa fa-home"></i></a>
+                        <h2 class="text-white">{{musician.fullname}}</h2>
+                        <small>{{ musician.title != null ? musician.title : 'Musician'}}</small>
+                        <a class="for-user btn btn-info pull-right toprofile-p" role="button" href="{{path('musician_profile')}}"><i class="fa fa-user"></i></a>
+                        <a class="btn btn-info pull-right tohome-p" role="button" href="{{path('homepage')}}"><i class="fa fa-home"></i></a>
+                        {% if app.user and app.user != null and app.user == musician %}
+                        <a class="btn btn-info pull-right login-link-p" href="{{path("app_logout")}}"><i class="fa fa-sign-out"></i></a> 
+                        {% else %} 
+                        <a class="btn btn-info pull-right login-link-p" href="{{path("app_login")}}"><i class="fa fa-sign-in"></i></a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

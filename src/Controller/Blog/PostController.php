@@ -72,12 +72,15 @@ class PostController extends AbstractController
             ], true))
             ->addMeta('property', 'og:description', substr($post->getContent(), 0 ,100))
         ;
+
+        $reading_time = $this->reading_time($post);
         
         return $this->render('blog/post/show.html.twig', [
             'post' => $post,
             'musician' => $post->getMusician(),
             'nextPost' => $nextPost,
             'prevPost' => $prevPost,
+            'reading_time' => $reading_time,
         ]);
     }
 
@@ -117,4 +120,18 @@ class PostController extends AbstractController
 
         return $this->redirectToRoute('blog', ['username' => $musician->getUsername()]);
     }
+
+    function reading_time($post) {
+        $content = $post->getContent();
+        $word_count = str_word_count( strip_tags( $content ) );
+        $readingtime = ceil($word_count / 200);
+        if ($readingtime == 1) {
+        $timer = " min";
+        } else {
+        $timer = " mins";
+        }
+        $totalreadingtime = $readingtime . $timer;
+        return $totalreadingtime;
+    }
+        
 }

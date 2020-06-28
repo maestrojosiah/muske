@@ -2,7 +2,7 @@
 		    <div class="container">
 			    <header class="blog-post-header">
 				    <h2 class="title mb-2">{{post.title}}</h2>
-				    <div class="meta mb-3"><span class="date">{{post.submitted|date("F jS \\a\\t g:ia")}}</span><span class="time">5 min read</span><span class="comment"><a href="#">4 comments</a></span></div>
+				    <div class="meta mb-3"><span class="date">{{post.submitted|date("F jS \\a\\t g:ia")}}</span><span class="time">{{reading_time}} read</span><span class="comment"><a href="#">{{post.comments|length}} comments</a></span></div>
 			    </header>
 			    
 			    <div class="blog-post-body">

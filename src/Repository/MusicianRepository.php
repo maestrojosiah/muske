@@ -57,6 +57,21 @@ class MusicianRepository extends ServiceEntityRepository implements PasswordUpgr
         ;
     }
     
+    /**
+     * @return Musician[] Returns an array of Musician objects
+     */
+    
+    public function findTitlesList()
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.title')
+            ->setMaxResults(1000)
+            ->orderBy('s.title', 'ASC')
+            ->distinct()
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     // /**
     //  * @return Musician[] Returns an array of Musician objects

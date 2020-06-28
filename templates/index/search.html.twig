@@ -18,13 +18,52 @@
             {% endfor %}
 
             <h4>Search now!</h4>
-            <div class="for-btn d-none d-md-inline-block">
-                <p>Click on any skill to narrow down.</p>
-                <ul class="nav nav-pills">
-                    {% for skill in skills %}
-                    <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{skill.skillname|lower|replace({' ':'-','.':''})}}" href="#">{{skill.skillname|capitalize}}</a></li>
-                    {% endfor %}
-                  </ul>
+            <div role="tablist" id="accordion-1">
+                <div class="card" style="padding: 0;">
+                    <div class="card-header" role="tab">
+                        <h5 class="mb-0"><a style="color: #3399F3!important;" data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-1">Filter by skills</a></h5>
+                    </div>
+                    <div class="collapse item-1" role="tabpanel" data-parent="#accordion-1">
+                        <div class="card-body">
+                            <p>Click on any skill to narrow down.</p>
+                            <ul class="nav nav-pills">
+                                {% for skill in skills %}
+                                <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{skill.skillname|lower|replace({' ':'-','.':''})}}" href="#">{{skill.skillname|capitalize}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="padding: 0;">
+                    <div class="card-header" role="tab">
+                        <h5 class="mb-0"><a style="color: #3399F3!important;" data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-2" href="#accordion-1 .item-2">Filter by specialties</a></h5>
+                    </div>
+                    <div class="collapse item-2" role="tabpanel" data-parent="#accordion-1">
+                        <div class="card-body">
+                            <p>Click on any specialty to narrow down.</p>
+                            <ul class="nav nav-pills">
+                                {% for specialty in specialties %}
+                                <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{specialty.jobtitle|lower|replace({' ':'-','.':''})}}" href="#">{{specialty.jobtitle|capitalize}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-3" style="padding: 0;">
+                    <div class="card-header" role="tab">
+                        <h5 class="mb-0"><a style="color: #3399F3!important;" data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-3" href="#accordion-1 .item-3">Filter by title</a></h5>
+                    </div>
+                    <div class="collapse item-3" role="tabpanel" data-parent="#accordion-1">
+                        <div class="card-body">
+                            <p>Click on any title to narrow down.</p>
+                            <ul class="nav nav-pills">
+                                {% for title in titles %}
+                                <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{title.title|lower|replace({' ':'-','.':''})}}" href="#">{{title.title|capitalize}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
             <form class="form-inline d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 <div class="input-group">

@@ -30,6 +30,21 @@ class JobToBeOfferedRepository extends ServiceEntityRepository
            ->getResult();
     }
 
+    /**
+     * @return JobToBeOffered[] Returns an array of JobToBeOffered objects
+     */
+    
+    public function findSpecialtiesList()
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.jobtitle')
+            ->setMaxResults(1000)
+            ->orderBy('s.jobtitle', 'ASC')
+            ->distinct()
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     // /**
     //  * @return JobToBeOffered[] Returns an array of JobToBeOffered objects

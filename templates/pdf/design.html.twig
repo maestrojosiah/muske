@@ -149,7 +149,7 @@
             {% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
             <p>{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</p>
             {% endif %}
-            <p>{{musician.phone}}<br>{{musician.email}}<br>www.muske.co.ke/{{musician.username}}</p>
+            <p>{{app.user != null and app.user == musician ? musician.realphone : musician.phone}}<br>{{app.user != null and app.user == musician ? musician.realemail : musician.email}}<br>www.muske.co.ke/{{musician.username}}</p>
         </div>
         <div class="col-md-4 "><img class="img-fluid" src="{{app.request.getSchemeAndHttpHost()}}{{thumbnailurl}}" width="240" height="240"></div>
     </div>

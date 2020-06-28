@@ -346,7 +346,7 @@
                                 <div class="form-group">
                                   <div class="custom-control custom-switch">
                                     <input type="hidden" name="visibility" value="off" />
-                                    <input class="custom-control-input" name="visibility" value="on" type="checkbox" id="formCheck-2" {{ musician.settings|length > 0 and musician.settings.visibility != null and musician.settings.visibility == 'on' ? 'checked' : ''}} />
+                                    <input class="custom-control-input" name="visibility" value="on" type="checkbox" id="formCheck-2" {{ musician.settings|length > 0 and musician.settings.visibility != null and musician.settings.visibility != 'off' ? 'checked' : ''}} />
                                     <label class="custom-control-label" for="formCheck-2"><strong>Visible in searches</strong></label>
                                     <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
                                     {% if musician.settings|length < 1 %}<input type="hidden" name="extras" value="musician" />{% endif %}        

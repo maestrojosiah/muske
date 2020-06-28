@@ -249,6 +249,7 @@
                     <div class="col-10">
                         <div id="name-and-title" style="white-space: nowrap;">
                             <h2>{{musician.fullname}}</h2>
+                            <h5 style="margin: 0; padding:0;">{{ musician.title != null ? musician.title : 'Musician'}}</h5>
                             <a class="spaced-links" href="tel:{{musician.phone}}">&nbsp;<img src="{{app.request.getSchemeAndHttpHost()}}/icons/phone.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.phone}}</a>
                             <a class="spaced-links" href="mailto:{{musician.email}}">&nbsp;<img src="{{app.request.getSchemeAndHttpHost()}}/icons/mail.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.email}}</a>
                             <a class="spaced-links" href="https://www.muske.co.ke/{{musician.username}}">&nbsp;<img src="{{app.request.getSchemeAndHttpHost()}}/icons/sphere.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;www.muske.co.ke/{{musician.username}}</a>

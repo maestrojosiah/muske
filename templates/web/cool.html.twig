@@ -24,6 +24,7 @@
 				<img class="rounded-circle pull-left ml-3" width="70" height="70" src="{{app.request.getSchemeAndHttpHost()}}{{thumbnailurl}}" />
 				<div class="beside-photo">
 					<h3>{{musician.fullname}}</h3>
+					<h6>{{ musician.title != null ? musician.title : 'Musician'}}</h6>
 					<a href="#" style="white-space: nowrap;"><img src="{{app.request.getSchemeAndHttpHost()}}/icons/phone.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.phone}}</a><br />
 					<a href="#" style="white-space: nowrap;"><img src="{{app.request.getSchemeAndHttpHost()}}/icons/mail.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.email}}</a><br />
 					<a href="#" style="white-space: nowrap;"><img src="{{app.request.getSchemeAndHttpHost()}}/icons/sphere.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;www.muske.co.ke/{{musician.username}}</a>

@@ -261,7 +261,7 @@
                         <div class="col-md-2"><img class="img-fluid profile-pic" src="{{app.request.getSchemeAndHttpHost()}}{{thumbnailurl}}"></div>
                         <div class="col">
                             <h3 style="font-family: Alice, serif;">{{musician.fullname}}</h3>
-                            <h5>Musician</h5>
+                            <h5>{{ musician.title != null ? musician.title : 'Musician'}}</h5>
                             <a class="spaced-links" href="tel:{{musician.phone}}">&nbsp;<img src="{{app.request.getSchemeAndHttpHost()}}/icons/phone.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.phone}}</a>
                             <a class="spaced-links" href="mailto:{{musician.email}}">&nbsp;<img src="{{app.request.getSchemeAndHttpHost()}}/icons/mail.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.email}}</a>
                             <a class="spaced-links" href="https://www.muske.co.ke/{{musician.username}}">&nbsp;<img src="{{app.request.getSchemeAndHttpHost()}}/icons/sphere.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;www.muske.co.ke/{{musician.username}}</a>

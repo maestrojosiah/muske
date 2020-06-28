@@ -10,6 +10,7 @@
     <div class="row">
         <div class="col-md-8">
             <h1 id="name">{{musician.fullname}}</h1>
+            <h5>{{ musician.title != null ? musician.title : 'Musician'}}</h5>
             {% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
             <p>{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</p>
             {% endif %}

@@ -52,6 +52,9 @@
 	#header h3 {
 		margin-left: 15px;
 	}
+	#header h5 {
+		margin-left: 15px;
+	}
 	h3, .h3 {
 		font-size: 1.75rem;
 	}
@@ -214,6 +217,7 @@
 		<div class="col-md-9 mb-3" id="header">
 			<div class="mt-3">
 				<h3>{{musician.fullname}}</h3>
+				<h5>{{ musician.title != null ? musician.title : 'Musician'}}</h5>
 				<a href="#"><img src="{{app.request.getSchemeAndHttpHost()}}/icons/phone.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.phone}}</a>
 				<a href="#"><img src="{{app.request.getSchemeAndHttpHost()}}/icons/mail.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;{{musician.email}}</a>
 				<a href="#"><img src="{{app.request.getSchemeAndHttpHost()}}/icons/sphere.png" style="margin:0px;padding:0px;width:10px; height:10px;" />&nbsp;www.muske.co.ke/{{musician.username}}</a>

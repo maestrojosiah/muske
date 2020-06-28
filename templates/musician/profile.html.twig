@@ -87,8 +87,14 @@
                       <small>For best appearance, upload image of 1280 x 500 dimensions or something close to that</small>
                     </div>
                     <button class="btn btn-primary" id="upload-coverphoto" type="button">Upload</button>
-                    <hr>
+                    <button class="btn btn-primary" id="save-coverphoto" type="button">Reset</button>
                   </form>
+                  <form id="coverphoto-form">
+                    <input type="hidden" name="coverphoto" value="drumset-half.jpg" />
+                    <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
+                    {% if musician.settings|length < 1 %}<input type="hidden" name="extras" value="musician" />{% endif %}
+                  </form>
+                  <hr>
                   <form id="bg-form">
                     <div class="form-group">
                       <label>Background image</label>
@@ -96,8 +102,14 @@
                       <small>For best appearance, upload image of 900 x 600 dimensions or something close to that</small>
                     </div>
                     <button class="btn btn-primary" id="upload-bgphoto" type="button">Upload</button>
-                    <hr>
+                    <button class="btn btn-primary" id="save-bgphoto" type="button">Reset</button>
                   </form>
+                  <form id="bgphoto-form">
+                    <input type="hidden" name="bgphoto" value="class.jpg" />
+                    <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
+                    {% if musician.settings|length < 1 %}<input type="hidden" name="extras" value="musician" />{% endif %}
+                  </form>
+                  <hr />
                   <form id="theme-form">
                     <div class="form-group">
                       <label>Pdf download theme</label>
@@ -413,6 +425,44 @@ $( "#upload-coverphoto" ).click(function() {
 <script>
 
 $( "#upload-bgphoto" ).click(function() {
+
+  var inputFile = document.getElementById('myBgphoto');
+  var directory = 'brochures_directory';
+  var path = '/uploads/photos';
+  var src_id = "#div";
+  var div = "#bg-form";
+  var myClass = "Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}";
+  var field = 'bgphoto';
+  var shape = '';
+  
+  uploadPhoto(inputFile, directory, path, src_id, div, myClass, field, shape, "" );
+  
+});
+
+</script>
+
+<script>
+
+$( "#reset-coverphoto" ).click(function() {
+
+  var inputFile = document.getElementById('myCoverphoto');
+  var directory = 'brochures_directory';
+  var path = '/uploads/photos';
+  var src_id = "#div";
+  var div = "#cover-form";
+  var myClass = "Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}";
+  var field = 'coverphoto';
+  var shape = 'rectangle';
+  
+  uploadPhoto(inputFile, directory, path, src_id, div, myClass, field, shape, "" );
+  
+});
+
+</script>
+
+<script>
+
+$( "#reset-bgphoto" ).click(function() {
 
   var inputFile = document.getElementById('myBgphoto');
   var directory = 'brochures_directory';

@@ -254,8 +254,10 @@ class UpdateController extends AbstractController
             if( isset($repo) ){
                 $current_photo_path = $this->getParameter($path_to_save)."/".$repo->$getString();
                 $current_photo_thumb_path = $this->getParameter($path_to_save)."/thumbs/".$repo->$getString().".png";
-                if(is_file($current_photo_path) && file_exists($current_photo_path)){ unlink($current_photo_path); }
-                if(is_file($current_photo_thumb_path) && file_exists($current_photo_thumb_path)){ unlink($current_photo_thumb_path); }    
+                if($repo->$getString() != "drumset-half.jpg" and $repo->$getString() != "class.jpg"){
+                    if(is_file($current_photo_path) && file_exists($current_photo_path)){ unlink($current_photo_path); }
+                    if(is_file($current_photo_thumb_path) && file_exists($current_photo_thumb_path)){ unlink($current_photo_thumb_path); }        
+                }
             }
 
             $filename = md5(uniqid()).'.'.$file->guessExtension();

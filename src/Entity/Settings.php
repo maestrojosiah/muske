@@ -104,6 +104,11 @@ class Settings
      */
     private $appendsignature;
 
+    /**
+     * @ORM\Column(type="string", length=3, nullable=true)
+     */
+    private $visibility;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -318,6 +323,18 @@ class Settings
     public function setAppendsignature(?string $appendsignature): self
     {
         $this->appendsignature = $appendsignature;
+
+        return $this;
+    }
+
+    public function getVisibility(): ?string
+    {
+        return $this->visibility;
+    }
+
+    public function setVisibility(?string $visibility): self
+    {
+        $this->visibility = $visibility;
 
         return $this;
     }

@@ -268,7 +268,7 @@
                   </div>
                   <div class="row" id="div-extrasettings">
                     <div class="col-md-6">
-                      <div class="card shadow mb-5 prof-panel">
+                      <div class="card shadow mb-3 prof-panel">
                         <div class="card-header py-3">
                           <p class="text-primary m-0 font-weight-bold">Extra Settings</p>
                         </div>
@@ -306,7 +306,7 @@
                       </div>        
                     </div>
                     <div class="col-md-6">
-                      <div class="card shadow mb-5 prof-panel">
+                      <div class="card shadow mb-3 prof-panel">
                         <div class="card-header py-3">
                           <p class="text-primary m-0 font-weight-bold">Address Details</p>
                         </div>
@@ -321,13 +321,38 @@
                                 <div class="form-group">
                                   <div class="custom-control custom-switch">
                                     <input type="hidden" name="appendsignature" value="false" />
-                                    <input class="custom-control-input" name="appendsignature" value="true" type="checkbox" id="formCheck-1" checked />
+                                    <input class="custom-control-input" name="appendsignature" value="true" type="checkbox" id="formCheck-1" {{ musician.settings|length > 0 and musician.settings.appendsignature != null and musician.settings.appendsignature == 'true' ? 'checked' : ''}} />
                                     <label class="custom-control-label" for="formCheck-1"><strong>Show this in my resume</strong></label>
                                     <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
                                     {% if musician.settings|length < 1 %}<input type="hidden" name="extras" value="musician" />{% endif %}        
                                   </div>
                                 </div>
                                 <div class="form-group"><button class="btn btn-primary btn-sm" id="save-signature" type="button">Save</button></div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>        
+                    </div>
+                    <div class="col-md-6">
+                      <div class="card shadow mb-5 prof-panel">
+                        <div class="card-header py-3">
+                          <p class="text-primary m-0 font-weight-bold">Visibility</p>
+                        </div>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <form id="visibility-form">
+                                <div class="form-group">
+                                  <div class="custom-control custom-switch">
+                                    <input type="hidden" name="visibility" value="off" />
+                                    <input class="custom-control-input" name="visibility" value="on" type="checkbox" id="formCheck-2" {{ musician.settings|length > 0 and musician.settings.visibility != null and musician.settings.visibility == 'on' ? 'checked' : ''}} />
+                                    <label class="custom-control-label" for="formCheck-2"><strong>Visible in searches</strong></label>
+                                    <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
+                                    {% if musician.settings|length < 1 %}<input type="hidden" name="extras" value="musician" />{% endif %}        
+                                  </div>
+                                </div>
+                                <div class="form-group"><button class="btn btn-primary btn-sm" id="save-visibility" type="button">Save</button></div>
                               </form>
                             </div>
                           </div>

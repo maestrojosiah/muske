@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sonata\SeoBundle\Seo\SeoPageInterface;
 
 /**
  * @Route("/gallery")
@@ -18,7 +19,7 @@ class GalleryController extends AbstractController
     /**
      * @Route("/{username}/{page}", name="gallery_index", methods={"GET"})
      */
-    public function index(GalleryRepository $galleryRepository, $username, $page = 1): Response
+    public function index(SeoPageInterface $seoPage, GalleryRepository $galleryRepository, $username, $page = 1): Response
     {
         $limit = 12;
         $offset = $page * $limit - $limit;
@@ -41,6 +42,7 @@ class GalleryController extends AbstractController
             $data['nextPage'] = "blank";
         }
     
+        $seoPage->setTitle($musician->getFullname()." | Portfolio");
 
         return $this->render('gallery/index.html.twig', [
             'photos' => $photos,

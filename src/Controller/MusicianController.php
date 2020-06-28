@@ -29,34 +29,21 @@ class MusicianController extends AbstractController
 {
     private $snappy_pdf;
     private $snappy_img;
+    private $seoPage;
     
-    public function __construct(Pdf $snappy_pdf, Image $snappy_img){
+    public function __construct(SeoPageInterface $seoPage, Pdf $snappy_pdf, Image $snappy_img){
         $this->snappy_pdf = $snappy_pdf;
         $this->snappy_img = $snappy_img;
+        $this->seoPage = $seoPage;
     }    
 
-
-    /**
-     * @Route("/musician/index", name="musician_index", methods={"GET"})
-     */
-    public function index(MusicianRepository $musicianRepository): Response
-    {
-        $musician = $this->getUser();
-        $skills = $this->getDoctrine()->getManager()->getRepository('App:Skill')->findall();
-        $job_roles = $this->getDoctrine()->getManager()->getRepository('App:JobToBeOffered')->findall();
-        return $this->render('musician/index.html.twig', [
-            'musician' => $musician,
-            'skills' => $skills,
-            'job_roles' => $job_roles,
-            'musicians' => $musicianRepository->findAll(),
-        ]);
-    }
 
     /**
      * @Route("/musician/details", name="musician_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
+        $this->seoPage->setTitle("MuSKe registration");
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         //this is for displaying the page and redirecting if all details are intact
@@ -178,6 +165,7 @@ class MusicianController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         
         $musician = $this->getUser();
+        $this->seoPage->setTitle($musician->getFullname()." | Profile");
 
         if($musician->getFullname() == null){
             return $this->redirectToRoute('musician_new');
@@ -244,6 +232,7 @@ class MusicianController extends AbstractController
      */
     public function plan(): Response
     {
+        $this->seoPage->setTitle("Plans / Pricing");
         $musician = $this->getUser();
 
         if($musician->isMuskeAndActive() == 'true'){
@@ -265,6 +254,7 @@ class MusicianController extends AbstractController
      */
     public function planDetails($plan): Response
     {
+        $this->seoPage->setTitle("$plan Details");
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $musician = $this->getUser();
 

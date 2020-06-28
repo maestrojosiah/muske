@@ -6,14 +6,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Sonata\SeoBundle\Seo\SeoPageInterface;
 
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/security/musician/login", name="app_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(SeoPageInterface $seoPage, AuthenticationUtils $authenticationUtils): Response
     {
+        $seoPage->setTitle("Log in");
+
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
         // }

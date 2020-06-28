@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\FaqCategoryRepository;
+use Sonata\SeoBundle\Seo\SeoPageInterface;
 
 /**
  * @Route("/f/a/q")
@@ -19,8 +20,9 @@ class FAQController extends AbstractController
     /**
      * @Route("/", name="f_a_q_index", methods={"GET"})
      */
-    public function index(FAQRepository $fAQRepository, FaqCategoryRepository $faqCategoryRepository): Response
+    public function index(SeoPageInterface $seoPage, FAQRepository $fAQRepository, FaqCategoryRepository $faqCategoryRepository): Response
     {
+        $seoPage->setTitle("Frequently Asked Questions");
         $categories = $faqCategoryRepository->findAll();
         return $this->render('faq/index.html.twig', [
             'categories' => $categories,

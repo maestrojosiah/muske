@@ -14,7 +14,6 @@ class ExternalLinkFilter extends AbstractExtension
         );
     }
 
-    /* source: http://stackoverflow.com/a/2762083/3924118 */
     public function externalLinkFilter($url)
     {
         if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {

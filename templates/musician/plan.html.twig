@@ -68,7 +68,6 @@
 {% block body %}
 
 {% include "reusable/nav.html.twig" %}
-
 <div class="container text-dark">
   <main class="page pricing-table-page">
     <section class="clean-block clean-pricing">
@@ -80,7 +79,12 @@
               <p>Music Services Kenya is designed to empower musicians in the country to make them get the most that the music market has to offer.
                 Most basic services that we offer are free of charge, and will remain free. 
               </p>
-            </div>
+              {% if app.request.get('msg') != "" %}
+                <div class="alert alert-warning" role="alert">
+                  <span>{{ app.request.get('msg') }}</span>
+                </div>
+              {% endif %}
+          </div>
             <div class="col-md-2"></div>
           </div>
             <div class="row justify-content-center">

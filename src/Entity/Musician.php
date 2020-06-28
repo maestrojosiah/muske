@@ -102,6 +102,7 @@ class Musician implements UserInterface
     private $logourl;
     private $isproandactive;
     private $ismuskeandactive;
+    private $isbasic;
     private $hassettings;
     private $realemail;
     private $realphone;
@@ -733,6 +734,19 @@ class Musician implements UserInterface
         
         $this->ismuskeandactive = $fact;
         return $this->ismuskeandactive;
+    }
+
+    public function isbasic(){
+        $membership = $this->account;
+        $fact = false;
+        if($membership == "basic"){
+            $fact = true;
+        } else {
+            $fact = false;
+        }
+        
+        $this->isbasic = $fact;
+        return $this->isbasic;
     }
 
     public function getSubscribed(): ?string

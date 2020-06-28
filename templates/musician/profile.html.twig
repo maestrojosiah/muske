@@ -115,8 +115,21 @@
                       <label>Pdf download theme</label>
                       <select name="pdfTheme" id="pdf_theme" class="form-control">
                         {% for theme in pdfThemes %}
+                          {% if musician.isproandactive %}
                           <option value="{{theme.template}}" {{ musician.pdfTheme == theme.template ? 'selected' : ''}}="">{{theme.title}}</option>
+                          {% elseif musician.ismuskeandactive %}
+                            {% if loop.index < 6 %}
+                            <option value="{{theme.template}}" {{ musician.pdfTheme == theme.template ? 'selected' : ''}}="">{{theme.title}}</option>
+                            {% endif %}
+                          {% else %}
+                            {% if loop.index < 2 %}
+                            <option value="{{theme.template}}" {{ musician.pdfTheme == theme.template ? 'selected' : ''}}="">{{theme.title}}</option>
+                            {% endif %}
+                          {% endif %}
                         {% endfor %}
+                        {% if musician.ismuskeandactive or musician.isbasic %}
+                        <option value="{{musician.account}}">Get more themes</option>
+                        {% endif %}
                       </select>
                       <input type="hidden" name="class" value="Musician-{{musician.id}}" />
                       <!-- modal -->
@@ -521,6 +534,9 @@ $( "#pdf_theme").change(function() {
   var splitted = template.split('.'); 
   var name = splitted[0];
   $("#template-image").attr('src', '/img/screenshots/'+name+'.jpg');
+  if($(this).val() == 'basic' || $(this).val() == 'muske'){
+    location.href = "{{path('musician_plan')}}?msg='You need to upgrade to get that feature'";
+  }
 });
 
 </script>

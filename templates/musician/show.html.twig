@@ -181,7 +181,9 @@
         {% include "web/templates/contact.html.twig" %}
     </div>
     <div title="close resume" id="close-icon"><i class="fa fa-close"></i></div>
+    {% if musician.isproandactive or musician.ismuskeandactive %}
     <a href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}" title="Download Resume" style="position:fixed; top:100px; right:20px; cursor:pointer; color:green; display:none; font-size:30px; z-index:100;" id="download-icon"><i class="fa fa-download"></i></a>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}

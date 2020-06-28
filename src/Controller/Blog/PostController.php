@@ -82,7 +82,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="post_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit/with_picture", name="post_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, BlogManager $blogManager, SluggerInterface $slugger, Post $post): Response
     {

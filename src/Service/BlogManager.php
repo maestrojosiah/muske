@@ -140,12 +140,14 @@ class BlogManager extends AbstractController
                 'form' => $form->createView(),
                 'musician' => $musician,
                 ]);    
+        } else {
+            return $this->render("$template", [
+                'musician' => $musician,
+                'entity' => $entity,
+                'form' => $form->createView(),
+            ]);
+    
         }
-        return $this->render("$template", [
-            'musician' => $musician,
-            'entity' => $entity,
-            'form' => $form->createView(),
-        ]);
     }
 
     public function edit(Request $request, Post $post): Response

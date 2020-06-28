@@ -28,7 +28,7 @@
                             <p>Click on any skill to narrow down.</p>
                             <ul class="nav nav-pills">
                                 {% for skill in skills %}
-                                <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{skill.skillname|lower|replace({' ':'-','.':''})}}" href="#">{{skill.skillname|capitalize}}</a></li>
+                                <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{skill.skillname|trim|lower|replace({' ':'-','.':''})}}" href="#">{{skill.skillname|capitalize}}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -43,7 +43,7 @@
                             <p>Click on any specialty to narrow down.</p>
                             <ul class="nav nav-pills">
                                 {% for specialty in specialties %}
-                                <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{specialty.jobtitle|lower|replace({' ':'-','.':''})}}" href="#">{{specialty.jobtitle|capitalize}}</a></li>
+                                <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}}" href="#">{{specialty.jobtitle|capitalize}}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -58,7 +58,7 @@
                             <p>Click on any title to narrow down.</p>
                             <ul class="nav nav-pills">
                                 {% for title in titles %}
-                                <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{title.title|lower|replace({' ':'-','.':''})}}" href="#">{{title.title|capitalize}}</a></li>
+                                <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{title.title|trim|lower|replace({' ':'-','.':''})}}" href="#">{{title.title|capitalize}}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -75,7 +75,7 @@
             <div class="row">
                 {% for musician in pro_musicians %}
                 {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
-                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|lower|replace({' ':'-','.':''})}} {% endfor %}">
+                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialties in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {{musician.title is not null ? musician.title : 'musician'}}">
                         <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
                             <a class="btn btn-primary middle" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
                             <div class="card-body">

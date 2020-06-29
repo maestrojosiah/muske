@@ -67,7 +67,7 @@
                   <form id="title-form">
                     <div class="form-group">
                       <label>Your title on your resume</label>
-                      <input class="form-control" type="text" value="Musician" name="title">
+                      <input class="form-control" type="text" value="{{ musician.title != null ? musician.title : 'Musician'}}" name="title">
                       <input type="hidden" name="class" value="Musician-{{musician.id}}" />
                       <small>e.g Musician, Dj, Pianist etc</small>
                     </div>

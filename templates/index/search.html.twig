@@ -76,7 +76,7 @@
                 {% for musician in pro_musicians  %}
                 {% if musician.settings|length > 0 and musician.settings.visibility != 'off' %}
                 {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
-                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialty in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {{musician.title is not null ? musician.title : 'musician'}}">
+                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialty in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {{musician.title is not null ? musician.title|trim|lower|replace({' ':'-','.':''}) : 'musician'}}">
                         <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
                             <a class="btn btn-primary middle" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
                             <div class="card-body">
@@ -106,7 +106,7 @@
                 {% for musician in muske_musicians %}
                 {% if musician.settings|length > 0 and musician.settings.visibility != 'off' %}
                 {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
-                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialty in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {{musician.title is not null ? musician.title : 'musician'}}">
+                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialty in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {{musician.title is not null ? musician.title|trim|lower|replace({' ':'-','.':''}) : 'musician'}}">
                         <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
                             <a class="btn btn-primary middle" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
                             <div class="card-body">
@@ -136,7 +136,7 @@
                 {% for musician in basic_musicians %}
                 {% if musician.settings|length > 0 and musician.settings.visibility != 'off' %}
                 {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
-                     <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialty in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {{musician.title is not null ? musician.title : 'musician'}}">
+                     <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialty in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {{musician.title is not null ? musician.title|trim|lower|replace({' ':'-','.':''}) : 'musician'}}">
                         <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
                             <a class="btn btn-primary middle" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
                             <div class="card-body">

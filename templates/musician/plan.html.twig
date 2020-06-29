@@ -132,7 +132,9 @@
                     <div class="clean-pricing-item line-top bg-white">
                         <div class="heading text-center">
                             <h3>MuSKe</h3>
+                            {% if app.user and app.user != null and musician is defined %}
                             <small>{{musician.account == 'muske' and musician.ismuskeandactive ? 'Your current account' : '.........'}}</small>
+                            {% endif %}
                         </div>
                         <hr>
                         <p>Pay 10% for given job</p>
@@ -171,7 +173,9 @@
                         <div class="ribbon"><span>Best Value</span></div>
                         <div class="heading text-center">
                             <h3>PRO</h3>
+                            {% if app.user and app.user != null and musician is defined %}
                             <small>{{musician.account == 'pro' and musician.isproandactive ? 'Your current account' : '.........'}}</small>
+                            {% endif %}
                         </div>
                         <hr>
                         <p>Only 1.99k per month. </p>

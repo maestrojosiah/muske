@@ -38,6 +38,7 @@ class JobToBeOfferedRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->select('s.jobtitle')
+            ->andWhere('s.jobtitle IS NOT NULL')
             ->setMaxResults(1000)
             ->orderBy('s.jobtitle', 'ASC')
             ->distinct()

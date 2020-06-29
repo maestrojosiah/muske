@@ -27,6 +27,7 @@ class SkillRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->select('s.skillname')
+            ->andWhere('s.skillname IS NOT NULL')
             ->setMaxResults(1000)
             ->orderBy('s.skillname', 'ASC')
             ->distinct()

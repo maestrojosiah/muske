@@ -12,7 +12,6 @@ prod:
 notification by email when end of pro : cron job
 Mail Reminder of incomplete accounts once a month : cron job
 Delete expired ads with all its notifications : cron job
-composer requires that was done in dev
 cron job to delete var/log/prod.log
 email address for pro members-
 
@@ -35,19 +34,28 @@ interested
 sent resumes
 muske and basic - limit photos in gallery
 
-                    // the provide_ function that are manually created for special cases
-                    if($entity == "Settings" && $extra == 'musician'){
-                        //do nothing for this special case
-                    } else {
-                        
-                        $function = "provide_$extra";
-                        $key = ucfirst($this->sanitizeInput($extra));
-                        $item = $this->{$function}($id);
-    
-                        // set the values
-                        $setter = "set".$key;
-                        $data[$key] = $item;
-                        $entity->$setter($item);
-    
-                    }
+{% block javascripts %}
+  <!-- Load Facebook SDK for JavaScript -->
+      <div id="fb-root"></div>
+      <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            xfbml            : true,
+            version          : 'v7.0'
+          });
+        };
 
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
+
+      <!-- Your Chat Plugin code -->
+      <div class="fb-customerchat"
+        attribution=setup_tool
+        page_id="105161107925351">
+      </div>
+{% endblock %}

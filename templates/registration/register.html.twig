@@ -46,8 +46,8 @@
 					<button id="register_button" class="btn btn-primary btn-block text-white btn-user" type="submit">Register Account</button>
 					<hr>
 				{{ form_end(registrationForm) }}
-				<div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
-				<div class="text-center"><a class="small" href="login.html">Already have an account? Login!</a></div>
+				<div class="text-center"><a class="small" href="{{ path('musician_reset_password')}}">Forgot Password?</a></div>
+				<div class="text-center"><a class="small" href="{{ path('app_login')}}">Already have an account? Login!</a></div>
 				</div>
 			</div>
 			</div>

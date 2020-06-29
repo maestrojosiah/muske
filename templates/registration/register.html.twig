@@ -29,7 +29,7 @@
 				{{ form_start(registrationForm, {'attr': {'class': 'user'}}) }}
 
 					<div class="form-group">
-						{{ form_widget(registrationForm.username, {'attr': {'class': 'form-control',  'required':"required", 'minlength':"5", 'maxlength':"20", 'pattern':"[^' ']+", 'autofocus':"autofocus", "value":" ", 'placeholder': "Username"}}) }}                                                      
+						{{ form_widget(registrationForm.username, {'attr': {'class': 'form-control',  'required':"required", 'minlength':"5", 'maxlength':"20", 'autofocus':"autofocus", "value":" ", 'placeholder': "Username"}}) }}                                                      
 						<small class="form-text text-muted" id='notify'></small>
 						<small class="form-text text-muted">Username should be a single word with no spaces. example: johnsmith</small>
 					</div>

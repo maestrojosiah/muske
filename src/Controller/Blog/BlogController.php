@@ -24,7 +24,7 @@ class BlogController extends AbstractController
 
         $musician = $musicianRepository->findOneByUsername($username);
 
-        if ($musician->isbasic()) {
+        if ($musician->isbasic() || $musician->ismuskeandactive()) {
             return $this->redirectToRoute('musician_plan',['msg' => 'You need to upgrade to get that feature']);
         }
         $posts = $postRepository

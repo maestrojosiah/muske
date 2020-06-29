@@ -14,9 +14,15 @@
                 <h2 style="display: inline-block; margin-bottom:0px!important; padding-bottom:0px!important;" class="text-center">Portfolio</h2>
                 <div style="display: inline-block; padding-bottom:0.5rem; margin-left:50px;" class="text-center">
                   {% if app.user and app.user != null and app.user == musician %}
+                  {% if (musician.isbasic and musician.uploadedphotos|length <= 20) or (musician.ismuskeandactive and musician.uploadedphotos|length <= 50) or musician.isproandactive %}
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                     <i class="fa fa-upload" style="font-size: 1.5rem;"></i>
                   </button>
+                  {% else %}
+                  <a href="{{path('musician_plan')}}?msg='You need to upgrade your account to upload more photos'" class="btn btn-primary">
+                    <i class="fa fa-upload" style="font-size: 1.5rem;"></i>
+                  </a>
+                  {% endif %}
                   {% endif %}
                 </div>
         
@@ -84,8 +90,8 @@
 
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
-    <script src="{{ asset('js/infinite.min.js') }}"></script>
+    <script src="{{ asset('theme/assets/js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('theme/assets/js/infinite.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
     
     <script>

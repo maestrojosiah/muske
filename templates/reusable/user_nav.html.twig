@@ -40,29 +40,31 @@
                 </div>
              </div>
           </li>
+          {% if app.user.ismuskeandactive or app.user.isproandactive %}
           <li class="nav-item dropdown no-arrow mx-1" role="presentation">
-             <div id="see-ad-notification" class="nav-item dropdown no-arrow">
-                <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="badge badge-danger badge-counter">{{app.user.notifications|length > 0 ? app.user.notifications|length : ''}}</span><i class="fas fa-clipboard-list fa-fw"></i></a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
-                   role="menu" style="background-color: rgb(231,231,231);">
-                   <h6 class="dropdown-header">Adverts center</h6>
-                   {% for notification in app.user.notifications %}
-                     {% if notification.unread == true and loop.index < 10 %}
-                        <a id="click-ad-notification_{{notification.id}}" class="d-flex align-items-center dropdown-item" href="#">
-                           <div class="mr-3">
-                              <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                           </div>
-                           <div>
-                              <span class="small text-gray-500">{{notification.created|date("jS F Y")}}</span>
-                              <p>{{notification.message}}</p>
-                           </div>
-                        </a>   
-                     {% endif %}
-                   {% endfor %}
-                   <a class="text-center dropdown-item small text-gray-500" href="{{ path('advert_index')}}">Show All Adverts</a>
-                </div>
-             </div>
+            <div id="see-ad-notification" class="nav-item dropdown no-arrow">
+               <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="badge badge-danger badge-counter">{{app.user.notifications|length > 0 ? app.user.notifications|length : ''}}</span><i class="fas fa-clipboard-list fa-fw"></i></a>
+               <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
+                  role="menu" style="background-color: rgb(231,231,231);">
+                  <h6 class="dropdown-header">Adverts center</h6>
+                  {% for notification in app.user.notifications %}
+                    {% if notification.unread == true and loop.index < 10 %}
+                       <a id="click-ad-notification_{{notification.id}}" class="d-flex align-items-center dropdown-item" href="#">
+                          <div class="mr-3">
+                             <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
+                          </div>
+                          <div>
+                             <span class="small text-gray-500">{{notification.created|date("jS F Y")}}</span>
+                             <p>{{notification.message}}</p>
+                          </div>
+                       </a>   
+                    {% endif %}
+                  {% endfor %}
+                  <a class="text-center dropdown-item small text-gray-500" href="{{ path('advert_index')}}">Show All Adverts</a>
+               </div>
+            </div>
           </li>
+          {% endif %}
           <div class="d-none d-sm-block topbar-divider"></div>
           <li class="nav-item dropdown no-arrow" role="presentation">
              <div class="nav-item dropdown no-arrow">

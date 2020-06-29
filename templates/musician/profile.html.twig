@@ -82,12 +82,12 @@
                 <div class="card-body">
                   <form id="cover-form">
                     <div class="form-group">
-                      <label>Cover image</label>
+                      <label>Change cover image</label>
                       <input id="myCoverphoto" name="coverphoto" type="file" /><br />
                       <small>For best appearance, upload image of 1280 x 500 dimensions or something close to that</small>
                     </div>
-                    <button class="btn btn-primary" id="upload-coverphoto" type="button">Upload</button>
-                    <button title="Reset cover photo to original image" class="btn btn-primary" id="save-coverphoto" type="button">Reset</button>
+                    <button {% if musician.isbasic %} disabled {% endif %} class="btn btn-primary" id="upload-coverphoto" type="button">Upload</button>
+                    <button {% if musician.isbasic %} disabled {% endif %} title="Reset cover photo to original image" class="btn btn-primary" id="save-coverphoto" type="button">Reset</button>
                   </form>
                   <form id="coverphoto-form">
                     <input type="hidden" name="coverphoto" value="drumset-half.jpg" />
@@ -97,12 +97,12 @@
                   <hr>
                   <form id="bg-form">
                     <div class="form-group">
-                      <label>Background image</label>
+                      <label>Change background image</label>
                       <input id="myBgphoto" name="bgphoto" type="file"><br />
                       <small>For best appearance, upload image of 900 x 600 dimensions or something close to that</small>
                     </div>
-                    <button class="btn btn-primary" id="upload-bgphoto" type="button">Upload</button>
-                    <button title="Reset background image to original image" class="btn btn-primary" id="save-bgphoto" type="button">Reset</button>
+                    <button {% if musician.isbasic %} disabled {% endif %} class="btn btn-primary" id="upload-bgphoto" type="button">Upload</button>
+                    <button {% if musician.isbasic %} disabled {% endif %} title="Reset background image to original image" class="btn btn-primary" id="save-bgphoto" type="button">Reset</button>
                   </form>
                   <form id="bgphoto-form">
                     <input type="hidden" name="bgphoto" value="class.jpg" />
@@ -112,7 +112,7 @@
                   <hr />
                   <form id="theme-form">
                     <div class="form-group">
-                      <label>Pdf download theme</label>
+                      <label>Change resume theme</label>
                       <select name="pdfTheme" id="pdf_theme" class="form-control">
                         {% for theme in pdfThemes %}
                           {% if musician.isproandactive %}
@@ -239,7 +239,7 @@
                   </div>
                   <div class="card shadow mb-3 margin-top" id="div-sociallinks">
                     <div class="card-header py-3">
-                      <p class="text-primary m-0 font-weight-bold">Social networks URL settings</p>
+                      <p class="text-primary m-0 font-weight-bold">Social networks URL settings (PRO)</p>
                     </div>
                     <div class="card-body">
                       <form id="social-form">
@@ -247,7 +247,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="facebook"><strong>Facebook</strong></label>
-                              <input name="facebook" value="{{musician.settings and musician.settings.facebook ? musician.settings.twitter : ""}}" type="text" class="form-control" id="facebook" placeholder="enter url" title="copy from address bar and paste here.">
+                              <input name="facebook" value="{{musician.settings and musician.settings.facebook ? musician.settings.facebook : ""}}" type="text" class="form-control" id="facebook" placeholder="enter url" title="copy from address bar and paste here.">
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -271,6 +271,7 @@
                             </div>
                           </div>
                         </div>
+                        {% if musician.isproandactive %}
                         <div class="form-row">
                           <div class="col">
                             <div class="form-group">
@@ -278,7 +279,8 @@
                               <textarea name="tawkTo" style="font-size: 12px;" class="form-control" rows="5" id="tawkTo" placeholder="enter tawk.to script" title="copy from tawk.to and paste here.">{{musician.settings and musician.settings.tawkTo ? musician.settings.tawkTo : "Leave this text here if you've got no tawk-to script"}}</textarea>
                             </div>
                           </div>
-                        </div>
+                        </div>                        
+                        {% endif %}
                         <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
                         {% if musician.settings|length < 1 %}<input type="hidden" name="extras" value="musician" />{% endif %}
                         <div class="form-group"><button id="save-social" class="btn btn-primary btn-sm" type="button">Save&nbsp;</button></div>

@@ -95,11 +95,12 @@
                 {% endif %}           
                 <div class="col-md-11 offset-sm-1" style="mb-4">
                     <legend><i class="fa fa-star"></i> Social</legend>
+                    <p>{% if (musician.isproandactive and musician.hassettings) and (musician.settings.twitter is null or musician.settings.facebook is null or musician.settings.instagram is null or musician.settings.linkedin is null) %}<a href="{{path('musician_profile')}}">Add your social media links in your profile settings</a>{% endif %}</p>
                     <div class="social-icons">
-                        <a href="{{ musician.hassettings and musician.settings.twitter|length > 1 ? musician.settings.twitter | external_link : '#'}}"><i class="fa fa-twitter"></i></a>
-                        <a href="{{ musician.hassettings and musician.settings.facebook|length > 1 ? musician.settings.facebook | external_link : '#'}}"><i class="fa fa-facebook"></i></a>
-                        <a href="{{ musician.hassettings and musician.settings.instagram|length > 1 ? musician.settings.instagram | external_link : '#'}}"><i class="fa fa-instagram"></i></a>
-                        <a href="{{ musician.hassettings and musician.settings.linkedin|length > 1 ? musician.settings.linkedin | external_link : '#'}}"><i class="fa fa-linkedin"></i></a>
+                        <a href="{{ musician.isproandactive and musician.hassettings and musician.settings.twitter|length > 1 ? musician.settings.twitter | external_link : '#'}}"><i class="fa fa-twitter"></i></a>
+                        <a href="{{ musician.isproandactive and musician.hassettings and musician.settings.facebook|length > 1 ? musician.settings.facebook | external_link : '#'}}"><i class="fa fa-facebook"></i></a>
+                        <a href="{{ musician.isproandactive and musician.hassettings and musician.settings.instagram|length > 1 ? musician.settings.instagram | external_link : '#'}}"><i class="fa fa-instagram"></i></a>
+                        <a href="{{ musician.isproandactive and musician.hassettings and musician.settings.linkedin|length > 1 ? musician.settings.linkedin | external_link : '#'}}"><i class="fa fa-linkedin"></i></a>
                     </div>
                     <hr>
                 </div>            

@@ -92,7 +92,9 @@
                     <div class="clean-pricing-item line-top bg-white">
                         <div class="heading text-center">
                             <h3>BASIC</h3>
+                            {% if musician is defined %}
                             <small>{{musician.account == 'basic' ? 'Your current account' : '.........'}}</small>
+                            {% endif %}
                         </div>
                         <hr>
                         <p>Basic is completely free.</p>

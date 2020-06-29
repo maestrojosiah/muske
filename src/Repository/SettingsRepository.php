@@ -19,6 +19,23 @@ class SettingsRepository extends ServiceEntityRepository
         parent::__construct($registry, Settings::class);
     }
 
+    /**
+     * @return Settings[] Returns an array of Musician objects
+     */
+    
+    public function findLocationList()
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.placeofwork')
+            ->andWhere('s.placeofwork IS NOT NULL')
+            ->setMaxResults(1000)
+            ->orderBy('s.placeofwork', 'ASC')
+            ->distinct()
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Settings[] Returns an array of Settings objects
     //  */

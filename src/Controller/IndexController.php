@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Repository\MusicianRepository;
 use App\Repository\JobToBeOfferedRepository;
 use App\Repository\SkillRepository;
+use App\Repository\SettingsRepository;
 use App\Repository\PdfThemeRepository;
 use Sonata\SeoBundle\Seo\SeoPageInterface;
 
@@ -27,11 +28,12 @@ class IndexController extends AbstractController
     /**
      * @Route("/search", name="search")
      */
-    public function search(SeoPageInterface $seoPage, JobToBeOfferedRepository $jobToBeOfferedRepository, MusicianRepository $musicianRepository, SkillRepository $skillRepository): Response
+    public function search(SeoPageInterface $seoPage, JobToBeOfferedRepository $jobToBeOfferedRepository, MusicianRepository $musicianRepository, SkillRepository $skillRepository, SettingsRepository $settingsRepository): Response
     {
         $skills = $skillRepository->findSkillsList();
         $specialties = $jobToBeOfferedRepository->findSpecialtiesList();
         $titles = $musicianRepository->findTitlesList();
+        $locations = $settingsRepository->findLocationList();
         $musicians = $musicianRepository->findAll();
         $proMusicians = $musicianRepository->getMusicians('pro');
         $muskeMusicians = $musicianRepository->getMusicians('muske');
@@ -55,6 +57,7 @@ class IndexController extends AbstractController
             'skills' => $skills,
             'specialties' => $specialties,
             'titles' => $titles,
+            'locations' => $locations,
             'musicians' => $musicians,
             'pro_musicians' => $proMusicians,
             'muske_musicians' => $muskeMusicians,

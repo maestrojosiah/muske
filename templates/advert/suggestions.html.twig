@@ -5,9 +5,10 @@
     {% for musician in proMusicians %}
     {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
         <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|lower|replace({' ':'-','.':''})}} {% endfor %}">
-            <div class="card" >
+            <div class="card">
                 <div class="card-body">
                   <h5 class="card-title"><a style="font-size: 14px;" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a></h5>
+                  <h6 class="mb-3 text-success">Verified Member</h6>
                   <h6 class="card-subtitle mb-2 text-muted">{{ musician.title != null ? musician.title : 'Musician'}}</h6>
                   <p class="card-text">{% for skill in musician.skills %}
                     <small>{{skill.skillname}} {% if loop.last %}{% else %} . {% endif %}</small>
@@ -28,6 +29,7 @@
             <div class="card" >
                 <div class="card-body">
                   <h5 class="card-title"><a style="font-size: 14px;" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a></h5>
+                  <h6 class="mb-3 text-info">Muske Member</h6>
                   <h6 class="card-subtitle mb-2 text-muted">{{ musician.title != null ? musician.title : 'Musician'}}</h6>
                   <p class="card-text">{% for skill in musician.skills %}
                     <small>{{skill.skillname}} {% if loop.last %}{% else %} . {% endif %}</small>

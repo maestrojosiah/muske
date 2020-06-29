@@ -23,12 +23,12 @@
                     <div class="card-header" role="tab">
                         <h5 class="mb-0"><a style="color: #3399F3!important;" data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-1">Filter by skills</a></h5>
                     </div>
-                    <div class="collapse item-1" role="tabpanel" data-parent="#accordion-1">
+                    <div class="t-b-c collapse item-1" role="tabpanel" data-parent="#accordion-1">
                         <div class="card-body">
                             <p>Click on any skill to narrow down.</p>
                             <ul class="nav nav-pills">
                                 {% for skill in skills %}
-                                <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{skill.skillname|trim|lower|replace({' ':'-','.':''})}}" href="#">{{skill.skillname|capitalize}}</a></li>
+                                <li class="nav-item close-all"><a class="filter-button nav-link text-dark border border-light" data-filter="{{skill.skillname|trim|lower|replace({' ':'-','.':''})}}" href="#">{{skill.skillname|capitalize}}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -38,12 +38,27 @@
                     <div class="card-header" role="tab">
                         <h5 class="mb-0"><a style="color: #3399F3!important;" data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-2" href="#accordion-1 .item-2">Filter by specialties</a></h5>
                     </div>
-                    <div class="collapse item-2" role="tabpanel" data-parent="#accordion-1">
+                    <div class="t-b-c collapse item-2" role="tabpanel" data-parent="#accordion-1">
                         <div class="card-body">
                             <p>Click on any specialty to narrow down.</p>
                             <ul class="nav nav-pills">
                                 {% for specialty in specialties %}
-                                <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}}" href="#">{{specialty.jobtitle|capitalize}}</a></li>
+                                <li class="nav-item close-all"><a class="filter-button nav-link text-dark border border-light" data-filter="{{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}}" href="#">{{specialty.jobtitle|capitalize}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="padding: 0;">
+                    <div class="card-header" role="tab">
+                        <h5 class="mb-0"><a style="color: #3399F3!important;" data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-3" href="#accordion-1 .item-3">Filter by title</a></h5>
+                    </div>
+                    <div class="t-b-c collapse item-3" role="tabpanel" data-parent="#accordion-1">
+                        <div class="card-body">
+                            <p>Click on any title to narrow down.</p>
+                            <ul class="nav nav-pills">
+                                {% for title in titles %}
+                                <li class="nav-item close-all"><a class="filter-button nav-link text-dark border border-light" data-filter="{{title.title|trim|lower|replace({' ':'-','.':''})}}" href="#">{{title.title|capitalize}}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -51,14 +66,14 @@
                 </div>
                 <div class="card mb-3" style="padding: 0;">
                     <div class="card-header" role="tab">
-                        <h5 class="mb-0"><a style="color: #3399F3!important;" data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-3" href="#accordion-1 .item-3">Filter by title</a></h5>
+                        <h5 class="mb-0"><a style="color: #3399F3!important;" data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-4" href="#accordion-1 .item-4">Filter by location</a></h5>
                     </div>
-                    <div class="collapse item-3" role="tabpanel" data-parent="#accordion-1">
+                    <div class="t-b-c collapse item-4" role="tabpanel" data-parent="#accordion-1">
                         <div class="card-body">
                             <p>Click on any title to narrow down.</p>
                             <ul class="nav nav-pills">
-                                {% for title in titles %}
-                                <li class="nav-item"><a class="filter-button nav-link text-dark border border-light" data-filter="{{title.title|trim|lower|replace({' ':'-','.':''})}}" href="#">{{title.title|capitalize}}</a></li>
+                                {% for location in locations %}
+                                <li class="nav-item close-all"><a class="filter-button nav-link text-dark border border-light" data-filter="{{location.placeofwork|trim|lower|replace({' ':'-','.':'',',':''})}}" href="#">{{location.placeofwork|capitalize}}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -76,7 +91,7 @@
                 {% for musician in pro_musicians  %}
                 {% if musician.settings|length > 0 and musician.settings.visibility != 'off' %}
                 {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
-                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialty in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {{musician.title is not null ? musician.title|trim|lower|replace({' ':'-','.':''}) : 'musician'}}">
+                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialty in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for location in locations %} {{musician.settings.placeofwork|trim|lower|replace({' ':'-','.':'',',':''})}} {% endfor %} {{musician.title is not null ? musician.title|trim|lower|replace({' ':'-','.':''}) : 'musician'}}">
                         <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
                             <a class="btn btn-primary middle" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
                             <div class="card-body">
@@ -88,6 +103,7 @@
                                 <p class="card-text">{% for jobtodo in musician.jobstobeoffered %}
                                     {{jobtodo.jobtitle}} {% if loop.last %}{% else %} . {% endif %}
                                 {% endfor %}</p>
+                                <p style="background-color: inherit; font-size: 0.7rem; text-transform: uppercase; font-weight: bold; padding-bottom: 0px; margin-bottom:0px;">{{musician.title != null? musician.title : 'Musician'}} {{musician.hassettings and musician.settings.placeofwork != null ? 'from ' ~ musician.settings.placeofwork : ''}}</p><br />
                             </div>
                             <div class="card-footer">
                                 <div class="btn-group" role="group">
@@ -106,7 +122,7 @@
                 {% for musician in muske_musicians %}
                 {% if musician.settings|length > 0 and musician.settings.visibility != 'off' %}
                 {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
-                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialty in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {{musician.title is not null ? musician.title|trim|lower|replace({' ':'-','.':''}) : 'musician'}}">
+                    <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialty in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for location in locations %} {{musician.settings.placeofwork|trim|lower|replace({' ':'-','.':'',',':''})}} {% endfor %} {{musician.title is not null ? musician.title|trim|lower|replace({' ':'-','.':''}) : 'musician'}}">
                         <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
                             <a class="btn btn-primary middle" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
                             <div class="card-body">
@@ -118,6 +134,7 @@
                                 <p class="card-text">{% for jobtodo in musician.jobstobeoffered %}
                                     {{jobtodo.jobtitle}} {% if loop.last %}{% else %} . {% endif %}
                                 {% endfor %}</p>
+                                <p style="background-color: inherit; font-size: 0.7rem; text-transform: uppercase; font-weight: bold; padding-bottom: 0px; margin-bottom:0px;">{{musician.title != null? musician.title : 'Musician'}} {{musician.hassettings and musician.settings.placeofwork != null ? 'from ' ~ musician.settings.placeofwork : ''}}</p><br />
                             </div>
                             <div class="card-footer">
                                 <div class="btn-group" role="group">
@@ -136,7 +153,7 @@
                 {% for musician in basic_musicians %}
                 {% if musician.settings|length > 0 and musician.settings.visibility != 'off' %}
                 {% set thumbnailurl = asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') %}
-                     <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialty in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {{musician.title is not null ? musician.title|trim|lower|replace({' ':'-','.':''}) : 'musician'}}">
+                     <div class="col-md-4 filter {% for skill in musician.skills %} {{skill.skillname|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for specialty in musician.jobstobeoffered %} {{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}} {% endfor %} {% for location in locations %} {{musician.settings.placeofwork|trim|lower|replace({' ':'-','.':'',',':''})}} {% endfor %} {{musician.title is not null ? musician.title|trim|lower|replace({' ':'-','.':''}) : 'musician'}}">
                         <div class="card text-center"><img class="rounded-circle card-img-top w-100 d-block search-card-img" src="{{ musician.photo|length > 1 ? thumbnailurl : asset('img/headshot.jpg') }}">
                             <a class="btn btn-primary middle" role="button" href="{{path('musician_show', {'username': musician.username})}}">{{musician.fullname|upper}}&nbsp;</a>
                             <div class="card-body">
@@ -148,9 +165,11 @@
                                 <p class="card-text">{% for jobtodo in musician.jobstobeoffered %}
                                     {{jobtodo.jobtitle}} {% if loop.last %}{% else %} . {% endif %}
                                 {% endfor %}</p>
+                                <p style="background-color: inherit; font-size: 0.7rem; text-transform: uppercase; font-weight: bold; padding-bottom: 0px; margin-bottom:0px;">{{musician.title != null? musician.title : 'Musician'}} {{musician.hassettings and musician.settings.placeofwork != null ? 'from ' ~ musician.settings.placeofwork : ''}}</p><br />
                             </div>
                             <div class="card-footer">
                                 <div class="btn-group" role="group">
+                                    <p>{{musician.title != null? musician.title : 'Musician'}} {{musician.hassettings and musician.settings.placeofwork != null ? 'from ' ~ musician.settings.placeofwork : ''}}</p>
                                     <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Resume</a>
                                     <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Contact</a>
                                 </div>
@@ -196,6 +215,11 @@
         });
 
     </script>
+<script>
+$('.close-all').click( function() {
 
+    $('.t-b-c').removeClass('show');
 
+})
+</script>
 {% endblock %}

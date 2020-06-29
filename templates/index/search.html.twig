@@ -169,7 +169,6 @@
                             </div>
                             <div class="card-footer">
                                 <div class="btn-group" role="group">
-                                    <p>{{musician.title != null? musician.title : 'Musician'}} {{musician.hassettings and musician.settings.placeofwork != null ? 'from ' ~ musician.settings.placeofwork : ''}}</p>
                                     <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Resume</a>
                                     <a class="btn btn-primary" href="{{ path('musician_show', {'username': musician.username})}}" >Contact</a>
                                 </div>

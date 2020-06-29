@@ -34,6 +34,7 @@ class Referee
 
     /**
      * @ORM\ManyToOne(targetEntity=Musician::class, inversedBy="referees")
+     * @ORM\JoinColumn(name="musician_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $musician;
 

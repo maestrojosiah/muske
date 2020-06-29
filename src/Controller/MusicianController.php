@@ -210,7 +210,7 @@ class MusicianController extends AbstractController
         $notifs = [];
         $notifs[] = count($musician->getJobs()) < 1 ? ['musician_new' => 'Please add job history to your resume'] : [];
         $notifs[] = count($musician->getEducation()) < 1 ? ['musician_new' => 'Please add education background to your resume'] : [];
-        $notifs[] = count($doc_array) < 1 ? ['musician_show' => 'You may need to add documents to your resume'] : [];
+        if($musician->isproandactive() || $musician->ismuskeandactive()){$notifs[] = count($doc_array) < 1 ? ['musician_show' => 'You may need to add documents to your resume'] : [];}
         $notifs[] = count($roles_array) < 1 ? ['musician_show' => 'You may need to add roles to your resume jobs'] : [];
         $notifs[] = count($musician->getReferees()) < 1 ? ['musician_show' => 'You may need to add referees to your resume'] : [];
 

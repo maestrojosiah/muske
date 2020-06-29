@@ -87,7 +87,12 @@ class UpdateController extends AbstractController
             } else if ($toReturn != "nothingToReturn"){
                 $getter = "get".$toReturn;
             }
-            
+            if ($classFromForm == 'Settings') { // special case of where browser needed to be refreshed to update settings hyphen and remove musician extra
+                $settingsforThisMusician = $this->settingsRepo->findOneByMusician($this->getUser());
+                if(null !== $settingsforThisMusician ){
+                    $classFromForm = "Settings-".$settingsforThisMusician->getId();
+                }
+            }
             // declarations
             $entityManager = $this->getDoctrine()->getManager();
 
@@ -150,6 +155,13 @@ class UpdateController extends AbstractController
                 }
 
                 // for testing purposes. remove when done
+                if ($class == 'App:Settings') {
+                    $settingsforThisMusician = $this->settingsRepo->findOneByMusician($this->getUser());
+                    if(null !== $settingsforThisMusician ){
+                        $item = str_replace('musician', '', $item);
+                    }
+                }
+                
                 $data[$key] = $item;
                 
             }

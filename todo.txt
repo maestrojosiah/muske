@@ -35,3 +35,19 @@ interested
 sent resumes
 muske and basic - limit photos in gallery
 
+                    // the provide_ function that are manually created for special cases
+                    if($entity == "Settings" && $extra == 'musician'){
+                        //do nothing for this special case
+                    } else {
+                        
+                        $function = "provide_$extra";
+                        $key = ucfirst($this->sanitizeInput($extra));
+                        $item = $this->{$function}($id);
+    
+                        // set the values
+                        $setter = "set".$key;
+                        $data[$key] = $item;
+                        $entity->$setter($item);
+    
+                    }
+

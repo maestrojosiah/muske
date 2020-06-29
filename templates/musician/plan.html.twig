@@ -92,7 +92,7 @@
                     <div class="clean-pricing-item line-top bg-white">
                         <div class="heading text-center">
                             <h3>BASIC</h3>
-                            {% if musician is defined %}
+                            {% if app.user and app.user != null and musician is defined %}
                             <small>{{musician.account == 'basic' ? 'Your current account' : '.........'}}</small>
                             {% endif %}
                         </div>

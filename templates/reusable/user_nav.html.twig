@@ -66,7 +66,7 @@
           <div class="d-none d-sm-block topbar-divider"></div>
           <li class="nav-item dropdown no-arrow" role="presentation">
              <div class="nav-item dropdown no-arrow">
-               {% set thumb = musician.photo|length > 1 ? asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') : asset('img/headshot.jpg') %}
+               {% set thumb = app.user and app.user.photo|length > 1 ? asset('uploads/photos/thumbs/' ~ musician.photo ~ '.png') : asset('img/headshot.jpg') %}
                 <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">{{app.user.fullname}}</span><img class="border rounded-circle img-profile" src="{{thumb}}"></a>
                 <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu">
                    <a class="dropdown-item" role="presentation" href="{{ path('musician_admin_index')}}"><i class="fas fa-wrench fa-sm fa-fw mr-2 text-gray-400"></i>Admin</a>

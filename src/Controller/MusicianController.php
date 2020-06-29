@@ -235,12 +235,17 @@ class MusicianController extends AbstractController
         $this->seoPage->setTitle("Plans / Pricing");
         $musician = $this->getUser();
 
-        if($musician->isMuskeAndActive() == 'true'){
-            $membership = "Muske";
-        } elseif($musician->isProAndActive() == 'true'){
-            $membership = "Pro";
+        if(null !== $musician) {
+            if($musician->isMuskeAndActive() == 'true'){
+                $membership = "Muske";
+            } elseif($musician->isProAndActive() == 'true'){
+                $membership = "Pro";
+            } else {
+                $membership = "Basic";
+            }
+    
         } else {
-            $membership = "Basic";
+            $membership = 'Basic';
         }
         
         return $this->render('musician/plan.html.twig', [

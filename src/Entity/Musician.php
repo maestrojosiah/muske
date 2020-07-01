@@ -106,6 +106,7 @@ class Musician implements UserInterface
     private $hassettings;
     private $realemail;
     private $realphone;
+    private $formattedphone;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Settings", mappedBy="musician", cascade={"persist", "remove"})
@@ -475,6 +476,12 @@ class Musician implements UserInterface
         } else {
             return "Call MuSKe | 0705285959";
         }
+    }
+
+    public function getFormattedNumber(): ?string
+    {
+        $this->formattedphone = $this->formatPhoneNumber($this->phone);
+        return $this->formattedphone;
     }
 
     public function getRealPhone(): ?string
@@ -974,6 +981,33 @@ class Musician implements UserInterface
         $this->title = $title;
 
         return $this;
+    }
+
+    public function formatPhoneNumber($phone){
+
+        //The default country code if the recipient's is unknown:
+        $country_code  = '254';
+
+        //Remove any parentheses and the numbers they contain:
+        $phone = preg_replace("/\([0-9]+?\)/", "", $phone);
+
+        //Strip spaces and non-numeric characters:
+        $phone = preg_replace("/[^0-9]/", "", $phone);
+
+        //Strip out leading zeros:
+        $phone = ltrim($phone, '0');
+
+        //Look up the country dialling code for this number:
+        $pfx = $country_code;
+
+        //Check if the number doesn't already start with the correct dialling code:
+        if ( !preg_match('/^'.$pfx.'/', $phone)  ) {
+            $phone = $pfx.$phone;
+        }
+
+        //return the converted number:
+        return $phone;        
+
     }
 
 }

@@ -38,6 +38,7 @@ use Knp\Snappy\Pdf;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 use App\Service\OrganizeThings; 
+use App\Service\SendSms; 
 use Sonata\SeoBundle\Seo\SeoPageInterface;
 
 class AjaxController extends AbstractController
@@ -253,7 +254,22 @@ class AjaxController extends AbstractController
 
             if($musician){
                 if($messageFromResume->sendEmailMessage($musician->getEmail(), $musician->getUsername(), $sendername, $senderemail, $message, $senderphone, $calltime)){
-                    // $this->addFlash('success', 'Notification mail was sent successfully');
+                    $to = $request->request->get($musician->getFormattedNumber());
+                    $msg = 'Resume message. Check your email if you\'re a pro member. Not pro? MuSKe will contact you';
+            
+                    if ($to !== "" && $msg !== "") {
+            
+                        $res = [];
+                        $data = "{\n \"from\":\"ModuleZilla\",\n \"to\":\"$to\",\n \"text\":\"$msg\"\n}";
+            
+                        try {
+                            $response = $sendSms->CallAPI('POST', 'http://54.247.191.102/restapi/sms/1/text/single', $data );
+                            $data['res'] = $response;
+                        } catch (HttpException $ex) {
+                            $data['res'] = $ex;
+                        }
+                        
+                    }
                     $data['found'] = "Message has been sent";
                 }
                 
@@ -262,7 +278,7 @@ class AjaxController extends AbstractController
             }
            
 
-            return new JsonResponse($data['found']);
+            return new JsonResponse($data);
 
         }
 
@@ -270,8 +286,7 @@ class AjaxController extends AbstractController
     
     /**
      * @Route("/musician/receive/callback", name="call_me_back")
-     */
-    public function sendCallBack(CallMeBack $callMeBack, Request $request)
+     */    public function sendCallBack(CallMeBack $callMeBack, Request $request)
     {
         
         if($request->request->get('client_phone_number')){

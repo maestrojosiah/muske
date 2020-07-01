@@ -59,3 +59,6 @@ muske and basic - limit photos in gallery
         page_id="105161107925351">
       </div>
 {% endblock %}
+
+sms
+Base URL: http://54.247.191.102

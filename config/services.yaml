@@ -10,7 +10,11 @@ parameters:
     projects_directory: '%kernel.project_dir%/public/uploads/projects'
     blog_directory: '%kernel.project_dir%/public/uploads/blog'
     img_directory: '%kernel.project_dir%/public/img'
+    public_dir: '%kernel.project_dir%/public'
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
+    mpesa_key: '%env(MPESA_CONSUMER_KEY)%'
+    mpesa_secret: '%env(MPESA_CONSUMER_SECRET)%'
+    mpesa_env: '%env(MPESA_ENV)%'
 
 services:
     # default configuration for services in *this* file

@@ -12,6 +12,7 @@
         "h4cc/wkhtmltoimage-amd64": "^0.12.4",
         "h4cc/wkhtmltopdf-amd64": "^0.12.4",
         "knplabs/knp-snappy-bundle": "^1.7",
+        "safaricom/mpesa": "^1.0",
         "sensio/framework-extra-bundle": "^5.5",
         "sonata-project/seo-bundle": "^2.10",
         "symfony/asset": "5.0.*",

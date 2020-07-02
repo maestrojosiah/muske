@@ -60,5 +60,100 @@ muske and basic - limit photos in gallery
       </div>
 {% endblock %}
 
-sms
-Base URL: http://54.247.191.102
+mpesa
+Accept:
+*/*
+Accept-Encoding: gzip
+Accept-Language: en-US
+Authorization: Basic SWlTdnpyaFE1eXJEeGxMZ3ViMU1rVlBCVjM5TVBBODA6dWNoTHlDaEx0a0RHeWlIVQ==
+Host: sandbox.safaricom.co.ke
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML
+X-Forwarded-For: 154.153.85.89
+X-Forwarded-Port: 443
+X-Forwarded-Proto: https
+
+curl -X GET --header "Authorization: Basic SWlTdnpyaFE1eXJEeGxMZ3ViMU1rVlBCVjM5TVBBODA6dWNoTHlDaEx0a0RHeWlIVQ==" "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+
+authentication 
+<?php
+$url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
+
+$curl = curl_init();
+curl_setopt($curl, CURLOPT_URL, $url);
+$credentials = base64_encode('YOUR_APP_CONSUMER_KEY:YOUR_APP_CONSUMER_SECRET');
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Basic '.$credentials)); //setting a custom header
+curl_setopt($curl, CURLOPT_HEADER, true);
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+$curl_response = curl_exec($curl);
+
+echo json_decode($curl_response);
+
+?>
+  
+Shortcode 1	
+Initiator Name (Shortcode 1)	
+Security Credential (Shortcode 1)	
+Shortcode 2	
+Test MSISDN	
+ExpiryDate	
+Lipa Na Mpesa Online Shortcode:	174379
+Lipa Na Mpesa Online Passkey:
+bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919
+// The resulting base64 encoded string is the security credential
+Generated Initiator Security Credential: DOCuYqdlnvcHhyR3mhvkNjcxoUQ+BKbakucGqrY5oI/I9Ybt/jPK4VJ2W+vPFx1Ms0Kerf2g+dCr2h58MzdJZQCQxe31V/Am7s0QcBCRl/K9D4YjPAZ/4d+CjbahiQL511/gcvb72RC+NJdeN7D/rBBe23QlrfctVvLPwk7L04ahW+yOJn5eP0pVliF1MiDVoTZjVm1+/jLr0au++ThfbPguJreMFaOKOJwncg9iyvPXMVBbV46aCJ3KzyVM/w0Ky/Ds5LOBR/6W5ZU71u0Kdj6DZZx9JuQacR8TQyyjPvUXPV34/59QZe575l95BY1QOVW5JpsnbgMpmraD4B1Uhg==
+
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate?",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+  CURLOPT_POSTFIELDS =>"{\n   \"ShortCode\": \"600775\",\n   \"CommandID\": \"CustomerPayBillOnline\",\n   \"Amount\": \"100\",\n   \"Msisdn\": \"254708374149\",\n   \"BillRefNumber\": \"account\"\n}",
+  CURLOPT_HTTPHEADER => array(
+    "Host: sandbox.safaricom.co.ke",
+    "Content-Type: application/json",
+    "Authorization: Bearer 3HtvEearoncG7zTMeG0tHFLsMp8N"
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+  CURLOPT_POSTFIELDS =>"{\n    \"BusinessShortCode\": \"174379\",\n    \"Password\": \"MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMTgwNDA5MDkzMDAy\",\n    \"Timestamp\": \"20180409093002\",\n    \"TransactionType\": \"CustomerBuyGoodsOnline\",\n    \"Amount\": \"5\",\n    \"PartyA\": \"254708374149\",\n    \"PartyB\": \"174379\",\n    \"PhoneNumber\": \"254708374149\",\n    \"CallBackURL\": \"https://sandbox.safaricom.co.ke/mpesa/\",\n    \"AccountReference\": \"account\",\n    \"TransactionDesc\": \"test\" \n}",
+  CURLOPT_HTTPHEADER => array(
+    "Host: sandbox.safaricom.co.ke",
+    "Content-Type: application/json",
+    "Authorization: Bearer AN6GhdLlt6Q5N71FiwABUAH0AxGA"
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;

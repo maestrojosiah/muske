@@ -211,6 +211,9 @@
     "sabberworm/php-css-parser": {
         "version": "8.3.0"
     },
+    "safaricom/mpesa": {
+        "version": "1.0.8"
+    },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
         "recipe": {

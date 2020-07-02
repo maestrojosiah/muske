@@ -237,7 +237,7 @@ class AjaxController extends AbstractController
     /**
      * @Route("/musician/receive/message", name="musician_receive_message", methods={"GET", "POST"})
      */
-    public function sendResumeMessage(MessageFromResume $messageFromResume, Request $request)
+    public function sendResumeMessage(MessageFromResume $messageFromResume, Request $request, SendSms $sendSms)
     {
         
         if($request->request->get('senderemail')){
@@ -254,16 +254,15 @@ class AjaxController extends AbstractController
 
             if($musician){
                 if($messageFromResume->sendEmailMessage($musician->getEmail(), $musician->getUsername(), $sendername, $senderemail, $message, $senderphone, $calltime)){
-                    $to = $request->request->get($musician->getFormattedNumber());
+                    $to = $musician->getFormattedNumber();
                     $msg = 'Resume message. Check your email if you\'re a pro member. Not pro? MuSKe will contact you';
             
                     if ($to !== "" && $msg !== "") {
             
-                        $res = [];
-                        $data = "{\n \"from\":\"ModuleZilla\",\n \"to\":\"$to\",\n \"text\":\"$msg\"\n}";
+                        $data1 = "{\n \"from\":\"ModuleZilla\",\n \"to\":\"$to\",\n \"text\":\"$msg\"\n}";
             
                         try {
-                            $response = $sendSms->CallAPI('POST', 'http://54.247.191.102/restapi/sms/1/text/single', $data );
+                            $response = $sendSms->CallAPI('POST', 'http://54.247.191.102/restapi/sms/1/text/single', $data1 );
                             $data['res'] = $response;
                         } catch (HttpException $ex) {
                             $data['res'] = $ex;

@@ -127,6 +127,7 @@ class PaymentController extends AbstractController
 
         $callbackData=$mpesa->getDataFromCallback();
 
+        $entityManager = $this->getDoctrine()->getManager();
         $payment = new Payment();
         $payment->setMerchantrequestid('testdata');
         $payment->setCheckoutrequestid('testdata');

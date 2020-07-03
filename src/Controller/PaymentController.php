@@ -151,7 +151,7 @@ class PaymentController extends AbstractController
 
     }
 
-    public function comments(){
+    // public function comments(){
         // $url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
         // $key = $this->getParameter('mpesa_key');
         // $pass = $this->getParameter('mpesa_secret');
@@ -177,5 +177,5 @@ class PaymentController extends AbstractController
         
         // $encryp =  base64_encode($encrypted);
 
-    }
+    // }
 }

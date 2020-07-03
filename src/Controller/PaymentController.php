@@ -79,8 +79,8 @@ class PaymentController extends AbstractController
         // $payment->setCustomermessage($data->CustomerMessage);
         // $entityManager->persist($payment);
         // $entityManager->flush();
+        $callbackData = $this->callBack();
 
-        $callbackData=$mpesa->getDataFromCallback();
 
         return new JsonResponse($callbackData);
 
@@ -104,6 +104,7 @@ class PaymentController extends AbstractController
         $timestamp='20'.date("ymdhis");
         $password=base64_encode($BusinessShortCode.$LipaNaMpesaPasskey.$timestamp);
         $STKPushRequestStatus=$mpesa->STKPushQuery($checkoutRequestID,$BusinessShortCode,$password,$timestamp);
+        $callbackData=$mpesa->getDataFromCallback();
 
         return $STKPushRequestStatus;
         // """

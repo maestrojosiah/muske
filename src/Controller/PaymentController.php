@@ -51,13 +51,13 @@ class PaymentController extends AbstractController
     public function stkPush()
     {
 
-        $BusinessShortCode = "174379";
+        $BusinessShortCode = "7254395";
         $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
         $Timestamp = "20180409093002";
         $TransactionType = "CustomerBuyGoodsOnline";
         $Amount = "1";
         $PartyA = "254705285959";
-        $PartyB = "174379";
+        $PartyB = "5253985";
         $PhoneNumber = "254705285959";
         $CallBackURL = "https://muske.co.ke/get/status/pmt";
         $AccountReference = "account";

@@ -56,9 +56,9 @@ class PaymentController extends AbstractController
         $Timestamp = "20180409093002";
         $TransactionType = "CustomerBuyGoodsOnline";
         $Amount = "1";
-        $PartyA = "254708374149";
+        $PartyA = "254705285959";
         $PartyB = "174379";
-        $PhoneNumber = "254708374149";
+        $PhoneNumber = "254705285959";
         $CallBackURL = "https://muske.co.ke/get/status/pmt";
         $AccountReference = "account";
         $TransactionDesc = "test";

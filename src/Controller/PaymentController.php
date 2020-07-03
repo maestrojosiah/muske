@@ -107,7 +107,9 @@ class PaymentController extends AbstractController
         $STKPushRequestStatus=$mpesa->STKPushQuery($checkoutRequestID,$BusinessShortCode,$password,$timestamp);
         $callbackData=$mpesa->getDataFromCallback();
 
-        return $STKPushRequestStatus;
+        // return $;
+        return new JsonResponse($STKPushRequestStatus);
+
         // """
         // {
         //             "ResponseCode": "0",

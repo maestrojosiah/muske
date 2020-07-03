@@ -68,21 +68,21 @@ class PaymentController extends AbstractController
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
         $stkPushSimulation = $mpesa->STKPushSimulation($BusinessShortCode, $LipaNaMpesaPasskey, $TransactionType, $Amount, $PartyA, $PartyB, $PhoneNumber, $CallBackURL, $AccountReference, $TransactionDesc, $Remarks);
-        
-        $entityManager = $this->getDoctrine()->getManager();
         $data = json_decode($stkPushSimulation);
-        // $payment = new Payment();
-        // $payment->setMerchantrequestid($data->MerchantRequestID);
-        // $payment->setCheckoutrequestid($data->CheckoutRequestID);
-        // $payment->setResponsecode($data->ResponseCode);
-        // $payment->setResponsedescription($data->ResponseDescription);
-        // $payment->setCustomermessage($data->CustomerMessage);
-        // $entityManager->persist($payment);
-        // $entityManager->flush();
-        $callbackData = $this->callBack($data->MerchantRequestID, $data->CheckoutRequestID, $data->ResponseCode, $data->ResponseDescription, $data->CustomerMessage );
-        $status = $this->checkStatus($data->CheckoutRequestID);
 
-        return new JsonResponse($status);
+        $entityManager = $this->getDoctrine()->getManager();
+        $payment = new Payment();
+        $payment->setMerchantrequestid($data->MerchantRequestID);
+        $payment->setCheckoutrequestid($data->CheckoutRequestID);
+        $payment->setResponsecode($data->ResponseCode);
+        $payment->setResponsedescription($data->ResponseDescription);
+        $payment->setCustomermessage($data->CustomerMessage);
+        $entityManager->persist($payment);
+        $entityManager->flush();
+        // $callbackData = $this->callBack($data->MerchantRequestID, $data->CheckoutRequestID, $data->ResponseCode, $data->ResponseDescription, $data->CustomerMessage );
+        // $status = $this->checkStatus($data->CheckoutRequestID);
+
+        return new JsonResponse($data);
 
         // "MerchantRequestID":"3178-477436-1",
         // "CheckoutRequestID":"ws_CO_020720202127321718",
@@ -128,25 +128,23 @@ class PaymentController extends AbstractController
     /**
      * @Route("/get/status/pmt", name="get_status")
      */
-    public function callBack($MerchantRequestID, $CheckoutRequestID, $ResponseCode, $ResponseDescription, $CustomerMessage) {
-        
-        $mpesa= new \Safaricom\Mpesa\Mpesa();
-
-        $callbackData = file_get_contents('php://output');
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $payment = new Payment();
-        $payment->setMerchantrequestid($MerchantRequestID);
-        $payment->setCheckoutrequestid($CheckoutRequestID);
-        $payment->setResponsecode($ResponseCode);
-        $payment->setResponsedescription($ResponseDescription);
-        $payment->setCustomermessage($CustomerMessage);
-        $payment->setStroutput($callbackData);
-        $entityManager->persist($payment);
-        $entityManager->flush();
-
-        return $callbackData;
-
+    public function callBack() {
+               
+        if($json = json_decode(file_get_contents("php://input"), true)) {
+            var_dump($json);
+            $data = $json;
+            $payment = new Payment();
+            $payment->setStroutput($data);
+            $entityManager->persist($payment);
+            $entityManager->flush();
+        } else {
+            var_dump($_POST);
+            $data = $_POST;
+            $payment = new Payment();
+            $payment->setStroutput($data);
+            $entityManager->persist($payment);
+            $entityManager->flush();
+        }
     }
     
     public function endTransaction() {

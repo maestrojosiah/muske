@@ -72,7 +72,7 @@ class PaymentController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $data = json_decode($stkPushSimulation);
         // $payment = new Payment();
-        // $payment->setMerchantrequestid($data->MerchantRequestId);
+        // $payment->setMerchantrequestid($data->MerchantRequestID);
         // $payment->setCheckoutrequestid($data->CheckoutRequestID);
         // $payment->setResponsecode($data->ResponseCode);
         // $payment->setResponsedescription($data->ResponseDescription);
@@ -82,7 +82,7 @@ class PaymentController extends AbstractController
         $callbackData = $this->callBack($data->MerchantRequestID, $data->CheckoutRequestID, $data->ResponseCode, $data->ResponseDescription, $data->CustomerMessage );
 
 
-        return new JsonResponse($callbackData);
+        return new JsonResponse($data);
 
         // "MerchantRequestID":"3178-477436-1",
         // "CheckoutRequestID":"ws_CO_020720202127321718",
@@ -121,7 +121,7 @@ class PaymentController extends AbstractController
     /**
      * @Route("/get/status/pmt", name="get_status")
      */
-    public function callBack($MerchantRequestId, $CheckoutRequestID, $ResponseCode, $ResponseDescription, $CustomerMessage) {
+    public function callBack($MerchantRequestID, $CheckoutRequestID, $ResponseCode, $ResponseDescription, $CustomerMessage) {
         
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
@@ -129,7 +129,7 @@ class PaymentController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
         $payment = new Payment();
-        $payment->setMerchantrequestid($MerchantRequestId);
+        $payment->setMerchantrequestid($MerchantRequestID);
         $payment->setCheckoutrequestid($CheckoutRequestID);
         $payment->setResponsecode($ResponseCode);
         $payment->setResponsedescription($ResponseDescription);

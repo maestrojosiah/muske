@@ -73,18 +73,18 @@
 
                     // save the data through ajax
                     $.ajax({
-                        url:'{{ (path("save_entity")) }}',
+                        url:'{{ (path("get_status")) }}',
                         type: "POST",
                         dataType: "json",
                         data: form_data,
                         async: true,
                         success: function (data)
                         {
-                            console.log(data);
-                            $("#saved").val("true");
-                            if ($(list).length){ // if the list to be updated exists, append a button
-                                $(list).append("<"+append_type+" class='"+append_class+"'> "+data+"</"+append_type+">");
-                            }
+                            // console.log(data);
+                            // $("#saved").val("true");
+                            // if ($(list).length){ // if the list to be updated exists, append a button
+                            //     $(list).append("<"+append_type+" class='"+append_class+"'> "+data+"</"+append_type+">");
+                            // }
                             $.notify({
                                 icon: 'glyphicon glyphicon-ok',
                                 title: 'Success!',

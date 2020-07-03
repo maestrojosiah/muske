@@ -133,28 +133,33 @@ class PaymentController extends AbstractController
         if($json = json_decode(file_get_contents("php://input"), true)) {
             var_dump($json);
             $data = $json;
+            $entityManager = $this->getDoctrine()->getManager();
             $payment = new Payment();
             $payment->setMerchantrequestid('test_data');
             $payment->setCheckoutrequestid('test_data');
             $payment->setResponsecode('test_data');
             $payment->setResponsedescription('test_data');
             $payment->setCustomermessage('test_data');
-            $payment->setStroutput($data);
+            $payment->setCallbackmetadata($data);
             $entityManager->persist($payment);
-            $entityManager->flush();
+            $entityManager->flush();        $entityManager = $this->getDoctrine()->getManager();
+
         } else {
             var_dump($_POST);
             $data = $_POST;
+            $entityManager = $this->getDoctrine()->getManager();
             $payment = new Payment();
             $payment->setMerchantrequestid('test_data');
             $payment->setCheckoutrequestid('test_data');
             $payment->setResponsecode('test_data');
             $payment->setResponsedescription('test_data');
             $payment->setCustomermessage('test_data');
-            $payment->setStroutput($data);
+            $payment->setCallbackmetadata($data);
             $entityManager->persist($payment);
             $entityManager->flush();
         }
+        return new JsonResponse('true');
+
     }
     
     public function endTransaction() {

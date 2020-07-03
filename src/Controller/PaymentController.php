@@ -126,15 +126,15 @@ class PaymentController extends AbstractController
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
         $callbackData=$mpesa->getDataFromCallback();
-        
-        // $payment = new Payment();
-        // $payment->setMerchantrequestid($data->MerchantRequestId);
-        // $payment->setCheckoutrequestid($data->CheckoutRequestID);
-        // $payment->setResponsecode($data->ResponseCode);
-        // $payment->setResponsedescription($data->ResponseDescription);
-        // $payment->setCustomermessage($data->CustomerMessage);
-        // $entityManager->persist($payment);
-        // $entityManager->flush();
+
+        $payment = new Payment();
+        $payment->setMerchantrequestid('testdata');
+        $payment->setCheckoutrequestid('testdata');
+        $payment->setResponsecode('testdata');
+        $payment->setResponsedescription('testdata');
+        $payment->setCustomermessage('testdata');
+        $entityManager->persist($payment);
+        $entityManager->flush();
 
 
     }

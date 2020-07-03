@@ -105,10 +105,11 @@ class PaymentController extends AbstractController
         $timestamp='20'.date("ymdhis");
         $password=base64_encode($BusinessShortCode.$LipaNaMpesaPasskey.$timestamp);
         $STKPushRequestStatus=$mpesa->STKPushQuery($checkoutRequestID,$BusinessShortCode,$password,$timestamp);
-        $callbackData=$mpesa->getDataFromCallback();
+        // $callbackData=$mpesa->getDataFromCallback();
 
         // return $;
-        return new JsonResponse($STKPushRequestStatus);
+        $status = json_decode($STKPushRequestStatus);
+        return new JsonResponse($status);
 
         // """
         // {

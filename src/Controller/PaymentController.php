@@ -79,7 +79,7 @@ class PaymentController extends AbstractController
         // $payment->setCustomermessage($data->CustomerMessage);
         // $entityManager->persist($payment);
         // $entityManager->flush();
-        $callbackData = $this->callBack();
+        $callbackData = $this->callBack($MerchantRequestId, $CheckoutRequestID, $ResponseCode, $ResponseDescription, $CustomerMessage );
 
 
         return new JsonResponse($callbackData);
@@ -121,7 +121,7 @@ class PaymentController extends AbstractController
     /**
      * @Route("/get/status/pmt", name="get_status")
      */
-    public function callBack() {
+    public function callBack($MerchantRequestId, $CheckoutRequestID, $ResponseCode, $ResponseDescription, $CustomerMessage) {
         
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
@@ -129,11 +129,11 @@ class PaymentController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
         $payment = new Payment();
-        $payment->setMerchantrequestid('testdata');
-        $payment->setCheckoutrequestid('testdata');
-        $payment->setResponsecode('testdata');
-        $payment->setResponsedescription('testdata');
-        $payment->setCustomermessage('testdata');
+        $payment->setMerchantrequestid($data->MerchantRequestId);
+        $payment->setCheckoutrequestid($data->CheckoutRequestID);
+        $payment->setResponsecode($data->ResponseCode);
+        $payment->setResponsedescription($data->ResponseDescription);
+        $payment->setCustomermessage($data->CustomerMessage);
         $entityManager->persist($payment);
         $entityManager->flush();
 

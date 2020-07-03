@@ -57,6 +57,11 @@ class Payment
      */
     private $callbackmetadata = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $stroutput;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +159,18 @@ class Payment
     public function setCallbackmetadata(?array $callbackmetadata): self
     {
         $this->callbackmetadata = $callbackmetadata;
+
+        return $this;
+    }
+
+    public function getStroutput(): ?string
+    {
+        return $this->stroutput;
+    }
+
+    public function setStroutput(?string $stroutput): self
+    {
+        $this->stroutput = $stroutput;
 
         return $this;
     }

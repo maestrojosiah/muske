@@ -91,11 +91,15 @@ class PaymentController extends AbstractController
         // "CustomerMessage":"Success. Request accepted for processing"
     }
 
-    public function checkStatus($checkoutRequestID) {
+
+    /**
+     * @Route("payment/stk_push/check/status", name="leepahnapush_status")
+     */
+    public function checkStatus() {
 
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
-        // $checkoutRequestID = "ws_CO_020720202224223573";
+        $checkoutRequestID = "ws_CO_030720201256538817";
         $BusinessShortCode = "174379";
         $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
         $timestamp='20'.date("ymdhis");

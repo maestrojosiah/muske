@@ -16,7 +16,7 @@ $( "#test-stuff" ).click(function() {
     var calltime = 'test data';
     
     $.ajax({
-        url:"{{ (path('leepahnapush')) }}",
+        url:"{{ (path('leepahnapush_status')) }}",
         type: "POST",
         dataType: "json",
         data: {

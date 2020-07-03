@@ -79,7 +79,7 @@ class PaymentController extends AbstractController
         // $payment->setCustomermessage($data->CustomerMessage);
         // $entityManager->persist($payment);
         // $entityManager->flush();
-        $callbackData = $this->callBack($data->MerchantRequestId, $data->CheckoutRequestID, $data->ResponseCode, $data->ResponseDescription, $data->CustomerMessage );
+        $callbackData = $this->callBack($data->MerchantRequestID, $data->CheckoutRequestID, $data->ResponseCode, $data->ResponseDescription, $data->CustomerMessage );
 
 
         return new JsonResponse($callbackData);

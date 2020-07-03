@@ -137,6 +137,7 @@ class PaymentController extends AbstractController
         $entityManager->persist($payment);
         $entityManager->flush();
 
+        return $payment;
 
     }
     

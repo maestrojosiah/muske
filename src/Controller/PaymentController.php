@@ -80,9 +80,9 @@ class PaymentController extends AbstractController
         // $entityManager->persist($payment);
         // $entityManager->flush();
         $callbackData = $this->callBack($data->MerchantRequestID, $data->CheckoutRequestID, $data->ResponseCode, $data->ResponseDescription, $data->CustomerMessage );
+        $status = $this->checkStatus($data->CheckoutRequestID);
 
-
-        return new JsonResponse($callbackData);
+        return new JsonResponse($status);
 
         // "MerchantRequestID":"3178-477436-1",
         // "CheckoutRequestID":"ws_CO_020720202127321718",
@@ -91,11 +91,11 @@ class PaymentController extends AbstractController
         // "CustomerMessage":"Success. Request accepted for processing"
     }
 
-    public function checkStatus() {
+    public function checkStatus($checkoutRequestID) {
 
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
-        $checkoutRequestID = "ws_CO_020720202224223573";
+        // $checkoutRequestID = "ws_CO_020720202224223573";
         $BusinessShortCode = "174379";
         $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
         $timestamp='20'.date("ymdhis");

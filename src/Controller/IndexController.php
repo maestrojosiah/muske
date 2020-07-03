@@ -99,53 +99,8 @@ class IndexController extends AbstractController
     public function test(): Response
     {
 
-        // $url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
-        // $key = $this->getParameter('mpesa_key');
-        // $pass = $this->getParameter('mpesa_secret');
-        
-        // $curl = curl_init();
-        // curl_setopt($curl, CURLOPT_URL, $url);
-        // $credentials = base64_encode($key.':'.$pass);
-        // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Basic '.$credentials)); //setting a custom header
-        // curl_setopt($curl, CURLOPT_HEADER, true);
-        // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        
-        // $curl_response = curl_exec($curl);
-        
-        // $auth = json_decode($curl_response);
-
-        // $path = "../public/cert.cer";
-        // $fp=fopen($path,"r");
-        // $publicKey=fread($fp,8192);
-        // fclose($fp);
-        // $plaintext = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
-        
-        // openssl_public_encrypt($plaintext, $encrypted, $publicKey, OPENSSL_PKCS1_PADDING);
-        
-        // $encryp =  base64_encode($encrypted);
-
-        $BusinessShortCode = "174379";
-        $LipaNaMpesaPasskey = "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMTgwNDA5MDkzMDAy";
-        $Timestamp = "20180409093002";
-        $TransactionType = "CustomerBuyGoodsOnline";
-        $Amount = "5";
-        $PartyA = "254708374149";
-        $PartyB = "174379";
-        $PhoneNumber = "254708374149";
-        $CallBackURL = "https://sandbox.safaricom.co.ke/mpesa/";
-        $AccountReference = "account";
-        $TransactionDesc = "test";
-        $Remarks = "pro";
-    
-      
-        $mpesa= new \Safaricom\Mpesa\Mpesa();
-
-        $stkPushSimulation = $mpesa->STKPushSimulation($BusinessShortCode, $LipaNaMpesaPasskey, $TransactionType, $Amount, $PartyA, $PartyB, $PhoneNumber, $CallBackURL, $AccountReference, $TransactionDesc, $Remarks);
-
-        
         return $this->render('index/test.html.twig', [
-            'test' => $stkPushSimulation,
+            'test' => 'test',
         ]);
     }
-
 }

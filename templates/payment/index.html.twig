@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PaymentController!{% endblock %}
+
+{% block body %}
+<div style="margin: 100px; padding: 100px;">
+    <button id="test-stuff">Test</button>
+</div>
+{% endblock %}
+{% block javascripts %}
+
+<script>
+
+$( "#test-stuff" ).click(function() {
+
+    var calltime = 'test data';
+    
+    $.ajax({
+        url:"{{ (path('leepahnapush')) }}",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "calltime": calltime,
+        },
+        async: true,
+        success: function (data)
+        {
+            console.log(data);
+        },
+        error: function (err) {
+            console.log("there is a problem: "+err.responseText);
+        }
+    });
+    
+
+});
+
+</script>
+
+
+{% endblock %}

@@ -91,9 +91,6 @@ class PaymentController extends AbstractController
         // "CustomerMessage":"Success. Request accepted for processing"
     }
 
-    /**
-     * @Route("/get/status/pmt", name="get_status")
-     */
     public function checkStatus() {
 
         $mpesa= new \Safaricom\Mpesa\Mpesa();
@@ -121,11 +118,23 @@ class PaymentController extends AbstractController
         
     }
 
+    /**
+     * @Route("/get/status/pmt", name="get_status")
+     */
     public function callBack() {
         
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
         $callbackData=$mpesa->getDataFromCallback();
+        
+        // $payment = new Payment();
+        // $payment->setMerchantrequestid($data->MerchantRequestId);
+        // $payment->setCheckoutrequestid($data->CheckoutRequestID);
+        // $payment->setResponsecode($data->ResponseCode);
+        // $payment->setResponsedescription($data->ResponseDescription);
+        // $payment->setCustomermessage($data->CustomerMessage);
+        // $entityManager->persist($payment);
+        // $entityManager->flush();
 
 
     }

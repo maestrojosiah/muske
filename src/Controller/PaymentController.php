@@ -71,14 +71,14 @@ class PaymentController extends AbstractController
         $data = json_decode($stkPushSimulation);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $payment = new Payment();
-        $payment->setMerchantrequestid($data->MerchantRequestID);
-        $payment->setCheckoutrequestid($data->CheckoutRequestID);
-        $payment->setResponsecode($data->ResponseCode);
-        $payment->setResponsedescription($data->ResponseDescription);
-        $payment->setCustomermessage($data->CustomerMessage);
-        $entityManager->persist($payment);
-        $entityManager->flush();
+        // $payment = new Payment();
+        // $payment->setMerchantrequestid($data->MerchantRequestID);
+        // $payment->setCheckoutrequestid($data->CheckoutRequestID);
+        // $payment->setResponsecode($data->ResponseCode);
+        // $payment->setResponsedescription($data->ResponseDescription);
+        // $payment->setCustomermessage($data->CustomerMessage);
+        // $entityManager->persist($payment);
+        // $entityManager->flush();
         // $callbackData = $this->callBack($data->MerchantRequestID, $data->CheckoutRequestID, $data->ResponseCode, $data->ResponseDescription, $data->CustomerMessage );
         // $status = $this->checkStatus($data->CheckoutRequestID);
 

@@ -79,10 +79,10 @@ class PaymentController extends AbstractController
         // $payment->setCustomermessage($data->CustomerMessage);
         // $entityManager->persist($payment);
         // $entityManager->flush();
-        // $callbackData = $this->callBack($data->MerchantRequestId, $data->CheckoutRequestID, $data->ResponseCode, $data->ResponseDescription, $data->CustomerMessage );
+        $callbackData = $this->callBack($data->MerchantRequestId, $data->CheckoutRequestID, $data->ResponseCode, $data->ResponseDescription, $data->CustomerMessage );
 
 
-        return new JsonResponse($data->CheckoutRequestID);
+        return new JsonResponse($callbackData);
 
         // "MerchantRequestID":"3178-477436-1",
         // "CheckoutRequestID":"ws_CO_020720202127321718",

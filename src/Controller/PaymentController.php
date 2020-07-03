@@ -134,6 +134,11 @@ class PaymentController extends AbstractController
             var_dump($json);
             $data = $json;
             $payment = new Payment();
+            $payment->setMerchantrequestid('test_data');
+            $payment->setCheckoutrequestid('test_data');
+            $payment->setResponsecode('test_data');
+            $payment->setResponsedescription('test_data');
+            $payment->setCustomermessage('test_data');
             $payment->setStroutput($data);
             $entityManager->persist($payment);
             $entityManager->flush();
@@ -141,6 +146,11 @@ class PaymentController extends AbstractController
             var_dump($_POST);
             $data = $_POST;
             $payment = new Payment();
+            $payment->setMerchantrequestid('test_data');
+            $payment->setCheckoutrequestid('test_data');
+            $payment->setResponsecode('test_data');
+            $payment->setResponsedescription('test_data');
+            $payment->setCustomermessage('test_data');
             $payment->setStroutput($data);
             $entityManager->persist($payment);
             $entityManager->flush();

@@ -126,7 +126,6 @@ class PaymentController extends AbstractController
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
         $callbackData = file_get_contents('php://input');
-        $call_back_data = json_decode($callbackData, true);
 
         $entityManager = $this->getDoctrine()->getManager();
         $payment = new Payment();
@@ -135,7 +134,7 @@ class PaymentController extends AbstractController
         $payment->setResponsecode($ResponseCode);
         $payment->setResponsedescription($ResponseDescription);
         $payment->setCustomermessage($CustomerMessage);
-        $payment->setCallbackmetadata($call_back_data);
+        $payment->setCallbackmetadata($callbackData);
         $entityManager->persist($payment);
         $entityManager->flush();
 

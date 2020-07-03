@@ -55,7 +55,7 @@ class PaymentController extends AbstractController
         $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
         $Timestamp = "20180409093002";
         $TransactionType = "CustomerBuyGoodsOnline";
-        $Amount = "5";
+        $Amount = "1";
         $PartyA = "254708374149";
         $PartyB = "174379";
         $PhoneNumber = "254708374149";
@@ -134,6 +134,7 @@ class PaymentController extends AbstractController
         $payment->setResponsecode($ResponseCode);
         $payment->setResponsedescription($ResponseDescription);
         $payment->setCustomermessage($CustomerMessage);
+        $payment->setCallbackmetadata($callbackData);
         $entityManager->persist($payment);
         $entityManager->flush();
 

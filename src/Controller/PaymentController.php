@@ -71,16 +71,18 @@ class PaymentController extends AbstractController
         
         $entityManager = $this->getDoctrine()->getManager();
         $data = json_decode($stkPushSimulation);
-        $payment = new Payment();
-        $payment->setMerchantrequestid($data->MerchantRequestId);
-        $payment->setCheckoutrequestid($data->CheckoutRequestID);
-        $payment->setResponsecode($data->ResponseCode);
-        $payment->setResponsedescription($data->ResponseDescription);
-        $payment->setCustomermessage($data->CustomerMessage);
-        $entityManager->persist($payment);
-        $entityManager->flush();
+        // $payment = new Payment();
+        // $payment->setMerchantrequestid($data->MerchantRequestId);
+        // $payment->setCheckoutrequestid($data->CheckoutRequestID);
+        // $payment->setResponsecode($data->ResponseCode);
+        // $payment->setResponsedescription($data->ResponseDescription);
+        // $payment->setCustomermessage($data->CustomerMessage);
+        // $entityManager->persist($payment);
+        // $entityManager->flush();
 
-        return new JsonResponse($data);
+        $callbackData=$mpesa->getDataFromCallback();
+
+        return new JsonResponse($callbackData);
 
         // "MerchantRequestID":"3178-477436-1",
         // "CheckoutRequestID":"ws_CO_020720202127321718",
@@ -103,9 +105,7 @@ class PaymentController extends AbstractController
         $password=base64_encode($BusinessShortCode.$LipaNaMpesaPasskey.$timestamp);
         $STKPushRequestStatus=$mpesa->STKPushQuery($checkoutRequestID,$BusinessShortCode,$password,$timestamp);
 
-        return $this->render('index/test.html.twig', [
-            'test' => $STKPushRequestStatus,
-        ]);
+        return $STKPushRequestStatus;
         // """
         // {
         //             "ResponseCode": "0",

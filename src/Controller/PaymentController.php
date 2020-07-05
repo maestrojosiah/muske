@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Payment;
+use App\Entity\Callback;
+use App\Repository\CallbackRepository;
 use App\Repository\PaymentRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -116,20 +118,18 @@ class PaymentController extends AbstractController
         if($json = json_decode(file_get_contents("php://input"), true)) {
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
             $entityManager = $this->getDoctrine()->getManager();
-            // $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
-            $payment = new Payment();
-            $payment->setCallbackmetadata($json);
-            $entityManager->persist($payment);
+            $callback = new Callback();
+            $callback->setCallbackmetadata($json);
+            $entityManager->persist($callback);
             $entityManager->flush();        
             // $this->followUp($CheckoutRequestID);
         } else {
             $json = $_POST;
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
             $entityManager = $this->getDoctrine()->getManager();
-            // $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
-            $payment = new Payment();
-            $payment->setCallbackmetadata($json);
-            $entityManager->persist($payment);
+            $callback = new Callback();
+            $callback->setCallbackmetadata($json);
+            $entityManager->persist($callback);
             $entityManager->flush();        
             // $this->followUp($CheckoutRequestID);
         }
@@ -170,20 +170,20 @@ class PaymentController extends AbstractController
      */
     public function followUp($CheckoutRequestID = 'ws_CO_050720201404258242'){
         $entityManager = $this->getDoctrine()->getManager();
-        $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
+        $callback = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
 
-        $json = $payment->getCallbackmetadata();
+        $json = $callback->getCallbackmetadata();
 
         $Amount = $this->getVar($json, 'Amount', 3);
         $MpesaReceiptNumber = $this->getVar($json, 'MpesaReceiptNumber', 3);
         $TransactionDate = $this->getVar($json, 'TransactionDate', 3);
         $PhoneNumber = $this->getVar($json, 'PhoneNumber', 3);
     
-        $payment->setMpesaReceiptNumber($MpesaReceiptNumber);
-        $payment->setTransactionDate($TransactionDate);
-        $payment->setAmount($Amount);
-        $payment->setPhoneNumber($PhoneNumber);
-        $entityManager->persist($payment);
+        $callback->setMpesaReceiptNumber($MpesaReceiptNumber);
+        $callback->setTransactionDate($TransactionDate);
+        $callback->setAmount($Amount);
+        $callback->setPhoneNumber($PhoneNumber);
+        $entityManager->persist($callback);
         $entityManager->flush();        
 
         return new JsonResponse('true');

@@ -116,7 +116,8 @@ class PaymentController extends AbstractController
         if($json = json_decode(file_get_contents("php://input"), true)) {
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
             $entityManager = $this->getDoctrine()->getManager();
-            $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
+            // $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
+            $payment = new Payment();
             $payment->setCallbackmetadata($json);
             $entityManager->persist($payment);
             $entityManager->flush();        
@@ -125,7 +126,8 @@ class PaymentController extends AbstractController
             $json = $_POST;
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
             $entityManager = $this->getDoctrine()->getManager();
-            $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
+            // $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
+            $payment = new Payment();
             $payment->setCallbackmetadata($json);
             $entityManager->persist($payment);
             $entityManager->flush();        

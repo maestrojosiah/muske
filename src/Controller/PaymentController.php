@@ -114,7 +114,35 @@ class PaymentController extends AbstractController
     public function callBack() {
                
         if($json = json_decode(file_get_contents("php://input"), true)) {
-
+            // $json = json_decode('{
+            //     "Body":{"stkCallback":
+            //         {
+            //             "MerchantRequestID":"28145-1122988-1",
+            //             "CheckoutRequestID":"ws_CO_030720201559453712",
+            //             "ResultCode":0,
+            //             "ResultDesc":"The service request is processed successfully.",
+            //             "CallbackMetadata":{
+            //                 "Item":[{
+            //                     "Name":"Amount",
+            //                     "Value":1
+            //                 },
+            //                 {
+            //                     "Name":"MpesaReceiptNumber",
+            //                     "Value":"OG38G7S0TI"
+            //                 },
+            //                 {
+            //                     "Name":"Balance"
+            //                 },
+            //                 {
+            //                     "Name":"TransactionDate","Value":20200703160003
+            //                 },
+            //                 {
+            //                     "Name":"PhoneNumber","Value":254705285959
+            //                 }]
+            //             }
+            //         }
+            //     }
+            // }', true);
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
             $Amount = $this->getVar($json, 'Amount', 3);
             $MpesaReceiptNumber = $this->getVar($json, 'MpesaReceiptNumber', 3);

@@ -94,7 +94,7 @@ class PaymentController extends AbstractController
 
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
-        // $payment = $this->getDoctrine()->getManager()->getRepository('App:Payment')->findOneById();
+        $payment = $this->getDoctrine()->getManager()->getRepository('App:Payment')->findOneById();
         $checkoutRequestID = "ws_CO_050720201338594217";
         $BusinessShortCode = "174379";
         $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
@@ -115,41 +115,21 @@ class PaymentController extends AbstractController
                
         if($json = json_decode(file_get_contents("php://input"), true)) {
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
-            $Amount = $this->getVar($json, 'Amount', 3);
-            $MpesaReceiptNumber = $this->getVar($json, 'MpesaReceiptNumber', 3);
-            $TransactionDate = $this->getVar($json, 'TransactionDate', 3);
-            $PhoneNumber = $this->getVar($json, 'PhoneNumber', 3);
-    
             $entityManager = $this->getDoctrine()->getManager();
             $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
             $payment->setCallbackmetadata($json);
-            $payment->setMpesaReceiptNumber($MpesaReceiptNumber);
-            $payment->setTransactionDate($TransactionDate);
-            $payment->setAmount($Amount);
-            $payment->setPhoneNumber($PhoneNumber);
             $entityManager->persist($payment);
             $entityManager->flush();        
-
+            // $this->followUp($CheckoutRequestID);
         } else {
-
             $json = $_POST;
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
-
-            $Amount = $this->getVar($json, 'Amount', 3);
-            $MpesaReceiptNumber = $this->getVar($json, 'MpesaReceiptNumber', 3);
-            $TransactionDate = $this->getVar($json, 'TransactionDate', 3);
-            $PhoneNumber = $this->getVar($json, 'PhoneNumber', 3);
-    
             $entityManager = $this->getDoctrine()->getManager();
             $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
             $payment->setCallbackmetadata($json);
-            $payment->setMpesaReceiptNumber($MpesaReceiptNumber);
-            $payment->setTransactionDate($TransactionDate);
-            $payment->setAmount($Amount);
-            $payment->setPhoneNumber($PhoneNumber);
             $entityManager->persist($payment);
             $entityManager->flush();        
-
+            // $this->followUp($CheckoutRequestID);
         }
         
         return new JsonResponse('true');
@@ -181,6 +161,31 @@ class PaymentController extends AbstractController
         }
 
         return $carrier;
+    }
+
+    /**
+     * @Route("/touch/follow/up", name="get_status")
+     */
+    public function followUp($CheckoutRequestID = 'ws_CO_050720201404258242'){
+        $entityManager = $this->getDoctrine()->getManager();
+        $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
+
+        $json = $payment->getCallbackmetadata();
+
+        $Amount = $this->getVar($json, 'Amount', 3);
+        $MpesaReceiptNumber = $this->getVar($json, 'MpesaReceiptNumber', 3);
+        $TransactionDate = $this->getVar($json, 'TransactionDate', 3);
+        $PhoneNumber = $this->getVar($json, 'PhoneNumber', 3);
+    
+        $payment->setMpesaReceiptNumber($MpesaReceiptNumber);
+        $payment->setTransactionDate($TransactionDate);
+        $payment->setAmount($Amount);
+        $payment->setPhoneNumber($PhoneNumber);
+        $entityManager->persist($payment);
+        $entityManager->flush();        
+
+        return new JsonResponse('true');
+
     }
 
     public function endTransaction() {

@@ -120,18 +120,20 @@ class PaymentController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $callback = new Callback();
             $callback->setCallbackmetadata($json);
+            $callback->setCheckoutRequestID($CheckoutRequestID);
             $entityManager->persist($callback);
             $entityManager->flush();        
-            // $this->followUp($CheckoutRequestID);
+            $this->followUp($CheckoutRequestID);
         } else {
             $json = $_POST;
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
             $entityManager = $this->getDoctrine()->getManager();
             $callback = new Callback();
             $callback->setCallbackmetadata($json);
+            $callback->setCheckoutRequestID($CheckoutRequestID);
             $entityManager->persist($callback);
             $entityManager->flush();        
-            // $this->followUp($CheckoutRequestID);
+            $this->followUp($CheckoutRequestID);
         }
         
         return new JsonResponse('true');
@@ -168,9 +170,9 @@ class PaymentController extends AbstractController
     /**
      * @Route("/touch/follow/up", name="follow_up")
      */
-    public function followUp($CheckoutRequestID = 'ws_CO_050720201404258242'){
+    public function followUp($CheckoutRequestID){
         $entityManager = $this->getDoctrine()->getManager();
-        $callback = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
+        $callback = $entityManager->getRepository('App:Callback')->findOneByCheckoutrequestid($CheckoutRequestID);
 
         $json = $callback->getCallbackmetadata();
 

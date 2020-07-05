@@ -3,7 +3,7 @@ uU-6X2vL+7F0fg
 p - 1980
 199.231.86.11
 ssh muskecok@199.231.86.11 -p 1980
-
+199.231.86.11:443
 FTP Username: public_html@muske.co.ke
 FTP server: ftp.muske.co.ke
 FTP & explicit FTPS port:  21
@@ -157,3 +157,33 @@ $response = curl_exec($curl);
 
 curl_close($curl);
 echo $response;
+{
+        "Body":{"stkCallback":
+            {
+                "MerchantRequestID":"28145-1122988-1",
+                "CheckoutRequestID":"ws_CO_030720201559453712",
+                "ResultCode":0,
+                "ResultDesc":"The service request is processed successfully.",
+                "CallbackMetadata":{
+                    "Item":[{
+                        "Name":"Amount",
+                        "Value":1
+                    },
+                    {
+                        "Name":"MpesaReceiptNumber",
+                        "Value":"OG38G7S0TI"
+                    },
+                    {
+                        "Name":"Balance"
+                    },
+                    {
+                        "Name":"TransactionDate","Value":20200703160003
+                    },
+                    {
+                        "Name":"PhoneNumber","Value":254705285959
+                    }]
+                }
+            }
+        }
+    }
+    

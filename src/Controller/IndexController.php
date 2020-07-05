@@ -98,9 +98,77 @@ class IndexController extends AbstractController
      */
     public function test(): Response
     {
+        $string = '{
+            "Body":{"stkCallback":
+                {
+                    "MerchantRequestID":"28145-1122988-1",
+                    "CheckoutRequestID":"ws_CO_030720201559453712",
+                    "ResultCode":0,
+                    "ResultDesc":"The service request is processed successfully.",
+                    "CallbackMetadata":{
+                        "Item":[{
+                            "Name":"Amount",
+                            "Value":1
+                        },
+                        {
+                            "Name":"MpesaReceiptNumber",
+                            "Value":"OG38G7S0TI"
+                        },
+                        {
+                            "Name":"Balance"
+                        },
+                        {
+                            "Name":"TransactionDate","Value":20200703160003
+                        },
+                        {
+                            "Name":"PhoneNumber","Value":254705285959
+                        }]
+                    }
+                }
+            }
+        }';
+        
+        $MerchantRequestID = $this->getVar($string, 'MerchantRequestID', 2);
+        $CheckoutRequestID = $this->getVar($string, 'CheckoutRequestID', 2);
+        $ResultCode = $this->getVar($string, 'ResultCode', 2);
+        $ResultDesc = $this->getVar($string, 'ResultDesc', 2);
+        $CallbackMetadata = $this->getVar($string, 'CallbackMetadata', 2);
+        $Amount = $this->getVar($string, 'Amount', 3);
+        $MpesaReceiptNumber = $this->getVar($string, 'MpesaReceiptNumber', 3);
+        $TransactionDate = $this->getVar($string, 'TransactionDate', 3);
+        $PhoneNumber = $this->getVar($string, 'PhoneNumber', 3);
 
         return $this->render('index/test.html.twig', [
-            'test' => 'test',
+            'test' => $PhoneNumber,
         ]);
+    }
+
+    function getVar($hay, $needle, $level){
+        // decode the json to array
+        $decoded = json_decode($hay, true);
+
+        // body and stkCallback
+        $body = $decoded['Body'];
+        $stkCallback = $body['stkCallback'];
+
+        // depending on array level provided to 3rd parameter,
+        // give back the carrier which contains the value
+        // given as the second parameter
+        if($level == 0){
+            $carrier = $body;
+        }
+        if($level == 1){
+            $carrier = $stkCallback;
+        }
+        if($level == 2){
+            $carrier = $stkCallback[$needle];
+        }
+        if($level == 3){
+            $Item = $stkCallback['CallbackMetadata']['Item'];
+            $columns = array_column($Item, 'Value', 'Name');
+            $carrier = $columns[$needle];
+        }
+
+        return $carrier;
     }
 }

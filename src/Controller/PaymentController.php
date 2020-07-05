@@ -40,9 +40,9 @@ class PaymentController extends AbstractController
 
         $curl_response = curl_exec($curl);
         
-        $auth = json_decode($curl_response)->access_token;
+        // $auth = json_decode($curl_response)->access_token;
 
-        return new JsonResponse($auth);
+        return new JsonResponse($curl_response);
 
     }
     /**
@@ -51,18 +51,18 @@ class PaymentController extends AbstractController
     public function stkPush()
     {
 
-        $BusinessShortCode = "7254395";
+        $BusinessShortCode = "174379";
         $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
         $Timestamp = "20180409093002";
-        $TransactionType = "CustomerBuyGoodsOnline";
+        $TransactionType = "CustomerPayBillOnline";
         $Amount = "1";
         $PartyA = "254705285959";
-        $PartyB = "5253985";
+        $PartyB = "174379";
         $PhoneNumber = "254705285959";
         $CallBackURL = "https://muske.co.ke/get/status/pmt";
-        $AccountReference = "account";
-        $TransactionDesc = "test";
-        $Remarks = "pro";
+        $AccountReference = "Pro Account";
+        $TransactionDesc = "Payment for MuSKe pro account";
+        $Remarks = "muskedotcodotke";
     
       
         $mpesa= new \Safaricom\Mpesa\Mpesa();
@@ -71,58 +71,40 @@ class PaymentController extends AbstractController
         $data = json_decode($stkPushSimulation);
 
         $entityManager = $this->getDoctrine()->getManager();
-        // $payment = new Payment();
-        // $payment->setMerchantrequestid($data->MerchantRequestID);
-        // $payment->setCheckoutrequestid($data->CheckoutRequestID);
-        // $payment->setResponsecode($data->ResponseCode);
-        // $payment->setResponsedescription($data->ResponseDescription);
-        // $payment->setCustomermessage($data->CustomerMessage);
-        // $entityManager->persist($payment);
-        // $entityManager->flush();
-        // $callbackData = $this->callBack($data->MerchantRequestID, $data->CheckoutRequestID, $data->ResponseCode, $data->ResponseDescription, $data->CustomerMessage );
+        $payment = new Payment();
+        $payment->setMerchantrequestid($data->MerchantRequestID);
+        $payment->setCheckoutrequestid($data->CheckoutRequestID);
+        $payment->setResponsecode($data->ResponseCode);
+        $payment->setResponsedescription($data->ResponseDescription);
+        $payment->setCustomermessage($data->CustomerMessage);
+        $entityManager->persist($payment);
+        $entityManager->flush();
+
         // $status = $this->checkStatus($data->CheckoutRequestID);
 
-        return new JsonResponse($data);
+        return new JsonResponse($status);
 
-        // "MerchantRequestID":"3178-477436-1",
-        // "CheckoutRequestID":"ws_CO_020720202127321718",
-        // "ResponseCode": "0",
-        // "ResponseDescription":"Success. Request accepted for processing",
-        // "CustomerMessage":"Success. Request accepted for processing"
     }
-
+    
 
     /**
      * @Route("payment/stk_push/check/status", name="leepahnapush_status")
      */
-    public function checkStatus() {
+    public function checkStatus($checkoutRequestID) {
 
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
-        $checkoutRequestID = "ws_CO_030720201256538817";
+        // $checkoutRequestID = "ws_CO_030720201749586279";
         $BusinessShortCode = "174379";
         $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
         $timestamp='20'.date("ymdhis");
         $password=base64_encode($BusinessShortCode.$LipaNaMpesaPasskey.$timestamp);
         $STKPushRequestStatus=$mpesa->STKPushQuery($checkoutRequestID,$BusinessShortCode,$password,$timestamp);
-        // $callbackData=$mpesa->getDataFromCallback();
 
-        // return $;
         $status = json_decode($STKPushRequestStatus);
+        
         return new JsonResponse($status);
 
-        // """
-        // {
-        //             "ResponseCode": "0",
-        //             "ResponseDescription":"The service request has been accepted successsfully",
-        //             "MerchantRequestID":"13443-25900690-1",
-        //             "CheckoutRequestID":"ws_CO_020720202224223573",
-        //             "ResultCode": "1037",
-        //             "ResultDesc":"DS timeout."
-        //         }
-                
-        // """
-        
     }
 
     /**
@@ -131,37 +113,62 @@ class PaymentController extends AbstractController
     public function callBack() {
                
         if($json = json_decode(file_get_contents("php://input"), true)) {
-            var_dump($json);
+
             $data = $json;
+            $CheckoutRequestID = $this->getVar($data, 'CheckoutRequestID', 2);
+
             $entityManager = $this->getDoctrine()->getManager();
-            $payment = new Payment();
-            $payment->setMerchantrequestid('test_data');
-            $payment->setCheckoutrequestid('test_data');
-            $payment->setResponsecode('test_data');
-            $payment->setResponsedescription('test_data');
-            $payment->setCustomermessage('test_data');
-            $payment->setCallbackmetadata($data);
+            $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
+            $payment->setCallbackmetadata($CheckoutRequestID);
             $entityManager->persist($payment);
-            $entityManager->flush();        $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();        
 
         } else {
-            var_dump($_POST);
+
             $data = $_POST;
+            $CheckoutRequestID = $this->getVar($data, 'CheckoutRequestID', 2);
+
             $entityManager = $this->getDoctrine()->getManager();
-            $payment = new Payment();
-            $payment->setMerchantrequestid('test_data');
-            $payment->setCheckoutrequestid('test_data');
-            $payment->setResponsecode('test_data');
-            $payment->setResponsedescription('test_data');
-            $payment->setCustomermessage('test_data');
-            $payment->setCallbackmetadata($data);
+            $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
+            $payment->setCallbackmetadata($CheckoutRequestID);
             $entityManager->persist($payment);
-            $entityManager->flush();
+            $entityManager->flush();        
+
         }
+        
         return new JsonResponse('true');
 
     }
-    
+
+    function getVar($hay, $needle, $level){
+        // decode the json to array
+        $decoded = json_decode($hay, true);
+
+        // body and stkCallback
+        $body = $decoded['Body'];
+        $stkCallback = $body['stkCallback'];
+
+        // depending on array level provided to 3rd parameter,
+        // give back the carrier which contains the value
+        // given as the second parameter
+        if($level == 0){
+            $carrier = $body;
+        }
+        if($level == 1){
+            $carrier = $stkCallback;
+        }
+        if($level == 2){
+            $carrier = $stkCallback[$needle];
+        }
+        if($level == 3){
+            $Item = $stkCallback['CallbackMetadata']['Item'];
+            $columns = array_column($Item, 'Value', 'Name');
+            $carrier = $columns[$needle];
+        }
+
+        return $carrier;
+    }
+
     public function endTransaction() {
 
         $mpesa= new \Safaricom\Mpesa\Mpesa();

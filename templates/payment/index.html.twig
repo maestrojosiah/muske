@@ -4,7 +4,8 @@
 
 {% block body %}
 <div style="margin: 100px; padding: 100px;">
-    <button id="test-stuff">Test</button>
+    <button id="test-stuff">Trigger</button>
+    <button id="get-status">Get status</button>
 </div>
 {% endblock %}
 {% block javascripts %}
@@ -17,6 +18,34 @@ $( "#test-stuff" ).click(function() {
     
     $.ajax({
         url:"{{ (path('leepahnapush')) }}",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "calltime": calltime,
+        },
+        async: true,
+        success: function (data)
+        {
+            console.log(data);
+        },
+        error: function (err) {
+            console.log("there is a problem: "+err.responseText);
+        }
+    });
+    
+
+});
+
+</script>
+
+<script>
+
+$( "#get-status" ).click(function() {
+
+    var calltime = 'test data';
+    
+    $.ajax({
+        url:"{{ (path('leepahnapush_status')) }}",
         type: "POST",
         dataType: "json",
         data: {

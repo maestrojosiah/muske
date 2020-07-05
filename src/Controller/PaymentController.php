@@ -123,7 +123,7 @@ class PaymentController extends AbstractController
             $entityManager->persist($payment);
             $entityManager->flush();        
 
-            $this->followUp($CheckoutRequestID);
+            // $this->followUp($CheckoutRequestID);
 
         } else {
 
@@ -136,7 +136,7 @@ class PaymentController extends AbstractController
             $entityManager->persist($payment);
             $entityManager->flush();        
 
-            $this->followUp($CheckoutRequestID);
+            // $this->followUp($CheckoutRequestID);
 
         }
         

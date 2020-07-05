@@ -90,10 +90,11 @@ class PaymentController extends AbstractController
     /**
      * @Route("payment/stk_push/check/status", name="leepahnapush_status")
      */
-    public function checkStatus($checkoutRequestID) {
+    public function checkStatus() {
 
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
+        $payment = $this->getDoctrine()->getManager()->getRepository('App:Payment')->findOneById();
         // $checkoutRequestID = "ws_CO_030720201749586279";
         $BusinessShortCode = "174379";
         $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
@@ -116,7 +117,11 @@ class PaymentController extends AbstractController
 
             $data = $json;
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
-
+            $Amount = $this->getVar($json, 'Amount', 3);
+            $MpesaReceiptNumber = $this->getVar($json, 'MpesaReceiptNumber', 3);
+            $TransactionDate = $this->getVar($json, 'TransactionDate', 3);
+            $PhoneNumber = $this->getVar($json, 'PhoneNumber', 3);
+    
             $entityManager = $this->getDoctrine()->getManager();
             $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
             $payment->setCallbackmetadata($CheckoutRequestID);

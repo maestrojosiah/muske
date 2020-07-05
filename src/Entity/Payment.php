@@ -62,6 +62,26 @@ class Payment
      */
     private $stroutput;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $MpesaReceiptNumber;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Amount;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $TransactionDate;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $PhoneNumber;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -171,6 +191,54 @@ class Payment
     public function setStroutput(?string $stroutput): self
     {
         $this->stroutput = $stroutput;
+
+        return $this;
+    }
+
+    public function getMpesaReceiptNumber(): ?string
+    {
+        return $this->MpesaReceiptNumber;
+    }
+
+    public function setMpesaReceiptNumber(?string $MpesaReceiptNumber): self
+    {
+        $this->MpesaReceiptNumber = $MpesaReceiptNumber;
+
+        return $this;
+    }
+
+    public function getAmount(): ?string
+    {
+        return $this->Amount;
+    }
+
+    public function setAmount(?string $Amount): self
+    {
+        $this->Amount = $Amount;
+
+        return $this;
+    }
+
+    public function getTransactionDate(): ?string
+    {
+        return $this->TransactionDate;
+    }
+
+    public function setTransactionDate(?string $TransactionDate): self
+    {
+        $this->TransactionDate = $TransactionDate;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->PhoneNumber;
+    }
+
+    public function setPhoneNumber(?string $PhoneNumber): self
+    {
+        $this->PhoneNumber = $PhoneNumber;
 
         return $this;
     }

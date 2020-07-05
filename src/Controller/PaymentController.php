@@ -48,7 +48,7 @@ class PaymentController extends AbstractController
 
     }
     /**
-     * @Route("payment/stk_push/leepah", name="leepahnapush")
+     * @Route("/payment/stk_push/leepah", name="leepahnapush")
      */
     public function stkPush()
     {
@@ -90,7 +90,7 @@ class PaymentController extends AbstractController
     
 
     /**
-     * @Route("payment/stk_push/check/status", name="leepahnapush_status")
+     * @Route("/payment/stk_push/check/status", name="leepahnapush_status")
      */
     public function checkStatus() {
 
@@ -166,7 +166,7 @@ class PaymentController extends AbstractController
     }
 
     /**
-     * @Route("/touch/follow/up", name="get_status")
+     * @Route("/touch/follow/up", name="follow_up")
      */
     public function followUp($CheckoutRequestID = 'ws_CO_050720201404258242'){
         $entityManager = $this->getDoctrine()->getManager();

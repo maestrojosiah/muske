@@ -3,9 +3,8 @@
 {% block title %}Hello PaymentController!{% endblock %}
 
 {% block body %}
-<div style="margin: 100px; padding: 100px;">
+<div id="box" style="margin: 100px; padding: 100px;">
     <button id="test-stuff">Trigger</button>
-    <button id="get-status">Get status</button>
 </div>
 {% endblock %}
 {% block javascripts %}
@@ -27,6 +26,7 @@ $( "#test-stuff" ).click(function() {
         success: function (data)
         {
             console.log(data);
+            $("#box").append('<button id="get-status-'+data+'">Get status</button>');
         },
         error: function (err) {
             console.log("there is a problem: "+err.responseText);
@@ -40,16 +40,18 @@ $( "#test-stuff" ).click(function() {
 
 <script>
 
-$( "#get-status" ).click(function() {
+$(document).on("click", '[id^="get-status-"]', function(){
 
-    var calltime = 'test data';
+    var myId = jQuery(this).attr("id");
+    var splitted = myId.split('-'); 
+    var CheckoutRequestID = splitted[2];
     
     $.ajax({
         url:"{{ (path('leepahnapush_status')) }}",
         type: "POST",
         dataType: "json",
         data: {
-            "calltime": calltime,
+            "CheckoutRequestID": CheckoutRequestID,
         },
         async: true,
         success: function (data)

@@ -9,6 +9,7 @@ use App\Entity\Callback;
 use App\Repository\CallbackRepository;
 use App\Repository\PaymentRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class PaymentController extends AbstractController
 {
@@ -82,9 +83,7 @@ class PaymentController extends AbstractController
         $entityManager->persist($payment);
         $entityManager->flush();
 
-        // $status = $this->checkStatus($data->CheckoutRequestID);
-
-        return new JsonResponse($data);
+        return new JsonResponse($data->CheckoutRequestID);
 
     }
     
@@ -92,12 +91,12 @@ class PaymentController extends AbstractController
     /**
      * @Route("/payment/stk_push/check/status", name="leepahnapush_status")
      */
-    public function checkStatus() {
+    public function checkStatus(Request $request) {
 
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
         // $payment = $this->getDoctrine()->getManager()->getRepository('App:Payment')->findOneById();
-        $checkoutRequestID = "ws_CO_050720201759379271";
+        $checkoutRequestID = $request->request->get('CheckoutRequestID');
         $BusinessShortCode = "174379";
         $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
         $timestamp='20'.date("ymdhis");
@@ -115,39 +114,26 @@ class PaymentController extends AbstractController
      */
     public function callBack() {
                
-        $postData = file_get_contents('php://input');
-        //perform your processing here, e.g. log to file....
-        $file = fopen("log.txt", "w"); //url fopen should be allowed for this to occur
-        if(fwrite($file, $postData) === FALSE)
-        {
-            fwrite($file, "Error: no data written");
+        if($json = json_decode(file_get_contents("php://input"), true)) {
+            $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
+            $entityManager = $this->getDoctrine()->getManager();
+            $callback = new Callback();
+            $callback->setCallbackmetadata($json);
+            $callback->setCheckoutRequestID($CheckoutRequestID);
+            $entityManager->persist($callback);
+            $entityManager->flush();        
+            // $this->followUp($CheckoutRequestID);
+        } else {
+            $json = $_POST;
+            $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
+            $entityManager = $this->getDoctrine()->getManager();
+            $callback = new Callback();
+            $callback->setCallbackmetadata($json);
+            $callback->setCheckoutRequestID($CheckoutRequestID);
+            $entityManager->persist($callback);
+            $entityManager->flush();        
+            // $this->followUp($CheckoutRequestID);
         }
-    
-        fwrite($file, "\r\n");
-        fclose($file);
-    
-        // echo '{"ResultCode": 0, "ResultDesc": "The service was accepted successfully", "ThirdPartyTransID": "1234567890"}';
-    
-        // if($json = json_decode(file_get_contents("php://input"), true)) {
-        //     $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
-        //     $entityManager = $this->getDoctrine()->getManager();
-        //     $callback = new Callback();
-        //     $callback->setCallbackmetadata($json);
-        //     $callback->setCheckoutRequestID($CheckoutRequestID);
-        //     $entityManager->persist($callback);
-        //     $entityManager->flush();        
-        //     // $this->followUp($CheckoutRequestID);
-        // } else {
-        //     $json = $_POST;
-        //     $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
-        //     $entityManager = $this->getDoctrine()->getManager();
-        //     $callback = new Callback();
-        //     $callback->setCallbackmetadata($json);
-        //     $callback->setCheckoutRequestID($CheckoutRequestID);
-        //     $entityManager->persist($callback);
-        //     $entityManager->flush();        
-        //     // $this->followUp($CheckoutRequestID);
-        // }
         
         return new JsonResponse('true');
 

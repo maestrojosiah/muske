@@ -59,7 +59,7 @@ class PaymentController extends AbstractController
         $PartyA = "254705285959";
         $PartyB = "174379";
         $PhoneNumber = "254705285959";
-        $CallBackURL = "https://muske.co.ke/get/status/pmt";
+        $CallBackURL = "https://muske.co.ke/touch/script/pmt";
         $AccountReference = "Pro Activation";
         $TransactionDesc = "Payment for MuSKe pro account";
         $Remarks = "muskedotcodotke";
@@ -109,7 +109,7 @@ class PaymentController extends AbstractController
     }
 
     /**
-     * @Route("/get/status/pmt", name="get_status")
+     * @Route("/touch/script/pmt", name="get_status")
      */
     public function callBack() {
                
@@ -123,7 +123,7 @@ class PaymentController extends AbstractController
     
             $entityManager = $this->getDoctrine()->getManager();
             $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
-            $payment->setCallbackmetadata($CheckoutRequestID);
+            $payment->setCallbackmetadata($json);
             $payment->setMpesaReceiptNumber($MpesaReceiptNumber);
             $payment->setTransactionDate($TransactionDate);
             $payment->setAmount($Amount);
@@ -143,7 +143,7 @@ class PaymentController extends AbstractController
     
             $entityManager = $this->getDoctrine()->getManager();
             $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
-            $payment->setCallbackmetadata($CheckoutRequestID);
+            $payment->setCallbackmetadata($json);
             $payment->setMpesaReceiptNumber($MpesaReceiptNumber);
             $payment->setTransactionDate($TransactionDate);
             $payment->setAmount($Amount);

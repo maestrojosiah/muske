@@ -60,7 +60,7 @@ class PaymentController extends AbstractController
         $PartyB = "174379";
         $PhoneNumber = "254705285959";
         $CallBackURL = "https://muske.co.ke/get/status/pmt";
-        $AccountReference = "Pro Account";
+        $AccountReference = "Pro Activation";
         $TransactionDesc = "Payment for MuSKe pro account";
         $Remarks = "muskedotcodotke";
     
@@ -82,7 +82,7 @@ class PaymentController extends AbstractController
 
         // $status = $this->checkStatus($data->CheckoutRequestID);
 
-        return new JsonResponse($status);
+        return new JsonResponse($data);
 
     }
     

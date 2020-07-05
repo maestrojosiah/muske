@@ -117,37 +117,23 @@ class PaymentController extends AbstractController
                
         if($json = json_decode(file_get_contents("php://input"), true)) {
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
-            $Amount = $this->getVar($json, 'Amount', 3);
-            $MpesaReceiptNumber = $this->getVar($json, 'MpesaReceiptNumber', 3);
-            $TransactionDate = $this->getVar($json, 'TransactionDate', 3);
-            $PhoneNumber = $this->getVar($json, 'PhoneNumber', 3);
             $entityManager = $this->getDoctrine()->getManager();
             $callback = new Callback();
             $callback->setCallbackmetadata($json);
             $callback->setCheckoutRequestID($CheckoutRequestID);
-            $callback->setMpesaReceiptNumber($MpesaReceiptNumber);
-            $callback->setTransactionDate($TransactionDate);
-            $callback->setAmount($Amount);
-            $callback->setPhoneNumber($PhoneNumber);
             $entityManager->persist($callback);
             $entityManager->flush();        
+            $this->followUp($CheckoutRequestID);
         } else {
             $json = $_POST;
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
-            $Amount = $this->getVar($json, 'Amount', 3);
-            $MpesaReceiptNumber = $this->getVar($json, 'MpesaReceiptNumber', 3);
-            $TransactionDate = $this->getVar($json, 'TransactionDate', 3);
-            $PhoneNumber = $this->getVar($json, 'PhoneNumber', 3);
             $entityManager = $this->getDoctrine()->getManager();
             $callback = new Callback();
             $callback->setCallbackmetadata($json);
             $callback->setCheckoutRequestID($CheckoutRequestID);
-            $callback->setMpesaReceiptNumber($MpesaReceiptNumber);
-            $callback->setTransactionDate($TransactionDate);
-            $callback->setAmount($Amount);
-            $callback->setPhoneNumber($PhoneNumber);
             $entityManager->persist($callback);
             $entityManager->flush();        
+            $this->followUp($CheckoutRequestID);
         }
         
         return new JsonResponse('true');

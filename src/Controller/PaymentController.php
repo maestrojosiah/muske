@@ -123,7 +123,7 @@ class PaymentController extends AbstractController
             $callback->setCheckoutRequestID($CheckoutRequestID);
             $entityManager->persist($callback);
             $entityManager->flush();        
-            $this->followUp($CheckoutRequestID);
+            // $this->followUp($CheckoutRequestID);
         } else {
             $json = $_POST;
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
@@ -133,7 +133,7 @@ class PaymentController extends AbstractController
             $callback->setCheckoutRequestID($CheckoutRequestID);
             $entityManager->persist($callback);
             $entityManager->flush();        
-            $this->followUp($CheckoutRequestID);
+            // $this->followUp($CheckoutRequestID);
         }
         
         return new JsonResponse('true');

@@ -115,7 +115,6 @@ class PaymentController extends AbstractController
                
         if($json = json_decode(file_get_contents("php://input"), true)) {
 
-            $data = $json;
             $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
             $Amount = $this->getVar($json, 'Amount', 3);
             $MpesaReceiptNumber = $this->getVar($json, 'MpesaReceiptNumber', 3);
@@ -134,8 +133,8 @@ class PaymentController extends AbstractController
 
         } else {
 
-            $data = $_POST;
-            $CheckoutRequestID = $this->getVar($data, 'CheckoutRequestID', 2);
+            $json = $_POST;
+            $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
 
             $Amount = $this->getVar($json, 'Amount', 3);
             $MpesaReceiptNumber = $this->getVar($json, 'MpesaReceiptNumber', 3);

@@ -94,8 +94,8 @@ class PaymentController extends AbstractController
 
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
-        $payment = $this->getDoctrine()->getManager()->getRepository('App:Payment')->findOneById();
-        // $checkoutRequestID = "ws_CO_030720201749586279";
+        // $payment = $this->getDoctrine()->getManager()->getRepository('App:Payment')->findOneById();
+        $checkoutRequestID = "ws_CO_050720201338594217";
         $BusinessShortCode = "174379";
         $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
         $timestamp='20'.date("ymdhis");
@@ -158,11 +158,9 @@ class PaymentController extends AbstractController
     }
 
     function getVar($hay, $needle, $level){
-        // decode the json to array
-        $decoded = json_decode($hay, true);
 
         // body and stkCallback
-        $body = $decoded['Body'];
+        $body = $hay['Body'];
         $stkCallback = $body['stkCallback'];
 
         // depending on array level provided to 3rd parameter,

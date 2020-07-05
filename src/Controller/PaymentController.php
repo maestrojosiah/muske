@@ -115,7 +115,7 @@ class PaymentController extends AbstractController
         if($json = json_decode(file_get_contents("php://input"), true)) {
 
             $data = $json;
-            $CheckoutRequestID = $this->getVar($data, 'CheckoutRequestID', 2);
+            $CheckoutRequestID = $this->getVar($json, 'CheckoutRequestID', 2);
 
             $entityManager = $this->getDoctrine()->getManager();
             $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);

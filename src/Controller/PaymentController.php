@@ -125,6 +125,10 @@ class PaymentController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
             $payment->setCallbackmetadata($CheckoutRequestID);
+            $payment->setMpesaReceiptNumber($MpesaReceiptNumber);
+            $payment->setTransactionDate($TransactionDate);
+            $payment->setAmount($Amount);
+            $payment->setPhoneNumber($PhoneNumber);
             $entityManager->persist($payment);
             $entityManager->flush();        
 
@@ -133,9 +137,18 @@ class PaymentController extends AbstractController
             $data = $_POST;
             $CheckoutRequestID = $this->getVar($data, 'CheckoutRequestID', 2);
 
+            $Amount = $this->getVar($json, 'Amount', 3);
+            $MpesaReceiptNumber = $this->getVar($json, 'MpesaReceiptNumber', 3);
+            $TransactionDate = $this->getVar($json, 'TransactionDate', 3);
+            $PhoneNumber = $this->getVar($json, 'PhoneNumber', 3);
+    
             $entityManager = $this->getDoctrine()->getManager();
             $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($CheckoutRequestID);
             $payment->setCallbackmetadata($CheckoutRequestID);
+            $payment->setMpesaReceiptNumber($MpesaReceiptNumber);
+            $payment->setTransactionDate($TransactionDate);
+            $payment->setAmount($Amount);
+            $payment->setPhoneNumber($PhoneNumber);
             $entityManager->persist($payment);
             $entityManager->flush();        
 

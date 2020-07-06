@@ -94,17 +94,6 @@ echo json_decode($curl_response);
 
 ?>
   
-Shortcode 1	
-Initiator Name (Shortcode 1)	
-Security Credential (Shortcode 1)	
-Shortcode 2	
-Test MSISDN	
-ExpiryDate	
-Lipa Na Mpesa Online Shortcode:	174379
-Lipa Na Mpesa Online Passkey:
-bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919
-// The resulting base64 encoded string is the security credential
-Generated Initiator Security Credential: DOCuYqdlnvcHhyR3mhvkNjcxoUQ+BKbakucGqrY5oI/I9Ybt/jPK4VJ2W+vPFx1Ms0Kerf2g+dCr2h58MzdJZQCQxe31V/Am7s0QcBCRl/K9D4YjPAZ/4d+CjbahiQL511/gcvb72RC+NJdeN7D/rBBe23QlrfctVvLPwk7L04ahW+yOJn5eP0pVliF1MiDVoTZjVm1+/jLr0au++ThfbPguJreMFaOKOJwncg9iyvPXMVBbV46aCJ3KzyVM/w0Ky/Ds5LOBR/6W5ZU71u0Kdj6DZZx9JuQacR8TQyyjPvUXPV34/59QZe575l95BY1QOVW5JpsnbgMpmraD4B1Uhg==
 
 <?php
 

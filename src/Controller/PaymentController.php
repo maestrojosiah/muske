@@ -10,6 +10,10 @@ use App\Repository\CallbackRepository;
 use App\Repository\PaymentRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use App\Repository\ProRepository;
+use App\Updates\MembershipManager;
 
 class PaymentController extends AbstractController
 {
@@ -18,6 +22,7 @@ class PaymentController extends AbstractController
      */
     public function index()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('payment/index.html.twig', [
             'controller_name' => 'PaymentController',
         ]);
@@ -51,17 +56,20 @@ class PaymentController extends AbstractController
     /**
      * @Route("/payment/stk_push/leepah", name="leepahnapush")
      */
-    public function stkPush()
+    public function stkPush(Request $request)
     {
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $phonenumber = $this->formatPhoneNumber($request->request->get('phonenumber'));
 
         $BusinessShortCode = "174379";
         $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
         $Timestamp = "20180409093002";
         $TransactionType = "CustomerPayBillOnline";
         $Amount = "1";
-        $PartyA = "254705285959";
+        $PartyA = $phonenumber;
         $PartyB = "174379";
-        $PhoneNumber = "254705285959";
+        $PhoneNumber = $phonenumber;
         $CallBackURL = "https://muske.co.ke/touch/script/pmt";
         $AccountReference = "Pro Activation";
         $TransactionDesc = "Payment for MuSKe pro account";
@@ -71,19 +79,35 @@ class PaymentController extends AbstractController
         $mpesa= new \Safaricom\Mpesa\Mpesa();
 
         $stkPushSimulation = $mpesa->STKPushSimulation($BusinessShortCode, $LipaNaMpesaPasskey, $TransactionType, $Amount, $PartyA, $PartyB, $PhoneNumber, $CallBackURL, $AccountReference, $TransactionDesc, $Remarks);
+        
         $data = json_decode($stkPushSimulation);
+        $errors = [];
+        if (isset($data->errorMessage)) {
+            if($data->errorMessage == "error on exit from activity, no matching transition"){
+                $msg = "Number is invalid. Please use an M-pesa activated number.";
+                $errors['error'] = $msg;
+            } else {
+                $msg = $data->errorMessage;
+                $errors['error'] = $msg;
+            }
+            $ret = ['status' => 'failed', 'errors' => $errors];
+            return new JsonResponse($ret);
+        } else {
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $payment = new Payment();
-        $payment->setMerchantrequestid($data->MerchantRequestID);
-        $payment->setCheckoutrequestid($data->CheckoutRequestID);
-        $payment->setResponsecode($data->ResponseCode);
-        $payment->setResponsedescription($data->ResponseDescription);
-        $payment->setCustomermessage($data->CustomerMessage);
-        $entityManager->persist($payment);
-        $entityManager->flush();
-
-        return new JsonResponse($data->CheckoutRequestID);
+            $entityManager = $this->getDoctrine()->getManager();
+            $payment = new Payment();
+            $payment->setMerchantrequestid($data->MerchantRequestID);
+            $payment->setCheckoutrequestid($data->CheckoutRequestID);
+            $payment->setResponsecode($data->ResponseCode);
+            $payment->setResponsedescription($data->ResponseDescription);
+            $payment->setCustomermessage($data->CustomerMessage);
+            $entityManager->persist($payment);
+            $entityManager->flush();
+    
+            $ret = ['status' => 'pending', 'id' => $data->CheckoutRequestID];
+            return new JsonResponse($ret);
+    
+        }
 
     }
     
@@ -91,11 +115,13 @@ class PaymentController extends AbstractController
     /**
      * @Route("/payment/stk_push/check/status", name="leepahnapush_status")
      */
-    public function checkStatus(Request $request) {
+    public function checkStatus(MembershipManager $membershipManager, Request $request, ProRepository $proRepository) {
 
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $mpesa= new \Safaricom\Mpesa\Mpesa();
+        $musician = $this->getUser();
+        $errors = [];
 
-        // $payment = $this->getDoctrine()->getManager()->getRepository('App:Payment')->findOneById();
         $checkoutRequestID = $request->request->get('CheckoutRequestID');
         $BusinessShortCode = "174379";
         $LipaNaMpesaPasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
@@ -105,12 +131,87 @@ class PaymentController extends AbstractController
 
         $status = json_decode($STKPushRequestStatus);
         
-        return new JsonResponse($status);
+        if (isset($status->errorMessage)) {
+            
+            $msg = $status->errorMessage;
+            $errors['error'] = $msg;
+        
+            $ret = ['status' => 'failed', 'errors' => $errors];
+            return new JsonResponse($ret);
+        } else {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $payment = $entityManager->getRepository('App:Payment')->findOneByCheckoutrequestid($checkoutRequestID);
+            $payment->setResultcode($status->ResultCode);
+            $payment->setResultdesc($status->ResultDesc);
+            $entityManager->persist($payment);
+            $entityManager->flush();        
+
+            if($status->ResultCode == 0){
+                $membership = 'pro';
+                $started = new \DateTime("now");
+                $started ->setTime(0, 0, 0);
+        
+                $ending = clone $started;
+                $ending->modify('+365 days'); 
+        
+                $prevPro = $proRepository->findOneBy(
+                    array('musician' => $musician)
+                );
+                
+                if($prevPro) {
+                    $pro = $prevPro;
+                } else {
+                    $pro = new Pro();
+                }
+        
+                $pro->setMusician($musician);
+                $pro->setStarted($started);
+                $pro->setEnding($ending);
+                $entityManager->persist($pro);
+                $entityManager->flush();
+                $email = $musician->getRealEmail();
+                $data = [];
+        
+                $musician->setAccount($membership);
+                $entityManager->persist($musician);
+                $entityManager->flush();
+
+                if($membershipManager->sendMembershipConfirmation($email, $membership, $musician->getUsername())){
+                    // $this->addFlash('success', 'Notification mail was sent successfully');
+                } 
+
+                $msg = "Payment successful! You have successfully activated PRO version. Click here to go to your profile page";
+                $ret = ['status' => 'success', 'msg' => $msg];
+                return new JsonResponse($ret);
+    
+            } else {
+
+                $msg = $status->ResultDesc;
+                $errors['error'] = $msg;
+                $ret = ['status' => 'failed', 'errors' => $errors];
+                return new JsonResponse($ret);
+
+            }
+        }
+
+        // return new JsonResponse($status);
 
     }
 
+    public function curl_call($path){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $path);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        $output = curl_exec($ch);
+        curl_close($ch);
+        return $output;
+    }
+
     /**
-     * @Route("/touch/script/pmt", name="get_status")
+     * @Route("/touch/script/pmt", name="callback")
      */
     public function callBack() {
                
@@ -197,6 +298,33 @@ class PaymentController extends AbstractController
 
         $callbackData=$mpesa->finishTransaction();
 
+
+    }
+
+    public function formatPhoneNumber($phone){
+
+        //The default country code if the recipient's is unknown:
+        $country_code  = '254';
+
+        //Remove any parentheses and the numbers they contain:
+        $phone = preg_replace("/\([0-9]+?\)/", "", $phone);
+
+        //Strip spaces and non-numeric characters:
+        $phone = preg_replace("/[^0-9]/", "", $phone);
+
+        //Strip out leading zeros:
+        $phone = ltrim($phone, '0');
+
+        //Look up the country dialling code for this number:
+        $pfx = $country_code;
+
+        //Check if the number doesn't already start with the correct dialling code:
+        if ( !preg_match('/^'.$pfx.'/', $phone)  ) {
+            $phone = $pfx.$phone;
+        }
+
+        //return the converted number:
+        return $phone;        
 
     }
 

@@ -46,12 +46,47 @@
                         <hr>
                         <p>Click 'Activate now' to start your {{plan}} membership. We're glad you found our services useful. {% if plan == 'pro' %}We will call you in a while to tell you how to make your payment. Please ensure the number you have in your account is reachable.{% endif %}</p>
                         <div class="alert alert-success d-none" id="notify" role="alert"></div>                        
+                        {% if plan == 'pro' %}
+                        <button class="open_prompt btn btn-success btn-lg" type="button" data-toggle="modal" data-target="#activate-pro-dialog">ACTIVATE PRO NOW</button>
+                        {% else %}
                         <button type="button" id="activate_{{plan}}" class="btn btn-outline-primary btn-block btn-lg">ACTIVATE NOW</button>
+                        {% endif %}
                     </div>
               </div>
             </div>
         </div>
   </section>
+  <div class="modal fade" id="activate-pro-dialog" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img class="img-fluid" src="{{ asset('img/m-pesa-logo-png-7-transparent.png')}}" >
+            </div>
+            <div class="modal-body">
+                <ol class="text-info">
+                  <li>Make sure your Safaricom phone is connected to the internet and is unlocked.</li>
+                  <li>After clicking on Pay, you'll get a prompt on your phone to put in your password.</li>
+                  <li>Put in your password and confirm the payment to <strong>Josiah Birai</strong>.</li>
+                  <li>A button will appear for confirmation. Click on it and you're done!</li>
+                </ol> 
+                <form id="pay-form" class="text-center">
+                  <button type="button" id="my-phone" class="btn btn-primary">Pay with {{musician.realphone}}</button>
+                  <input type="hidden" id="my_phone" value="{{musician.realphone}}" />
+                  <hr />
+                  OR
+                  <hr />
+                  <div class="form-group">
+                    <input type="phone" class="form-control text-center" id="my_phone_number" aria-describedby="phoneHelp" placeholder="254722123456" value="254">
+                    <small id="phoneHelp" class="form-text text-muted">The number you wish to pay with. Don't use '+' prefix. Use format 254722123456</small>
+                  </div>
+                  <button id="my-phone-number" type="button" class="btn btn-primary">Pay Using the number above</button>
+                </form>                
+            </div>
+            <div class="modal-footer">Click the button (that will appear) below after confirming payment on your phone</div>
+        </div>
+    </div>
+</div>
+
 </main>
 
 {% include "reusable/footer.html.twig" %}
@@ -94,5 +129,81 @@
 	});
 
 	</script>
+  <script>
+
+$(document).on("click", '[id^="my-phone"]', function(){
+
+    var myId = jQuery(this).attr("id");
+    var input = myId.replace(/\-/g, '_'); 
+
+    var phonenumber = $("#"+input).val();   
+    $.notify({icon: 'glyphicon glyphicon-time', message: 'Please wait...' },{ element: $("#contact-form"),type: "info",allow_dismiss: true,newest_on_top: false,delay: 5000,placement: {from: 'bottom',align: 'center'}});
+    $.ajax({
+        url:"{{ (path('leepahnapush')) }}",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "phonenumber": phonenumber,
+        },
+        async: true,
+        success: function (data)
+        {
+            console.log(data);
+            if(data.status == 'pending'){
+                $(".modal-footer").append('<button class="btn btn-success btn-block btn-lg" id="get-status-'+data.id+'" type="button">Confirm payment and Activate PRO</button>');
+                $.notify({icon: 'glyphicon glyphicon-ok', message: 'Connecting, please enter your pin on your phone! Then scroll down to activate PRO version' },{ element: $("#pay-form"),type: "info",allow_dismiss: true,newest_on_top: false,delay: 20000,placement: {from: 'bottom',align: 'center'}});
+            }
+            if(data.status == 'failed') {
+                $.notify({icon: 'glyphicon glyphicon-alert', message: 'Failed! '+data.errors.error },{ element: $("#pay-form"),type: "danger",allow_dismiss: true,newest_on_top: false,delay: 10000,placement: {from: 'bottom',align: 'center'}});
+            }
+            
+        },
+        error: function (err) {
+            console.log("there is a problem: "+err.responseText);
+        }
+    });
+    
+
+});
+
+</script>
+
+<script>
+
+$(document).on("click", '[id^="get-status-"]', function(){
+
+    var myId = jQuery(this).attr("id");
+    var splitted = myId.split('-'); 
+    var CheckoutRequestID = splitted[2];
+    
+    $.notify({icon: 'glyphicon glyphicon-time', message: 'Please wait...' },{ element: $("#contact-form"),type: "info",allow_dismiss: true,newest_on_top: false,delay: 5000,placement: {from: 'bottom',align: 'center'}});    
+    $.ajax({
+        url:"{{ (path('leepahnapush_status')) }}",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "CheckoutRequestID": CheckoutRequestID,
+        },
+        async: true,
+        success: function (data)
+        {
+            console.log(data);
+            if(data.status == 'success'){
+                $.notify({icon: 'glyphicon glyphicon-ok', message: data.msg,url: "{{path('musician_profile')}}",target: '_self' },{ element: $("#pay-form"),type: "success",allow_dismiss: true,newest_on_top: false,delay: 20000,placement: {from: 'bottom',align: 'center'}});
+            }
+            if(data.status == 'failed') {
+                $.notify({icon: 'glyphicon glyphicon-alert', message: 'Failed! '+data.errors.error },{ element: $("#pay-form"),type: "danger",allow_dismiss: true,newest_on_top: false,delay: 10000,placement: {from: 'bottom',align: 'center'}});
+            }
+        },
+        error: function (err) {
+            console.log("there is a problem: "+err.responseText);
+        }
+    });
+    
+
+});
+
+</script>
+
 
 {% endblock %}

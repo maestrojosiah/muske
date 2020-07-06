@@ -28,8 +28,8 @@ class MembershipManager
 			$this->templating->render('email/account_type.html.twig', ['username' => $username, 'membership' => $membership]),'text/html'
 		);
 
-		// return $this->mailer->send($message) > 0;
-		return true;
+		return $this->mailer->send($message) > 0;
+		// return true;
 	}   
 
 	

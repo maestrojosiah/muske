@@ -137,7 +137,7 @@ $(document).on("click", '[id^="my-phone"]', function(){
     var input = myId.replace(/\-/g, '_'); 
 
     var phonenumber = $("#"+input).val();   
-    $.notify({icon: 'glyphicon glyphicon-time', message: 'Please wait...' },{ element: $("#contact-form"),type: "info",allow_dismiss: true,newest_on_top: false,delay: 5000,placement: {from: 'bottom',align: 'center'}});
+    $.notify({icon: 'glyphicon glyphicon-time', message: 'Please wait...' },{ element: $("#pay-form"),type: "info",allow_dismiss: true,newest_on_top: false,delay: 5000,placement: {from: 'bottom',align: 'center'}});
     $.ajax({
         url:"{{ (path('leepahnapush')) }}",
         type: "POST",
@@ -176,7 +176,7 @@ $(document).on("click", '[id^="get-status-"]', function(){
     var splitted = myId.split('-'); 
     var CheckoutRequestID = splitted[2];
     
-    $.notify({icon: 'glyphicon glyphicon-time', message: 'Please wait...' },{ element: $("#contact-form"),type: "info",allow_dismiss: true,newest_on_top: false,delay: 5000,placement: {from: 'bottom',align: 'center'}});    
+    $.notify({icon: 'glyphicon glyphicon-time', message: 'Please wait...' },{ element: $("#pay-form"),type: "info",allow_dismiss: true,newest_on_top: false,delay: 5000,placement: {from: 'bottom',align: 'center'}});
     $.ajax({
         url:"{{ (path('leepahnapush_status')) }}",
         type: "POST",

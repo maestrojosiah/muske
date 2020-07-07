@@ -294,7 +294,7 @@
                         <div>
                             <h5 class="text-muted mb-2">{{edu.institution}}</h5>
                             <p style="margin-bottom:0px; margin-top:0px;" class="text-muted mb-2">{{edu.coursename}} | {{edu.degree}} </p>
-                            <h6 class="text-muted mb-2">{{edu.fromyear|date("M Y")}} - {{"now"|date() < edu.toyear|date() ? "Ongoing" : edu.toyear|date("M Y")}}, {{edu.location}}</h6>
+                            <h6 class="text-muted mb-2">{{edu.fromyear|date("M Y")}} - {{"now"|date('U') < edu.toyear|date('U') ? "Ongoing" : edu.toyear|date("M Y")}}, {{edu.location}}</h6>
                         </div>
                         {% endfor %}
                     </div>

@@ -74,7 +74,7 @@
 						<div class="col-md-12 edu-sec" style="position: relative;">
 							<h5 class="sec-heading">{{edu.coursename}} | {{edu.degree}}<br></h5>
 							<p class="sec-paragraph">{{edu.institution}}, {{edu.location}},<br></p>
-							<small><em>{{edu.fromyear|date("M Y")}} - {{"now"|date() < edu.toyear|date() ? "Ongoing" : edu.toyear|date("M Y")}}</em><br></small>
+							<small><em>{{edu.fromyear|date("M Y")}} - {{"now"|date('U') < edu.toyear|date('U') ? "Ongoing" : edu.toyear|date("M Y")}}</em><br></small>
 							{% include "web/templates/doc.html.twig" %}
 						</div>
 						{% endfor %}

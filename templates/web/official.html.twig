@@ -42,7 +42,7 @@
                     {% for edu in educ %}
                     <div style="position: relative; padding-right:20px; padding-top:10px; padding-bottom:10px;">
                         <h5 class="text-muted mb-2">{{edu.coursename}} | {{edu.degree}}</h5>
-                        <h6 class="text-muted mb-2">{{edu.institution}} | {{edu.fromyear|date("M Y")}} - {{"now"|date() < edu.toyear|date() ? "Ongoing" : edu.toyear|date("M Y")}}</h6>
+                        <h6 class="text-muted mb-2">{{edu.institution}} | {{edu.fromyear|date("M Y")}} - {{"now"|date('U') < edu.toyear|date('U') ? "Ongoing" : edu.toyear|date("M Y")}}</h6>
                         {% include "web/templates/doc.html.twig" %}
                     </div>
                     {% endfor %}

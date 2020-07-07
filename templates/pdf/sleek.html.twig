@@ -306,7 +306,7 @@
                             {% for edu in educ %}
                             <div class="row item">
                                 <div class="col-md-4 date-and-place">
-                                    <h6>{{edu.fromyear|date("M Y")}} - {{"now"|date() < edu.toyear|date() ? "Ongoing" : edu.toyear|date("M Y")}}</h6>
+                                    <h6>{{edu.fromyear|date("M Y")}} - {{"now"|date('U') < edu.toyear|date('U') ? "Ongoing" : edu.toyear|date("M Y")}}</h6>
                                     <p>{{edu.location}}</p>
                                 </div>
                                 <div class="col-md-8 list-details">

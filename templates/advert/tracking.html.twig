@@ -13,7 +13,7 @@
             <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Opened by</a></li>
             <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Read by</a></li>
             <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Interested</a></li>
-            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-4">Sent resumes</a></li>
+            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-4">Sent CV (resume)s</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" role="tabpanel" id="tab-1">
@@ -24,7 +24,7 @@
                             <tr>
                                 <th>Date</th>
                                 <th>Musician</th>
-                                <th>Visit Resume</th>
+                                <th>Visit CV (resume)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,7 +33,7 @@
                                 <tr>
                                     <th>{{track.updated|date("jS F Y")}}</th>
                                     <td>{{track.musician.fullname}}</td>
-                                    <td><a target="_parent" href="{{ path('musician_show', {'username': track.musician.username})}}">Resume</a></td>
+                                    <td><a target="_parent" href="{{ path('musician_show', {'username': track.musician.username})}}">CV (resume)</a></td>
                                 </tr>
                             {% endif %}
                             {% endfor %}
@@ -49,7 +49,7 @@
                             <tr>
                                 <th>Date</th>
                                 <th>Musician</th>
-                                <th>Visit Resume</th>
+                                <th>Visit CV (resume)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,7 +58,7 @@
                                 <tr>
                                     <th>{{track.updated|date("jS F Y")}}</th>
                                     <td>{{track.musician.fullname}}</td>
-                                    <td><a target="_parent" href="{{ path('musician_show', {'username': track.musician.username})}}">Resume</a></td>
+                                    <td><a target="_parent" href="{{ path('musician_show', {'username': track.musician.username})}}">CV (resume)</a></td>
                                 </tr>
                             {% endif %}
                             {% endfor %}
@@ -83,7 +83,7 @@
                                 <tr>
                                     <th>{{track.updated|date("jS F Y")}}</th>
                                     <td>{{track.musician.fullname}}</td>
-                                    <td><a target="_parent" href="{{ path('musician_show', {'username': track.musician.username})}}">Resume</a></td>
+                                    <td><a target="_parent" href="{{ path('musician_show', {'username': track.musician.username})}}">CV (resume)</a></td>
                                 </tr>
                             {% endif %}
                             {% endfor %}
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div class="tab-pane" role="tabpanel" id="tab-4">
-                <p>These ones have already sent their resume to your email.</p>
+                <p>These ones have already sent their CV (resume) to your email.</p>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-sm">
                         <thead>
@@ -108,7 +108,7 @@
                                 <tr>
                                     <th>{{track.updated|date("jS F Y")}}</th>
                                     <td>{{track.musician.fullname}}</td>
-                                    <td><a target="_parent" href="{{ path('musician_show', {'username': track.musician.username})}}">Resume</a></td>
+                                    <td><a target="_parent" href="{{ path('musician_show', {'username': track.musician.username})}}">CV (resume)</a></td>
                                 </tr>
                             {% endif %}
                             {% endfor %}

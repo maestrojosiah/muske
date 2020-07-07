@@ -110,7 +110,7 @@
                 <div role="tabpanel" data-parent="#accordion-1" class="collapse item-7">
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-md-6"><button id="send-resume" class="btn btn-primary btn-block" type="button">Send your Resume now</button></div>
+                      <div class="col-md-6"><button id="send-resume" class="btn btn-primary btn-block" type="button">Send your CV (resume) now</button></div>
                       <div class="col-md-6"><button class="btn btn-primary btn-block" id="request-contact" type="button" data-toggle="modal" data-target="#ad-contact">Get Advertiser&#39;s contact</button></div>
                     </div>
                     <hr />
@@ -210,7 +210,7 @@
           $( "#send-resume" ).click(function() {
 
             var id = "{{advert.id}}";
-            $.notify({message: 'Please wait as we attach your resume and send the email...'},{element: "#take-action",type: 'info',placement:{from: 'bottom',align: 'center'}});
+            $.notify({message: 'Please wait as we attach your CV (resume) and send the email...'},{element: "#take-action",type: 'info',placement:{from: 'bottom',align: 'center'}});
 
             $.ajax({
                 url:'{{ (path("ad_tracking")) }}',
@@ -224,7 +224,7 @@
                 success: function (data)
                 {
                     console.log(data);
-                    $.notify({message: 'Your resume has been sent!'},{element: "#take-action",type: 'success',placement:{from: 'bottom',align: 'center'}});
+                    $.notify({message: 'Your CV (resume) has been sent!'},{element: "#take-action",type: 'success',placement:{from: 'bottom',align: 'center'}});
                 },
                 error: function (err) {
                     console.log("there is a problem: "+err.responseText);

@@ -1,7 +1,7 @@
 sonata_seo:
     encoding:         UTF-8
     page:
-        title:            Musician Resume Collection
+        title:            Musician CV (Resume) Collection
         default:          sonata.seo.page.default
         metas:
             name:

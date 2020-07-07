@@ -17,7 +17,7 @@
                   <p class="card-text">{% for jobtodo in musician.jobstobeoffered %}
                     <small>{{jobtodo.jobtitle}} {% if loop.last %}{% else %} . {% endif %}</small>
                     {% endfor %}</p>
-                  <a href="{{ path('musician_show', {'username': musician.username})}}" class="card-link">Resume</a>
+                  <a href="{{ path('musician_show', {'username': musician.username})}}" class="card-link">CV (resume)</a>
                   <a href="{{ path('musician_show', {'username': musician.username})}}" class="card-link">Contact</a>
                 </div>
               </div>
@@ -38,7 +38,7 @@
                   <p class="card-text">{% for jobtodo in musician.jobstobeoffered %}
                     <small>{{jobtodo.jobtitle}} {% if loop.last %}{% else %} . {% endif %}</small>
                     {% endfor %}</p>
-                  <a href="{{ path('musician_show', {'username': musician.username})}}" class="card-link">Resume</a>
+                  <a href="{{ path('musician_show', {'username': musician.username})}}" class="card-link">CV (resume)</a>
                   <a href="{{ path('musician_show', {'username': musician.username})}}" class="card-link">Contact</a>
                 </div>
               </div>
@@ -58,7 +58,7 @@
                   <p class="card-text">{% for jobtodo in musician.jobstobeoffered %}
                     <small>{{jobtodo.jobtitle}} {% if loop.last %}{% else %} . {% endif %}</small>
                     {% endfor %}</p>
-                  <a href="{{ path('musician_show', {'username': musician.username})}}" class="card-link">Resume</a>
+                  <a href="{{ path('musician_show', {'username': musician.username})}}" class="card-link">CV (resume)</a>
                   <a href="{{ path('musician_show', {'username': musician.username})}}" class="card-link">Contact</a>
                 </div>
               </div>

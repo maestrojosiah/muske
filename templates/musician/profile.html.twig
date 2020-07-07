@@ -8,7 +8,7 @@
         {% include "reusable/user_nav.html.twig" %}
         <div id="pad">
           <h3 class="text-dark mb-2" id="prof-heading">Profile Settings</h3>
-          <a class="btn btn-primary text-white mb-1" role="button" href="{{path('musician_show', {'username': musician.username})}}">Your Personal Resume Website</a>
+          <a class="btn btn-primary text-white mb-1" role="button" href="{{path('musician_show', {'username': musician.username})}}">Your Personal CV (resume) Website</a>
           <div class="row mb-3" style="width: inherit;">
             <div class="col-sm-12 col-md-4">
               <div class="card mb-3" id="prof">
@@ -31,12 +31,12 @@
                   <h5 class="mb-0">Quick Links</h5>
                 </div>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item"><span><a href="{{path('musician_show', {'username': musician.username})}}">Your resume website</a></span></li>
+                  <li class="list-group-item"><span><a href="{{path('musician_show', {'username': musician.username})}}">Your CV (resume) website</a></span></li>
                   <li class="list-group-item"><span><a href="{{path('blog', {'username': musician.username})}}">Your blog</a></span></li>
-                  <li class="list-group-item"><span><a href="{{path('musician_new')}}">Add Resume Info</a></span></li>
+                  <li class="list-group-item"><span><a href="{{path('musician_new')}}">Add CV (resume) Info</a></span></li>
                   <li class="list-group-item"><span><a href="{{path('musician_admin_index')}}">Your Admin Page</a></span></li>
                   <li class="list-group-item"><span><a href="{{path('gallery_index', {'username': musician.username})}}">Your Gallery</a></span></li>
-                  <li class="list-group-item"><span><a href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}">Download resume</a></span></li>
+                  <li class="list-group-item"><span><a href="{{path('musician_show', {'username': musician.username, 'download': 'pdf'})}}">Download CV (resume)</a></span></li>
                 </ul>
               </div>
               <div class="card prof-panel" id="div-account">
@@ -66,7 +66,7 @@
                 <div class="card-body special-card-body">
                   <form id="title-form">
                     <div class="form-group">
-                      <label>Your title on your resume</label>
+                      <label>Your title on your CV (resume)</label>
                       <input class="form-control" type="text" value="{{ musician.title != null ? musician.title : 'Musician'}}" name="title">
                       <input type="hidden" name="class" value="Musician-{{musician.id}}" />
                       <small>e.g Musician, Dj, Pianist etc</small>
@@ -112,7 +112,7 @@
                   <hr />
                   <form id="theme-form">
                     <div class="form-group">
-                      <label>Change resume theme</label>
+                      <label>Change CV (resume) theme</label>
                       <select name="pdfTheme" id="pdf_theme" class="form-control">
                         {% for theme in pdfThemes %}
                           {% if musician.isproandactive %}
@@ -343,7 +343,7 @@
                                   <div class="custom-control custom-switch">
                                     <input type="hidden" name="appendsignature" value="false" />
                                     <input class="custom-control-input" name="appendsignature" value="true" type="checkbox" id="formCheck-1" {{ musician.settings|length > 0 and musician.settings.appendsignature != null and musician.settings.appendsignature == 'true' ? 'checked' : ''}} />
-                                    <label class="custom-control-label" for="formCheck-1"><strong>Show this in my resume</strong></label>
+                                    <label class="custom-control-label" for="formCheck-1"><strong>Show this in my CV (resume)</strong></label>
                                     <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />
                                     {% if musician.settings|length < 1 %}<input type="hidden" name="extras" value="musician" />{% endif %}        
                                   </div>

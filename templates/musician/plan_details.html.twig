@@ -59,6 +59,7 @@
   <div class="modal fade" id="activate-pro-dialog" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
+            <button type="button" class="btn btn-sm" style="position: absolute; top:10px; right:10px;" data-dismiss="modal"><i class="fa fa-times"></i></button>
             <div class="modal-header">
                 <img class="img-fluid" src="{{ asset('img/m-pesa-logo-png-7-transparent.png')}}" >
             </div>
@@ -73,10 +74,10 @@
                   <button type="button" id="my-phone" class="btn btn-primary">Pay with {{musician.realphone}}</button>
                   <input type="hidden" id="my_phone" value="{{musician.realphone}}" />
                   <hr />
-                  OR
+                  OR TYPE ONE BELOW
                   <hr />
                   <div class="form-group">
-                    <input type="phone" class="form-control text-center" id="my_phone_number" aria-describedby="phoneHelp" placeholder="254722123456" value="254">
+                    <input autofocus type="phone" class="form-control text-center" id="my_phone_number" aria-describedby="phoneHelp" placeholder="254722123456" value="254" >
                     <small id="phoneHelp" class="form-text text-muted">The number you wish to pay with. Don't use '+' prefix. Use format 254722123456</small>
                   </div>
                   <button id="my-phone-number" type="button" class="btn btn-primary">Pay Using the number above</button>

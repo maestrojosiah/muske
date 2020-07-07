@@ -176,3 +176,4 @@ echo $response;
         }
     }
     
+                        <a {% if app.user and app.user != null %} href="{{ musician.isbasic or musician.ismuskeandactive ? path('musician_plan') ~ '?msg=You need to upgrade to get that feature' : path('blog', {'username': musician.username})}}" {% else %} href="{{ musician.isbasic or musician.ismuskeandactive ? '#' : path('blog', {'username': musician.username})}}" {% endif %}>

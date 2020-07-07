@@ -192,20 +192,22 @@
                             <div class="form-group">
                               <label for="city"><strong>Order jobs by</strong><br></label>
                               <select name="job_order" class="form-control">
-                                <option value="id"  {% if musician.settings and musician.settings.jobOrder == 'null' or musician.settings and musician.settings.jobOrder == 'id' %} selected {% endif %}>How you added them</option>
+                                <option value="id"  {% if musician.settings and musician.settings.jobOrder == null or musician.settings and musician.settings.jobOrder == 'id' %} selected {% endif %}>In the order you added them</option>
                                 <option value="endedin" {{ musician.settings and musician.settings.jobOrder == 'endedin' ? 'selected' : '' }}>Job ending date</option>
                                 <option value="startingfrom" {{ musician.settings and musician.settings.jobOrder == 'startingfrom' ? 'selected' : '' }}>Job starting date</option>
                               </select>
+                              <small>Which dates will you prefer to sort your jobs with?</small>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="country"><strong>Sort jobs by</strong></label>
                               <select name="job_order_by" class="form-control">
-                                  <option value="" {{ musician.settings and musician.settings.jobOrderBy == null ? 'selected' : '' }} {{ musician.settings and musician.settings.jobOrderBy == '' ? 'selected' : '' }}>Select One</option>
+                                  <option value="ASC" {{ musician.settings and musician.settings.jobOrderBy == null or musician.settings and musician.settings.jobOrderBy == '' ? 'selected' : '' }}>In the order you added them</option>
                                   <option value="DESC" {{ musician.settings and musician.settings.jobOrderBy == 'DESC' ? 'selected' : '' }}>Starting with latest</option>
                                   <option value="ASC" {{ musician.settings and musician.settings.jobOrderBy == 'ASC' ? 'selected' : '' }}>Ending with latest</option>
                               </select>
+                              <small>How would you like your jobs to be sorted in your CV (resume)?</small>
                             </div>
                           </div>
                         </div>
@@ -214,20 +216,22 @@
                             <div class="form-group">
                               <label for="city"><strong>Order education by</strong><br></label>
                               <select name="edu_order" class="form-control">
-                                <option value="id"  {{ musician.settings and musician.settings.eduOrder == 'id' ? 'selected' : '' }} {{ musician.settings and musician.settings.eduOrder == '' ? 'selected' : '' }}>How you added them</option>
+                                <option value="id"  {{ musician.settings and musician.settings.eduOrder == null or musician.settings and musician.settings.eduOrder == 'id' ? 'selected' : '' }}>In the order you added them</option>
                                 <option value="toyear" {{ musician.settings and musician.settings.eduOrder == 'toyear' ? 'selected' : '' }}>Education ending date</option>
                                 <option value="fromyear" {{ musician.settings and musician.settings.eduOrder == 'fromyear' ? 'selected' : '' }}>Education starting date</option>
                               </select>
+                              <small>Which dates will you prefer to sort your education with?</small>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="country"><strong>Sort education by</strong></label>
                               <select name="edu_order_by" class="form-control">
-                                <option value="" {{ musician.settings and musician.settings.eduOrderBy == '' ? 'selected' : '' }} {{ musician.settings and musician.settings.eduOrderBy == null ? 'selected' : '' }}>Select One</option> 
+                                <option value="ASC" {{ musician.settings and musician.settings.eduOrderBy == null or musician.settings and musician.settings.eduOrderBy == '' ? 'selected' : '' }}>In the order you added them</option> 
                                 <option value="DESC" {{ musician.settings and musician.settings.eduOrderBy == 'DESC' ? 'selected' : '' }}>Starting with latest</option>
                                 <option value="ASC" {{ musician.settings and musician.settings.eduOrderBy == 'ASC' ? 'selected' : '' }}>Ending with latest</option>
                               </select>
+                              <small>How would you like your education to be sorted in your CV (resume)?</small>
                             </div>
                           </div>
                           <input type="hidden" name="class" value="Settings{{musician.settings|length < 1 ? '' : '-' ~ musician.settings.id }}" />

@@ -67,6 +67,7 @@ class PostController extends AbstractController
             ->addMeta('name', 'author', $post->getMusician()->getFullname())
             ->addMeta('property', 'og:title', $post->getTitle().' | '.$post->getMusician()->getFullname(). ' Blog')
             ->addMeta('property', 'og:type', 'Blog Post')
+            ->addMeta('property', 'og:image', "/uploads/blog/".$post->getImage())
             ->addMeta('property', 'og:url',  $this->generateUrl('blog', [
                 'username' => $post->getMusician()->getUsername() 
             ], true))

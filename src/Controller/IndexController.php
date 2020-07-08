@@ -26,7 +26,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/search", name="search")
+     * @Route("/search/music-service", name="search")
      */
     public function search(SeoPageInterface $seoPage, JobToBeOfferedRepository $jobToBeOfferedRepository, MusicianRepository $musicianRepository, SkillRepository $skillRepository, SettingsRepository $settingsRepository): Response
     {
@@ -66,7 +66,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/choose-theme", name="choose_theme")
+     * @Route("/register/choose-theme", name="choose_theme")
      */
     public function themes(PdfThemeRepository $pdfThemeRepository): Response
     {

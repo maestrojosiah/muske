@@ -25,7 +25,7 @@
                 <td>{{ post.submitted ? post.submitted|date('Y-m-d') : '' }}</td>
                 <td>{{ post.content }}</td>
                 <td>
-                    <a href="{{ path('post_show', {'id': post.id, 'title': post.title}) }}">show</a>
+                    <a href="{{ path('post_show', {'id': post.id, 'title': post.getUrlTitle}) }}">show</a>
                     <a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
                 </td>
             </tr>

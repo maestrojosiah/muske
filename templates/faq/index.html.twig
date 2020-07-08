@@ -14,7 +14,7 @@
                     <li class="nav-item"><a class="nav-link {{ loop.index == 1 ? 'active' : ''}}" role="tab" data-toggle="tab" href="#tab{{loop.index}}">{{category.title|capitalize}}</a></li>
                     {% endfor %}
                     {% if app.user and app.user.username == 'maestrojosiah' %}
-                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="{{path('f_a_q_new')}}">Create new</a></li>
+                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="{{path('faq_new')}}">Create new</a></li>
                     {% endif %}                    
                 </ul>
         
@@ -35,7 +35,7 @@
                                         <div class="card-body">
                                             <div class="card-text">{% autoescape false %}{{faq.answer|raw}}{% endautoescape %}</div>
                                             {% if app.user and app.user.username == 'maestrojosiah' %}
-                                            <a style="margin-left:20px;" href="{{path('f_a_q_edit', {'id': faq.id })}}">Edit</a>
+                                            <a style="margin-left:20px;" href="{{path('faq_edit', {'id': faq.id })}}">Edit</a>
                                             {% endif %}
                                         </div>
                                     </div>

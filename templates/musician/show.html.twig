@@ -156,7 +156,7 @@
                     </a>
                 </div>
                 <div class="col-sm-6 col-md-6 piece align-self-center text-center" data-bs-hover-animate="bounce">
-                    <a href="{{ musician.isbasic or musician.ismuskeandactive ? (app.user and app.user != null ? path('musician_plan') ~ '?msg=You need to upgrade to get that feature': '#') : path('blog', {'username': musician.username})}}">
+                    <a href="{{ musician.isbasic or musician.ismuskeandactive ? (app.user and app.user != null and app.user == musician ? path('musician_plan') ~ '?msg=You need to upgrade to get that feature': '#') : path('blog', {'username': musician.username})}}">
                         <div class="row full-height">
                             <div class="col align-self-center"><span class="circle-border"><i class="fa fa-themeisle"></i></span>
                                 <p class="text-white icon-text">BLOG</p>

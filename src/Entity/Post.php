@@ -57,6 +57,7 @@ class Post
      * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="post")
      */
     private $notifications;
+    private $urltitle;
 
     public function __construct()
     {
@@ -72,6 +73,12 @@ class Post
     public function getTitle(): ?string
     {
         return $this->title;
+    }
+
+    public function getUrlTitle(): ?string
+    {
+        $this->url_title = str_replace(" ", "-", $this->title);
+        return $this->url_title;
     }
 
     public function setTitle(string $title): self

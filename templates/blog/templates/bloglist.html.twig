@@ -16,10 +16,10 @@
 							{{asset('/uploads/blog/play_thumbnail.png')}}
 						{% endif %}" alt="{{post.title}}">
 					    <div class="media-body">
-						    <h3 class="title mb-1"><a href="{{path('post_show', {'id': post.id, 'title': post.title})}}">{{post.title}}</a></h3>
+						    <h3 class="title mb-1"><a href="{{path('post_show', {'id': post.id, 'title': post.getUrlTitle })}}">{{post.title}}</a></h3>
 						    <div class="meta mb-1"><span class="date">{{post.submitted|date("F jS \\a\\t g:ia")}}</span><span class="time">{{totalreadingtime}} read</span><span class="comment"><a href="#">{{post.comments|length}} comments</a></span></div>
 						    <div class="intro">{{post.content|slice(0, 219)|raw}}...</div>
-						    <a class="more-link" href="{{path('post_show', {'id': post.id, 'title': post.title})}}">Read more &rarr;</a>
+						    <a class="more-link" href="{{path('post_show', {'id': post.id, 'title': post.getUrlTitle })}}">Read more &rarr;</a>
 					    </div><!--//media-body-->
 				    </div><!--//media-->
 			    </div><!--//item-->

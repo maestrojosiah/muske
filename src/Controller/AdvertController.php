@@ -50,10 +50,10 @@ class AdvertController extends AbstractController
     {
 
         $seoPage
-        ->setTitle("Advertize music job position")
+        ->setTitle("Advertise a music job position to musicians in Kenya - 2020")
         ->addMeta('name', 'keywords', "Advertise music job choir trainer pianist church pianist music teacher ")
         ->addMeta('name', 'description', "Advertize a music job and have it reach all the musicians in the MuSKe platform. Track the performance of your advert in real time!")
-        ->addMeta('property', 'og:title', "Advertise music job position")
+        ->addMeta('property', 'og:title', "Advertise a music job position to musicians in Kenya - 2020")
         ->addMeta('property', 'og:url',  $this->generateUrl('advert_new'))
         ->addMeta('property', 'og:description', "Advertize a music job and have it reach all the musicians in the MuSKe platform. Track the performance of your advert in real time!")
         ;

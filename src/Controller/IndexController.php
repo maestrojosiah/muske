@@ -44,13 +44,14 @@ class IndexController extends AbstractController
         }
         $skill_list = implode(" ", $skills_list);
 
+        $date = date("Y");
         $seoPage
-        ->setTitle("Search for music services")
+        ->setTitle("Music & instrument instructors - find a teacher in Kenya - $date")
         ->addMeta('name', 'keywords', $skill_list)
-        ->addMeta('name', 'description', "Search for a music instructor in any music field from the country's largest musician database")
-        ->addMeta('property', 'og:title', "Search for music services")
+        ->addMeta('name', 'description', "Simple and powerful search for music lessons or any music services from the largest musician database in Kenya")
+        ->addMeta('property', 'og:title', "Music & instrument instructors - find a teacher in Kenya - $date")
         ->addMeta('property', 'og:url',  $this->generateUrl('search'))
-        ->addMeta('property', 'og:description', "Search for a music instructor in any music field from the country's largest musician database")
+        ->addMeta('property', 'og:description', "Simple and powerful search for music lessons or any music services from the largest musician database in Kenya")
     ;
 
         return $this->render('index/search.html.twig', [

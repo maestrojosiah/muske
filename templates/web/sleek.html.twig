@@ -15,7 +15,7 @@
                 <div class="col">
                     <h3 style="font-family: Alice, serif;">{{musician.fullname}}</h3>
                     <h5>{{ musician.title != null ? musician.title : 'Musician'}}</h5>
-                    <a class="spaced-links" href="tel:{{musician.phone}}">&nbsp;<i class="fa fa-phone"></i>&nbsp;{{musician.phone}}</a><a class="spaced-links" href="mailto:{{musician.email}}">&nbsp;<i class="fa fa-envelope"></i>&nbsp;{{musician.email}}</a><a class="spaced-links" href="https://www.muske.co.ke/{{musician.username}}">&nbsp;<i class="fa fa-globe"></i>&nbsp;www.muske.co.ke/{{musician.username}}</a></div>
+                    <a class="spaced-links" href="tel:{{app.user != null and app.user == musician ? musician.realphone : musician.phone}}">&nbsp;<i class="fa fa-phone"></i>&nbsp;{{app.user != null and app.user == musician ? musician.realphone : musician.phone}}</a><a class="spaced-links" href="mailto:{{app.user != null and app.user == musician ? musician.realemail : musician.email}}">&nbsp;<i class="fa fa-envelope"></i>&nbsp;{{app.user != null and app.user == musician ? musician.realemail : musician.email}}</a><a class="spaced-links" href="https://www.muske.co.ke/{{musician.username}}">&nbsp;<i class="fa fa-globe"></i>&nbsp;www.muske.co.ke/{{musician.username}}</a></div>
             </div>
             <div class="card about">
                 <div class="card-header">

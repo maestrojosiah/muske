@@ -18,8 +18,12 @@ class IndexController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index(AuthenticationUtils $authenticationUtils): Response
+    public function index(SeoPageInterface $seoPage, AuthenticationUtils $authenticationUtils): Response
     {
+        $seoPage
+        ->setTitle("Music & instrument instructors Kenya - create your CV (resume)")
+        ->addMeta('property', 'og:title', "Music & instrument instructors Kenya - create your CV (resume)")
+    ;
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
         ]);

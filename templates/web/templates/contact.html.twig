@@ -59,7 +59,7 @@
                     <fieldset>
                         <legend><i class="fa fa-envelope"></i> Contacts</legend>
                     </fieldset>
-                    <div><span><strong>{{musician.fullname}}</strong></span></div>
+                    <div><span><strong>{{musician.fullname|title}}</strong></span></div>
                     <div><span>{{app.user != null and app.user == musician ? musician.realemail : musician.email}}</span></div>
                     <div><span>{{app.user != null and app.user == musician ? musician.realphone : musician.phone}}</span></div>
                     <div><span><small>www.muske.co.ke/{{musician.username}}</small></span></div>

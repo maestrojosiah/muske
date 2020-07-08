@@ -144,7 +144,7 @@
 <div class="container" id="design">
     <div class="row">
         <div class="col-md-8">
-            <h1 id="name">{{musician.fullname}}</h1>
+            <h1 id="name">{{musician.fullname|title}}</h1>
             <h2>{{ musician.title != null ? musician.title : 'Musician'}}</h2>
             {% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
             <p>{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</p>

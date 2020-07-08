@@ -9,7 +9,7 @@
                                 <p style="display:none" id="error_comment"></p>
                                     <div class="row form-group">
                                         <div class="col">
-                                        <input type="text" required="required" id="commenter-name" class="form-control" placeholder="Your Name" {% if app.user and app.user == musician %} value="{{musician.fullname}}" {% endif %}>
+                                        <input type="text" required="required" id="commenter-name" class="form-control" placeholder="Your Name" {% if app.user and app.user == musician %} value="{{musician.fullname|title}}" {% endif %}>
                                         </div>
                                         <div class="col">
                                         <input type="email" required="required" id="commenter-email" class="form-control" placeholder="Your Email" {% if app.user and app.user == musician %} value="{{musician.email}}" {% endif %}>
@@ -79,7 +79,7 @@
                                             <p style="display:none" id="error_reply"></p>    
                                                 <div class="row form-group">
                                                     <div class="col">
-                                                    <input required="required" type="text" id="replier-name-{{comment.id}}" class="form-control" placeholder="Your Name" {% if app.user and app.user == musician %} value="{{musician.fullname}}" {% endif %}>
+                                                    <input required="required" type="text" id="replier-name-{{comment.id}}" class="form-control" placeholder="Your Name" {% if app.user and app.user == musician %} value="{{musician.fullname|title}}" {% endif %}>
                                                     </div>
                                                     <div class="col">
                                                     <input required="required" type="email" id="replier-email-{{comment.id}}" class="form-control" placeholder="Your Email" {% if app.user and app.user == musician %} value="{{musician.email}}" {% endif %}>

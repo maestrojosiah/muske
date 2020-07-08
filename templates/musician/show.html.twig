@@ -111,7 +111,7 @@
                 <div class="col-sm-4 text-center align-self-center mt-1" id="for-pic"><img id="prof-pic" src="{{thumbnailurl}}" style="border: 2px solid white;"></div>
                 <div class="col-sm-8 col-md-6 text-light align-self-center d-none d-md-block" id="heading-col">
                     <div>
-                        <h1 class="text-white">{{musician.fullname}}</h1>
+                        <h1 class="text-white">{{musician.fullname|title}}</h1>
                         <h4 class="text-white">{{ musician.title != null ? musician.title : 'Musician'}}</h4>
                         <a class="for-user btn btn-info pull-right toprofile" role="button" href="{{path('musician_profile')}}"><i class="fa fa-user"></i></a>
                         <a class="btn btn-info pull-right tohome" role="button" href="{{path('homepage')}}"><i class="fa fa-home"></i></a>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="col-sm-8 col-md-6 text-light text-center align-self-center d-md-none" id="heading-col">
                     <div>
-                        <h2 class="text-white">{{musician.fullname}}</h2>
+                        <h2 class="text-white">{{musician.fullname|title}}</h2>
                         <small>{{ musician.title != null ? musician.title : 'Musician'}}</small>
                         <a class="for-user btn btn-info pull-right toprofile-p" role="button" href="{{path('musician_profile')}}"><i class="fa fa-user"></i></a>
                         <a class="btn btn-info pull-right tohome-p" role="button" href="{{path('homepage')}}"><i class="fa fa-home"></i></a>

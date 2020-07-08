@@ -1,6 +1,6 @@
 	    <section class="cta-section theme-bg-light py-5">
 		    <div class="container text-center">
-			    <h2 class="heading">{{musician.fullname}}</h2>
+			    <h2 class="heading">{{musician.fullname|title}}</h2>
 			    <div class="intro">Welcome to my blog. You can visit my CV (resume) website at <a href="{{ path('musician_show', {'username': musician.username })}}">https://muske.co.ke/{{musician.username}}</a>.</div>
 				{% if app.user and app.user == musician %}
 				<a class="btn btn-primary" style="margin-top:15px;" href="{{ path('post_new')}}">Create a new Article</a>

@@ -1,6 +1,6 @@
 		
 		<section style="width:90%; text-align:center; margin:auto; margin-bottom:10px;">
-			<h1>{{musician.fullname}}</h1>
+			<h1>{{musician.fullname|title}}</h1>
 			<h3>{% if musician.settings and musician.settings.placeofwork != null %}{{musician.settings.placeofwork}}{% endif %}</h3>
 			Phone: <abbr title="University of Waterloo">{{musician.phone}}</abbr><br>
 			Email: <a style="text-decoration: none; color:black; " href="mailto:{{musician.email}}">{{musician.email}}</a><br>

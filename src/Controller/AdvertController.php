@@ -44,7 +44,7 @@ class AdvertController extends AbstractController
     }
 
     /**
-     * @Route("create/new/music-job/advert", name="advert_new", methods={"GET","POST"})
+     * @Route("/create/new/music-job/advert", name="advert_new", methods={"GET","POST"})
      */
     public function new(SeoPageInterface $seoPage, MusicianRepository $musicianRepository, Request $request): Response
     {

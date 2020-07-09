@@ -45,7 +45,7 @@
                             <p>Click on any specialty to narrow down.</p>
                             <ul class="nav nav-pills">
                                 {% for specialty in specialties %}
-                                {% if specialty.musician.settings|length > 0 and specialty.musician.settings.visibility != 'off' %}
+                                {% if specialty.musician and specialty.musician.settings|length > 0 and specialty.musician.settings.visibility != 'off' %}
                                 <li class="nav-item close-all"><a class="filter-button nav-link text-dark border border-light" data-filter="{{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}}" href="#">{{specialty.jobtitle|capitalize}}</a></li>
                                 {% endif %}
                                 {% endfor %}

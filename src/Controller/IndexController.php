@@ -59,8 +59,8 @@ class IndexController extends AbstractController
         return $this->render('index/search.html.twig', [
             'skills' => array_unique($skills),
             'specialties' => array_unique($specialties),
-            'titles' => array_unique($titles),
-            'locations' => array_unique($locations),
+            'titles' => $titles,
+            'locations' => $locations,
             'pro_musicians' => $proMusicians,
             'muske_musicians' => $muskeMusicians,
             'basic_musicians' => $basicMusicians

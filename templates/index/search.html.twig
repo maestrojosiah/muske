@@ -28,7 +28,9 @@
                             <p>Click on any skill to narrow down.</p>
                             <ul class="nav nav-pills">
                                 {% for skill in skills %}
+                                {% if skill.musician.settings|length > 0 and skill.musician.settings.visibility != 'off' %}
                                 <li class="nav-item close-all"><a class="filter-button nav-link text-dark border border-light" data-filter="{{skill.skillname|trim|lower|replace({' ':'-','.':''})}}" href="#">{{skill.skillname|capitalize}}</a></li>
+                                {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>
@@ -43,7 +45,9 @@
                             <p>Click on any specialty to narrow down.</p>
                             <ul class="nav nav-pills">
                                 {% for specialty in specialties %}
+                                {% if specialty.musician.settings|length > 0 and specialty.musician.settings.visibility != 'off' %}
                                 <li class="nav-item close-all"><a class="filter-button nav-link text-dark border border-light" data-filter="{{specialty.jobtitle|trim|lower|replace({' ':'-','.':''})}}" href="#">{{specialty.jobtitle|capitalize}}</a></li>
+                                {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>

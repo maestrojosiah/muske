@@ -26,15 +26,27 @@ class SkillRepository extends ServiceEntityRepository
     public function findSkillsList()
     {
         return $this->createQueryBuilder('s')
-            ->select('s.skillname')
+            ->select('s')
             ->andWhere('s.skillname IS NOT NULL')
-            ->setMaxResults(1000)
+            ->setMaxResults(500)
             ->orderBy('s.skillname', 'ASC')
             ->distinct()
             ->getQuery()
             ->getResult()
         ;
     }
+
+    // public function findSkillsList()
+    // {
+    //     $entityManager = $this->getEntityManager();
+    //     $query = $entityManager->createQuery(
+    //         'SELECT s
+    //         FROM App\Entity\Skill s
+    //         WHERE s.skillname IS NOT NULL
+    //         ORDER BY s.skillname ASC'
+    //     );//->setParameter('price', $price);
+    //     return $query->getResult();
+    // }
 
     public function searchFromSkills($searchText)
     {

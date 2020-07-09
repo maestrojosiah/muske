@@ -38,13 +38,12 @@ class IndexController extends AbstractController
         $specialties = $jobToBeOfferedRepository->findSpecialtiesList();
         $titles = $musicianRepository->findTitlesList();
         $locations = $settingsRepository->findLocationList();
-        $musicians = $musicianRepository->findAll();
         $proMusicians = $musicianRepository->getMusicians('pro');
         $muskeMusicians = $musicianRepository->getMusicians('muske');
         $basicMusicians = $musicianRepository->getMusicians('basic');
         $skills_list = [];
         foreach ($skills as $skill ) {
-            $skills_list[] = $skill['skillname'];
+            $skills_list[] = $skill->getSkillname();
         }
         $skill_list = implode(" ", $skills_list);
 
@@ -57,13 +56,11 @@ class IndexController extends AbstractController
         ->addMeta('property', 'og:url',  $this->generateUrl('search'))
         ->addMeta('property', 'og:description', "Simple and powerful search for music lessons or any music services from the largest musician database in Kenya")
     ;
-
         return $this->render('index/search.html.twig', [
             'skills' => $skills,
             'specialties' => $specialties,
             'titles' => $titles,
             'locations' => $locations,
-            'musicians' => $musicians,
             'pro_musicians' => $proMusicians,
             'muske_musicians' => $muskeMusicians,
             'basic_musicians' => $basicMusicians

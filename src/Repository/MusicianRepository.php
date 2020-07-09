@@ -65,8 +65,11 @@ class MusicianRepository extends ServiceEntityRepository implements PasswordUpgr
     {
         return $this->createQueryBuilder('s')
             ->select('s.title')
+            ->leftJoin('s.settings', 'st')
             ->andWhere('s.title IS NOT NULL')
-            ->setMaxResults(1000)
+            ->andWhere('st.visibility = :on')
+            ->setParameter('on', 'on')
+            ->setMaxResults(100)
             ->orderBy('s.title', 'ASC')
             ->distinct()
             ->getQuery()

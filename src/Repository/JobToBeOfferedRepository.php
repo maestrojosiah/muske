@@ -37,9 +37,9 @@ class JobToBeOfferedRepository extends ServiceEntityRepository
     public function findSpecialtiesList()
     {
         return $this->createQueryBuilder('s')
-            ->select('s.jobtitle')
+            ->select('s')
             ->andWhere('s.jobtitle IS NOT NULL')
-            ->setMaxResults(1000)
+            ->setMaxResults(100)
             ->orderBy('s.jobtitle', 'ASC')
             ->distinct()
             ->getQuery()

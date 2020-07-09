@@ -57,10 +57,10 @@ class IndexController extends AbstractController
         ->addMeta('property', 'og:description', "Simple and powerful search for music lessons or any music services from the largest musician database in Kenya")
     ;
         return $this->render('index/search.html.twig', [
-            'skills' => $skills,
-            'specialties' => $specialties,
-            'titles' => $titles,
-            'locations' => $locations,
+            'skills' => array_unique($skills),
+            'specialties' => array_unique($specialties),
+            'titles' => array_unique($titles),
+            'locations' => array_unique($locations),
             'pro_musicians' => $proMusicians,
             'muske_musicians' => $muskeMusicians,
             'basic_musicians' => $basicMusicians

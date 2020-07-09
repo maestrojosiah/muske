@@ -77,7 +77,7 @@ class Post
 
     public function getUrlTitle(): ?string
     {
-        $this->url_title = str_replace(" ", "-", $this->title);
+        $this->url_title = str_replace([" ", "/"], ["-", "or"], $this->title);
         return $this->url_title;
     }
 

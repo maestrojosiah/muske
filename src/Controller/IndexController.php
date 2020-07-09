@@ -51,10 +51,10 @@ class IndexController extends AbstractController
         $seoPage
         ->setTitle("Music & instrument instructors - find a teacher in Kenya - $date")
         ->addMeta('name', 'keywords', $skill_list)
-        ->addMeta('name', 'description', "Simple and powerful search for music lessons or any music services from the largest musician database in Kenya")
+        ->addMeta('name', 'description', "Simple and powerful search for music instructors or any music services from the largest musician database in Kenya")
         ->addMeta('property', 'og:title', "Music & instrument instructors - find a teacher in Kenya - $date")
         ->addMeta('property', 'og:url',  $this->generateUrl('search'))
-        ->addMeta('property', 'og:description', "Simple and powerful search for music lessons or any music services from the largest musician database in Kenya")
+        ->addMeta('property', 'og:description', "Simple and powerful search for music instructors or any music services from the largest musician database in Kenya")
     ;
         return $this->render('index/search.html.twig', [
             'skills' => array_unique($skills),

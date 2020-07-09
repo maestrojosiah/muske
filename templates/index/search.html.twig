@@ -28,7 +28,7 @@
                             <p>Click on any skill to narrow down.</p>
                             <ul class="nav nav-pills">
                                 {% for skill in skills %}
-                                {% if skill.musician.settings|length > 0 and skill.musician.settings.visibility != 'off' %}
+                                {% if skill.musician and skill.musician.settings|length > 0 and skill.musician.settings.visibility != 'off' %}
                                 <li class="nav-item close-all"><a class="filter-button nav-link text-dark border border-light" data-filter="{{skill.skillname|trim|lower|replace({' ':'-','.':''})}}" href="#">{{skill.skillname|capitalize}}</a></li>
                                 {% endif %}
                                 {% endfor %}

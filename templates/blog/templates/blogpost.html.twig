@@ -50,7 +50,7 @@
   "name" : "{{post.getUrlTitle}}",
   "author" : "{{post.musician.fullname|title}}",
   "image" : "https://muske.co.ke/uploads/blog/{{ post.image }}",
-  "articleBody" : "{{post.content|raw}}",
+  "articleBody" : "{{post.content|raw|e('js')}}",
   "URL" : "https://muske.co.ke/post/{{post.id}}/{{post.getUrlTitle}}"
 }
 </script>

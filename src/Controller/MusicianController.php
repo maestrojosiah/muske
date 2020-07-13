@@ -109,7 +109,7 @@ class MusicianController extends AbstractController
             ->addMeta('name', 'description', $musician->getAbout())
             ->addMeta('property', 'og:title', $musician->getFullname().' | Resume')
             ->addMeta('property', 'og:type', 'Resume')
-            ->addMeta('property', 'og:image', "/uploads/photos/thumbs/".$musician->getPhoto().".png")
+            ->addMeta('property', 'og:image', "https://muske.co.ke/uploads/photos/thumbs/".$musician->getPhoto().".png")
             ->addMeta('property', 'og:url',  "https://muske.co.ke/".$musician->getUsername())
             ->addMeta('property', 'og:description', $jobsString)
         ;

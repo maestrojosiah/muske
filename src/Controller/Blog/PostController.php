@@ -59,6 +59,7 @@ class PostController extends AbstractController
         $nextPost = $postRepository->getNextPost($post->getId(), $post->getMusician());
         $prevPost = $postRepository->getPrevPost($post->getId(), $post->getMusician());
 
+        $datetime = $post->getSubmitted()->format(\DateTime::ATOM); // Updated ISO8601
         $seoPage
             ->setTitle($post->getTitle())
             ->addMeta('name', 'keywords', $post->getTags())
@@ -66,7 +67,10 @@ class PostController extends AbstractController
             ->addMeta('name', 'description', substr($post->getContent(), 0, 100))
             ->addMeta('name', 'author', $post->getMusician()->getFullname())
             ->addMeta('property', 'og:title', $post->getTitle().' | '.$post->getMusician()->getFullname(). ' Blog')
-            ->addMeta('property', 'og:type', 'Blog Post')
+            ->addMeta('property', 'og:type', 'article')
+            ->addMeta('property', 'article:published_time', $datetime)
+            ->addMeta('property', 'article:modified_time', $datetime)
+            ->addMeta('property', 'article:author', $post->getMusician()->getFullname())
             ->addMeta('property', 'og:image', "/uploads/blog/".$post->getImage())
             ->addMeta('property', 'og:url',  $this->generateUrl('blog', [
                 'username' => $post->getMusician()->getUsername() 

@@ -253,9 +253,9 @@
 
 <script type="text/javascript">
     var CaptchaCallback = function() {
-        if ( $('#RecaptchaField0').length ) {
-            grecaptcha.render('RecaptchaField0', {'sitekey' : '6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP'});
-        }
+        // if ( $('#RecaptchaField0').length ) {
+        //     grecaptcha.render('RecaptchaField0', {'sitekey' : '6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP'});
+        // }
         {% for i in 1..captchas|length %}
         if ( $('#RecaptchaField{{i}}').length ) {
             grecaptcha.render('RecaptchaField{{i}}', {'sitekey' : '6LeFG_oUAAAAAEHY0PFIkyVVQtNmJHRiqcDGHYpP'});

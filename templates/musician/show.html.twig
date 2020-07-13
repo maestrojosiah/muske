@@ -342,5 +342,32 @@ $( "#send-my-email" ).click(function() {
 {% include "reusable/phplive.html.twig" %}       
 
 {% endif %}
+{% if musician.photo != null %}
+
+{% set birthYear = "now"|date("Y") - musician.age %}
+    <script type='application/ld+json'>
+    {
+    "@context": "http://www.schema.org",
+    "@type": "person",
+    "name": "{{musician.fullname|title}}",
+    "jobTitle": "{{ musician.title != null ? musician.title : 'Musician'}}",
+    "url": "https://muske.co.ke/{{musician.username}}",
+    "image": "https://muske.co.ke/uploads/photos/thumbs/{{musician.photo}}.png",
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Nairobi",
+        "addressLocality": "Nairobi",
+        "addressRegion": "Nairobi",
+        "postalCode": "00200",
+        "addressCountry": "Kenya"
+    },
+    "email": "{{musician.email}}",
+    "birthDate": "{{birthYear}}-01-01",
+    "nationality": "Kenyan",
+    "telephone": "{{musician.phone}}"
+    }
+    </script>
+
+{% endif %}
 
 {% endblock %}

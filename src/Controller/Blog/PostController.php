@@ -71,10 +71,8 @@ class PostController extends AbstractController
             ->addMeta('property', 'article:published_time', $datetime)
             ->addMeta('property', 'article:modified_time', $datetime)
             ->addMeta('property', 'article:author', $post->getMusician()->getFullname())
-            ->addMeta('property', 'og:image', "/uploads/blog/".$post->getImage())
-            ->addMeta('property', 'og:url',  $this->generateUrl('blog', [
-                'username' => $post->getMusician()->getUsername() 
-            ], true))
+            ->addMeta('property', 'og:image', "https://muske.co.ke/uploads/blog/".$post->getImage())
+            ->addMeta('property', 'og:url',  "https://muske.co.ke/".$post->getId()."/".$post->getUrlTitle())
             ->addMeta('property', 'og:description', substr($post->getContent(), 0 ,100))
         ;
 

@@ -48,12 +48,21 @@
   "@context" : "http://schema.org",
   "@type" : "Article",
   "name" : "{{post.getUrlTitle}}",
-  "author" : "{{post.musician.fullname|title}}",
+  "headline" : "{{post.getUrlTitle}}",
+  "author": {
+        "@type": "Person",
+        "name": "{{post.musician.fullname|title}}"
+      },
   "image" : "https://muske.co.ke/uploads/blog/{{ post.image }}",
   "articleBody" : "{{post.content|raw|e}}",
   "dateCreated" : "{{post.submitted|date('c')}}",
   "datePublished" : "{{post.submitted|date('c')}}",
-  "URL" : "https://muske.co.ke/post/{{post.id}}/{{post.getUrlTitle}}"
+  "dateModified" : "{{post.submitted|date('c')}}",
+  "URL" : "https://muske.co.ke/post/{{post.id}}/{{post.getUrlTitle}}",
+  "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://muske.co.ke/post/{{post.id}}/{{post.getUrlTitle}}"
+      }
 }
 </script>
 

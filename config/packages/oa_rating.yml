@@ -1,0 +1,4 @@
+oa_rating:
+    strategy: ip
+    cookie_name: ratemusician
+    cookie_lifetime: '+1 year'

@@ -160,6 +160,9 @@
     "nikic/php-parser": {
         "version": "v4.3.0"
     },
+    "oachoor/rating-bundle": {
+        "version": "dev-master"
+    },
     "ocramius/package-versions": {
         "version": "1.4.2"
     },

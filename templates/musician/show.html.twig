@@ -5,6 +5,88 @@
     <link rel="stylesheet" href="{{ asset('theme/assets/css/themes.css ') }}">
     <link rel="stylesheet" href="{{ asset('theme/assets/css/web_theme.css ') }}">
     <style>
+        .rating {
+        font-size: 16px;
+        }
+
+        .rating-wrap {
+        display: inline-block;
+        }
+
+        .rating input.rating {
+        display: none;
+        }
+
+        .rating div.star {
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 25px;
+        display: inline-block;
+        position: relative;
+        }
+
+        .rating div.star:before {
+        padding-right: 5px;
+        content: "\f006";
+        color: #999;
+        }
+
+        .rating div.star:hover {
+        cursor: pointer;
+        content: "\f005";
+        color: #e3cf7a;
+        }
+
+        .rating .rating-wrap:hover div.star:before {
+        content: "\f005";
+        color: #e3cf7a;
+        }
+
+        .rating div.star:hover:before, .rating div.star:hover ~ div.star:before {
+        content: "\f006";
+        color: #999;
+        }
+
+        .rating div.star-full {
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 25px;
+        display: inline-block;
+        position: relative;
+        }
+
+        .rating div.star-full:before {
+        content: "\f005";
+        color: #e3cf7a;
+        }
+
+        .rating div.star-empty {
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 25px;
+        display: inline-block;
+        position: relative;
+        }
+
+        .rating div.star-empty:before {
+        content: "\f006";
+        color: #999;
+        }
+
+        .rating div.fa-norm {
+        font-size: 1em;
+        }
+
+        .rating div.fa-lg {
+        font-size: 1.33333333em;
+        line-height: 0.75em;
+        vertical-align: -15%;
+        }
+    </style>
+    <style>
         .tohome {
             position: fixed;
             top: 20px;
@@ -365,6 +447,22 @@ $( "#send-my-email" ).click(function() {
     "nationality": "Kenyan",
     "telephone": "{{musician.phone}}"
     }
+    </script>
+
+    <script>
+    $(function () {
+        $(document).on('click', '.star', function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+        $('input.rating').val($(this).data('value'));
+        $.post(form.attr('action'), form.serialize(), function (data) {
+            form.find('.rating-wrap').removeClass('rating-wrap').html(data);
+        })
+        .fail(function (error) {
+            console.log('error', error);
+        })
+        });
+    });
     </script>
 
 {% endif %}

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "957ae36e40dd7470c4eb86d6cac4da03",
+    "content-hash": "38d99e35c8250938442bed4d0c959f17",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1933,6 +1933,65 @@
                 "psr-3"
             ],
             "time": "2019-12-20T14:22:59+00:00"
+        },
+        {
+            "name": "oachoor/rating-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oachoor/RatingBundle.git",
+                "reference": "ff4a9b7d92fc56e8d6fda4a45a721199be12a666"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oachoor/RatingBundle/zipball/ff4a9b7d92fc56e8d6fda4a45a721199be12a666",
+                "reference": "ff4a9b7d92fc56e8d6fda4a45a721199be12a666",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "^2.11",
+                "doctrine/doctrine-bundle": "^1.0 || ^2.0",
+                "doctrine/orm": "^2.6 || ^2.7",
+                "php": ">=7.2",
+                "symfony/form": "^4.3 || ^5.0",
+                "symfony/framework-bundle": "^4.3 || ^5.0",
+                "symfony/security-bundle": "^4.3 || ^5.0",
+                "symfony/twig-bundle": "^4.3 || ^5.0",
+                "symfony/validator": "^4.3 || ^5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.4",
+                "symfony/browser-kit": "^4.3 || ^5.0",
+                "symfony/phpunit-bridge": "^4.3 || ^5.0"
+            },
+            "suggest": {
+                "symfony/translation": "If you want feedback messages to be translated."
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "RatingBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Omar Achoor",
+                    "email": "oachoor@gmail.com"
+                }
+            ],
+            "description": "Provides star rating functionality for Symfony",
+            "homepage": "https://github.com/oachoor/RatingBundle",
+            "keywords": [
+                "Rating",
+                "bundle",
+                "star",
+                "voting"
+            ],
+            "time": "2019-12-19T11:53:00+00:00"
         },
         {
             "name": "ocramius/package-versions",
@@ -8742,7 +8801,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "oachoor/rating-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

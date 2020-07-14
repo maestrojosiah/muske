@@ -24,17 +24,21 @@ use App\Repository\PdfThemeRepository;
 use App\Repository\EducationRepository;
 use App\Repository\DocumentRepository;
 use App\Repository\PostRepository;
+use RatingBundle\Model\AbstractRating;
+use RatingBundle\Repository\RatingRepository;
 
 class MusicianController extends AbstractController
 {
     private $snappy_pdf;
     private $snappy_img;
     private $seoPage;
-    
-    public function __construct(SeoPageInterface $seoPage, Pdf $snappy_pdf, Image $snappy_img){
+    private $ratingRepository;
+
+    public function __construct(RatingRepository $ratingRepository, SeoPageInterface $seoPage, Pdf $snappy_pdf, Image $snappy_img){
         $this->snappy_pdf = $snappy_pdf;
         $this->snappy_img = $snappy_img;
         $this->seoPage = $seoPage;
+        $this->ratingRepository = $ratingRepository;
     }    
 
 
@@ -124,6 +128,10 @@ class MusicianController extends AbstractController
 
         $thumbnailurl = strlen($musician->getPhoto()) > 1 ?  $photourl : $placeholder;
         
+        if (null === ($rating = $this->ratingRepository->findOneByContentId($musician->getId()))) {
+            $rating = "no-rating";
+        }
+
         $array_data = [
             'musician' => $musician,
             'jobs' => $jobs,
@@ -131,6 +139,8 @@ class MusicianController extends AbstractController
             'fourPhotos' => $fourPhotos,
             'thumbnailurl' => $thumbnailurl,
             'pdf_template' => $pdf_template,
+            'max' => (int) AbstractRating::MAX_VALUE,
+            'rating' => $rating
         ];
 
         if($download == 'pdf'){

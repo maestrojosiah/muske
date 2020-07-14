@@ -5,3 +5,7 @@ controllers:
 kernel:
     resource: ../../src/Kernel.php
     type: annotation
+
+oa_rating:
+    resource: '@RatingBundle/Controller'
+    type: annotation

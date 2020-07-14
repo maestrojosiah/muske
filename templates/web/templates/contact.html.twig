@@ -53,6 +53,17 @@
                     {% if musician.hassettings and musician.settings.tsc != null and musician.settings.tsc == 'true' %}<div><span>TSC Certified</span></div>{% endif %}
                     {% if musician.hassettings and musician.settings.online != null and musician.settings.online == 'true' %}<div><span>Online lessons available</span></div>{% endif %}
                     {% if musician.hassettings and musician.settings.placeofwork != null and musician.settings.placeofwork|length > 1 %}<div><span>{{musician.settings.placeofwork}}</span></div>{% endif %}
+                    <div class="rating">
+                        {% if rating != 'no-rating' %}
+                        {% for i in 1..max %}
+                            <div class="{% if i <= rating.value|round %}star-full {% else %}star-empty {% endif %}"></div>
+                        {% endfor %}
+                        {{ rating.value|round|number_format(2) }}/{{ constant('MAX_VALUE', rating) }}
+                        <small><i>({{ rating.totalVotes }} votes) {{ rating.percentageValue|number_format(0) }}%</i></small>
+                        {% else %}
+                        No ratings yet
+                        {% endif %}
+                    </div>
                     <hr>
                 </div>
                 <div class="col-sm-5 offset-sm-1">
@@ -92,7 +103,15 @@
                     </form>
                     <hr>
                 </div> 
-                {% endif %}           
+                {% endif %}    
+                {% if app.user and app.user != null %}
+                {% else %}
+                <div class="col-md-11 offset-sm-1" style="mb-4">
+                    <legend><i class="fa fa-star"></i> Rate {{musician.fullname}}</legend>
+                    {{ render( controller( 'RatingBundle\\Controller\\RatingController::voteAction', {'contentId' : musician.id} ) ) }}       
+                    <hr>
+                </div>               
+                {% endif %}
                 <div class="col-md-11 offset-sm-1" style="mb-4">
                     <legend><i class="fa fa-star"></i> Social</legend>
                     <p>{% if (musician.isproandactive and musician.hassettings) and (musician.settings.twitter is null or musician.settings.facebook is null or musician.settings.instagram is null or musician.settings.linkedin is null) %}<a href="{{path('musician_profile')}}">Add your social media links in your profile settings</a>{% endif %}</p>

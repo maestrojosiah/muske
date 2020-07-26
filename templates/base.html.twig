@@ -80,7 +80,7 @@
                         async: true,
                         success: function (data)
                         {
-                            console.log(data);
+                            console.log('returned data : ' + data);
                             $("#saved").val("true");
                             if ($(list).length){ // if the list to be updated exists, append a button
                                 $(list).append("<"+append_type+" class='"+append_class+"'> "+data+"</"+append_type+">");

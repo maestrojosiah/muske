@@ -69,7 +69,8 @@
                       {% endfor %}
                       <td>
                         <div class="btn-group">
-                          <a class="btn btn-primary" href="{{path('admin_edit', {'entity_name': lastPartUrl, 'id': val.id })}}" title="edit"><i class="icon_pencil"></i></a>
+                          {% set instruct = "true" %}
+                          <a class="btn btn-primary" href="{{path('admin_edit', {'entity_name': lastPartUrl, 'id': val.id, 'redirect': instruct })}}" title="edit"><i class="icon_pencil"></i></a>
                           {{ include('admin/_delete_form.html.twig') }}
                         </div>
                       </td>

@@ -2,11 +2,14 @@
     <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">CV (resume)</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <h4 class="modal-title">Preview</h4><button class="close-preview" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
             <div class="modal-body">
-                <div class="embed-responsive embed-responsive-16by9" style="width:21cm;margin:auto;"><iframe id="resume-preview" class="embed-responsive-item" src="{{ path('musician_show', {'username': musician.username, 'download': 'show'})}}"></iframe></div>
+                <div class="embed-responsive embed-responsive-16by9" style="width:21cm;margin:auto;"><iframe id="resume-preview" class="embed-responsive-item" src="{{ path('musician_new')}}"></iframe></div>
             </div>
-            <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button></div>
+            <div class="modal-footer">
+                <p>Preview of your CV (resume)</p>
+                <button class="btn btn-light close-preview" type="button" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>

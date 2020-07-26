@@ -1,0 +1,139 @@
+<div class="container" id="theme-two">
+    {% if thumbnailurl is not defined %}
+        {% set thumbnailurl = musician.thumbnailurl %}
+    {% endif %}
+    <div id="scroll-info" class="row" id="header">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-1 d-none d-md-block" id="for-prof-image"><img style="border-radius: 50%;" id="profile-image" src="{{thumbnailurl}}"></div>
+                <div class="col">
+                    <div id="name-and-title">
+                        <h2 id="fullname-info">{{musician.fullname|title}} {{ musician.fullname == null ? '<span class="plc-hld-title" id="fullname-info"></span>' }}<!-- edit --> <span class="btn btn-outline" style="cursor: pointer;" {#data-toggle="modal" data-target="#how-to-edit-info"#} onclick="showInfo()"><i class="fa fa-pencil"></i></span> <!-- edit --></h2>
+                        <h3>{{ musician.title != null ? musician.title : 'Musician'}}</h3>
+                        <a class="spaced-links" href="tel:{{app.user != null and app.user == musician ? musician.realphone : musician.phone}}">&nbsp;<i class="fa fa-phone"></i>&nbsp;<span id="phone-info">{{app.user != null and app.user == musician ? musician.realphone : musician.phone}}{{ musician.realphone == null ? '<span class="plc-hld-text"></span>' }}</span></a>
+                        <a class="spaced-links" href="mailto:{{app.user != null and app.user == musician ? musician.realemail : musician.email}}">&nbsp;<i class="fa fa-envelope"></i>&nbsp;<span id="email-info">{{app.user != null and app.user == musician ? musician.realemail : musician.email}}{{ musician.realemail == null ? '<span class="plc-hld-text"></span>' }}</span></a>
+                        <a class="spaced-links" href="https://www.muske.co.ke/{{musician.username}}">&nbsp;<i class="fa fa-globe"></i>&nbsp;www.muske.co.ke/{{musician.username}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div id="profile" class="card">
+                <div class="card-body">
+                    <h4 class="card-title"><i class="fa fa-user-circle-o"></i>&nbsp;Profile<!-- edit --> <span class="btn btn-outline" style="cursor: pointer;" {#data-toggle="modal" data-target="#how-to-edit-info"#} onclick="showInfo()"><i class="fa fa-pencil"></i></span> <!-- edit --></h4>
+                    <p class="card-text" id="about-info" >{{musician.about}}</p>
+                </div>
+            </div>
+            <div id="scroll-jobs" class="card">
+                <div class="card-body">
+                    <h4 class="card-title"><i class="fa fa-briefcase"></i>&nbsp;Employment History</h4>
+                    {% for job in jobs %}
+                    <div style="position: relative;">
+                        <h5 class="text-muted mb-2">{{job.jobtitle}}, {{job.institution}}, {{job.location}}<!-- edit --> <span class="btn btn-outline" style="cursor: pointer;" id="url-/admin/edit/jobs/{{job.id}}/false" data-toggle="modal" data-target="#editor"><i class="fa fa-pencil"></i></span> <!-- edit --><!--delete-->{% include 'admin/_delete_form.html.twig' with {'lastPartUrl': "jobs", 'val': job, 'instruct': "false" } %}<!--delete--></h5>
+                        <h6 class="text-muted mb-2">{{job.startingfrom|date("M Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</h6>
+                        {% include "webbuild/templates/list.html.twig" %}
+                    </div>
+                    {% endfor %}
+                    <!-- realtime entry -->
+                    <div id="jobs-plc-hld" style="position: relative;">
+                        <h5 class="text-muted mb-2"><span id="jobtitle-jobs" class="plc-hld-text"></span>, <span class="plc-hld-text" id="institution-jobs"></span>, <span class="plc-hld-text" id="location-jobs"></span></h5>
+                        <h6 class="text-muted mb-2"><span style="min-width: 30px!important;" class="plc-hld-text" id="startingfrom-jobs"></span> - <span style="min-width: 30px!important;" class="plc-hld-text" id="endedin-jobs"></span></h6>
+                    </div>
+                    <!-- end realtime entry -->
+                </div>
+            </div>
+            <div id="scroll-education" class="card">
+                <div class="card-body">
+                    <h4 class="card-title"><i class="fa fa-graduation-cap"></i>&nbsp;Education</h4>
+                    {% for edu in educ %}
+                    <div style="position: relative; padding-right:20px; padding-top:10px; padding-bottom:10px;">
+                        <h5 class="text-muted mb-2">{{edu.coursename}} | {{edu.degree}}<!-- edit --> <span class="btn btn-outline" style="cursor: pointer;" id="url-/admin/edit/education/{{edu.id}}/false" data-toggle="modal" data-target="#editor"><i class="fa fa-pencil"></i></span> <!-- edit --><!--delete-->{% include 'admin/_delete_form.html.twig' with {'lastPartUrl': "education", 'val': edu, 'instruct': "false" } %}<!--delete--></h5>
+                        <h6 class="text-muted mb-2">{{edu.institution}}, {{edu.location}} | {{edu.fromyear|date("M Y")}} - {{"now"|date('U') < edu.toyear|date('U') ? "Ongoing" : edu.toyear|date("M Y")}}</h6>
+                    </div>
+                    {% endfor %}
+                    <!-- realtime entry -->
+                    <div id="education-plc-hld" style="position: relative; padding-right:20px; padding-top:10px; padding-bottom:10px;">
+                        <h5 class="text-muted mb-2"><span class="plc-hld-title" id="coursename-education"></span> | <span class="plc-hld-title" id="degree-education"></span></h5>
+                        <h6 class="text-muted mb-2"><span class="plc-hld-text" id="institution-education"></span>, <span class="plc-hld-text" id="location-education"></span>| <span style="min-width: 50px!important;" class="plc-hld-text" id="fromyear-education"></span> - <span style="min-width: 50px!important;" class="plc-hld-text" id="toyear-education"></span></h6>
+                    </div>
+                    <!-- end realtime entry -->
+                </div>
+            </div>
+            <div id="scroll-projects" class="card">
+                <div class="card-body">
+                    <h4 class="card-title"><i class="fa fa-music"></i>&nbsp;Projects</h4>
+                    {% for project in musician.projects %}
+                    <div style="position: relative;">
+                        <h5>{{project.projecttitle}}<!-- edit --> <span class="btn btn-outline" style="cursor: pointer;" id="url-/admin/edit/projects/{{project.id}}/false" data-toggle="modal" data-target="#editor"><i class="fa fa-pencil"></i></span> <!-- edit --><!--delete-->{% include 'admin/_delete_form.html.twig' with {'lastPartUrl': "projects", 'val': project, 'instruct': "false" } %}<!--delete--></h5>
+                        <p>{{project.projectdescription}}.<br>
+                        </p>
+                    </div>
+                    {% else %}
+                        <small class="text-muted">(Optional. Will not appear on CV if no project is added)</small>
+                    {% endfor %}                    
+                    <!-- realtime entry -->
+                    <div style="position: relative;" id="projects-plc-hld">
+                        <h5><span class="plc-hld-title" id="projecttitle-projects"></span></h5>
+                        <p><span class="plc-hld-textarea" id="projectdescription-projects"></span><br>
+                        </p>    
+                    </div>
+                    <!-- end realtime entry -->
+                </div>
+            </div>
+
+            <div id="scroll-referees" class="card content d-none d-md-block" style="margin-bottom: 50px;">
+                <div class="card-body">
+                    <h4 class="card-title"><i class="fa fa-bullhorn"></i>&nbsp;Referees</h4>
+                    {% include "reusable/referees.html.twig" %}                     
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div id="right" style="border-left: 1px solid #777;">
+                {% if musician.hassettings and musician.settings.signature|length > 0 and musician.settings.appendsignature == 'true' %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted card-subtitle mb-2">Details</h5>
+                        <p class="card-text">{{musician.hassettings and musician.settings.signature|length > 0 ? musician.settings.signature|nl2br }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                <div id="scroll-skills" class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted card-subtitle mb-2">Skills</h5>
+                        <ul class="list-group">
+                            {% for skill in musician.skills %}
+                                <li class="list-group-item skill-list"><span>{{skill.skillname}}<!-- edit --> <span class="btn btn-outline" style="cursor: pointer;" id="url-/admin/edit/skills/{{skill.id}}/false" data-toggle="modal" data-target="#editor"><i class="fa fa-pencil"></i></span> <!-- edit --><!--delete-->{% include 'admin/_delete_form.html.twig' with {'lastPartUrl': "skills", 'val': skill, 'instruct': "false" } %}<!--delete--></span></li>
+                            {% endfor %}
+                            <!-- realtime entry -->
+                            <li class="list-group-item skill-list" id="skills-plc-hld">
+                                <span class="plc-hld-list" id="skillname-skills"></span>
+                            </li>
+                            <!-- end realtime entry -->
+                        </ul>
+                    </div>
+                </div>
+                <div id="scroll-roles" class="card">
+                    <div class="card-body">
+                        <h5 class="text-muted card-subtitle mb-2">Specialties</h5>
+                        <ul class="list-group">
+                            {% for job_role in musician.jobstobeoffered %}
+                            <li class="list-group-item skill-list"><span>{{job_role.jobtitle}}<!-- edit --> <span class="btn btn-outline" style="cursor: pointer;" id="url-/admin/edit/myJobs/{{job_role.id}}/false" data-toggle="modal" data-target="#editor"><i class="fa fa-pencil"></i></span> <!-- edit --><!--delete-->{% include 'admin/_delete_form.html.twig' with {'lastPartUrl': "myJobs", 'val': job_role, 'instruct': "false" } %}<!--delete--></span></li>
+                            {% endfor %}
+                            <!-- realtime entry -->
+                            <li class="list-group-item skill-list" id="roles-plc-hld">
+                                <span class="plc-hld-list" id="jobtitle-roles"></span>
+                            </li>                            
+                            <!-- end realtime entry -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="scroll-referees" class="card content d-md-none" style="margin-bottom: 50px;">
+            {% include "reusable/referees.html.twig" %}                    
+        </div>
+    </div>
+</div>

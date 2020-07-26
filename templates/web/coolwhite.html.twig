@@ -134,14 +134,7 @@
 				</div>
 				<div class="card-body pt-1 col-md-9 offset-md-3">
 					<div class="row sec">
-						{% for referee in musician.referees %}
-						<div class="col-md-4 edu-sec mb-3">
-							<h6 class="ref-h6">{{referee.name}}</h6>
-							<p class="ref">{{referee.title}}</p>
-							<p class="ref">{{referee.address}}</p>
-							<p class="ref">{{referee.contact}}</p>
-						</div>
-						{% endfor %}
+						{% include "reusable/referees.html.twig" %} 
 					</div>
 				</div>
 			</div>

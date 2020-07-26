@@ -1,0 +1,28 @@
+{% set toReturn = '<span class="btn btn-outline" style="cursor: pointer;" id="url-/admin/edit/roles/role.id/false" data-toggle="modal" data-target="#editor"><i class="fa fa-pencil"></i></span>' %}
+<ul id="role-list-{{job.id}}">
+    {% for role in job.roles %}
+    <li>{{role.role}} <!-- edit --> <span class="btn btn-outline" style="cursor: pointer;" id="url-{{path('admin_edit', {'entity_name': 'roles', 'id': role.id, 'shell': 'false' })}}" data-toggle="modal" data-target="#editor"><i class="fa fa-pencil"></i></span> <!-- edit --> <!--delete-->{% include 'admin/_delete_form.html.twig' with {'lastPartUrl': "roles", 'val': role, 'instruct': "false" } %}<!--delete--></li>
+    {% else %}
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>Add roles: </strong> You can add roles here by typing the roles you played in each job <i class="fa fa-hand-o-down" aria-hidden="true"></i>.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    <li id="role{{job.id}}-plc-hld">
+        <span class="plc-hld-list" id="role-role{{job.id}}"></span>
+    </li>
+</ul>
+<form class="for-user" id="role{{job.id}}-form" style="padding-left: 30px;">
+    <div class="input-group input-group-sm mb-3">
+        <input type="text" id="roleinput-{{job.id}}" class="form-control auto-role-role{{job.id}}" name="role" placeholder="Add a role" aria-label="Add a role" aria-describedby="basic-addon2">
+        <input type="hidden" name="class" value="Role" />
+        <input type="hidden" name="extras" value="job#{{job.id}}" />
+        <input type="hidden" name="return" value="{{toReturn}}" />
+        <input type="hidden" name="texttoreplace" value="role.id" />
+        <div class="input-group-append">
+          <button id="savedetail-role{{job.id}}" class="btn btn-outline-secondary" type="button">Save</button>
+        </div>
+    </div>
+</form>

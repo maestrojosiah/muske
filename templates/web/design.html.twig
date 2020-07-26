@@ -87,7 +87,7 @@
             <div class="mt-5">
                 <ul>
                     {% for skill in musician.skills %}
-                    <li><span>{{skill.skillname}}</span></li>
+                    <li><span>{{skill.skillname}} | <strong>{{skill.levelofskill}}</strong> | {{skill.experienceofskill}}</span></li>
                     {% endfor %}                
                 </ul>
             </div>

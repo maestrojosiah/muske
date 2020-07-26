@@ -5,26 +5,28 @@
   <div class="steps-progressbar cursor-pointer">
     <ul>
       <li class="previous" id="goto-info">Info</li>
+      <li class="previous" id="goto-jobs">Jobs</li>
+      <li class="previous" id="goto-education">Education</li>
       <li class="active" id="goto-skills">Skills</li>
-      <li id="goto-education">Education</li>
-      <li id="goto-jobs">Jobs</li>
       <li id="goto-roles">Roles</li>
+      <li id="goto-projects">Projects</li>
     </ul>
   </div>
+  {% set toReturn = '<span class="btn btn-outline" style="cursor: pointer;" id="url-/admin/edit/skills/skill.id/false" data-toggle="modal" data-target="#editor"><i class="fa fa-pencil"></i></span>' %}
   <div class="register-photo">
     <div class="form-container">
       <form id="skills-form" class="underlined-inputs">
         <div class="form-row">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="form-group">
-              <legend>Skill (One skill at a time)</legend>
-              <input name="skillname" class="form-control" type="text" id="skillname" autofocus="" required="" minlength="3"><small class="form-text text-muted">Write a skill that you have like piano, guitar or choral conducting</small>
+              <legend>Skill (Add 1 skill at a time)</legend>
+              <input name="skillname" class="init form-control auto-skillname-skills" type="text" id="skillname" autofocus="" required="" minlength="3"><small class="form-text text-muted">Write a skill that you have like piano, guitar or choral conducting</small>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="form-group">
               <legend>Experience</legend>
-              <input name="experienceofskill" class="form-control" type="text" id="experience" required="" minlength="3"><small class="form-text text-muted">How many years or months have you been practicing this skill?</small>
+              <input name="experienceofskill" class="form-control auto-experienceofskill-skills" type="text" id="experience" required="" minlength="3"><small class="form-text text-muted">How many years or months have you been practicing this skill?</small>
             </div>
           </div>
           <div class="col-md-12 notify-skills">
@@ -32,9 +34,18 @@
               <div>
                 <fieldset>
                   <legend>Skill level</legend>
-                  <div class="custom-control custom-radio custom-control-inline"><input type="radio" id="customRadioInline1" class="custom-control-input" name="levelofskill" value="Beginner" checked=""><label class="custom-control-label" for="customRadioInline1">Beginner</label></div>
-                  <div class="custom-control custom-radio custom-control-inline"><input type="radio" id="customRadioInline2" class="custom-control-input" name="levelofskill" value="Intermediate"><label class="custom-control-label" for="customRadioInline2">Intermediate</label></div>
-                  <div class="custom-control custom-radio custom-control-inline"><input type="radio" id="customRadioInline3" class="custom-control-input" name="levelofskill" value="Advanced"><label class="custom-control-label" for="customRadioInline3">Advanced</label></div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline1" class="custom-control-input auto-levelofskill-skills" name="levelofskill" value="Beginner" checked="">
+                    <label class="custom-control-label" for="customRadioInline1">Beginner</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline2" class="custom-control-input auto-levelofskill-skills" name="levelofskill" value="Intermediate">
+                    <label class="custom-control-label" for="customRadioInline2">Intermediate</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline3" class="custom-control-input auto-levelofskill-skills" name="levelofskill" value="Advanced">
+                    <label class="custom-control-label" for="customRadioInline3">Advanced</label>
+                  </div>
                 </fieldset>
               </div>
               <small class="form-text text-muted">How many years or months have you been practicing this skill?</small>
@@ -42,13 +53,11 @@
           </div>
           <input type="hidden" name="class" value="Skill" />
           <input type="hidden" name="extras" value="musician" />
-          <input type="hidden" name="return" value="skillname" />
+          <input type="hidden" name="return" value='{{toReturn}}' />
+          <input type="hidden" name="texttoreplace" value="skill.id" />
 
-          <div class="col-sm-6 col-md-6">
-            <div class="form-group reg-action"><button class="btn btn-info btn-lg" id="save-skills" type="button">Save Skill</button></div>
-          </div>
-          <div class="col-sm-6 col-md-6 text-right">
-            <div class="form-group reg-action"><button class="reload-and-preview btn btn-success btn-lg" type="button" data-toggle="modal" data-target="#preview">Preview your CV (resume)</button></div>
+          <div class="col-sm-6 col-md-12">
+            <div class="form-group reg-action"><button class="btn btn-info btn-lg" id="savedetail-skills" type="button">Save Skill</button></div>
           </div>
         </div>
       </form>
@@ -57,20 +66,9 @@
   <div class="next-prev">
     <div class="container">
       <div class="row">
-        <div class="col-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-info-from-skills">Previous</a></div>
-        <div class="col-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-education-from-skills">Next</a></div>
+        <div class="col-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-education-from-skills">Previous</a></div>
+        <div class="col-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-roles-from-skills">Next</a></div>
       </div>
-    </div>
-    <div class="jumbotron text-center">
-      <h4>What you have already added:</h4>
-      <p>Here is the list of what you have already added as your skills</p>
-      <p>
-      <div id="skills-list">
-        {% for skill in fields.skills %}
-            <button class="btn btn-secondary" type="button">{{skill.skillname}}</button>
-        {% endfor %}
-      </div>
-      </p>
     </div>
   </div>
 </div>

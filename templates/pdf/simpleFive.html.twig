@@ -181,7 +181,7 @@
 			<div>
 				<div class="col-md-4"><small>{{job.startingfrom|date("M Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</small></div>
 				<div class="col-md-8">
-					<h6 class="sec-heading">{{job.jobtitle}}</h6><small>{{job.institution}}</small>
+                    <h6 class="sec-heading">{{job.jobtitle}}</h6><small>{{job.institution}}, {{job.location}}</small>
 					<ul>
 						{% for role in job.roles %}
 						<li>{{role.role}}<br></li>

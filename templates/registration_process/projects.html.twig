@@ -1,0 +1,49 @@
+<div id="projects" style="display: none;">
+    <h1 class="text-center reg-heading">Projects</h1>
+    <h3 class="text-center reg-heading-two">What projects have you done?</h3>
+    <hr>
+    <div class="steps-progressbar cursor-pointer">
+        <ul>
+            <li class="previous" id="goto-info">Info</li>
+            <li class="previous" id="goto-jobs">Jobs</li>
+            <li class="previous" id="goto-education">Education</li>
+            <li class="previous" id="goto-skills">Skills</li>
+            <li class="previous" id="goto-roles">Roles</li>
+            <li class="active" id="goto-projects">Projects</li>
+        </ul>
+    </div>
+    {% set toReturnProject = '<span class="btn btn-outline" style="cursor: pointer; position: absolute; top: 5px; right: 15px;" id="url-/admin/edit/projects/project.id/false" data-toggle="modal" data-target="#editor"><i class="fa fa-pencil"></i></span> ' %}
+    <div class="register-photo">
+        <div class="form-container col-12">
+            <form id="projects-form" class="underlined-inputs">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h4>Projects (If any)</h4>
+                        <div class="form-group"><label>Project title</label><input name="projecttitle" type="text" class="init form-control auto-projecttitle-projects" autofocus /><small class="form-text text-muted">A title of a project that you have done. </small></div>
+                        <div class="form-group notify-projects">
+                            <label>Project Description</label>
+                            <textarea name="projectdescription" style="height: 100px!important;font-size:14px!important" class="form-control form-control-lg auto-projectdescription-projects"></textarea>
+                            <small class="form-text text-muted">A description of the project. </small>
+                        </div>
+                        <input type="hidden" name="class" value="Project" />
+                        <input type="hidden" name="extras" value="musician" />                            
+                        <input type="hidden" name="return" value='{{toReturnProject}}' />
+                        <input type="hidden" name="texttoreplace" value="project.id" />
+                    </div>
+                    <div class="col-sm-6 col-md-12">
+                        <div class="form-group reg-action"><button class="btn btn-info btn-lg" id="savedetail-projects" type="button">Save Project</button></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="next-prev">
+        <div class="container">
+            <div class="row">
+                <div class="col-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-roles-from-projects">Previous</a></div>
+                <div class="col-6"><a class="btn btn-success btn-block btn-lg" role="button" id="complete" href="{{ path('musician_profile')}}">Finish</a></div>
+            </div>
+        </div>
+    </div>
+</div>

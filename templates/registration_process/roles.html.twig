@@ -5,12 +5,14 @@
     <div class="steps-progressbar cursor-pointer">
         <ul>
             <li class="previous" id="goto-info">Info</li>
-            <li class="previous" id="goto-skills">Skills</li>
-            <li class="previous" id="goto-education">Education</li>
             <li class="previous" id="goto-jobs">Jobs</li>
+            <li class="previous" id="goto-education">Education</li>
+            <li class="previous" id="goto-skills">Skills</li>
             <li class="active" id="goto-roles">Roles</li>
+            <li id="goto-projects">Projects</li>
         </ul>
     </div>
+    {% set toReturnRole = '<span class="btn btn-outline" style="cursor: pointer;" id="url-/admin/edit/myJobs/role.id/false" data-toggle="modal" data-target="#editor"><i class="fa fa-pencil"></i></span> ' %}
     <div class="register-photo">
         <div class="form-container col-12">
             <form id="roles-form" class="underlined-inputs">
@@ -19,36 +21,15 @@
                         <h4>Add a job that you can do</h4>
                         <div class="form-group">
                             <label>Job Role</label>
-                            <input name="jobtitle" type="text" class="form-control" autofocus /><small class="form-text text-muted">Add a role that you can do. Examples include Piano instructor, Choir Trainer, Composer, Saxophone Teacher etc</small>
+                            <input name="jobtitle" type="text" id="submit-roles" class="init form-control auto-jobtitle-roles" autofocus /><small class="form-text text-muted">Add a role that you can do. Examples include Piano instructor, Choir Trainer, Composer, Saxophone Teacher etc</small>
                         </div>
                     </div>
                     <input type="hidden" name="class" value="JobToBeOffered" />
                     <input type="hidden" name="extras" value="musician" />
-                    <input type="hidden" name="return" value="jobtitle" />
-                    <div class="col-sm-6 col-md-6">
-                        <div class="form-group reg-action"><button class="btn btn-info btn-lg" id="save-roles" type="button">Save Role</button></div>
-                    </div>
-                </div>
-            </form>
-            <form id="projects-form" class="underlined-inputs">
-                <div class="form-row">
-                    <div class="col-md-12">
-                        <h4>Projects (If any)</h4>
-                        <div class="form-group"><label>Project title</label><input name="projecttitle" type="text" class="form-control" autofocus /><small class="form-text text-muted">A title of a project that you have done. </small></div>
-                        <div class="form-group notify-projects">
-                            <label>Project Description</label>
-                            <textarea name="projectdescription" style="height: 100px!important;font-size:14px!important" class="form-control form-control-lg"></textarea>
-                            <small class="form-text text-muted">A description of the project. </small>
-                        </div>
-                        <input type="hidden" name="class" value="Project" />
-                        <input type="hidden" name="extras" value="musician" />                            
-                        <input type="hidden" name="return" value="projecttitle" />
-                    </div>
-                    <div class="col-sm-6 col-md-6">
-                        <div class="form-group reg-action"><button class="btn btn-info btn-lg" id="save-projects" type="button">Save Project</button></div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 text-right">
-                        <div class="form-group reg-action"><button class="reload-and-preview btn btn-success btn-lg" type="button" data-toggle="modal" data-target="#preview">Preview your CV (resume)</button></div>
+                    <input type="hidden" name="return" value="{{toReturnRole}}" />
+                    <input type="hidden" name="texttoreplace" value="role.id" />
+                    <div class="col-sm-6 col-md-12">
+                        <div class="form-group reg-action"><button class="btn btn-info btn-lg" id="savedetail-roles" type="button">Save Role</button></div>
                     </div>
                 </div>
             </form>
@@ -58,30 +39,9 @@
     <div class="next-prev">
         <div class="container">
             <div class="row">
-                <div class="col-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-jobs-from-roles">Previous</a></div>
-                <div class="col-6"><a class="btn btn-success btn-block btn-lg" role="button" href="{{ path('musician_profile')}}">Finish</a></div>
+                <div class="col-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-skills-from-roles">Previous</a></div>
+                <div class="col-6"><a class="btn btn-info btn-block btn-lg" role="button" id="to-projects-from-roles">Next</a></div>
             </div>
-        </div>
-        <div class="jumbotron text-center">
-            <h4>What you have already added:</h4>
-            <p>Here is the list of what you have already added as job roles you can do:</p>
-            <p>
-                <div id="roles-list">
-                    {% for role in fields.roles %}
-                        <button class="btn btn-secondary" type="button">{{role.jobtitle}}</button>
-                    {% endfor %}
-                </div>
-            </p>
-            <p>Here is the list of what you have already added as projects you've done:</p>
-            <p>
-                <div id="projects-list">
-                    {% if app.user.projects|length > 0 %}
-                        {% for project in app.user.projects %}
-                            <button class="btn btn-secondary" type="button">{{project.projecttitle}}</button>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-            </p>
         </div>
     </div>
 </div>

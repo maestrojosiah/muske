@@ -222,7 +222,7 @@ class UpdateController extends AbstractController
                     //do nothing
                 } else {
                     if($this->activationManager->sendActivationEmail($email, $username)){
-                        $this->addFlash('success', "Account created successfully! Please check your email for an account activation link. (Check spam folder if you can't find it) ");
+                        // $this->addFlash('success', "Account created successfully! Please check your email for an account activation link. (Check spam folder if you can't find it) ");
                     }    
                 }
     

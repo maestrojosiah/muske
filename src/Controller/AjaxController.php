@@ -322,7 +322,7 @@ class AjaxController extends AbstractController
     /**
      * @Route("/musician/password/new/{encoded_username}", name="musician_new_password", methods={"GET", "POST"})
      */
-    public function newPassword(Request $request, UserPasswordEncoderInterface $encoder, MUsicianRepository $userRepository, $encoded_username)
+    public function newPassword(Request $request, UserPasswordEncoderInterface $encoder, MusicianRepository $userRepository, $encoded_username)
     {
         $this->seoPage->setTitle("Change password");
 

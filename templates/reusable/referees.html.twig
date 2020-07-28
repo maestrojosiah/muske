@@ -2,14 +2,7 @@
     <div class="row" id="referees" style="color: #777 !important;">
 
         <div class="for-user col-md-12 text-left">
-            {% if musician.referees|length < 1 %}
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                <strong>Add Referees: </strong> Click on the placeholders below to add Referees. Don't forget to save. This section will appear as <strong>"Referees available on request"</strong> on the resume if not edited <i class="fa fa-hand-o-down" aria-hidden="true"></i>.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            {% endif %}
+            <p>Click to edit.</p>
         </div>
         {% set counter = 0 %}
         {% for referee in musician.referees %}
@@ -34,7 +27,7 @@
             <form class="referee-form" id="referee-form-1">            
                 <h5><input class="for-user" name="name" type="text" value="Mr/Mrs Smith" /></h5>
                 <h6><input class="for-user" name="title" type="text" value="Job title" /></h6>
-                <h6><input class="for-user" name="address" type="text" value="Institution" /></h6>
+                <h6><input class="for-user" name="address" type="text" value="Company / Address" /></h6>
                 <h6><input class="for-user" name="contact" type="text" value="0712345678" /></h6>
                 <input type="hidden" name="class" value="referee" />
                 <input type="hidden" name="extras" value="musician" /`>
@@ -45,7 +38,7 @@
             <form class="referee-form" id="referee-form-2">            
                 <h5><input class="for-user" name="name" type="text" value="Mr/Mrs Smith" /></h5>
                 <h6><input class="for-user" name="title" type="text" value="Job title" /></h6>
-                <h6><input class="for-user" name="address" type="text" value="Institution" /></h6>
+                <h6><input class="for-user" name="address" type="text" value="Company / Address" /></h6>
                 <h6><input class="for-user" name="contact" type="text" value="0712345678" /></h6>
                 <input type="hidden" name="class" value="referee" />
                 <input type="hidden" name="extras" value="musician" /`>
@@ -56,7 +49,7 @@
             <form class="referee-form" id="referee-form-3">            
                 <h5><input class="for-user" name="name" type="text" value="Mr/Mrs Smith" /></h5>
                 <h6><input class="for-user" name="title" type="text" value="Job title" /></h6>
-                <h6><input class="for-user" name="address" type="text" value="Institution" /></h6>
+                <h6><input class="for-user" name="address" type="text" value="Company / Address" /></h6>
                 <h6><input class="for-user" name="contact" type="text" value="0712345678" /></h6>
                 <input type="hidden" name="class" value="referee" />
                 <input type="hidden" name="extras" value="musician" /`>
@@ -72,7 +65,7 @@
                 <form class="referee-form" id="referee-form-{{i}}">            
                     <h5><input class="for-user" name="name" type="text" value="Mr/Mrs Smith" /></h5>
                     <h6><input class="for-user" name="title" type="text" value="Job title" /></h6>
-                    <h6><input class="for-user" name="address" type="text" value="Institution" /></h6>
+                    <h6><input class="for-user" name="address" type="text" value="Company / Address" /></h6>
                     <h6><input class="for-user" name="contact" type="text" value="0712345678" /></h6>
                     <input type="hidden" name="class" value="referee" />
                     <input type="hidden" name="extras" value="musician" /`>

@@ -27,6 +27,7 @@
         <script src="{{ asset('NiceAdmin/js/bootstrap.min.js' ) }}"></script>
         <!-- nice scroll -->
         <script src="{{ asset('NiceAdmin/js/jquery.scrollTo.min.js' ) }}"></script>
+        <script src="{{ asset('NiceAdmin/js/jquery.nicescroll.js' ) }}" type="text/javascript"></script>
         <!-- charts scripts -->
         <script src="{{ asset('NiceAdmin/js/jquery.rateit.min.js' ) }}"></script>
         <!--custome script for all page-->
@@ -35,7 +36,7 @@
 
         {% block javascripts %}{% endblock %}
 
-        {# {% include "reusable/phplive.html.twig" %}        #}
+        {% include "reusable/phplive.html.twig" %}       
 
     </body>
 </html>

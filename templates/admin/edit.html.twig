@@ -5,17 +5,15 @@
 {% block body %}
 
   <!-- container section start -->
-  {% if shell == "true" %}
-  <section id="container" class="">
+<section id="container" class="">
 
-    
+
     {% include "admin/header.html.twig" %}
     {% include "admin/aside.html.twig" %}
-    
     <section id="main-content">
       <section class="wrapper">
         <!--overview start-->
-        {% endif %}
+       
         <div class="row">
             <div class="col-lg-6">
                 <section class="panel">
@@ -23,13 +21,6 @@
                     <h3>Edit {{usable_entity_name}}</h3>
                     </header>
                     <div class="panel-body">
-                        
-                    {% for message in app.flashes('success') %}
-                    <div class="alert alert-success">
-                        {{ message }}
-                    </div>
-                    {% endfor %}
-        
                     {{ form_start(form) }}
                     {% for child in form.children|keys %}
                     {% if loop.index == form.children|keys|length %}
@@ -37,38 +28,20 @@
                         <div class="form-group">
                             {{form_errors(attribute(form.children,child))}}
                             {{form_label(attribute(form.children,child))}}
-                            {{form_widget(attribute(form.children,child), {'attr': {'class': 'form-control live-update'}})}}
+                            {{form_widget(attribute(form.children,child), {'attr': {'class': 'form-control'}})}}
                             {# type = "{{attribute(form.children,child).vars.block_prefixes.1}}" #}
                         </div>
                     {% endif %}
                     {% endfor %}  
                     {{form_rest(form)}}  
-                    <button id="update-info" class="btn btn-primary">{{ 'Update'|default('Save') }}</button>
+                    <button class="btn btn-primary">{{ 'Update'|default('Save') }}</button>
                     {{ form_end(form) }}
-                    
+
                     </div>
                 </section>
             </div>
         </div>
-        {% if shell == "true" %}
-
       </section>
 
 </section>
-{% endif %}
-{% endblock %}
-{% block javascripts %}
-<script>
-$("body").on("click", '#update-info', function(){
-    // alert($(this).val());
-    // /admin/edit/jobs/96/false
-    
-    var page_url = '{{ app.request.requesturi }}';
-    var splitted = page_url.split('/'); 
-	var div = splitted[3];
-
-    $('#test', parent.document).text($(this).val());
-})
-    
-</script>
 {% endblock %}

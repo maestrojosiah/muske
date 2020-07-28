@@ -1,5 +1,5 @@
-<form class="btnxsm" style="padding:0px!important; display: inline-block;" method="post" action="{{ path('admin_delete', {'entity_name': lastPartUrl, 'id': val.id, 'redirect': instruct}) }}" onsubmit="return confirm('Are you sure you want to delete {{val}}?');">
+<form class="btnxsm" style="padding:0px!important" method="post" action="{{ path('admin_delete', {'entity_name': lastPartUrl, 'id': val.id}) }}" onsubmit="return confirm('Are you sure you want to delete {{val}}?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ val.id) }}">
-    <button class="btn btn-outline btn-danger"><i class="fa fa-trash icon_trash" class=""></i></button>
+    <button class="btn btn-danger"><i class="icon_trash"></i></button>
 </form>

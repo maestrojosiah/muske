@@ -84,9 +84,9 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{entity_name}/{id}/{shell}", name="admin_edit", methods={"GET","POST"})
+     * @Route("/edit/{entity_name}/{id}", name="admin_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, $entity_name, $id, $shell = "true"): Response
+    public function edit(Request $request, $entity_name, $id): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $usable_entity_name = rtrim(ucfirst($entity_name), "s");
@@ -134,12 +134,8 @@ class AdminController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            if($shell == "true") {
-                return $this->redirectToRoute('musician_admin_index', ['entity' => $entity_name]);
-            } else {
-                $this->addFlash('success', 'Successfully updated');
-            }
-            
+
+            return $this->redirectToRoute('musician_admin_index', ['entity' => $entity_name]);
         }
 
         $sidebar_menu = [ 'Job Experience'=>['jobs', 'roles'], 'Education'=>['education', 'specialties'], 'skills', 'projects', 'myJobs', 'photos' ];
@@ -150,14 +146,13 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
             'usable_entity_name' => $usable_entity_name,
             'sidebar_menu' => $sidebar_menu,
-            'shell' => $shell,
         ]);
     }
 
     /**
-     * @Route("/delete/{entity_name}/{id}/{redirect}", name="admin_delete", methods={"DELETE"})
+     * @Route("/delete/{entity_name}/{id}", name="admin_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, $entity_name, $id, $redirect = "true"): Response
+    public function delete(Request $request, $entity_name, $id): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         switch ($entity_name) {
@@ -200,14 +195,8 @@ class AdminController extends AbstractController
             $entityManager->flush();
 
         }
-        if($redirect == "true"){
-            return $this->redirectToRoute('musician_admin_index', ['entity' => $entity_name]);
-        } else {
-            $scroll = "scroll-$entity_name";
-            $this->addFlash('success_task_hash', $scroll);
-            return $this->redirectToRoute('musician_new', ['s-t-h' => $scroll]);
-        }
-        
+
+        return $this->redirectToRoute('musician_admin_index', ['entity' => $entity_name]);
     }
 
 

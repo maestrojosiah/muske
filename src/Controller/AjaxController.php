@@ -40,9 +40,6 @@ use Twig\Environment;
 use App\Service\OrganizeThings; 
 use App\Service\SendSms; 
 use Sonata\SeoBundle\Seo\SeoPageInterface;
-use Doctrine\Common\Annotations\AnnotationReader;
-use App\Repository\JobRepository;
-use App\Repository\EducationRepository;
 
 class AjaxController extends AbstractController
 {
@@ -50,17 +47,13 @@ class AjaxController extends AbstractController
 	private $twig;
     private $organizeThings;
     private $seoPage;
-    private $jobRepo;
-    private $educationRepo;
-
-	public function __construct(JobRepository $jobRepository, EducationRepository $educationRepository, SeoPageInterface $seoPage, Pdf $pdf, Environment $twig, OrganizeThings $organizeThings)
+	
+	public function __construct(SeoPageInterface $seoPage, Pdf $pdf, Environment $twig, OrganizeThings $organizeThings)
 	{
         $this->pdf = $pdf;		
         $this->twig = $twig;		
         $this->organizeThings = $organizeThings;		
         $this->seoPage = $seoPage;		
-        $this->jobRepo = $jobRepository;
-        $this->educationRepo = $educationRepository;
 	}
 
     public function human_filesize($bytes, $decimals = 2) {
@@ -322,7 +315,7 @@ class AjaxController extends AbstractController
     /**
      * @Route("/musician/password/new/{encoded_username}", name="musician_new_password", methods={"GET", "POST"})
      */
-    public function newPassword(Request $request, UserPasswordEncoderInterface $encoder, MusicianRepository $userRepository, $encoded_username)
+    public function newPassword(Request $request, UserPasswordEncoderInterface $encoder, MUsicianRepository $userRepository, $encoded_username)
     {
         $this->seoPage->setTitle("Change password");
 
@@ -602,179 +595,5 @@ class AjaxController extends AbstractController
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT,"$file.pdf");
         return $response;
     }    
-
-    /**
-     * @Route("/save-entity-cv", name="save_entity_cv")
-     */
-    public function save( $myClass = "", $array_data = [], Request $request )
-    {
-        if(null !== $request->request->get('class') || $myClass != null){
-            
-            // class from form
-            $classFromForm = $myClass == "" ? $request->request->get('class') : $myClass ;
-
-            // declarations
-            $entityManager = $this->getDoctrine()->getManager();
-            
-            //check if classname contains a hyphen and id, use existing entity, else, new
-            if(strpos($classFromForm, '-')){
-                $class_name = explode('-', $classFromForm)[0]; // get the class name
-                $id = explode('-', $classFromForm)[1]; // get the second part of the string - id
-                $class = "App:".$class_name; // make a string of the entity
-                $entity = $entityManager->getRepository($class)->find($id); // get the entity by id
-            } else { // if new entity
-                $class = "App\Entity\\".$classFromForm; // make a string of the entity
-                $entity = new $class(); // instantiate
-            }            
-
-            // for checking entity attributes
-            $docReader = new AnnotationReader();
-            $reflect = new \ReflectionClass($entity);
-                   
-            // for testing. delete when done
-            $data = [];
-            $my_data_array = empty($array_data) ? $request->request->all() : $array_data;
-
-            // go through all the request data attributes
-            foreach ($my_data_array as $key => $item ) {
-                // var_dump($key);
-
-                // see if there is a property by the name $key
-                if (!$reflect->hasProperty($key)) {
-                    // var_dump('the entity does not have such a property called '.$key);
-                } else {
-                    
-                    // if the property name exists, assign it to propInfos variable
-                    $propInfos = $docReader->getPropertyAnnotations($reflect->getProperty($key));
-
-                    // capitalize the first letter of the $key so as to concatenate it to "set".
-                    $key = $this->dashesToCamelCase($key);
-                    $key = ucfirst($this->sanitizeInput($key));
-
-                    // sanitize the item to be saved
-                    $item = $this->sanitizeInput($item);
-
-                    // create a string method eg. setFirstname.
-                    $setter = "set".$key;
-                    
-                    // check if the property to be saved is a date
-                    if ( $propInfos[0]->type === 'date' ) {
-
-                        // if it is a date then do the necessary
-                        $date = new \DateTime("$item");
-
-                        // set it using the setter created above setFirstname("John")
-                        $entity->$setter($date);
-
-                    } else {
-
-                        // if it is not a date, just set it : setFirstname("John")
-                        $entity->$setter($item);
-
-                    } 
-                }
-                
-                $data[$key] = $item;
-                
-            }
-
-            // in case there were extras..
-            $extras = isset($data['extras']) ? $data['extras'] : null;
-            if($extras != null) {
-                if(strpos($extras, '-')){ // if more than one extra
-                    // explode them using '-'
-                    $all_extras = explode('-',$extras);
-                } else {
-                    $all_extras = [$extras];
-                }
-                
-
-                // iterate through the extras array 
-                foreach ($all_extras as $extra ) {
-
-                    if(strpos($extra, '#')){
-                        $arrSplit = explode('#', $extra);
-                        $extra = $arrSplit[0];
-                        $id = $arrSplit[1]; 
-                    } else { 
-                        $id = "";
-                    }
-        
-                    // the provide_ function that are manually created for special cases
-                    $function = "provide_$extra";
-                    $key = ucfirst($this->sanitizeInput($extra));
-                    $item = $this->{$function}($id);
-
-                    // set the values
-                    $setter = "set".$key;
-                    $data[$key] = $item;
-                    $entity->$setter($item);
-
-                }
-            }
-
-            // persist and flush
-            $entityManager->persist($entity);
-            $entityManager->flush();
-
-            if(null != $request->request->get('return')) {
-                $toReturn = str_replace($request->request->get('texttoreplace'),$entity->getId(),$request->request->get('return'));
-                if(strtolower($classFromForm) == "job" && $entity){
-                    $musician = $this->getUser();
-
-                    $em = $this->getDoctrine()->getManager();
-                    $repoJobs = $em->getRepository(Job::class)->findBy(
-                        ['musician' => $musician],
-                        ['id' => 'ASC']
-                    );
-                    $totalJobs = count($repoJobs);
-                    if($totalJobs == 1){
-                        $toReturn .= '<div class="alert alert-info alert-dismissible fade show" role="alert">
-                        <strong>Add roles: </strong> You can add roles here by typing the roles you played in each job. <i class="fa fa-hand-o-up" aria-hidden="true"></i>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                       </div>';
-                    }
-                }
-            } else {
-                $toReturn = "";
-            }
-            
-            // return html
-            return new JsonResponse($toReturn);
-
-        } 
-
-    }
-
-    public function provide_musician($id){
-        $musician = $this->getUser();
-        return $musician;
-    }
-
-    public function provide_job($id){
-        $job = $this->jobRepo->find($id);
-        return $job;
-    }
-
-    public function provide_education($id){
-        $edu = $this->educationRepo->find($id);
-        return $edu;
-    }
-
-    function dashesToCamelCase($string, $capitalizeFirstCharacter = false) 
-    {
-    
-        $str = str_replace('_', '', ucwords($string, '_'));
-    
-        if (!$capitalizeFirstCharacter) {
-            $str = lcfirst($str);
-        }
-    
-        return $str;
-    }
-
-
 
 }

@@ -45,9 +45,9 @@ class MusicianController extends AbstractController
     /**
      * @Route("/musician/details", name="musician_new", methods={"GET","POST"})
      */
-    public function new(Request $request, OrganizeThings $organizeThings): Response
+    public function new(Request $request): Response
     {
-        $this->seoPage->setTitle("MuSKe Musician Details");
+        $this->seoPage->setTitle("MuSKe registration");
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         //this is for displaying the page and redirecting if all details are intact
@@ -59,50 +59,17 @@ class MusicianController extends AbstractController
         $education = $musician->getEducation()[0];
         $jobs = $musician->getJobs()[0];
         $roles = $musician->getJobstobeoffered()[0];
-        $pdf_template = $musician->getPdfTheme() ? $musician->getPdfTheme() : 'simpleOne.html.twig' ;
-        $jobs = $organizeThings->organizedJobsAccordingToSettings($musician);
-        $educ = $organizeThings->organizedEducationAccordingToSettings($musician);
-        $photourl = "/uploads/photos/thumbs/".$musician->getPhoto().".png";
-        $placeholder = "/img/headshot.jpg";
-        $thumbnailurl = strlen($musician->getPhoto()) > 1 ?  $photourl : $placeholder;
 
-        if($pdf_template == "textresume.html.twig" ){
-            $col = "col-md-8 offset-md-4";
-        } else {
-            $col = "col-md-9";
-        }
-
-        switch ($pdf_template) {
-            case 'textresume.html.twig':
-                $col = "col-md-8 offset-md-4";
-                $style = "";
-                break;
-            case 'sleek.html.twig':
-                $col = "col-md-8 offset-md-4";
-                $style = "margin-top: -30px";
-                break;
-            case 'simpleFive.html.twig':
-                $col = "col-md-8 offset-md-4";
-                $style = "";
-                break;
-            case 'simpleFour.html.twig':
-                $col = "col-md-8 offset-md-4";
-                $style = "";
-                break;
-            default:
-                $col = "col-md-9";
-                $style = "";
-                break;
-        }
-
+        $fields = [
+                    "skills" => $musician->getSkills(),
+                    "education" => $musician->getEducation(),
+                    "jobs" => $musician->getJobs(),
+                    "roles" => $musician->getJobstobeoffered()
+                ];
+        
         return $this->render('musician/new.html.twig', [
             'musician' => $musician,
-            'pdf_template' => $pdf_template,
-            'jobs' => $jobs,
-            'educ' => $educ,
-            'col' => $col,
-            'style' => $style,
-            'thumbnailurl' => $thumbnailurl,
+            'fields' => $fields,
         ]);
     }
 

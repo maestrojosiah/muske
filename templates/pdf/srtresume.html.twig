@@ -250,7 +250,7 @@
 					{% for job in jobs %}
 					<div class="row sec">
 						<div class="col-md-9">
-							<h5 class="sec-heading">{{job.jobtitle}}<br></h5><small><em>{{job.institution}}, {{job.location}}</em><br></small></div>
+							<h5 class="sec-heading">{{job.jobtitle}}<br></h5><small><em>{{job.institution}}</em><br></small></div>
 						<div class="col-md-3 text-right"><small>{{job.startingfrom|date("M Y")}} – {{job.currentornot == 'current' ? 'Present' : job.endedin|date("M Y") }}</small></div>
 						<div class="col-md-9">
 							<ul class="sec-list">

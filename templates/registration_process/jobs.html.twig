@@ -1,72 +1,52 @@
-<div id="jobs" style="display: none; height: 100%;">
+<div id="jobs" style="display: none;">
     <h1 class="text-center reg-heading">Experience</h1>
     <h3 class="text-center reg-heading-two">Your job history, save one at a time</h3>
     <hr>
     <div class="steps-progressbar cursor-pointer">
         <ul>
             <li class="previous" id="goto-info">Info</li>
+            <li class="previous" id="goto-skills">Skills</li>
+            <li class="previous" id="goto-education">Education</li>
             <li class="active" id="goto-jobs">Jobs</li>
-            <li id="goto-education">Education</li>
-            <li id="goto-skills">Skills</li>
             <li id="goto-roles">Roles</li>
-            <li id="goto-projects">Projects</li>
         </ul>
     </div>
-    {% set span = '<span class=&quot;btn btn-outline&quot; style=&quot;cursor: pointer;&quot; id=&quot;url-/admin/edit/roles/role.id/false&quot; data-toggle=&quot;modal&quot; data-target=&quot;#editor&quot;><i class=&quot; fa fa-pencil &quot;></i></span>' %}
-    {% set toReturn = '<div class="' ~ col ~ '" style="' ~ style ~ '">' ~
-        '<ul id="role-list-job.id">' ~
-        '<li id="rolejob.id-plc-hld">' ~
-            '<span class="plc-hld-list" id="role-rolejob.id"></span>' ~
-        '</li></ul>' ~
-        '<form class="for-user" id="rolejob.id-form" style="padding-left: 30px;">' ~
-            '<div class="input-group input-group-sm mb-3">' ~
-                '<input type="text" id="roleinput-job.id" class="form-control auto-role-rolejob.id" name="role" placeholder="Add a role" aria-label="Add a role" aria-describedby="basic-addon2">' ~
-                '<input type="hidden" name="class" value="Role" />' ~
-                '<input type="hidden" name="extras" value="job#job.id" />' ~
-                '<input type="hidden" name="return" value="' ~ span ~ '" />' ~
-                '<input type="hidden" name="texttoreplace" value="role.id" />' ~
-                '<div class="input-group-append">' ~
-                '<button id="savedetail-rolejob.id" class="btn btn-outline-secondary" type="button">Save</button>' ~
-                '</div>' ~
-            '</div>' ~
-        '</form>' ~
-      '</div>' ~
-      '<!-- edit --> <span class="btn btn-outline" style="cursor: pointer; position: absolute; top: 5px; right: 5px;" id="url-/admin/edit/jobs/job.id/false" data-toggle="modal" data-target="#editor"><i class="fa fa-pencil"></i></span> <!-- edit -->'
-      %}
     <div class="register-photo">
         <div class="form-container">
             <form id="jobs-form" class="underlined-inputs">
                 <div class="form-row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <legend>Job title</legend><input name="jobtitle" class="init form-control auto-jobtitle-jobs" type="text" id="job_title" required="" minlength="5" inputmode="email"><small class="form-text text-muted">What is the title of this job that you did?</small></div>
+                            <legend>Institution</legend><input name="institution" class="form-control" type="text" id="institution_job" autofocus="" required="" minlength="5"><small class="form-text text-muted">The name of person or institution where you did this job</small></div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <legend>Institution</legend><input name="institution" class="form-control auto-institution-jobs" type="text" id="institution_job" autofocus="" required="" minlength="5"><small class="form-text text-muted">The name of person or institution where you did this job</small></div>
+                            <legend>Job title</legend><input name="jobtitle" class="form-control" type="text" id="job_title" required="" minlength="5" inputmode="email"><small class="form-text text-muted">What is the title of this job that you did?</small></div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <legend>Location</legend><input name="location" class="form-control auto-location-jobs" type="text" id="location_job" required=""><small class="form-text text-muted">Where was / is it that you did / do this job?</small></div>
+                            <legend>Location</legend><input name="location" class="form-control" type="text" id="location_job" required=""><small class="form-text text-muted">Where was / is it that you did / do this job?</small></div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <legend>Current job?</legend><select name="currentornot" class="form-control auto-currentornot-jobs" id="current"><optgroup label="- Select one -"><option value="not_current" selected="">No</option><option value="current">Yes</option></optgroup></select><small class="form-text text-muted">Are you currently doing this job?</small></div>
+                            <legend>Current job?</legend><select name="currentornot" class="form-control" id="current"><optgroup label="- Select one -"><option value="not_current" selected="">No</option><option value="current">Yes</option></optgroup></select><small class="form-text text-muted">Are you currently doing this job?</small></div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <legend>When did you start?</legend><input name="startingfrom" class="form-control auto-startingfrom-jobs" id="from_year_job" required="" minlength="2"><small class="form-text text-muted">The month and year that you started the job. eg, 31-12-1996</small></div>
+                            <legend>When did you start?</legend><input name="startingfrom" class="form-control" id="from_year_job" required="" minlength="2"><small class="form-text text-muted">The month and year that you started the job. eg, 31-12-1996</small></div>
                     </div>
-                    <div class="col-md-12 notify-jobs">
+                    <div class="col-md-6 notify-jobs">
                         <div class="form-group" id="condition">
-                            <legend>When did you complete?</legend><input name="endedin" class="form-control auto-endedin-jobs" id="to_year_job" required="" minlength="2"><small class="form-text text-muted">The month and year that you completed the job. eg, 31-12-1996</small></div>
+                            <legend>When did you complete?</legend><input name="endedin" class="form-control" id="to_year_job" required="" minlength="2"><small class="form-text text-muted">The month and year that you completed the job. eg, 31-12-1996</small></div>
                     </div>
                     <input type="hidden" name="class" value="Job" />
                     <input type="hidden" name="extras" value="musician" />
-                    <input type="hidden" name="return" value="{{toReturn}}" />
-                    <input type="hidden" name="texttoreplace" value="job.id" />
-                    <div class="col-sm-6 col-md-12">
-                        <div class="form-group reg-action"><button class="btn btn-info btn-lg" id="savedetail-jobs" type="button">Save Job Experience</button></div>
+                    <input type="hidden" name="return" value="jobtitle" />
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group reg-action"><button class="btn btn-info btn-lg" id="save-jobs" type="button">Save Job Experience</button></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 text-right">
+                        <div class="reload-and-preview form-group reg-action"><button class="btn btn-success btn-lg" type="button" data-toggle="modal" data-target="#preview">Preview CV (resume)</button></div>
                     </div>
                 </div>
             </form>
@@ -75,9 +55,20 @@
     <div class="next-prev">
         <div class="container">
             <div class="row">
-                <div class="col-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-info-from-jobs">Previous</a></div>
-                <div class="col-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-education-from-jobs">Next</a></div>
+                <div class="col-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-education-from-jobs">Previous</a></div>
+                <div class="col-6"><a class="btn btn-info btn-block btn-lg" type="button" id="to-roles-from-jobs">Next</a></div>
             </div>
         </div>
+    </div>
+    <div class="jumbotron text-center">
+        <h4>What you have already added:</h4>
+        <p>Here is the list of what you have already added as your job background</p>
+        <p>
+            <div id="jobs-list">
+                {% for job in fields.jobs %}
+                    <button class="btn btn-secondary" type="button">{{job.institution}}</button>
+                {% endfor %}
+            </div>
+        </p>
     </div>
 </div>

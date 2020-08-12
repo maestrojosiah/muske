@@ -18,15 +18,6 @@ use App\Updates\CommentReplyMailer;
  */
 class ReplyController extends AbstractController
 {
-    /**
-     * @Route("/", name="reply_index", methods={"GET"})
-     */
-    public function index(ReplyRepository $replyRepository): Response
-    {
-        return $this->render('blog/reply/index.html.twig', [
-            'replies' => $replyRepository->findAll(),
-        ]);
-    }
 
     /**
      * @Route("/new", name="reply_new", methods={"GET","POST"})

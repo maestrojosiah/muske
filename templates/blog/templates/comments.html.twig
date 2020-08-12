@@ -214,7 +214,7 @@
 		var replier_name = $("#replier-name-"+id).val();              
 		var replier_email = $("#replier-email-"+id).val();
         
-        if(comment.length && commenter_name.length && commenter_email.length){
+        if(reply.length && replier_name.length && replier_email.length){
 
 			$.ajax({
 				url:'{{ (path('reply_new')) }}',

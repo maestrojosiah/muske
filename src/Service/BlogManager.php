@@ -62,7 +62,8 @@ class BlogManager extends AbstractController
                 case 'Post':
                     $form = $this->createForm(PostType::class, $entity, ['with_video' => $array['with_video']]);
                     break;
-                case 'Comment':
+                case 'Com
+                ment':
                     $form = $this->createForm(CommentType::class, $entity);
                     break;
                 case 'Reply':
@@ -89,7 +90,7 @@ class BlogManager extends AbstractController
                         $image = false;
                     }
                     if($image == true) {
-                        //delete the current phowo if available
+                        //delete the current photo if available
                         if($entity->getImage() != null ) {
                             $current_image_path = $this->getParameter('blog_directory')."/".$entity->getImage();
                             $current_image_thumb_path = $this->getParameter('blog_directory')."/thumbs/".$entity->getImage();

@@ -9,14 +9,19 @@
 			
 			{% if '.jpeg' in post.image %}
 				{% set myimage = "https://muske.co.ke/uploads/blog/" ~ post.image %}
+				{% set type = "" %}
 			{% elseif '.jpg' in post.image %} 
 				{% set myimage = "https://muske.co.ke/uploads/blog/" ~ post.image %}
+				{% set type = "" %}
 			{% elseif '.png' in post.image %}
 				{% set myimage = "https://muske.co.ke/uploads/blog/" ~ post.image %}
+				{% set type = "" %}
 			{% elseif 'youtu.be' in post.image %}
 				{% set myimage = "https://img.youtube.com/vi/" ~ post.image|slice(-11, 11) ~ "/0.jpg" %}
+				{% set type = " [Video]" %}
 			{% elseif 'youtube.com' in post.image %}
 				{% set myimage = "https://img.youtube.com/vi/" ~ post.image|slice(-11, 11) ~ "/0.jpg" %}
+				{% set type = " [Video]" %}
 			{% endif %}
 				
 				<div class="item mb-5">
@@ -28,7 +33,7 @@
 							{{myimage}}
 						{% endif %}" alt="{{post.title}}">
 					    <div class="media-body">
-						    <h3 class="title mb-1"><a href="{{path('post_show', {'id': post.id, 'title': post.getUrlTitle })}}">{{post.title}}</a></h3>
+						    <h3 class="title mb-1"><a href="{{path('post_show', {'id': post.id, 'title': post.getUrlTitle })}}">{{post.title}}</a>{{type}}</h3>
 						    <div class="meta mb-1"><span class="date">{{post.submitted|date("F jS \\a\\t g:ia")}}</span><span class="time">{{totalreadingtime}} read</span><span class="comment"><a href="#">{{post.comments|length}} comments</a></span></div>
 						    <div class="intro">{{post.content|slice(0, 219)|raw}}...</div>
 						    <a class="more-link" href="{{path('post_show', {'id': post.id, 'title': post.getUrlTitle })}}">Read more &rarr;</a>

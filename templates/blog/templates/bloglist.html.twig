@@ -6,14 +6,26 @@
 			{% if reading_time == 1 %}{% set timer = 'min' %}{% else %}
 				{% set timer = 'mins' %}{% endif %}
 			{% set totalreadingtime = reading_time ~ ' ' ~ timer %}
-
+			
+			{% if '.jpeg' in post.image %}
+				{% set myimage = "https://muske.co.ke/uploads/blog/" ~ post.image %}
+			{% elseif '.jpg' in post.image %} 
+				{% set myimage = "https://muske.co.ke/uploads/blog/" ~ post.image %}
+			{% elseif '.png' in post.image %}
+				{% set myimage = "https://muske.co.ke/uploads/blog/" ~ post.image %}
+			{% elseif 'youtu.be' in post.image %}
+				{% set myimage = "https://img.youtube.com/vi/" ~ post.image|slice(-11, 11) ~ "/0.jpg" %}
+			{% elseif 'youtube.com' in post.image %}
+				{% set myimage = "https://img.youtube.com/vi/" ~ post.image|slice(-11, 11) ~ "/0.jpg" %}
+			{% endif %}
+				
 				<div class="item mb-5">
 				    <div class="media">
 					    <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="
 						{% if file_exists(assetDirectory ~ '/blog/thumbs/' ~ post.image ~ ".png") %}
 							{{ asset('uploads/blog/thumbs/' ~ post.image ~ ".png") }}
 						{% else %}
-							{{asset('/uploads/blog/play_thumbnail.png')}}
+							{{myimage}}
 						{% endif %}" alt="{{post.title}}">
 					    <div class="media-body">
 						    <h3 class="title mb-1"><a href="{{path('post_show', {'id': post.id, 'title': post.getUrlTitle })}}">{{post.title}}</a></h3>

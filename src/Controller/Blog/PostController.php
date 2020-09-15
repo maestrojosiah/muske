@@ -60,6 +60,7 @@ class PostController extends AbstractController
         $prevPost = $postRepository->getPrevPost($post->getId(), $post->getMusician());
 
         $datetime = $post->getSubmitted()->format(\DateTime::ATOM); // Updated ISO8601
+        $imageLink = $this->toImageLink($post->getImage());
         $seoPage
             ->setTitle($post->getTitle())
             ->addMeta('name', 'keywords', $post->getTags())
@@ -68,7 +69,7 @@ class PostController extends AbstractController
             ->addMeta('name', 'author', $post->getMusician()->getFullname())
             ->addMeta('property', 'og:title', $post->getTitle().' | '.$post->getMusician()->getFullname(). ' Blog')
             ->addMeta('property', 'og:type', 'article')
-            ->addMeta('property', 'og:image', "https://muske.co.ke/uploads/blog/".$post->getImage())
+            ->addMeta('property', 'og:image', $imageLink)
             ->addMeta('property', 'og:url',  "https://muske.co.ke/post/".$post->getId()."/".$post->getUrlTitle())
             ->addMeta('property', 'og:description', substr($post->getContent(), 0 ,100))
         ;
@@ -82,6 +83,20 @@ class PostController extends AbstractController
             'prevPost' => $prevPost,
             'reading_time' => $reading_time,
         ]);
+    }
+
+    public function toImageLink($content){
+
+        if (preg_match('/(\.jpg|\.png|\.bmp)$/', $content)) {
+            return "https://muske.co.ke/uploads/blog/" . $content;
+        } elseif (strpos($content, "youtube.com") !== false) {
+            return "https://img.youtube.com/vi/" . substr($content, -11)."/0.jpg";
+        } elseif (strpos($content, "youtu.be") !== false) {
+            return "https://img.youtube.com/vi/" . substr($content, -11)."/0.jpg";
+        } else {
+            return "https://muske.co.ke/uploads/blog/" . $content;
+        }
+
     }
 
     /**
